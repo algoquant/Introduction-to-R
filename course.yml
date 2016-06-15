@@ -1,7 +1,7 @@
 title            : Introduction to R
-author_field     : algoquant
-description      : This is an automatically generated demo course which will help you on your way to create an awesome DataCamp course.
-author_bio       : algoquant is an awesome DataCamp course creator.<br>You can say something about yourself <strong>here</strong>.
-university       : DataCamp
+author_field     : Jerzy Pawlowski (algoquant)
+description      : This is the first course in R, designed to introduce students to the basics of the R language.
+author_bio       : Jerzy Pawlowski is an adjunct professor of Financial Engineering at NYU Tandon School of Engineering.
+university       : NYU Tandon School of Engineering
 difficulty_level : 2
 time_needed      : 1 hour

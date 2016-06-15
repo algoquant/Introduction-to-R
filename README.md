@@ -1,30 +1,15 @@
-# DataCamp Template Course
-<a href=http://localhost:3001/teach/repositories/61203508/go target="_blank"><img src="https://s3.amazonaws.com/assets.datacamp.com/img/github/content-engineering-repos/course_button.png" width="150"></a>
-<a href=http://localhost:3001/teach/repositories target="_blank"><img src="https://s3.amazonaws.com/assets.datacamp.com/img/github/content-engineering-repos/dashboard_button.png" width="150"></a>
+## Introduction to R  
 
-This an automatically generated <a href=https://www.datacamp.com target="_blank">DataCamp</a> course. You can start from these template files to create your own course.
+This repository contains all the files needed to create the DataCamp course **Introduction to R**.  
 
-Changes you make to this GitHub repository are automatically reflected in the linked DataCamp course. This means that you can enjoy all the advantages of version control, collaboration, issue handling ... of GitHub. 
+This is the first <a href=https://www.datacamp.com target="_blank">DataCamp</a> course in R, designed to introduce students to the basics of the R language.  
 
-## Workflow
+<a href=https://www.datacamp.com/courses/1203 target="_blank"><img src="https://s3.amazonaws.com/assets.datacamp.com/img/github/content-engineering-repos/course_button.png" width="150"></a>  
+<a href=https://www.datacamp.com/courses target="_blank"><img src="https://s3.amazonaws.com/assets.datacamp.com/img/github/content-engineering-repos/dashboard_button.png" width="150"></a>  
 
-1. Edit the markdown and yml files in this repository. You can use GitHub's online editor or use <a href=https://git-scm.com/ target="_blank">git</a> locally and push your changes.
-2. Check out your build attempts on the <a href=http://localhost:3001/teach/repositories target="_blank">Teach Dashboard</a>.
-3. Check out your automatically updated <a href=https://www.datacamp.com/teach/repositories/61203508/go target="_blank">course on DataCamp</a>
+## Getting Started  
 
-## Getting Started
+The DataCamp course consists of multiple vignettes designed to teach a particular element of the R language.  
+Each vignette consists of narrative text, R code, and instructions, followed by simple exercises designed to test the programming knowledge that the student has acquired.  The student must pass the exercises before she can procede to the next vignette.  
 
-A DataCamp course consists of two types of files:
-
-- `course.yml`, a <a href=http://docs.ansible.com/ansible/YAMLSyntax.html target="_blank">YAML-formatted file</a> that's prepopulated with some general course information.
-- `chapterX.md`, a markdown file with:
-   - a YAML header containing chapter information. 
-   - markdown chunks representing DataCamp Exercises. 
-
-To learn more about the structure of a DataCamp course, check out the <a href=http://localhost:3001/teach/documentation#tab_course_structure target="_blank">documentation</a>.
-
-Every DataCamp exercise consists of different parts, read up about them <a href=http://localhost:3001/teach/documentation#tab_code_exercises target="_blank">here</a>. A very important part about DataCamp exercises is to provide automated personalized feedback to students. In R, these so-called Submission Correctness Tests (SCTs) are written with the <a href=https://github.com/datacamp/testwhat target="_blank">`testwhat`</a> package. SCTs for Python exercises are coded up with <a href=https://github.com/datacamp/pythonwhat target="_blank">`pythonwhat`</a>. Check out the GitHub repositories' wiki pages for more information and examples.
-
-Want to learn more? Check out the <a href=http://localhost:3001/teach/documentation target="_blank">DataCamp Teach documentation</a>.
-
-*Happy teaching!*
+*Happy learning!*
