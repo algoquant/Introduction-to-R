@@ -19,7 +19,7 @@ attachments :
 
 In the script on the right you should type R code to solve the exercises. When you hit the _Submit Answer_ button, every line of code in the script is interpreted and executed by R and you get a message that indicates whether or not your code was correct. The output of your submission is shown in the R console.
 
-You can also execute R commands straight in the console. When you type in the console, your submission will not be checked for correctness! Try, for example, to type in `3 * 4` and hit Enter. R should return `[1] 12`.
+You can also execute R commands straight in the console. When you type in the console, your submission will not be checked for correctness! Try, for example, to type in `2 * 3` and hit Enter. R should return `[1] 6`.
 
 *** =instructions
 In the script, add another line of code that calculates the product of 2 times 3, and hit the _Submit Answer_ button.
@@ -39,7 +39,6 @@ Simply add a line of R code that calculates the product of 2 times 3, just like 
 
 *** =solution
 ```{r}
-3 + 4
 2 * 3
 ```
 
