@@ -6,7 +6,7 @@ attachments :
   slides_link: http://s3.amazonaws.com/assets.datacamp.com/production/course_1203/slides/R_environment.pdf
 
 
---- type:MultipleChoiceExercise xp:50 skills:1
+--- type:MultipleChoiceExercise xp:50 skills:1 key:0378d3d2a2
 ## What is R?
 
 *R* and *Python* are the two most popular programming languages for statistics, data science, and econometrics.  *R* has many important features that make it very attractive to users.  Which of the following statements about *R* are *not* true?  
