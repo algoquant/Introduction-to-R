@@ -1,9 +1,9 @@
 --- 
 title_meta  : Chapter 1
 title       : Intro to basics
-description : "This is the first chapter in the Introduction to *R* course. You will learn how to use the console as a calculator and how to assign variables. You will also get to know the basic data types in R. Let's get started!"
+description : "This is the first chapter in the Introduction to R course. You will learn how to use the console as a calculator and how to assign variables. You will also get to know the basic data types in R. Let's get started!"
 attachments : 
-  slides_link: https://drive.google.com/open?id=0Bxzva1I0t63vWFl3MV9iXzg5M1E
+  slides_link: http://s3.amazonaws.com/assets.datacamp.com/production/course_1203/slides/R_environment.pdf
 
 --- type:VideoExercise lang:r xp:50 skills:1 key:1a1ba28cd5
 ## Meet R
@@ -15,14 +15,14 @@ attachments :
 //videos.datacamp.com/transcoded/732_intro_to_r/v1/hls-ch1_1.master.m3u8
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:5714863ba8
-## Your first *R* script
+## Your first R script
 
-In the script window on the upper right you should type *R* code required for the exercises. When you hit the _Submit Answer_ button, your *R* code is executed, and you get a message indicating whether your *R* code is correct. The output of your submission is shown in the *R* console on the lower right.
+In the script window on the upper right you should type the *R* code required for the exercises. When you hit the *Submit Answer* button, your *R* code is executed, and you get a message indicating whether your *R* code is correct. The output of your submission is shown in the *R* console on the lower right.
 
 You can also execute *R* commands in the console on the lower right. When you type in the console, your submission will not be checked for correctness! Try, for example, to type in `2 * 3` and hit Enter. *R* should return `[1] 6`.
 
 *** =instructions
-In the script window on the upper right, add another line of code that calculates the product of 2 times 3, and hit the _Submit Answer_ button.
+In the script window on the upper right, add another line of code that calculates the product of 2 times 3, and hit the *Submit Answer* button.
 
 *** =hint
 Simply add a line of *R* code that calculates the product of 2 times 3, just like the example in the sample code!
@@ -54,15 +54,15 @@ success_msg("Awesome! See how the console shows the result of the R code you sub
 --- type:NormalExercise lang:r xp:100 skills:1 key:ab37530088
 ## Documenting your code
 
-Adding comments to your code is extremely important to make sure that you and others can understand what your code is about. *R* makes use of the `#` sign to add comments, just like Twitter!
-
-Comments are not run as *R* code, so they will not influence your result. For example, _Calculate 3 + 4_ in the script window on the right is a comment and is ignored during execution.
+*R* uses the hash `#` sign to mark text as comments.  
+All text after the hash `#` sign is treated as a comment, and is not executed as code.  
+For example, the text *Calculate 3 + 4* in the script window on the upper right is a comment and is ignored during execution.
 
 *** =instructions
-Add another comment in the script window on the right, _Calculate 6 + 12_, at the appropriate location.
+Add a line with the comment text *Calculate 11 - 5*, in the script window on the upper right, just above the *R* code that calculates *11 - 5*.
 
 *** =hint
-Simply add the line `# Calculate 6 + 12` above the *R* code that calculates 6 + 12.
+Simply add the line `# Calculate 11 - 5` above the *R* code that calculates 11 - 5.
 
 *** =pre_exercise_code
 ```{r}
@@ -73,28 +73,29 @@ Simply add the line `# Calculate 6 + 12` above the *R* code that calculates 6 + 
 ```{r}
 # Calculate 3 + 4
 3 + 4
+3 + 4  # this is another comment
 
-
-6 + 12
+11 - 5
 ```
 
 *** =solution
 ```{r}
 # Calculate 3 + 4
 3 + 4
+3 + 4  # this is another comment
 
-# Calculate 6 + 12
-6 + 12
+# Calculate 11 - 5
+11 - 5
 ```
 
 *** =sct
 ```{r}
 test_output_contains("7", incorrect_msg = "Do not remove the code that calculates 3 + 4.")
 test_student_typed("# Calculate 3 + 4", not_typed_msg = "Do not remove the comment for the code that calculates 3 + 4.")
-test_output_contains("18", incorrect_msg = "Do not remove the code that calculates 6 + 12.")
-test_student_typed(c("# Calculate 6 + 12", "# calculate 6 + 12", "#Calculate 6 + 12", "#calculate 6 + 12",
-                     "# Calculate 6+12", "# calculate 6+12", "#Calculate 6+12", "#calculate 6+12"), 
-                   not_typed_msg = "Make sure to add the comment: `# Calculate 6 + 12`")
+test_output_contains("18", incorrect_msg = "Do not remove the code that calculates 11 - 5.")
+test_student_typed(c("# Calculate 11 - 5", "# calculate 11 - 5", "#Calculate 11 - 5", "#calculate 11 - 5",
+                     "# Calculate 11-5", "# calculate 11-5", "#Calculate 11-5", "#calculate 11-5"), 
+                   not_typed_msg = "Make sure to add the comment: `# Calculate 11 - 5`")
 success_msg("Great! Looks better, doesn't it?")
 ```
 
@@ -118,7 +119,7 @@ The last two might need some explaining:
 *** =instructions
 - Type `2^5` in the script window to calculate 2 to the power 5.
 - Type `28 %% 6` to calculate 28 modulo 6.
-- Click _Submit Answer_ and have a look at the *R* output in the console.
+- Click *Submit Answer* and have a look at the *R* output in the console.
 
 *** =hint
 Another example of the modulo operator: `9 %% 2` equals `1`.
@@ -278,7 +279,7 @@ Suppose you have a fruit basket with five apples. You want to store the number o
 *** =instructions
 - Using `<-`, assign the value 5 to `my_apples` below the first comment.
 - Type `my_apples` below the second comment. This will print out the value of `my_apples`.
-- After clicking _Submit Answer_, have a look at the console: the number 5 is printed, so *R* now links the variable `my_apples` to the value 5.
+- After clicking *Submit Answer*, have a look at the console: the number 5 is printed, so *R* now links the variable `my_apples` to the value 5.
 
 *** =hint
 Remember that if you want to assign a number or an object to a variable in R, you can make use of the assignment operator `<-`. Alternatively, you can use `=`, but `<-` is widely preferred in the *R* community.
@@ -527,8 +528,8 @@ Common knowledge tells you not to add apples and oranges. But hey, that is what 
 However, if you try to add a numeric and a character string, *R* will complain.
 
 *** =instructions
-- Click _Submit Answer_ and read the error message. Make sure you understand why this did not work.
-- Adjust `my_oranges <- "six"` such that *R* knows you have 6 oranges and thus a fruit basket with 11 pieces of fruit. Click _Submit Answer_ again.
+- Click *Submit Answer* and read the error message. Make sure you understand why this did not work.
+- Adjust `my_oranges <- "six"` such that *R* knows you have 6 oranges and thus a fruit basket with 11 pieces of fruit. Click *Submit Answer* again.
 
 *** =hint
 You have to assign the numeric value `6` to the `my_oranges` variable instead of the character value `"six"`. Notice how the quotation marks are used to indicate that `"six"` is a character.
