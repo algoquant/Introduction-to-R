@@ -5,14 +5,46 @@ description : "This is the first chapter in the Introduction to R course. You wi
 attachments : 
   slides_link: http://s3.amazonaws.com/assets.datacamp.com/production/course_1203/slides/R_environment.pdf
 
---- type:VideoExercise lang:r xp:50 skills:1 key:1a1ba28cd5
-## Meet R
 
-*** =video_link
-//www.youtube.com/watch?v=x2snEBDocgc
+--- type:MultipleChoiceExercise xp:50 skills:1
+## What is R?
 
-*** =video_hls
-//videos.datacamp.com/transcoded/732_intro_to_r/v1/hls-ch1_1.master.m3u8
+*R* and *Python* are the two most popular programming languages for statistics, data science, and econometrics.  *R* has many important features that make it very attractive to users.  Which of the following statements about *R* are *not* true?  
+
+1. *R* is an open-source software environment for statistical computing and graphics,
+2. *R* users must submit requests to a committee of experts to obtain new features, 
+3. *R* can be very slow compared to *C++*,
+4. *R* is an interpreted language, allowing interactive code development,
+5. *R* cannot call software written in *C++*,
+6. *R* is a functional language where every operator is an *R* function,
+7. *R* supports object-oriented programming with classes and methods,
+8. *R* cannot perform *for* loops,
+9. *R* is extended through user-created packages, providing for the latest developments, such as *Machine Learning*,
+10. *R* has metaprogramming facilities that allow programming on the language,
+
+
+*** =instructions
+- statements (3) and (8) are false; the others are true.
+- statements (4) and (6) are false; the others are true.
+- statements (2), (5) and (8) are false; the others are true.
+- statements (3) and (7) are false; the others are true.
+
+*** =hint
+Read about R in the attached slides.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sct
+```{r}
+msg1 = "R can be extended through user-created packages."
+msg2 = "R is written in C++, and can easily call C++ code."
+msg3 = "R can perform for loops, but they are slow."
+test_mc(3, feedback_msgs = c(msg1, msg2, msg3, msg4, msg5))
+```
+
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:5714863ba8
 ## Your first R script
@@ -92,7 +124,7 @@ Simply add the line `# Calculate 11 - 5` above the *R* code that calculates 11 -
 ```{r}
 test_output_contains("7", incorrect_msg = "Do not remove the code that calculates 3 + 4.")
 test_student_typed("# Calculate 3 + 4", not_typed_msg = "Do not remove the comment for the code that calculates 3 + 4.")
-test_output_contains("18", incorrect_msg = "Do not remove the code that calculates 11 - 5.")
+test_output_contains("6", incorrect_msg = "Do not remove the code that calculates 11 - 5.")
 test_student_typed(c("# Calculate 11 - 5", "# calculate 11 - 5", "#Calculate 11 - 5", "#calculate 11 - 5",
                      "# Calculate 11-5", "# calculate 11-5", "#Calculate 11-5", "#calculate 11-5"), 
                    not_typed_msg = "Make sure to add the comment: `# Calculate 11 - 5`")
@@ -105,12 +137,12 @@ success_msg("Great! Looks better, doesn't it?")
 
 In its most basic form *R* can be used as a scientific calculator. Consider the following arithmetic operators:
 
-- Addition: `+`
-- Subtraction: `-`
-- Multiplication: `*`
-- Division: `/`
-- Exponentiation: `^`
-- Modulo: `%%`
++ Addition: `+`
++ Subtraction: `-`
++ Multiplication: `*`
++ Division: `/`
++ Exponentiation: `^`
++ Modulo: `%%`
 
 The last two might need some explaining:
 - The `^` operator raises the number to its left to the power of the number to its right: for example `3^2` equals 9.
