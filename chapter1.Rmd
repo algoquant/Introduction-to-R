@@ -42,7 +42,7 @@ Read about R in the attached slides.
 msg1 = "R can be extended through user-created packages."
 msg2 = "R is written in C++, and can easily call C++ code."
 msg3 = "R can perform for loops, but they are slow."
-test_mc(3, feedback_msgs = c(msg1, msg2, msg3, msg4, msg5))
+test_mc(3, feedback_msgs = c(msg1, msg2, msg3))
 ```
 
 
