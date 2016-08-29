@@ -85,7 +85,7 @@ success_msg("Awesome! See how the console shows the result of the R code you sub
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:ab37530088
-## Documenting your code
+## Inserting comments into your code
 
 *R* uses the hash `#` sign to mark text as comments.  
 All text after the hash `#` sign is treated as a comment, and is not executed as code.  
@@ -134,7 +134,7 @@ success_msg("Great! Looks better, doesn't it?")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:9d8a3d0b88
-## *R* as a calculator
+## Arithmetic Operators in R
 
 In its most basic form *R* can be used as a scientific calculator. Consider the following arithmetic operators:
 
@@ -142,7 +142,7 @@ In its most basic form *R* can be used as a scientific calculator. Consider the 
 + Subtraction: `-`
 + Multiplication: `*`
 + Division: `/`
-+ Exponentiation: `^`
++ Exponentiation: `^` and `**`
 + Modulo: `%%`
 
 The last two might need some explaining:
@@ -214,43 +214,6 @@ test_output_contains("(5 + 5)/2", incorrect_msg = msg)
 test_output_contains("2^5", incorrect_msg = "Have another look at the exponentiation. Read the instructions carefully.")
 test_output_contains("28 %% 6", incorrect_msg = "Have another look at the use of the `%%` operator. Read the instructions carefully.")
 success_msg("Nice one!")
-```
-
-
---- type:MultipleChoiceExercise xp:50 skills:1 key:9d8819fb2e
-## R's pros and cons
-
-There are things that make *R* the immensely popular language that it is today. On the other hand, there are also aspects of *R* that are less attractive. Which of the following statements are true regarding this statistical programming language developed by Ihaka and Gentleman in the nineties?
-
-1. As opposed to SAS and SPSS, *R* is completely open-source.
-2. *R* is open-source, but it's hard to share your code with others since *R* uses a command-line interface.
-3. It typically takes a long time for new and updated *R* packages to be released and made available to the public.
-4. *R* is easy to use, but this comes at the cost of limited graphical abilities.
-5. *R* works well with large data sets, if the code is properly written and the data fits into the working memory. 
-
-*** =instructions
-- statements (1) and (2) are correct; the others are false.
-- statements (1) and (4) are correct; the others are false.
-- statements (1) and (5) are correct; the others are false.
-- statements (2) and (4) are correct; the others are false.
-- statements (3) and (5) are correct; the others are false.
-
-*** =hint
-Remember that your data has to fit in the working memory for *R* to be able to process it.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-```
-
-*** =sct
-```{r}
-msg1 = "Remember that the fact that R uses a command-line interface, does not make it hard to share code. On the contrary, sharing your results becomes very straightforward because you can easily share R scripts."
-msg2 = "R is the perfect tool for creating neat and insightful visualizations. Try again."
-msg3 = "Great! Head over to the next exercise and get your hands dirty!"
-msg4 = "R uses a command-line interface, which makes it very easy to share one's code. Also, R is very suitable for creating visualizations. Try again."
-msg5 = "It's fairly straightforward to write, maintain and share R packages. Try again."
-test_mc(correct=3, feedback_msgs = c(msg1, msg2, msg3, msg4, msg5))
 ```
 
 
