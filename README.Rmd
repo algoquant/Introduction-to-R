@@ -1,0 +1,42 @@
+---
+title: DataCamp Course, Introduction to R
+author: Jerzy Pawlowski
+abstract: An interactive online course for learning the R programming language.
+tags: DataCamp, R
+---
+
+### Introduction to *R*  
+
+This is a beginner <a href=https://www.datacamp.com target="_blank">DataCamp</a> course in *R*, designed to introduce students to the basics of the *R* programming language.  
+The *DataCamp* course consists of multiple exercises, each designed to teach a particular element of the *R* language.  
+Each exercise consists of narrative text, *R* code, and instructions, followed by a simple assignment designed to test the programming knowledge that the student has acquired.  
+The student must pass the tests before she can procede to the next exercise.  
+
+You can start the course *Introduction to R* by following this link: <a href=https://www.datacamp.com/courses/1203 target="_blank"><img src="https://s3.amazonaws.com/assets.datacamp.com/img/github/content-engineering-repos/course_button.png" width="150"></a>  
+
+
+### How to Create a *DataCamp* Course  
+
+*DataCamp* has built a programming framework that allows users to create their own *DataCamp* courses as follows:  
+
++ *DataCamp* course files reside on *GitHub*, so the first step is to create an empty *GitHub* repository for the new course in your *GitHub* account,  
+
++ Then install *GitHub Desktop* on your computer,  
+
++ Next clone the new empty repository from the *GitHub* website to a directory on your computer (which is called the local repository),  
+
++ Populate the local repository with the files *course.yml* and *README.Rmd*, and individual *\*.Rmd* files for each course chapter,  
+
++ Add the sub-directories named *slides*, *img*, and *datasets* to the local repository,  
+
++ From *GitHub Desktop* on your computer synchronize the *GitHub* repository with the local repository,  
+
++ Go to the *DataCamp* website: <https://www.datacamp.com/teach/repositories>, and under "Create a *DataCamp* course", select "link existing *GitHub* repository" (before that your *DataCamp* account should be linked to your *GitHub* account),  
+
+Once your *GitHub* repository is linked to *DataCamp*, then *DataCamp* will automatically build the course and host it on its website.  You can find the web link to the course on <https://www.datacamp.com/teach/repositories>.
+
+You can find more information about how to create *DataCamp* courses on these pages:  
+<a href="https://www.datacamp.com/community/blog/create-your-own-r-tutorials-with-github-datacamp" target="_blank"> How to Create *DataCamp* Course</a>  
+<a href="https://www.datacamp.com/community/blog/building-your-own-datacamp-course-with-github" target="_blank"> How to Create *DataCamp* Course II</a>  
+<a href="https://www.datacamp.com/teach/documentation" target="_blank"> Technical Details on How to Create *DataCamp* Courses</a>  
+
