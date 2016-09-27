@@ -9,17 +9,19 @@ attachments :
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:5714863ba8
-## A First R Session
+## Variables assignment
 
 In the script window on the upper right you should type the *R* code required for the exercises. When you hit the *Submit Answer* button, your *R* code is executed, and you get a message indicating whether your *R* code is correct. The output of your submission is shown in the *R* console on the lower right.
 
 You can also execute *R* commands in the console on the lower right. When you type in the console, your submission will not be checked for correctness! Try, for example, to type in `2 + 1` and hit Enter. *R* should return `[1] 3`.
 
+Variables are created by an assignment operation, and they don’t have to be declared, The standard assignment operator in R is the arrow symbol `<-`, R interprets text in quotes (`””`) as character strings, Text that is not in quotes (`””`) is interpreted as a symbol or expression, Typing a symbol or expression evaluates it.
+
 *** =instructions
-In the script window on the upper right, add another line of code that calculates the product of 2 times 3, and hit the *Submit Answer* button.
+In the script window on the upper right, assign number 2 and a string "Hello World!" to variables, and hit the *Submit Answer* button.
 
 *** =hint
-Simply add a line of *R* code that calculates the product of 2 times 3, just like the example in the sample code!
+The variable assignments are already presented, just type the variable name and check results. Remember not to add quotes to them!
 
 *** =pre_exercise_code
 ```{r}
@@ -28,19 +30,32 @@ Simply add a line of *R* code that calculates the product of 2 times 3, just lik
 
 *** =sample_code
 ```{r}
-3 + 4
-# now write R code that calculates the product of 2 times 3
+#assign number to a variable
+myvariable1 <- 2
+
+#assign a string to a variable
+myvariable2 <- "Hello World!"
+
+# now write R code to check if the assignments are successfull
 ```
 
 *** =solution
 ```{r}
-# now write R code that calculates the product of 2 times 3
-2 * 3
+#assign number to a variable
+myvariable1 <- 2
+
+#assign a string to a variable
+myvariable2 <- "Hello World!"
+
+# now write R code to check if the assignments are successfull
+myvariable1
+myvariable2
 ```
 
 *** =sct
 ```{r}
-test_output_contains("6", incorrect_msg = "Make sure to add a line of R code that calculates the product of 2 times 3")
+test_output_contains(myvariable1, incorrect_msg = "Make sure to type the correct variable names without quote")
+test_output_contains(myvariable2, incorrect_msg = "Make sure to type the correct variable names without quote")
 success_msg("Awesome! See how the console shows the result of the R code you submitted?")
 ```
 
