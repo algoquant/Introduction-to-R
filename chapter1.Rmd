@@ -372,6 +372,45 @@ test_object("my_fruit")
 success_msg("Nice one! The great advantage of doing calculations with variables is reusability. If you just change `my_apples` to equal 12 instead of 5 and rerun the script, `my_fruit` will automatically update as well.")
 ```
 
+--- type:NormalExercise lang:r xp:100 skills:1 key:6a41feeca0
+## jingtao's first R script
+
+In the script window on the upper right you should type the *R* code required for the exercises. When you hit the *Submit Answer* button, your *R* code is executed, and you get a message indicating whether your *R* code is correct. The output of your submission is shown in the *R* console on the lower right.
+
+You can also execute *R* commands in the console on the lower right. When you type in the console, your submission will not be checked for correctness! Try, for example, to type in `2 * 3` and hit Enter. *R* should return `[1] 6`.
+
+*** =instructions
+In the script window on the upper right, add another line of code that calculates the product of 2 times 3, and hit the *Submit Answer* button.
+
+*** =hint
+Simply add a line of *R* code that calculates the product of 2 times 3, just like the example in the sample code!
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+3 + 4
+# now write R code that calculates the product of 2 times 3
+```
+
+*** =solution
+```{r}
+# now write R code that calculates the product of 2 times 3
+2 * 3
+```
+
+*** =sct
+```{r}
+test_output_contains("6", incorrect_msg = "Make sure to add a line of R code that calculates the product of 2 times 3")
+success_msg("Awesome! See how the console shows the result of the R code you submitted?")
+```
+
+
+
+
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:6192f64167
 ## The workspace
