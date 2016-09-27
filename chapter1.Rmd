@@ -1,58 +1,19 @@
 --- 
 title_meta  : Chapter 1
-title       : Intro to basics
-description : "This is the first chapter in the Introduction to R course. You will learn how to use the console as a calculator and how to assign variables. You will also get to know the basic data types in R. Let's get started!"
+title       : R Environment
+description : "This is the first chapter in the R in Finance course. You will get to know the R environment. You will also learn basic manipulations on R objects, which is essential for R. Let's get started!"
 attachments : 
-  slides_link: http://s3.amazonaws.com/assets.datacamp.com/production/course_1203/slides/R_environment.pdf
 
 
---- type:MultipleChoiceExercise xp:50 skills:1 key:0378d3d2a2
-## What is R?
 
-*R* and *Python* are the two most popular programming languages for statistics, data science, and econometrics.  *R* has many important features that make it very attractive to users.  Which of the following statements about *R* are *not* true?  
-
-1. *R* is an open-source software environment for statistical computing and graphics,
-2. *R* users must submit requests to a committee of experts to obtain new features, 
-3. *R* can be very slow compared to *C++*,
-4. *R* is an interpreted language, allowing interactive code development,
-5. *R* cannot call software written in *C++*,
-6. *R* is a functional language where every operator is an *R* function,
-7. *R* supports object-oriented programming with classes and methods,
-8. *R* cannot perform *for* loops,
-9. *R* is extended through user-created packages, providing for the latest developments, such as *Machine Learning*,
-10. *R* has metaprogramming facilities that allow programming on the language,
-
-
-*** =instructions
-- statements (3) and (8) are false; the others are true.
-- statements (4) and (6) are false; the others are true.
-- statements (2), (5) and (8) are false; the others are true.
-- statements (3) and (7) are false; the others are true.
-
-*** =hint
-Read about R in the attached slides.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-```
-
-*** =sct
-```{r}
-msg1 = "R can be extended through user-created packages."
-msg2 = "R is written in C++, and can easily call C++ code."
-msg3 = "R can perform for loops, but they are slow."
-msg4 = "R supports object-oriented programming."
-test_mc(correct=3, feedback_msgs = c(msg1, msg2, msg3, msg4))
-```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:5714863ba8
-## Your first R script
+## A First R Session
 
 In the script window on the upper right you should type the *R* code required for the exercises. When you hit the *Submit Answer* button, your *R* code is executed, and you get a message indicating whether your *R* code is correct. The output of your submission is shown in the *R* console on the lower right.
 
-You can also execute *R* commands in the console on the lower right. When you type in the console, your submission will not be checked for correctness! Try, for example, to type in `2 * 3` and hit Enter. *R* should return `[1] 6`.
+You can also execute *R* commands in the console on the lower right. When you type in the console, your submission will not be checked for correctness! Try, for example, to type in `2 + 1` and hit Enter. *R* should return `[1] 3`.
 
 *** =instructions
 In the script window on the upper right, add another line of code that calculates the product of 2 times 3, and hit the *Submit Answer* button.
