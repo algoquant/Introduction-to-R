@@ -1,7 +1,7 @@
 --- 
 title_meta  : Chapter 1
 title       : R Environment
-description : "This is the first chapter in the R in Finance course. You will get to know the R environment. You will also learn basic manipulations on R objects, which is essential for R. Let's get started!"
+description : "This is the first chapter in the Introduction to R course. You will get to know the R environment. You will also learn basic manipulations on R objects, which is essential for R. Let's get started!"
 attachments : 
 
 
@@ -50,12 +50,13 @@ myvariable2 <- "Hello World!"
 # now write R code to check if the assignments are successfull
 myvariable1
 myvariable2
+
 ```
 
 *** =sct
 ```{r}
-test_output_contains(myvariable1, incorrect_msg = "Make sure to type the correct variable names without quote")
-test_output_contains(myvariable2, incorrect_msg = "Make sure to type the correct variable names without quote")
+test_output_contains("myvariable1", incorrect_msg = "Make sure to type the correct variable names without quote")
+test_output_contains("myvariable2", incorrect_msg = "Make sure to type the correct variable names without quote")
 success_msg("Awesome! See how the console shows the result of the R code you submitted?")
 ```
 
