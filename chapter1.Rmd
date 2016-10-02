@@ -69,10 +69,10 @@ All text after the hash `#` sign is treated as a comment, and is not executed as
 For example, the text *Calculate 3 + 4* in the script window on the upper right is a comment and is ignored during execution.
 
 *** =instructions
-Add a line with the comment text *Calculate 11 - 5*, in the script window on the upper right, just above the *R* code that calculates *11 - 5*.
+Add a line with the comment text *add comments to myvariable <- 1*, in the script window on the upper right, just above the *R* code that assigns values *myvariable1 <- 2*.
 
 *** =hint
-Simply add the line `# Calculate 11 - 5` above the *R* code that calculates 11 - 5.
+Simply add the line `# add comments to myvariable <- 1` above the *R* code that assigns values *myvariable1 <- 2*.
 
 *** =pre_exercise_code
 ```{r}
@@ -81,37 +81,164 @@ Simply add the line `# Calculate 11 - 5` above the *R* code that calculates 11 -
 
 *** =sample_code
 ```{r}
-# Calculate 3 + 4
-3 + 4
-3 + 4  # this is another comment
+#assign number to a variable
+myvariable1 <- 2
 
-11 - 5
+#assign a string to a variable
+myvariable2 <- "Hello World!"
+
+# now write R code to check if the assignments are successfull
 ```
 
 *** =solution
 ```{r}
-# Calculate 3 + 4
-3 + 4
-3 + 4  # this is another comment
+#assign number to a variable
+myvariable1 <- 2
 
-# Calculate 11 - 5
-11 - 5
+#assign a string to a variable
+myvariable2 <- "Hello World!"
+
+# now write R code to check if the assignments are successfull
+myvariable
+myvariable1
+myvariable2
+```
+
+*** =solution
+```{r}
+# now write R code to check if the assignments are successfull
+myvariable
+myvariable1
+myvariable2
 ```
 
 *** =sct
 ```{r}
-test_output_contains("7", incorrect_msg = "Do not remove the code that calculates 3 + 4.")
-test_student_typed("# Calculate 3 + 4", not_typed_msg = "Do not remove the comment for the code that calculates 3 + 4.")
-test_output_contains("6", incorrect_msg = "Do not remove the code that calculates 11 - 5.")
-test_student_typed(c("# Calculate 11 - 5", "# calculate 11 - 5", "#Calculate 11 - 5", "#calculate 11 - 5",
-                     "# Calculate 11-5", "# calculate 11-5", "#Calculate 11-5", "#calculate 11-5"), 
-                   not_typed_msg = "Make sure to add the comment: `# Calculate 11 - 5`")
-success_msg("Great! Looks better, doesn't it?")
+test_output_contains("myvariable", incorrect_msg = "Make sure to type the correct variable names without quote")
+test_output_contains("myvariable1", incorrect_msg = "Make sure to type the correct variable names without quote")
+test_output_contains("myvariable2", incorrect_msg = "Make sure to type the correct variable names without quote")
+success_msg("Awesome! See? That assignment in the comment does not take effect.")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:93f879e02e
+## Explore sessions in R
+
+R session has many default settings, which you can learn to configure or make use of.
+
+The function getwd() returns a vector of length 1, with the ﬁrst element containing a string with the name of the current working directory (cwd).
+The function setwd() accepts a character string as input (the name of the directory), and sets the working directory to that string. 
+With Sys.time() you can get system time with time zone of the R session; or you can just get system date with Sys.Date().
+
+*** =instructions
+Type the function getwd(), Sys.time() and Sys.Date().
+
+*** =hint
+Simply the function name, copy & paste.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#type getwd()
+
+
+#type Sys.time()
+
+
+#type Sys.Date()
+
+
+```
+
+*** =solution
+```{r}
+#type getwd()
+getwd()
+
+#type Sys.time()
+Sys.time()
+
+#type Sys.Date()
+Sys.Date()
+
 ```
 
 
+*** =sct
+```{r}
+success_msg("Great! Look at the results, play with them if you would like to")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:58ca8cb732
+## The R Workspace
+
+The workspace is the current R working environment, which includes all user-deﬁned objects and the command history.
+The function ls() returns names of objects in the R workspace.
+The function rm() removes objects from the R workspace.
+The workspace can be saved into and loaded back from an *.RData ﬁle (binary ﬁle format).
+The function save.image() saves the whole workspace. 
+The function save() saves just the selected objects.
+The function load() reads data from *.RData ﬁles, and invisibly returns a vector of names of objects created in the workspace.
+
+When you quit R you’ll be prompted ”Save workspace image?” If you answer YES then the workspace will be saved into the .RData ﬁle in the cwd, When you start R again, the workspace will be automatically loaded from the existing .RData ﬁle,
+
+The function history() displays recent commands, You can also save and load the command history from a ﬁle.
+
+*** =instructions
+Type the function ls() and rm().
+
+*** =hint
+Simply the function name, copy & paste as instructed by comments.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#type ls() to see what variable is currently in the workspace
+variable_1 <- 5
+variable_2 <- "sand"
+
+
+#use rm() to remove all elements in the workspace
+rm(list = ls())
+
+#check what is left in the workspace by type ls()
+
+
+```
+
+*** =solution
+```{r}
+#type ls() to see what variable is currently in the workspace
+variable_1 <- 5
+variable_2 <- "sand"
+ls()
+
+#use rm() to remove all elements in the workspace
+rm(list = ls())
+
+#check what is left in the workspace by type ls()
+ls()
+
+
+```
+
+
+*** =sct
+```{r}
+success_msg("Great! Look at the results, play with them if you would like to")
+```
+
+
+
 --- type:NormalExercise lang:r xp:100 skills:1 key:9d8a3d0b88
-## Arithmetic Operators in R
+## Arithmetric calculation in R
 
 In its most basic form *R* can be used as a scientific calculator. Consider the following arithmetic operators:
 
