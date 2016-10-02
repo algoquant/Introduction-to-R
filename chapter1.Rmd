@@ -172,6 +172,164 @@ Sys.Date()
 success_msg("Great! Look at the results, play with them if you would like to")
 ```
 
+--- type:NormalExercise lang:r xp:100 skills:1 key:b1bb4402e2
+## More about R sessions
+
+The function sessionInfo() returns information about the current R session:
+R version;
+OS platform;
+locale settings;
+list of packages that are loaded and attached to the search path;
+list of packages that are loaded, but not attached to the search path
+
+
+*** =instructions
+Type the function sessionInfo().
+
+*** =hint
+Simply the function name, copy & paste.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#type sessionInfo()
+
+
+```
+
+*** =solution
+```{r}
+#type sessionInfo()
+sessionInfo()
+
+```
+
+
+*** =sct
+```{r}
+success_msg("Correct! Remeber to see what's pop up in the console")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:2f547ffda2
+## Environment Variables
+
+R uses environment variables to store information about its environment, such as paths to directories containing ﬁles used by R (startup, history, OS).
+For example the environment variables: 
+R USER and HOME store the R user Home directory, 
+R HOME stores the root directory of the R installation, 
+The functions Sys.getenv() and Sys.setenv() display and set the values environment variables, 
+Sys.getenv("env var") displays the environment variable "env var", 
+Sys.setenv("env var=value") sets the environment variable "env var" equal to "value",
+
+
+*** =instructions
+Change parameters as instructed and see the results.
+
+*** =hint
+Simply copy the function name and change parameters inside.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#type Sys.getenv() and get the subset from 5th to 7th element for list of environment variable
+Sys.getenv()[5:7]
+
+#change the parameter to "Home" to see the get R user HOME directory
+
+
+#change the parameter to "R_home" to see the R_HOME directory
+
+
+#change the parameter to "env_var" to see environment variables
+
+
+```
+
+*** =solution
+```{r}
+#type Sys.getenv() and get the subset from 5th to 7th element for list of environment variable
+Sys.getenv()[5:7]
+
+#change the parameter to "Home" to see the get R user HOME directory
+Sys.getenv("Home")
+
+#change the parameter to "R_home" to see the R_HOME directory
+Sys.getenv("R_home")
+
+#change the parameter to "env_var" to see environment variables
+Sys.getenv("env_var")
+
+```
+
+
+*** =sct
+```{r}
+success_msg("Correct! Remeber to see what's pop up in the console")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:4d04bf29c2
+## Global Options Settings
+
+R uses a list of global options which aﬀect how R computes and displays results.
+The function options() either sets or displays the values of global options: 
+  options("globop") displays the current value of option "globop";
+  getOption("globop") displays the current value of option "globop";
+  options(globop=value) sets the option "globop" equal to "value";
+
+
+*** =instructions
+Change parameters as instructed and see the results.
+
+*** =hint
+Remeber to capitalize TRUE and don't use commas for the last code!
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#type options("digits")
+options("digits")
+
+#use getOption to see the current value of "digits"
+
+
+#set the digits option to 3, type 0.12345 and see results
+
+
+```
+
+*** =solution
+```{r}
+#type options("digits")
+getOption("digits")
+
+#use getOption to see the current value of "digits"
+options("digits")
+
+#change the parameter to "R_home" to see the R_HOME directory
+options(digits=3)
+0.12345
+
+```
+
+
+*** =sct
+```{r}
+success_msg("OK, now see what's pop up in the console")
+```
+
 --- type:NormalExercise lang:r xp:100 skills:1 key:58ca8cb732
 ## The R Workspace
 
