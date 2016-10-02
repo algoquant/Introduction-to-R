@@ -55,8 +55,6 @@ myvariable2
 
 *** =sct
 ```{r}
-test_output_contains("myvariable1", incorrect_msg = "Make sure to type the correct variable names without quote")
-test_output_contains("myvariable2", incorrect_msg = "Make sure to type the correct variable names without quote")
 success_msg("Awesome! See how the console shows the result of the R code you submitted?")
 ```
 
@@ -114,19 +112,8 @@ myvariable1
 myvariable2
 ```
 
-*** =solution
-```{r}
-# now write R code to check if the assignments are successfull
-myvariable
-myvariable1
-myvariable2
-```
-
 *** =sct
 ```{r}
-test_output_contains("myvariable", incorrect_msg = "Make sure to type the correct variable names without quote")
-test_output_contains("myvariable1", incorrect_msg = "Make sure to type the correct variable names without quote")
-test_output_contains("myvariable2", incorrect_msg = "Make sure to type the correct variable names without quote")
 success_msg("Awesome! See? That assignment in the comment does not take effect.")
 ```
 
