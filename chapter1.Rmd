@@ -390,6 +390,154 @@ ls()
 success_msg("Great! Look at the results, play with them if you would like to")
 ```
 
+--- type:NormalExercise lang:r xp:100 skills:1 key:39d8f62180
+## Data Objects in R
+
+All data objects in R are vectors, or consist of vectors.
+Single numbers and character strings are vectors of length "1".
+Atomic vectors are homogeneous objects whose elements are all of the same mode (type).
+Lists and data frames are recursive (heterogeneous) objects, whose elements can be vectors of diﬀerent mode.
+The functions is.atomic() and is.recursive() return logical values depending on whether their arguments are atomic or recursive.
+
+*** =instructions
+Use function is.atomic() and is.recursive() to check whether the object is atomic or recursive.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#define objects of single number, vector, list and dataframe
+v1 <- 1
+v2 <- 1:10
+v3 <- list(aa=c('a', 'b'), bb=1:5)
+v4 <- data.frame(aa=c('a', 'b'), bb=1:2)
+
+#find out if single number is atomic or recursive
+is.atomic(v1)
+is.recursive(v1)
+
+#find out if vector is atomic or recursive
+is.atomic(v2)
+is.recursive(v2)
+
+#now use similar process to find out if list is atomic or recursive
+
+
+#do the same to data frame
+```
+
+*** =solution
+```{r}
+#define objects of single number, vector, list and dataframe
+v1 <- 1
+v2 <- 1:10
+v3 <- list(aa=c('a', 'b'), bb=1:5)
+v4 <- data.frame(aa=c('a', 'b'), bb=1:2)
+
+#find out if single number is atomic or recursive
+is.atomic(v1)
+is.recursive(v1)
+
+#find out if vector is atomic or recursive
+is.atomic(v2)
+is.recursive(v2)
+
+#now use similar process to find out if list is atomic or recursive
+is.atomic(v3)
+is.recursive(v3)
+
+#do the same to data frame
+is.atomic(v4)
+is.recursive(v4)
+```
+
+
+*** =sct
+```{r}
+success_msg("You can scroll down and console and see the output")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:a5293e3bde
+## Type, Mode, and Class of Objects
+
+The type, mode, and class are character strings representing various object properties.
+The type of an atomic object represents how it’s stored in memory (logical, character, integer, double, etc.)
+The mode of an atomic object is the kind of data it represents (logical, character, numeric, etc.)
+The mode of an object often coincides with its type (except for integer and double types)
+Recursive objects (lists, data frames) have both type and mode equal to the recursive type (list)
+The class of an object is given by either an explicit class attribute, or is derived from the object mode and its dim attribute (implicit class)
+The function class() returns the explicit or implicit class of an object.
+The object class is used for method dispatching in the S3 object-oriented programming system in R
+
+*** =instructions
+Use function typeof(), mode() and class().
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#define objects of single number, vector, list and dataframe
+v1 <- 1
+v2 <- 1:10
+v3 <- list(aa=c('a', 'b'), bb=1:5)
+v4 <- data.frame(aa=c('a', 'b'), bb=1:2)
+
+#find out if single number is atomic or recursive
+is.atomic(v1)
+is.recursive(v1)
+
+#find out if vector is atomic or recursive
+is.atomic(v2)
+is.recursive(v2)
+
+#now use similar process to find out if list is atomic or recursive
+
+
+#do the same to data frame
+```
+
+*** =solution
+```{r}
+#define objects of single number, vector, list and dataframe
+v1 <- 1
+v2 <- 1:10
+v3 <- list(aa=c('a', 'b'), bb=1:5)
+v4 <- data.frame(aa=c('a', 'b'), bb=1:2)
+
+#find out if single number is atomic or recursive
+is.atomic(v1)
+is.recursive(v1)
+
+#find out if vector is atomic or recursive
+is.atomic(v2)
+is.recursive(v2)
+
+#now use similar process to find out if list is atomic or recursive
+is.atomic(v3)
+is.recursive(v3)
+
+#do the same to data frame
+is.atomic(v4)
+is.recursive(v4)
+```
+
+
+*** =sct
+```{r}
+success_msg("You can scroll down and console and see the output")
+```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:9d8a3d0b88
