@@ -476,7 +476,7 @@ The function class() returns the explicit or implicit class of an object.
 The object class is used for method dispatching in the S3 object-oriented programming system in R
 
 *** =instructions
-Use function typeof(), mode() and class().
+Use function typeof(), mode() and class() to explore object type, mode and class.
 
 *** =hint
 Check if object names and function names are correctly typed.
@@ -488,55 +488,131 @@ Check if object names and function names are correctly typed.
 
 *** =sample_code
 ```{r}
-#define objects of single number, vector, list and dataframe
-v1 <- 1
-v2 <- 1:10
+#define objects of vector, matrix, list and dataframe
+v1 <- 1:10
+v2 <- matrix(1:10, 2, 5)
 v3 <- list(aa=c('a', 'b'), bb=1:5)
 v4 <- data.frame(aa=c('a', 'b'), bb=1:2)
 
-#find out if single number is atomic or recursive
-is.atomic(v1)
-is.recursive(v1)
+#find out the type, mode and class of vector and matrix
+c(typeof(v1), mode(v1), class(v1))
+c(typeof(v2), mode(v2), class(v2))
 
-#find out if vector is atomic or recursive
-is.atomic(v2)
-is.recursive(v2)
-
-#now use similar process to find out if list is atomic or recursive
+#now use the same code to check list and dataframe
 
 
-#do the same to data frame
 ```
 
 *** =solution
 ```{r}
-#define objects of single number, vector, list and dataframe
-v1 <- 1
-v2 <- 1:10
+#define objects of vector, matrix, list and dataframe
+v1 <- 1:10
+v2 <- matrix(1:10, 2, 5)
 v3 <- list(aa=c('a', 'b'), bb=1:5)
 v4 <- data.frame(aa=c('a', 'b'), bb=1:2)
 
-#find out if single number is atomic or recursive
-is.atomic(v1)
-is.recursive(v1)
+#find out the type, mode and class of vector and matrix
+c(typeof(v1), mode(v1), class(v1))
+c(typeof(v2), mode(v2), class(v2))
 
-#find out if vector is atomic or recursive
-is.atomic(v2)
-is.recursive(v2)
+#now use the same code to check list and dataframe
+c(typeof(v3), mode(v3), class(v3))
+c(typeof(v4), mode(v4), class(v4))
 
-#now use similar process to find out if list is atomic or recursive
-is.atomic(v3)
-is.recursive(v3)
-
-#do the same to data frame
-is.atomic(v4)
-is.recursive(v4)
 ```
 
 
 *** =sct
 ```{r}
-success_msg("You can scroll down and console and see the output")
+success_msg("Good Job!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:85b773db52
+## R Object Attributes
+
+R objects can have diﬀerent attributes, such as: names, dimnames, dimensions, class, etc.
+The attributes of an object is a named list of symbol=value pairs.
+The function attributes() returns the attributes of an object.
+The attributes of an R object can be modiﬁed using the "attributes()" assignment.
+
+The function structure() adds attributes (speciﬁed as symbol=value pairs) to an object, and returns it.
+A vector that is assigned an attribute other than names is not treated as a vector.
+The function is.vector() returns TRUE if its argument is a vector, and returns FALSE otherwise,
+
+
+*** =instructions
+Use function attributes(), structure() and is.vector() to explore object attributes.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#a simple vector has no attributes
+attributes(1:10)
+
+# named vector has "names" attribute
+my_var <- c(pi=pi, euler=exp(1), gamma=-digamma(1))
+attributes(my_var)
+
+#modify the attributes of an object
+attributes(my_var) <- list(class = "Date")
+
+#print the object and see what's changed
+my_var
+
+#also we can use structure to change attributes
+structure(1:10, class = "Date")
+
+#now use attributes assignment method to change the class attributes of a list to character
+my_list <- list(1, 2)
+
+#print out my_list, check if it is a vector
+
+```
+
+*** =solution
+```{r}
+#a simple vector has no attributes
+attributes(1:10)
+
+# named vector has "names" attribute
+my_var <- c(pi=pi, euler=exp(1), gamma=-digamma(1))
+attributes(my_var)
+
+#modify the attributes of an object
+attributes(my_var) <- list(class = "Date")
+
+#print the object and see what's changed
+my_var
+
+#also we can use structure to change attributes
+structure(1:10, class = "Date")
+
+#now use attributes assignment method to change the attributes of a list to vector
+my_list <- list(1, 2)
+attributes(my_list) <- list(class)
+
+#print out your result
+my_list
+is.vector(my_list)
+```
+
+
+*** =sct
+```{r}
+test_error()
+msg <- "Do not remove or change the definition of the variable `my_list`."
+test_object("var", undefined_msg = msg, incorrect_msg = msg)
+test_function("is.vector", "x",
+              not_called_msg = "Make sure to call the function [`is.vector()`] to see if the object is a vector.",
+              incorrect_msg = "Have you passed the correct variable to the function [`is.vector()`]?")
+success_msg("Good Job!")
 ```
 
 
