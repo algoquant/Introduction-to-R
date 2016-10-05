@@ -537,7 +537,7 @@ The attributes of an R object can be modiﬁed using the "attributes()" assignme
 
 The function structure() adds attributes (speciﬁed as symbol=value pairs) to an object, and returns it.
 A vector that is assigned an attribute other than names is not treated as a vector.
-The function is.vector() returns TRUE if its argument is a vector, and returns FALSE otherwise,
+The function is.vector() returns TRUE if its argument is a vector, and returns FALSE otherwise.
 
 
 *** =instructions
@@ -613,6 +613,677 @@ test_function("is.vector", "x",
               not_called_msg = "Make sure to call the function [`is.vector()`] to see if the object is a vector.",
               incorrect_msg = "Have you passed the correct variable to the function [`is.vector()`]?")
 success_msg("Good Job!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:792449dde3
+## Implicit Class of Objects
+
+We will revisit the class of objects in this exercise. This time there are more details:
+
+If an object has no explicit class, then its implicit class is derived from its mode and dim attribute (except for integer vectors which have the implicit class "integer" derived from their type).
+
+If an atomic object has a dim attribute, then its implicit class is matrix or array.
+Data frames have no explicit dim attribute, but dim() returns a value, so they have an implicit dim attribute.
+
+
+*** =instructions
+Now that a dataframe is created. Use function typeof(), mode(), class() and attributes() to explore results.
+
+*** =hint
+Check if object names and function names are correctly typed. Remember to use all of the functions in the instructions.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# integer implicit class derived from type
+my_var_1 <- vector(mode="integer", length=10)
+c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
+
+# numeric implicit class derived from mode
+my_var_2 <- vector(mode="numeric", length=10)
+c(typeof(my_var_2), mode(my_var_2), class(my_var_2))
+
+# adding dim attribute changes implicit class to matrix
+dim(my_var_1) <- c(5, 2)
+c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
+
+# now explore the type, class, mode and attributes of a data frame
+my_var <- data.frame(aa=c('a', 'b'), bb=1:2)
+
+```
+
+*** =solution
+```{r}
+# integer implicit class derived from type
+my_var_1 <- vector(mode="integer", length=10)
+c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
+
+# numeric implicit class derived from mode
+my_var_2 <- vector(mode="numeric", length=10)
+c(typeof(my_var_2), mode(my_var_2), class(my_var_2))
+
+# adding dim attribute changes implicit class to matrix
+dim(my_var_1) <- c(5, 2)
+c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
+
+# now explore the type, class, mode and attributes of a data frame
+my_var <- data.frame(aa=c('a', 'b'), bb=1:2)
+c(typeof(my_var), mode(my_var), class(my_var))
+attributes(my_var)
+
+```
+
+
+*** =sct
+```{r}
+test_error()
+msg <- "Do not remove or change the definition of the variable `my_var`."
+test_object("var", undefined_msg = msg, incorrect_msg = msg)
+test_function("typeof", "x",
+              not_called_msg = "Make sure to call the function [`typeof()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`typeof()`]?")
+test_function("mode", "x",
+              not_called_msg = "Make sure to call the function [`mode()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`mode()`]?")
+test_function("class", "x",
+              not_called_msg = "Make sure to call the function [`class()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`class()`]?")
+test_function("attributes", "x",
+              not_called_msg = "Make sure to call the function [`attributes()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`attributes()`]?")
+success_msg("Good Job!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:914dcdc4c2
+## Object Coercion
+
+Coercion means changing the type, mode, or class of an object, often without changing the underlying data. 
+Changing the mode of an object can change its class as well, but not always.
+Objects can be explicitly coerced using the "as.*" coercion functions.
+Most coercion functions strip the attributes from the object.
+Implicit coercion occurs when objects with diﬀerent modes are combined into a vector, forcing the elements to have the same mode.
+Implicit coercion can cause bugs that are diﬃcult to trace.
+The rule is that coercion is into larger types (numeric objects are coerced into character strings).
+
+Notice: Coercion can introduce bad data, such as NA values.
+
+
+*** =instructions
+Use coercison to convert object types.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# create a numeric vector
+my_var_1 <- vector(mode="integer", length=10)
+c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
+
+# coerce the vector into character and check itd type, mode and class
+my_var_1 <- as.character(my_var_1)
+c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
+
+# create a mixed vector
+my_var <- c(2, "a", 3.2)
+c(typeof(my_var), mode(my_var), class(my_var))
+
+# now coerce the vector into integer and see type, mode and class
+
+```
+
+*** =solution
+```{r}
+# create a numeric vector
+my_var_1 <- vector(mode="integer", length=10)
+c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
+
+# coerce the vector into character and check itd type, mode and class
+my_var_1 <- as.character(my_var_1)
+c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
+
+# create a mixed vector
+my_var <- c(2, "a", 3.2)
+c(typeof(my_var), mode(my_var), class(my_var))
+
+# now coerce the vector into integer and see type, mode and class
+my_var <- as.integer(my_var)
+c(typeof(my_var), mode(my_var), class(my_var))
+```
+
+
+*** =sct
+```{r}
+test_error()
+msg <- "Do not remove or change the definition of the variable `my_var`."
+test_object("var", undefined_msg = msg, incorrect_msg = msg)
+test_function("typeof", "x",
+              not_called_msg = "Make sure to call the function [`typeof()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`typeof()`]?")
+test_function("mode", "x",
+              not_called_msg = "Make sure to call the function [`mode()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`mode()`]?")
+test_function("class", "x",
+              not_called_msg = "Make sure to call the function [`class()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`class()`]?")
+test_function("attributes", "x",
+              not_called_msg = "Make sure to call the function [`as.integer()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`attributes()`]?")
+success_msg("Good Job!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:b1b1305012
+## Basic R Objects
+
+The quotation marks "" (or ’’) around a character string tell R that it’s a string, not a variable name.
+Vectors are the basic building blocks of R objects, There are no scalars in R, and single values are stored as vectors of length "1".
+A character string is also a vector with a single element, with the ﬁrst element of the vector containing the string of text.
+The colon binary operator ’:’ produces a vector.
+The function c() combines objects into a vector.
+The "[1]" symbol means the return value is a vector.
+The function is.vector() returns TRUE if its argument is a vector, and returns FALSE otherwise,
+
+
+*** =instructions
+Try to explore different kinds of vector and make use of vector's basic operations.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# create a character vector
+vec_char <- "some string"
+
+# explore the vector with basic operations of vector
+is.vector(vec_char)
+vec_char[1]
+
+# create a numeric vector
+vec_num <- 1:10
+
+# print and explore the vector with basic operations of vector
+vec_num
+is.vector(vec_num)
+vec_num[2]
+
+#now use c() to combine vec_char and vec_num and create vec_c
+
+
+#check if vec_c is a vector and print the second element of vec_c
+```
+
+*** =solution
+```{r}
+# create a character vector
+vec_char <- "some string"
+
+# explore the vector with basic operations of vector
+is.vector(vec_char)
+vec_char[1]
+
+# create a numeric vector
+vec_num <- 1:10
+
+# print and explore the vector with basic operations of vector
+vec_num
+is.vector(vec_num)
+vec_num[2]
+
+#now use c() to combine vec_char and vec_num and create vec_c
+vec_c <- c(vec_char, vec_num)
+
+#check if vec_c is a vector and print the second element of vec_c
+is.vector(vec_c)
+vec_c[2]
+#
+```
+
+
+*** =sct
+```{r}
+test_error()
+msg <- "Do not remove or change the definition of the variable `my_var`."
+test_object("var", undefined_msg = msg, incorrect_msg = msg)
+success_msg("Great!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:05697caf6a
+## Character Strings
+
+Character strings are sequences of characters (and vectors of length one), The function nchar() returns the length of a string.
+
+Special characters in strings: 
+"\t" for TAB, "\n" for new-line, 
+”\\” for a (single) backslash character
+
+The function cat() concatenates strings and echos them to console, without returning any values
+The function cat() is useful in user-deﬁned functions.
+
+
+*** =instructions
+Explore characters and strings with functions and basic features.
+
+*** =hint
+Check if object names and function names are correctly typed. Don't miss any variables or functions!
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#create a character string
+str_var <- "Some string"
+
+#print the entire vector and its first element
+str_var
+str_var[1]
+
+#try to print its second element
+
+
+#see the length of vector and string
+length(str_var)
+nchar(str_var)
+
+#concatenate and echo to console
+cat("Hello", "World!")
+
+#use \n to start a new line when concatenating
+
+```
+
+*** =solution
+```{r}
+#create a character string
+str_var <- "Some string"
+
+#print the entire vector and its first element
+str_var
+str_var[1]
+
+#try to print its second element
+str_var[2]
+
+#see the length of vector and string
+length(str_var)
+nchar(str_var)
+
+#concatenate and echo to console
+cat("Hello", "World!")
+
+#use \n to start a new line when concatenating
+cat("Enter\nnewline")
+```
+
+
+*** =sct
+```{r}
+test_error()
+msg <- "Do not remove or change the definition of the variable `my_var`."
+test_object("var", undefined_msg = msg, incorrect_msg = msg)
+test_function("cat", "x",
+              not_called_msg = "Make sure to call the function [`cat()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`cat()`]?")
+success_msg("Excellent!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:b99299073f
+## Manipulating Strings
+
+The function paste() concatenates its arguments into a string, coerces them to characters if needed, and returns the string.
+If a vector or list is passed to paste(), together with a collapse string, then paste() concatenates the elements into a string, separated by the collapse string.
+The function strsplit() splits the elements of a character vector.
+Splitting on the "." character requires surrounding it with brackets: "[.]", or using argument fixed=TRUE.
+The function substring() extracts or replaces substrings in a character string, The recycling rule extends the length to match the longest object.
+
+*** =instructions
+Use functions to manipulate strings.
+
+*** =hint
+Check if object names and function names are correctly typed. Don't miss the square bracket!
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#create two character string and combine
+str_var1 <- "Hello"
+str_var2 <- "World!"
+paste(str_var1, str_var2, sep=' ')
+
+#create a character string and a numeric vector
+str_var3 <- "a"
+num_var <- 1:4
+
+#try to combine them together with "," and see results
+
+
+#create a new string
+hello <- "Hello.World"
+
+#split the string into seperate strings using strsplit() on "[.]"
+
+
+#use substring to get from the third to the sixth elements
+
+```
+
+*** =solution
+```{r}
+#create two character string and combine
+str_var1 <- "Hello"
+str_var2 <- "World!"
+paste(str_var1, str_var2, sep=' ')
+
+#create a character string and a numeric vector
+str_var3 <- "a"
+num_var <- 1:4
+
+#try to combine them together with "," and see results
+paste(str_var3, num_var, sep = ",")
+
+#create a new string
+hello <- "Hello.World"
+
+#split the string into seperate strings using strsplit() on "[.]"
+strsplit(hello, split = "[.]")
+
+#use substring to get from the third to the sixth elements
+substring(hello, 3, 6)
+```
+
+
+*** =sct
+```{r}
+test_error()
+test_function("paste", "x",
+              not_called_msg = "Make sure to call the function [`paste()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`paste()`]?")
+test_function("strsplit", "x",
+              not_called_msg = "Make sure to call the function [`strsplit()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`strsplit()`]?")
+test_function("substring", "x",
+              not_called_msg = "Make sure to call the function [`substring()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`substring()`]?")
+success_msg("Excellent!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:ab03e239aa
+## Regular Expressions in R
+
+R has Regex functions for pattern matching and replacement.
+The function gsub() replaces all matches of a pattern in a string.
+The function grep() searches for matches of a pattern in a string.
+The function glob2rx() converts globbing wildcard patterns into regular expressions.
+
+*** =instructions
+Use functions to manipulate strings.
+
+*** =hint
+Check if object names and function names are correctly typed. Don't forget to use "i+" instead of "i"
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#replace "is" with "XX"
+my_string <- c("is", "XX", "is this gratis?")
+gsub(my_string)
+
+#get indexes of elements in a vector that contains certain string
+grep("b+", c("abc", "xyz", "cba d", "bbb"))
+
+#get values among elements in a vector that contains certain string
+grep("b+", c("abc", "xyz", "cba d", "bbb"), value=TRUE)
+
+# convert globs into regex (regular expression)
+glob2rx("abc.*")
+
+#now try to get the index of elements that contain character "i" in my_string
+
+
+#convert my_string to regex
+
+```
+
+*** =solution
+```{r}
+#replace "is" with "XX"
+my_string <- c("is", "XX", "is this gratis?")
+gsub(my_string)
+
+#get indexes of elements in a vector that contains certain string
+grep("b+", c("abc", "xyz", "cba d", "bbb"))
+
+#get values among elements in a vector that contains certain string
+grep("b+", c("abc", "xyz", "cba d", "bbb"), value=TRUE)
+
+# convert globs into regex (regular expression)
+glob2rx("abc.*")
+
+#now try to get the index of elements that contain character "i+" in my_string
+grep("i+", my_string)
+
+#convert my_string to regex
+glob2rx(my_string)
+```
+
+
+*** =sct
+```{r}
+test_error()
+test_function("grep", "x",
+              not_called_msg = "Make sure to call the function [`grep()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`paste()`]?")
+test_function("glob2rx", "x",
+              not_called_msg = "Make sure to call the function [`glob2rx()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`glob2rx()`]?")
+success_msg("Remember to look at what's popped up in the console")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:540b8c57a5
+## Vectors
+
+Vectors are the basic building blocks of R objects.
+
+For a brief review, we already know that:
+There are no scalars in R, and single values are stored as vectors of length "1"
+The function c() combines values into a vector
+The function is.vector() returns TRUE if its argument is a vector, and returns FALSE otherwise
+
+Beside, we need to knwo that the object letters is a constant and a vector.
+
+To create a vector, R provides several way to do it:
+1) The colon operator (":") provides a simple way of creating a numeric vector
+2) The function vector() returns a vector of the speciﬁed mode
+3) The functions seq(), seq_len(), and seq_along() return a sequence (vector) of numbers
+4) The function rep() replicates an object multiple times
+5) The functions numeric() and character() return empty (zero length) vectors of the speciﬁed type (not to be confused with a NULL object)
+6) Zero length vectors are not NULL objects,
+
+
+*** =instructions
+Use mentioned functions to create vector.
+
+*** =hint
+Check if object names and function names are correctly typed. Use "by=" instead of "len=".
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#create vectors using ":", vector() and rep()
+1:10
+vector(mode = "numeric", length = 10)
+rep(10, times = 5)
+
+#create vectors using seq
+seq(10)
+seq(along=(-5:5))
+seq_along(c("a", "b", "c"))
+seq(from=0, to=1, len=11)
+
+#now try to use seq() to create a vector from 0 to 1, each step is 0.1, using "by="
+
+
+#use character() to create empty vector of characters
+character(5)
+
+#now try to use numeric() to create empty vector of numerics
+
+```
+
+*** =solution
+```{r}
+#create vectors using ":", vector() and rep()
+1:10
+vector(mode = "numeric", length = 10)
+rep(10, times = 5)
+
+#create vectors using seq
+seq(10)
+seq(along=(-5:5))
+seq_along(c("a", "b", "c"))
+seq(from=0, to=1, len=11)
+
+#now try to use seq() to create a vector from 0 to 1, each step is 0.1, using "by="
+seq(from = 0, to = 1, by = 0.1)
+
+#use character() to create empty vector of characters
+character(5)
+
+#now try to use numeric() to create empty vector of numerics of length 5
+numeric(5)
+```
+
+
+*** =sct
+```{r}
+test_error()
+test_function("seq", "x",
+              not_called_msg = "Make sure to call the function [`seq()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`paste()`]?")
+test_function("numeric", "x",
+              not_called_msg = "Make sure to call the function [`numeric()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`numeric()`]?")
+success_msg("See? Empty vector with zero length is not equal to NULL!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:5a2dc65a8a
+## Vectors
+
+Vectors are the basic building blocks of R objects.
+
+For a brief review, we already know that:
+There are no scalars in R, and single values are stored as vectors of length "1"
+The function c() combines values into a vector
+The function is.vector() returns TRUE if its argument is a vector, and returns FALSE otherwise
+
+Beside, we need to knwo that the object letters is a constant and a vector.
+
+To create a vector, R provides several way to do it:
+1) The colon operator (":") provides a simple way of creating a numeric vector
+2) The function vector() returns a vector of the speciﬁed mode
+3) The functions seq(), seq_len(), and seq_along() return a sequence (vector) of numbers
+4) The function rep() replicates an object multiple times
+5) The functions numeric() and character() return empty (zero length) vectors of the speciﬁed type (not to be confused with a NULL object)
+6) Zero length vectors are not NULL objects,
+
+
+*** =instructions
+Use mentioned functions to create vector.
+
+*** =hint
+Check if object names and function names are correctly typed. Use "by=" instead of "len=".
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#create vectors using ":", vector() and rep()
+1:10
+vector(mode = "numeric", length = 10)
+rep(10, times = 5)
+
+#create vectors using seq
+seq(10)
+seq(along=(-5:5))
+seq_along(c("a", "b", "c"))
+seq(from=0, to=1, len=11)
+
+#now try to use seq() to create a vector from 0 to 1, each step is 0.1, using "by="
+
+
+#use character() to create empty vector of characters
+character(5)
+
+#now try to use numeric() to create empty vector of numerics
+
+```
+
+*** =solution
+```{r}
+#create vectors using ":", vector() and rep()
+1:10
+vector(mode = "numeric", length = 10)
+rep(10, times = 5)
+
+#create vectors using seq
+seq(10)
+seq(along=(-5:5))
+seq_along(c("a", "b", "c"))
+seq(from=0, to=1, len=11)
+
+#now try to use seq() to create a vector from 0 to 1, each step is 0.1, using "by="
+seq(from = 0, to = 1, by = 0.1)
+
+#use character() to create empty vector of characters
+character(5)
+
+#now try to use numeric() to create empty vector of numerics of length 0
+numeric(0)
+```
+
+
+*** =sct
+```{r}
+test_error()
+test_function("seq", "x",
+              not_called_msg = "Make sure to call the function [`seq()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`paste()`]?")
+test_function("numeric", "x",
+              not_called_msg = "Make sure to call the function [`numeric()`].",
+              incorrect_msg = "Have you passed the correct variable to the function [`numeric()`]?")
+success_msg("See? Empty vector with zero length is not equal to NULL!")
 ```
 
 
