@@ -1196,31 +1196,19 @@ success_msg("See? Empty vector with zero length is not equal to NULL!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:5a2dc65a8a
-## Vectors
+## Arithmetic and Logical Operations on Vectors
 
-Vectors are the basic building blocks of R objects.
+Vectors can be multiplied and squared element by element, as if they were single elements.
 
-For a brief review, we already know that:
-There are no scalars in R, and single values are stored as vectors of length "1"
-The function c() combines values into a vector
-The function is.vector() returns TRUE if its argument is a vector, and returns FALSE otherwise
+When vectors are manipulated as if they were single elements, then R automatically performs a loop over the vector elements, and applies the operation element-wise. This is a very powerful feature of R called vectorized arithmetic. Vectorized arithmetic avoids writing loops and simpliﬁes notation.
 
-Beside, we need to knwo that the object letters is a constant and a vector.
-
-To create a vector, R provides several way to do it:
-1) The colon operator (":") provides a simple way of creating a numeric vector
-2) The function vector() returns a vector of the speciﬁed mode
-3) The functions seq(), seq_len(), and seq_along() return a sequence (vector) of numbers
-4) The function rep() replicates an object multiple times
-5) The functions numeric() and character() return empty (zero length) vectors of the speciﬁed type (not to be confused with a NULL object)
-6) Zero length vectors are not NULL objects,
-
+Vectors can be combined together and appended.
 
 *** =instructions
-Use mentioned functions to create vector.
+Use mentioned functions to conduct vector arithmetic and logical operation.
 
 *** =hint
-Check if object names and function names are correctly typed. Use "by=" instead of "len=".
+Check if object names and function names are correctly typed.
 
 *** =pre_exercise_code
 ```{r}
@@ -1229,61 +1217,75 @@ Check if object names and function names are correctly typed. Use "by=" instead 
 
 *** =sample_code
 ```{r}
-#create vectors using ":", vector() and rep()
-1:10
-vector(mode = "numeric", length = 10)
-rep(10, times = 5)
+#multiply a vector
+2*4:8
+2*(4:8)
 
-#create vectors using seq
-seq(10)
-seq(along=(-5:5))
-seq_along(c("a", "b", "c"))
-seq(from=0, to=1, len=11)
+#divide a vector
+4:8/2
+(0:10)/10
 
-#now try to use seq() to create a vector from 0 to 1, each step is 0.1, using "by="
+#create vector
+vec_tor <- c(8, 6, 5, 7)
+vec_tor
+
+#boolean vector TRUE if element is equal to second one, otherwise FALSE
+vec_tor == vec_tor[2]
+
+#try to create boolean vector TRUE for elements greater than six, otherwise FALSE
 
 
-#use character() to create empty vector of characters
-character(5)
+#square all elements
+vec_tor^2
 
-#now try to use numeric() to create empty vector of numerics
+#now try to multiply all elements by 2
+
+
+#combine two vectors
+c(11, 5:10)
+
+#now try to append number to vector
 
 ```
 
 *** =solution
 ```{r}
-#create vectors using ":", vector() and rep()
-1:10
-vector(mode = "numeric", length = 10)
-rep(10, times = 5)
+#multiply a vector
+2*4:8
+2*(4:8)
 
-#create vectors using seq
-seq(10)
-seq(along=(-5:5))
-seq_along(c("a", "b", "c"))
-seq(from=0, to=1, len=11)
+#divide a vector
+4:8/2
+(0:10)/10
 
-#now try to use seq() to create a vector from 0 to 1, each step is 0.1, using "by="
-seq(from = 0, to = 1, by = 0.1)
+#create vector
+vec_tor <- c(8, 6, 5, 7)
+vec_tor
 
-#use character() to create empty vector of characters
-character(5)
+#boolean vector TRUE if element is equal to second one
+vec_tor == vec_tor[2]
 
-#now try to use numeric() to create empty vector of numerics of length 0
-numeric(0)
+#try to create boolean vector TRUE for elements greater than six
+vec_tor > 6
+
+#square all elements
+vec_tor^2
+
+#now try to multiply all elements by 2
+2*vec_tor
+
+#combine two vectors
+c(11, 5:10)
+
+#now try to append number to vector
+c(vec_tor, 2.0)
 ```
 
 
 *** =sct
 ```{r}
 test_error()
-test_function("seq", "x",
-              not_called_msg = "Make sure to call the function [`seq()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`paste()`]?")
-test_function("numeric", "x",
-              not_called_msg = "Make sure to call the function [`numeric()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`numeric()`]?")
-success_msg("See? Empty vector with zero length is not equal to NULL!")
+success_msg("Beautiful! Appreciate results in the console!")
 ```
 
 
