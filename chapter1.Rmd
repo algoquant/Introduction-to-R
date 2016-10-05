@@ -776,7 +776,7 @@ test_function("class", "x",
               not_called_msg = "Make sure to call the function [`class()`].",
               incorrect_msg = "Have you passed the correct variable to the function [`class()`]?")
 test_function("attributes", "x",
-              not_called_msg = "Make sure to call the function [`as.integer()`].",
+              not_called_msg = "Make sure to call the function [`attributes()`].",
               incorrect_msg = "Have you passed the correct variable to the function [`attributes()`]?")
 success_msg("Good Job!")
 ```
@@ -857,8 +857,8 @@ vec_c[2]
 *** =sct
 ```{r}
 test_error()
-msg <- "Do not remove or change the definition of the variable `my_var`."
-test_object("var", undefined_msg = msg, incorrect_msg = msg)
+msg <- "Do not remove or change the definition of the variable `vec_num`."
+test_object("vec_num", undefined_msg = msg, incorrect_msg = msg)
 success_msg("Great!")
 ```
 
@@ -936,8 +936,8 @@ cat("Enter\nnewline")
 *** =sct
 ```{r}
 test_error()
-msg <- "Do not remove or change the definition of the variable `my_var`."
-test_object("var", undefined_msg = msg, incorrect_msg = msg)
+msg <- "Do not remove or change the definition of the variable `str_var`."
+test_object("str_var", undefined_msg = msg, incorrect_msg = msg)
 test_function("cat", "x",
               not_called_msg = "Make sure to call the function [`cat()`].",
               incorrect_msg = "Have you passed the correct variable to the function [`cat()`]?")
@@ -1016,15 +1016,6 @@ substring(hello, 3, 6)
 *** =sct
 ```{r}
 test_error()
-test_function("paste", "x",
-              not_called_msg = "Make sure to call the function [`paste()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`paste()`]?")
-test_function("strsplit", "x",
-              not_called_msg = "Make sure to call the function [`strsplit()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`strsplit()`]?")
-test_function("substring", "x",
-              not_called_msg = "Make sure to call the function [`substring()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`substring()`]?")
 success_msg("Excellent!")
 ```
 
@@ -1095,9 +1086,6 @@ glob2rx(my_string)
 *** =sct
 ```{r}
 test_error()
-test_function("grep", "x",
-              not_called_msg = "Make sure to call the function [`grep()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`paste()`]?")
 test_function("glob2rx", "x",
               not_called_msg = "Make sure to call the function [`glob2rx()`].",
               incorrect_msg = "Have you passed the correct variable to the function [`glob2rx()`]?")
@@ -1186,9 +1174,6 @@ numeric(5)
 *** =sct
 ```{r}
 test_error()
-test_function("seq", "x",
-              not_called_msg = "Make sure to call the function [`seq()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`paste()`]?")
 test_function("numeric", "x",
               not_called_msg = "Make sure to call the function [`numeric()`].",
               incorrect_msg = "Have you passed the correct variable to the function [`numeric()`]?")
