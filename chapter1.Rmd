@@ -596,7 +596,7 @@ structure(1:10, class = "Date")
 
 #now use attributes assignment method to change the attributes of a list to vector
 my_list <- list(1, 2)
-attributes(my_list) <- list(class)
+attributes(my_list) <- list(class = "Date")
 
 #print out your result
 my_list
