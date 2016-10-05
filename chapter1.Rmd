@@ -608,7 +608,7 @@ is.vector(my_list)
 ```{r}
 test_error()
 msg <- "Do not remove or change the definition of the variable `my_list`."
-test_object("var", undefined_msg = msg, incorrect_msg = msg)
+test_object("my_list", undefined_msg = msg, incorrect_msg = msg)
 test_function("is.vector", "x",
               not_called_msg = "Make sure to call the function [`is.vector()`] to see if the object is a vector.",
               incorrect_msg = "Have you passed the correct variable to the function [`is.vector()`]?")
@@ -682,7 +682,7 @@ attributes(my_var)
 ```{r}
 test_error()
 msg <- "Do not remove or change the definition of the variable `my_var`."
-test_object("var", undefined_msg = msg, incorrect_msg = msg)
+test_object("my_var", undefined_msg = msg, incorrect_msg = msg)
 test_function("typeof", "x",
               not_called_msg = "Make sure to call the function [`typeof()`].",
               incorrect_msg = "Have you passed the correct variable to the function [`typeof()`]?")
@@ -765,7 +765,7 @@ c(typeof(my_var), mode(my_var), class(my_var))
 ```{r}
 test_error()
 msg <- "Do not remove or change the definition of the variable `my_var`."
-test_object("var", undefined_msg = msg, incorrect_msg = msg)
+test_object("my_var", undefined_msg = msg, incorrect_msg = msg)
 test_function("typeof", "x",
               not_called_msg = "Make sure to call the function [`typeof()`].",
               incorrect_msg = "Have you passed the correct variable to the function [`typeof()`]?")
@@ -938,9 +938,6 @@ cat("Enter\nnewline")
 test_error()
 msg <- "Do not remove or change the definition of the variable `str_var`."
 test_object("str_var", undefined_msg = msg, incorrect_msg = msg)
-test_function("cat", "x",
-              not_called_msg = "Make sure to call the function [`cat()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`cat()`]?")
 success_msg("Excellent!")
 ```
 
@@ -1086,9 +1083,6 @@ glob2rx(my_string)
 *** =sct
 ```{r}
 test_error()
-test_function("glob2rx", "x",
-              not_called_msg = "Make sure to call the function [`glob2rx()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`glob2rx()`]?")
 success_msg("Remember to look at what's popped up in the console")
 ```
 
@@ -1143,7 +1137,7 @@ seq(from=0, to=1, len=11)
 #use character() to create empty vector of characters
 character(5)
 
-#now try to use numeric() to create empty vector of numerics
+#now try to use numeric() to create empty vector of numerics of length 0
 
 ```
 
@@ -1166,17 +1160,14 @@ seq(from = 0, to = 1, by = 0.1)
 #use character() to create empty vector of characters
 character(5)
 
-#now try to use numeric() to create empty vector of numerics of length 5
-numeric(5)
+#now try to use numeric() to create empty vector of numerics of length 0
+numeric(0)
 ```
 
 
 *** =sct
 ```{r}
 test_error()
-test_function("numeric", "x",
-              not_called_msg = "Make sure to call the function [`numeric()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`numeric()`]?")
 success_msg("See? Empty vector with zero length is not equal to NULL!")
 ```
 
