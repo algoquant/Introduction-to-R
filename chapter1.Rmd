@@ -1268,29 +1268,20 @@ success_msg("Beautiful! Appreciate results in the console!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:9d8a3d0b88
-## Arithmetric calculation in R
+--- type:NormalExercise lang:r xp:100 skills:1 key:2635635720
+## Naming and Manipulating Vectors
 
-In its most basic form *R* can be used as a scientific calculator. Consider the following arithmetic operators:
-
-+ Addition: `+`
-+ Subtraction: `-`
-+ Multiplication: `*`
-+ Division: `/`
-+ Exponentiation: `^` and `**`
-+ Modulo: `%%`
-
-The last two might need some explaining:
-- The `^` operator raises the number to its left to the power of the number to its right: for example `3^2` equals 9.
-- The modulo returns the remainder of the division of the number to the left by the number on its right, for example 5 modulo 3 or `5 %% 3` equals 2.
+Vector elements can be assigned names using a list of symbol-value pairs.
+The function names() returns the names attribute of an object.
+The names attribute of a vector can be modiﬁed by assigning to the names() function (”names() <-” assignment).
+The function unname() removes the names attribute.
+The function structure() adds attributes (speciﬁed as symbol=value pairs) to an object, and returns it,
 
 *** =instructions
-- Type `2^5` in the script window to calculate 2 to the power 5.
-- Type `28 %% 6` to calculate 28 modulo 6.
-- Click *Submit Answer* and have a look at the *R* output in the console.
+Use names() to get names and assign names. Also learn to use structure() to assign names to a vector.
 
 *** =hint
-Another example of the modulo operator: `9 %% 2` equals `1`.
+Check if object names and function names are correctly typed.
 
 *** =pre_exercise_code
 ```{r}
@@ -1299,554 +1290,597 @@ Another example of the modulo operator: `9 %% 2` equals `1`.
 
 *** =sample_code
 ```{r}
-# Addition
-5 + 5 
+# create named vector
+vec_tor <- c(pi_const=pi, euler=exp(1), gamma=-digamma(1))
 
-# Subtraction
-5 - 5 
+# get names of elements
+names(vec_tor)
 
-# Multiplication
-3 * 5
+# remove names attribute
+unname(vec_tor)
 
- # Division
-(5 + 5) / 2 
+# combine two vectors of letters
+c('a', letters[5:10])
 
-# Exponentiation
+# create named vector using structure
+structure(sample(1:5), names=paste0("el", 1:5))
+
+# now try to assign 1:3 to names of vec_tor
 
 
-# Modulo
+# print out vec_tor
+
+
+# use structure to create a vector of 1:3, naming it with vec_tor
 
 ```
 
 *** =solution
 ```{r}
-# Addition
-5 + 5 
+# create named vector
+vec_tor <- c(pi_const=pi, euler=exp(1), gamma=-digamma(1))
 
-# Subtraction
-5 - 5 
+# get names of elements
+names(vec_tor)
 
-# Multiplication
-3 * 5
+# remove names attribute
+unname(vec_tor)
 
- # Division
-(5 + 5) / 2 
+# combine two vectors of letters
+c('a', letters[5:10])
 
-# Exponentiation
-2 ^ 5
+# create named vector using structure
+structure(sample(1:5), names=paste0("el", 1:5))
 
-# Modulo
-28 %% 6
+# now try to assign 1:3 to names of vec_tor
+names(vec_tor) <- 1:3
+
+# print out vec_tor
+vec_tor
+
+# use structure to create a vector of 1:3, naming it by vec_tor
+structure(1:3, names = vec_tor)
 ```
 
-*** =sct
-```{r}
-msg <- "Do not remove the examples that have already been coded for you!"
-test_output_contains("5 + 5", incorrect_msg = msg)
-test_output_contains("5 - 5", incorrect_msg = msg)
-test_output_contains("3 * 5", incorrect_msg = msg)
-test_output_contains("(5 + 5)/2", incorrect_msg = msg)
-test_output_contains("2^5", incorrect_msg = "Have another look at the exponentiation. Read the instructions carefully.")
-test_output_contains("28 %% 6", incorrect_msg = "Have another look at the use of the `%%` operator. Read the instructions carefully.")
-success_msg("Nice one!")
-```
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:6b6fb4974c
-## Variable assignment (1)
-
-A variable allows you store a value or an object in R. You can then later use this variable's name to easily access the value or the object that is stored within this variable. You use `<-` to assign a variable:
-
-```
-my_variable <- 4
-```
-
-*** =instructions
-Complete the code in the editor such that it assigns the value 42 to the variable `x` in the editor. Click 'Submit Answer'. Notice that when you ask *R* to print `x`, the value 42 appears.
-
-*** =hint
-Look at how the value 4 was assigned to `my_variable` in the exercise's assignment. Do the exact same thing in the editor, but now assign 42 to the variable `x`.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-```
-
-*** =sample_code
-```{r}
-# Assign the value 42 to x
-x <- 
-
-# Print out the value of the variable x
-x
-```
-
-*** =solution
-```{r}
-# Assign the value 42 to x
-x <- 42
-
-# Print out the value of the variable x
-x
-```
 
 *** =sct
 ```{r}
 test_error()
-test_object("x", 
-            undefined_msg = "Make sure to define a variable <code>x</code>.",
-            incorrect_msg = "Make sure that you assign the correct value to <code>x</code>.") 
-success_msg("Good job! Notice that R does not print the value of a variable to the console when you do the assignment. <code>x <- 42</code> did not generate any output, because R assumes that you will be needing this variable in the future. Otherwise you wouldn't have stored the value in a variable in the first place, right? Proceed to the next exercise!")
+success_msg("Now you can name a vector with names() and structure() methods!")
 ```
 
+--- type:NormalExercise lang:r xp:100 skills:1 key:e2b1d979f4
+## Subsetting Vectors
 
+Vector elements can be subset (indexed, dereferenced) using the "[]" operator.
 
+Vectors can be subset using vectors of:
+positive integers, 
+negative integers, 
+characters (names),
+boolean vectors. 
 
---- type:NormalExercise xp:100 skills:1 key:a5b8028834
-## Variable assignment (2)
-
-Suppose you have a fruit basket with five apples. You want to store the number of apples in a variable with the name `my_apples`. 
+Negative integers remove the vector elements.
+Subsetting with zero returns a zero-length vector.
+A named vector can be subset using element names.
 
 *** =instructions
-- Using `<-`, assign the value 5 to `my_apples` below the first comment.
-- Type `my_apples` below the second comment. This will print out the value of `my_apples`.
-- After clicking *Submit Answer*, have a look at the console: the number 5 is printed, so *R* now links the variable `my_apples` to the value 5.
+Vec_tor has been recreated in this exercise. 
+Use "[]" combined with integers, characters and boolean vectors to subset a vector.
 
 *** =hint
-Remember that if you want to assign a number or an object to a variable in R, you can make use of the assignment operator `<-`. Alternatively, you can use `=`, but `<-` is widely preferred in the *R* community.
+Check if object names and function names are correctly typed.
 
 *** =pre_exercise_code
 ```{r}
+vec_tor <- c(pi_const=pi, euler=exp(1), gamma=-digamma(1))
 ```
 
 *** =sample_code
 ```{r}
-# Assign the value 5 to the variable called my_apples
+# extract second element
+vec_tor[2]
+
+# extract all elements, except the second element
+vec_tor[-2]
+
+# extract zero elements - returns zero-length vector
+vec_tor[0]
+
+# extract second and third elements
+vec_tor[c(FALSE, TRUE, TRUE)]
+
+# extract a element using their names
+vec_tor["eulery"]
+
+# extract multiple elements using a vector of their names
+vec_tor[c("pie", "gammy")]
+
+# now create a boolean vector comparing vec_tor to 2, name it as "bool"
 
 
-# Print out the value of the variable my_apples
+# subset vec_tor with bool to see which element is bigger than 2
 
 ```
 
 *** =solution
 ```{r}
-# Assign the value 5 to the variable called my_apples
-my_apples <- 5
+# extract second element
+vec_tor[2]
 
-# Print out the value of the variable my_apples
-my_apples
+# extract all elements, except the second element
+vec_tor[-2]
+
+# extract zero elements - returns zero-length vector
+vec_tor[0]
+
+# extract second and third elements
+vec_tor[c(FALSE, TRUE, TRUE)]
+
+# extract a element using their names
+vec_tor["eulery"]
+
+# extract multiple elements using a vector of their names
+vec_tor[c("pie", "gammy")]
+
+# now create a boolean vector comparing vec_tor to 2, name it as "bool"
+bool <- vec_tor > 2
+
+# subset vec_tor with bool to see which element is bigger than 2
+vec_tor[bool]
 ```
 
-*** =sct
-```{r}
-test_object("my_apples", incorrect_msg = "Have you correctly assigned 5 to `my_apples`? Write `my_apples <- 5` on a new line in the script window.")
-test_output_contains("my_apples", incorrect_msg = "Have you explicitly told R to print out the `my_apples` variable to the console? Simply type `my_apples` on a new line.")
-success_msg("Great! You could also use `=` for variable assignment, but `<-` is typically preferred.")
-```
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:a0cb1bea96
-## Variable assignment (3)
-
-Every tasty fruit basket needs oranges, so you decide to add six oranges. You decide to create the variable `my_oranges` and assign the value 6 to it. Next, you want to calculate how many pieces of fruit you have in total. Since you have given meaningful names to these values, you can now code this in a clear way:
-
-```
-my_apples + my_oranges
-```
-
-*** =instructions
-- Assign to `my_oranges` the value 6.
-- Add the variables `my_apples` and `my_oranges` and have *R* simply print the result.
-- Combine the variables `my_apples` and `my_oranges` into a new variable `my_fruit`, which is the total amount of fruits in your fruit basket.
-
-*** =hint
-`my_fruit` is just the sum of `my_apples` and `my_oranges`. You can use the `+` operator to sum the two and `<-` to assign that value to the variable `my_fruit`.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-```
-
-*** =sample_code
-```{r}
-# Assign 5 to my_apples
-my_apples <- 5
-
-# Assign 6 to my_oranges
-
-
-# Add my_apples and my_oranges: print the result
-
-
-# Add my_apples and my_oranges: assign to my_fruit
-
-```
-
-*** =solution
-```{r}
-# Assign 5 to my_apples
-my_apples <- 5
-
-# Assign 6 to my_oranges
-my_oranges <- 6
-
-# Add my_apples and my_oranges: print the result
-my_apples + my_oranges
-
-# Add my_apples and my_oranges: assign to my_fruit
-my_fruit <- my_apples + my_oranges
-```
-
-*** =sct
-```{r}
-test_object("my_apples", incorrect_msg = "Do not change the assignment of the `my_apples` variable!")
-test_object("my_oranges")
-test_output_contains("my_apples + my_oranges",
-                     incorrect_msg = "The output does not contain the result of adding `my_apples` and `my_oranges` (second instruction). Try again.")
-test_object("my_fruit")
-success_msg("Nice one! The great advantage of doing calculations with variables is reusability. If you just change `my_apples` to equal 12 instead of 5 and rerun the script, `my_fruit` will automatically update as well.")
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:6a41feeca0
-## jingtao's first R script
-
-In the script window on the upper right you should type the *R* code required for the exercises. When you hit the *Submit Answer* button, your *R* code is executed, and you get a message indicating whether your *R* code is correct. The output of your submission is shown in the *R* console on the lower right.
-
-You can also execute *R* commands in the console on the lower right. When you type in the console, your submission will not be checked for correctness! Try, for example, to type in `2 * 3` and hit Enter. *R* should return `[1] 6`.
-
-*** =instructions
-In the script window on the upper right, add another line of code that calculates the product of 2 times 3, and hit the *Submit Answer* button.
-
-*** =hint
-Simply add a line of *R* code that calculates the product of 2 times 3, just like the example in the sample code!
-
-*** =pre_exercise_code
-```{r}
-# no pec
-```
-
-*** =sample_code
-```{r}
-3 + 4
-# now write R code that calculates the product of 2 times 3
-```
-
-*** =solution
-```{r}
-# now write R code that calculates the product of 2 times 3
-2 * 3
-```
-
-*** =sct
-```{r}
-test_output_contains("6", incorrect_msg = "Make sure to add a line of R code that calculates the product of 2 times 3")
-success_msg("Awesome! See how the console shows the result of the R code you submitted?")
-```
-
-
-
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:6192f64167
-## The workspace
-
-If you assign a value to a variable, this variable is stored in the workspace. It's the place where all user-defined variables live. The command [`ls()`](http://www.rdocumentation.org/packages/base/functions/ls) lists the contents of this workspace. 
-
-```
-a <- 1
-b <- 2
-ls()
-```
-
-The first two lines create the variables `a` and `b`. Calling [`ls()`](http://www.rdocumentation.org/packages/base/functions/ls) now shows you that `a` and `b` are in the workspace. 
-
-You can also remove variables from the workspace. You do this with [`rm()`](http://www.rdocumentation.org/packages/base/functions/rm). `rm(a)`, for example, would remove `a` from the workspace again. `rm(list = ls())`, which is used in the beginning of your script, clears everything from the workspace.
-
-*** =instructions
-- Create a variable, `horses`, equal to 3, and a variable `dogs`, equal to 7.
-- List the contents of your workspace with [`ls()`](http://www.rdocumentation.org/packages/base/functions/ls) to see that indeed, these two variables are in there.
-
-*** =hint
-All you need is a combination of [`ls()`](http://www.rdocumentation.org/packages/base/functions/ls) and [`rm()`](http://www.rdocumentation.org/packages/base/functions/rm) at the right time. Give it a try and let the feedback messages guide you.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-```
-
-*** =sample_code
-```{r}
-# Clear the entire workspace
-rm(list = ls())
-
-# Create the variables horses and dogs
-
-
-# List the contents of your workspace
-
-
-```
-
-*** =solution
-```{r}
-# Clear the entire workspace
-rm(list = ls())
-
-# Create the variables horses and dogs
-horses <- 3
-dogs <- 7
-
-# Inspect the contents of the workspace again
-ls()
-```
-
-*** =sct
-```{r}
-test_student_typed("rm(list = ls())", not_typed_msg = "Do not remove the line `rm(list = ls())`.")
-test_object("horses")
-test_object("dogs")
-test_output_contains('c("dogs", "horses")',
-                     incorrect_msg = "Make sure to inspect the objects in your workspace after creating `horses` and `dogs`.")
-success_msg("Awesome! You can now build up and inspect your workspace, great!")
-```
-
-
---- type:VideoExercise lang:r xp:50 skills:1 key:9f9019501e
-## Basic Data Types
-
-*** =video_link
-//player.vimeo.com/video/138173888
-
-*** =video_hls
-//videos.datacamp.com/transcoded/732_intro_to_r/v1/hls-ch1_2.master.m3u8
-
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:1866cdd202
-## Discover Basic Data Types
-
-To get started, here are some of R's most basic data types:
-
-- Decimal values like `4.5` are called **numerics**.
-- Natural numbers like `4L` are called **integers**. Integers are also numerics.
-- Boolean values (`TRUE` or `FALSE`) are called **logical**. Capital letters are important here; `true` and `false` are not valid.
-- Text (or string) values are called **characters**.
-
-Note how the quotation marks on the right indicate that `"some text"` is of type character.
-
-*** =instructions
-Change the value of the:
-
-- `my_numeric` variable to `42`.
-- `my_character` variable to `"forty-two"`. Note that the quotation marks indicate that `"forty-two"` is a character.
-- `my_logical` variable to `FALSE`.
-
-*** =hint 
-Replace the values in the script window with the values that are provided in the exercise.
-```
-my_numeric <- 42
-```
-assigns the value 42 to the variable `my_numeric`. 
-
-*** =pre_exercise_code
-```{r}
-# no pec
-```
-
-*** =sample_code
-```{r}
-# What is the answer to the universe?
-my_numeric <- 42.5
-
-# The quotation marks indicate that the variable is of type character
-my_character <- "some text"
-
-# Change the value of my_logical
-my_logical <- TRUE
-```
-
-*** =solution
-```{r}
-# What is the answer to the universe?
-my_numeric <- 42
-
-# The quotation marks indicate that the variable is of type character
-my_character <- "forty-two"
-
-# Change the value of my_logical
-my_logical <- FALSE
-```
-
-*** =sct
-```{r}
-test_object("my_numeric", 
-            incorrect_msg = "Make sure that you assign the correct value to `my_numeric.`")
-test_object("my_character",
-            incorrect_msg = paste("Make sure that you assign the correct value to `my_character`.",
-                                  "Do not forget the quotes and beware of capitalization! R is case sensitive!"))
-test_object("my_logical",
-            undefined_msg = "Please make sure to define a variable `my_logical`.",
-            incorrect_msg = "Make sure that you assign the correct value to `my_logical`.") 
-success_msg("Great work! Continue to the next exercise.")
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:c52153af0b
-## Back to Apples and Oranges
-
-Common knowledge tells you not to add apples and oranges. But hey, that is what you just did! The `my_apples` and `my_oranges` variables both contained a number in the previous exercise. The `+` operator works with numeric variables in R. 
-
-However, if you try to add a numeric and a character string, *R* will complain.
-
-*** =instructions
-- Click *Submit Answer* and read the error message. Make sure you understand why this did not work.
-- Adjust `my_oranges <- "six"` such that *R* knows you have 6 oranges and thus a fruit basket with 11 pieces of fruit. Click *Submit Answer* again.
-
-*** =hint
-You have to assign the numeric value `6` to the `my_oranges` variable instead of the character value `"six"`. Notice how the quotation marks are used to indicate that `"six"` is a character.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-```
-
-*** =sample_code
-```{r}
-# Assign a value to the variable my_apples and print it out
-my_apples <- 5
-my_apples       
-
-# Assign a value to the variable my_oranges and print it out
-my_oranges <- "six" 
-my_oranges 
-
-# New variable that contains the total amount of fruit
-my_fruit <- my_apples + my_oranges 
-my_fruit
-```
-
-*** =solution
-```{r}
-# Assign a value to the variable my_apples and print it out
-my_apples <- 5  
-my_apples  
-
-# Assign a value to the variable my_oranges and print it out
-my_oranges <- 6
-my_oranges 
-
-# New variable that contains the total amount of fruit
-my_fruit <- my_apples + my_oranges 
-my_fruit
-```
-
-*** =sct
-```{r}
-test_object("my_apples", incorrect_msg = "Don't change the code that assigns 5 to `my_apples`.")
-test_object("my_oranges", incorrect_msg = "Change the assignment of the `my_oranges` variable such that the code runs without errors.")
-test_object("my_fruit", 
-            undefined_msg = "Please make sure to define a variable `my_fruit`.",
-            incorrect_msg = "Make sure that you assign the correct value to `my_fruit`.")
-test_output_contains("my_fruit", incorrect_msg = "The output does not contain the result of adding `my_apples` and `my_oranges`.")
-success_msg("Awesome, keep up the good work!")
-```
-
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:7806ca24d2
-## What's that data type?
-
-When you added the variables containing `5` and `"six"`, you got an error due to a mismatch in data types. You can avoid such embarrassing situations by checking the data type of a variable beforehand:
-
-```
-class(my_var)
-```
-
-In the workspace (you can see what it contains by typing [`ls()`](http://www.rdocumentation.org/packages/base/functions/ls) in the console), some variables have already been defined. Which statement concerning these variables are correct?
-
-*** =instructions
-- `a`'s class is `integer`, `b` is a `character`, `c` is a `boolean`.
-- `a`'s class is `character`, `b` is a `character` as well, `c` is a `logical`.
-- `a`'s class is `numeric`, `b` is a `string`, `c` is a `logical`.
-- `a`'s class is `numeric`, `b` is a `character`, `c` is a `logical`.
-
-*** =hint
-You can find out the data type of the `a` variable for example by typing `class(a)`. You can do similar things for `b` and `c`.
-
-*** =pre_exercise_code
-```{r}
-a <- 42
-b <- "forty-two"
-c <- FALSE
-```
-
-*** =sct
-```{r}
-msg1 <- "`boolean` is not the class for logical values. Try again."
-msg2 <- "`a` is of the class `numeric`, give it another go."
-msg3 <- "`string` is not a class in R. `character` is!"
-msg4 <- "Nice one. Let's step it up a notch and start coercing variables!"
-test_mc(correct=4, feedback_msgs = c(msg1, msg2, msg3, msg4))
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:c75fe45544
-## Coercion: Taming your data
-
-As Filip explained in the video, coercion to transform your data from one type to another is perfectly possible. Next to the [`class()`](http://www.rdocumentation.org/packages/base/functions/class) function and the `is.*()` functions, you can use the `as.*()` functions to force data to change types.
-
-Take this example:
-
-```
-var <- "3"
-var_num <- as.numeric(var)
-```
-
-`var`, a character string, is converted into a numeric using [`as.numeric()`](http://www.rdocumentation.org/packages/base/functions/numeric). The resulting numeric is stored as `var_num`.
-
-*** =instructions
-- Convert `var`, a logical, to a character. Assign to resulting character string to the variable `var_char`.
-- Inspect the class of `var_char` by using [`class()`](http://www.rdocumentation.org/packages/base/functions/class) on it.
-
-*** =hints
-Use the [`as.character()`](http://www.rdocumentation.org/packages/base/functions/character) function to convert `var` to a character.
-
-*** =pre_exercise_code
-```{r}
-```
-
-*** =sample_code
-```{r}
-# Definition of var
-var <- TRUE
-
-# Convert var to a character: var_char
-
-
-# Display the class of var_char
-
-
-```
-
-*** =solution
-```{r}
-# Definition of var
-var <- TRUE
-
-# Convert var to a character: var_char
-var_char <- as.character(var)
-
-# Display the class of var_char
-class(var_char)
-```
 
 *** =sct
 ```{r}
 test_error()
-msg <- "Do not remove or change the definition of the variable `var`."
-test_object("var", undefined_msg = msg, incorrect_msg = msg)
-test_function("as.character", "x",
-              not_called_msg = "Make sure to call the function [`as.character()`](http://www.rdocumentation.org/packages/base/functions/character) to convert `var` to a character.",
-              incorrect_msg = "Have you passed the correct variable to the function [`as.character()`](http://www.rdocumentation.org/packages/base/functions/character)?")
-test_object("var_char")
-test_function("class", "x", 
-              not_called_msg = "Make sure to call the function <code>class()</code> to inspect the class of <code>var_char</code>.",
-              incorrect_msg = "Have you passed the correct variable to the function <code>class()/<code>?")
-success_msg("Bellissimo!")
+success_msg("The subsetting provides support for filtering")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:47e9ca9b81
+## Filtering Vectors
+
+Filtering means extracting elements from a vector that satisfy a logical condition.
+When logical comparison operators are applied to vectors, they produce boolean vectors.
+Boolean vectors can then be applied to subset the original vectors, to extract their elements.
+The function which() returns the indices of the TRUE elements of a boolean vector or array.
+
+
+*** =instructions
+Vec_tor has been recreated in this exercise. 
+Use "[]"  or "which()" to filter vector elements.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+vec_tor <- runif(5)
+```
+
+*** =sample_code
+```{r}
+# first, print the vec_tor
+vec_tor
+
+# compare vec_tor to 0.5, in this way you actually created a boolean vector
+vec_tor > 0.5
+
+# boolean vector of elements equal to the second one
+vec_tor == vec_tor[2]
+
+# extract all elements equal to the second one
+vec_tor[vec_tor == vec_tor[2]]
+
+# now extract all elements greater than 0.5
+
+
+# use which() and returns the index of filtered element greater than 0.5
+which(vec_tor > 0.5)
+
+# use which() and "[]" to extract elements greater than 0.5
+
+```
+
+*** =solution
+```{r}
+# first, print the vec_tor
+vec_tor
+
+# compare vec_tor to 0.5, in this way you actually created a boolean vector
+vec_tor > 0.5
+
+# boolean vector of elements equal to the second one
+vec_tor == vec_tor[2]
+
+# extract all elements equal to the second one
+vec_tor[vec_tor == vec_tor[2]]
+
+# now extract all elements greater than 0.5
+vec_tor[vec_tor > 0.5]
+
+# use which() and returns the index of filtered element greater than 0.5
+which(vec_tor > 0.5)
+
+# use which() and "[]" to extract elements greater than 0.5
+vec_tor[which(vector > 0.5)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Now you can filter a vector with "[]" and which()!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:ab3a8365ff
+## Factors
+
+Factors are similar to vectors, but their elements can only take values from a set of levels.
+Factors are designed for categorical data which can only take certain values.
+
+The function factor() converts a vector into a factor, Factors have two attributes: class (equal to "factor") and levels (the allowed values).
+Although factors aren’t vectors, the data underlying a factor is an integer vector, called an encoding vector.
+The function as.numeric() extracts the encoding vector (indices) of a factor.
+The function as.vector() coerces a factor to a character vector.
+
+*** =instructions
+Create factors with factor(). 
+See attributes of factor using attributes() and levels().
+Coerce factor using as.numeric() and as.vector().
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+fac_tor <- factor(c('b', 'c', 'd', 'a', 'c', 'b'))
+```
+
+*** =sample_code
+```{r}
+# have a look at the factor vector
+fac_tor
+
+# factor can be subsetted the same way using "[]"
+fac_tor[3]
+
+# get factor attributes
+attributes(fac_tor)
+
+# get factor levels
+levels(fac_tor)
+
+# get encoding vector
+as.numeric(fac_tor)
+
+# coerce vector of 1:5 to factor, and then coerce it back using as.vector()
+
+```
+
+*** =solution
+```{r}
+# have a look at the factor vector
+fac_tor
+
+# factor can be subsetted the same way using "[]"
+fac_tor[3]
+
+# get factor attributes
+attributes(fac_tor)
+
+# get factor levels
+levels(fac_tor)
+
+# get encoding vector
+as.numeric(fac_tor)
+
+# coerce vector of 1:5 to factor, and then coerce it back using as.vector()
+as.vector(factor(1:5))
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("See! The numeric vector turned to be a character vector!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:771f2e9f50
+## Tables of Categorical Data
+
+The function table() calculates the frequency distribution of categorical data.
+A contingency table is a matrix that contains the frequency distribution of variables (factors) contained in a set of data, sapply() applies a function to a vector or a list of objects and returns a vector or a list,
+
+
+*** =instructions
+Use functions and variables as insturcted in the comment.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+fac_tor <- factor(c('b', 'c', 'd', 'a', 'c', 'b'))
+```
+
+*** =sample_code
+```{r}
+# have a look at the factor vector
+fac_tor
+
+# get encoding vector
+as.numeric(fac_tor)
+
+# get unique values
+unique(fac_tor)
+
+# get contingency table using sapply 
+sapply(levels(fac_tor), 
+ function(le_vel) {
+   sum(fac_tor==le_vel)
+ })
+
+# get contingency (frequency) table using table() on fac_tor
+
+```
+
+*** =solution
+```{r}
+# have a look at the factor vector
+fac_tor
+
+# get encoding vector
+as.numeric(fac_tor)
+
+# get unique values
+unique(fac_tor)
+
+# get contingency table using sapply 
+sapply(levels(fac_tor), 
+ function(le_vel) {
+   sum(fac_tor==le_vel)
+ })
+
+# get contingency (frequency) table using table() on fac_tor
+table(fac_tor)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Compared the results you get with sapply() and table()")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:748763cc09
+## Classifying Continuous Numeric Data Into Categories
+
+Numeric data that represents a magnitude, intensity, or score can be classiﬁed into categorical data, given a vector of breakpoints.
+
+The breakpoints create intervals that correspond to diﬀerent categories.
+
+The categories combine elements that have a similar numeric magnitude, findInterval() returns the indices of the intervals speciﬁed by "vec" that contain the elements of "x".
+If there’s an exact match, then findInterval() returns the same index as function match().
+If there’s no exact match, then findInterval() ﬁnds the element of "vec" that is closest to, but not greater than, the element of "x".
+If all the elements of "vec" are greater than the element of "x", then findInterval() returns zero,
+
+
+*** =instructions
+Use functions and variables as insturcted in the comment.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# see how we can tweak the outcome findInterval() function with five parameters
+str(findInterval)
+
+# get index of the element of "vec" that matches 5
+findInterval(x=5, vec=c(3, 5, 7))
+match(5, c(3, 5, 7))
+
+# no exact match
+findInterval(x=6, vec=c(3, 5, 7))
+match(6, c(3, 5, 7))
+
+# indices of "vec" that match elements of "x"
+findInterval(x=1:8, vec=c(3, 5, 7))
+
+# return only indices of inside intervals
+
+
+# make rightmost interval inclusive
+
+```
+
+*** =solution
+```{r}
+# see how we can tweak the outcome findInterval() function with five parameters
+str(findInterval)
+
+# get index of the element of "vec" that matches 5
+findInterval(x=5, vec=c(3, 5, 7))
+match(5, c(3, 5, 7))
+
+# no exact match
+findInterval(x=6, vec=c(3, 5, 7))
+match(6, c(3, 5, 7))
+
+# indices of "vec" that match elements of "x"
+findInterval(x=1:8, vec=c(3, 5, 7))
+
+# return only indices of inside intervals
+findInterval(x=1:8, vec=c(3, 5, 7), all.inside=TRUE)
+
+# make rightmost interval inclusive
+findInterval(x=1:8, vec=c(3, 5, 7), rightmost.closed=TRUE)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Congrats! This is the very first step in dividing continuous values")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:91aa35a650
+## Classifying Continuous Numeric Data Into Categories, Continued
+
+Temperature can be categorized into ”cold”, ”warm”, ”hot”, etc. 
+A named numeric vector of breakpoints can be used to convert a temperature into one of the categories.
+Breakpoints correspond to categories of the data.
+The ﬁrst breakpoint should correspond to the lowest category, and should have a value less than any of the data.
+
+
+*** =instructions
+Use functions and variables as insturcted in the comment.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# creat named numeric vector of breakpoints
+brea_ks <- c("freezing"=0, "very_cold"=30,
+       "cold"=50, "pleasant"=60,
+       "warm"=80, "hot"=90)
+
+# print out the breakpoints vector
+brea_ks
+
+# create a vector of temperatures
+tempe_ratures <- runif(10, min=10, max=100)
+
+# name values according to breakpoints
+feels_like <- names(
+  brea_ks[findInterval(x=tempe_ratures,
+                 vec=brea_ks)])
+
+names(tempe_ratures) <- feels_like
+
+# print the categorized vector
+
+```
+
+*** =solution
+```{r}
+# creat named numeric vector of breakpoints
+brea_ks <- c("freezing"=0, "very_cold"=30,
+       "cold"=50, "pleasant"=60,
+       "warm"=80, "hot"=90)
+
+# print out the breakpoints vector
+brea_ks
+
+# create a vector of temperatures
+tempe_ratures <- runif(10, min=10, max=100)
+
+# name values according to breakpoints
+feels_like <- names(
+  brea_ks[findInterval(x=tempe_ratures,
+                 vec=brea_ks)])
+
+names(tempe_ratures) <- feels_like
+
+# print the categorized vector
+tempe_ratures
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Congrats! This is the your first value categorization results!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:ca09ff3670
+## Converting Numeric Data Into Factors Using cut()
+
+The function cut() converts a numeric vector into a vector of factors, representing the intervals to which the numeric values belong, cut() divides the range of values into intervals, based on a vector of breaks, cut() then assigns factors to the numeric values, representing the intervals to which the numeric values belong. 
+The argument "breaks" is a numeric vector of break points that divide the range of values into intervals.
+The argument "labels" is a vector of labels for the intervals.
+The argument "right" is a boolean indicating if the intervals should be closed on the right (and open on the left), or vice versa, cut() can produce the same classiﬁcation as findInterval(), but findInterval() is faster than cut(), because it’s a compiled function,
+
+The library microbenchmark is already loaded to the environment
+
+*** =instructions
+Use functions and variables as insturcted in the comment.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+library(microbenchmark)
+```
+
+*** =sample_code
+```{r}
+# create a vector of random value
+foo <- sample(0:6) + 0.1
+
+# print the vector
+foo
+
+# use cut to vector
+cut(x=foo, breaks=c(2, 4, 6, 8))
+rbind(foo, cut(x=foo, breaks=c(2, 4, 6, 8)))
+
+# use findInterval() to cut the vector and compare the results
+
+
+# findInterval() is a compiled function, so it is faster than cut()
+vec_tor <- rnorm(1000)
+summary(microbenchmark(
+  find_interval=
+    findInterval(x=vec_tor, vec=c(3, 5, 7)),
+  cuut=
+    cut(x=vec_tor, breaks=c(3, 5, 7)),
+  times=10))[, c(1, 4, 5)]
+```
+
+*** =solution
+```{r}
+# create a vector of random value
+foo <- sample(0:6) + 0.1
+
+# print the vector
+foo
+
+# use cut to vector
+cut(x=foo, breaks=c(2, 4, 6, 8))
+rbind(foo, cut(x=foo, breaks=c(2, 4, 6, 8)))
+
+# use findInterval() to cut the vector and compare the results
+findInterval(x=1:8, vec=c(2, 4, 6, 8))
+
+# findInterval() is a compiled function, so it is faster than cut()
+vec_tor <- rnorm(1000)
+summary(microbenchmark(
+  find_interval=
+    findInterval(x=vec_tor, vec=c(3, 5, 7)),
+  cuut=
+    cut(x=vec_tor, breaks=c(3, 5, 7)),
+  times=10))[, c(1, 4, 5)]
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Althogh slower and a little bit different, cut() has similar functionality as findInternval()")
 ```
