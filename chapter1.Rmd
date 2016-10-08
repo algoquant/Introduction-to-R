@@ -651,8 +651,10 @@ c(typeof(my_var_2), mode(my_var_2), class(my_var_2))
 dim(my_var_1) <- c(5, 2)
 c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
 
-# now explore the type, class, mode and attributes of a data frame
+# define a new dataframe
 my_var <- data.frame(aa=c('a', 'b'), bb=1:2)
+
+# now explore the type, class, mode and attributes of a data frame
 
 ```
 
@@ -670,11 +672,12 @@ c(typeof(my_var_2), mode(my_var_2), class(my_var_2))
 dim(my_var_1) <- c(5, 2)
 c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
 
-# now explore the type, class, mode and attributes of a data frame
+# define a new dataframe
 my_var <- data.frame(aa=c('a', 'b'), bb=1:2)
+
+# now explore the type, class, mode and attributes of a data frame
 c(typeof(my_var), mode(my_var), class(my_var))
 attributes(my_var)
-
 ```
 
 
