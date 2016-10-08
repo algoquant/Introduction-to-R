@@ -686,18 +686,18 @@ attributes(my_var)
 test_error()
 msg <- "Do not remove or change the definition of the variable `my_var`."
 test_object("my_var", undefined_msg = msg, incorrect_msg = msg)
-test_function("typeof", "x",
-              not_called_msg = "Make sure to call the function [`typeof()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`typeof()`]?")
-test_function("mode", "x",
-              not_called_msg = "Make sure to call the function [`mode()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`mode()`]?")
-test_function("class", "x",
-              not_called_msg = "Make sure to call the function [`class()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`class()`]?")
-test_function("attributes", "x",
-              not_called_msg = "Make sure to call the function [`attributes()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`attributes()`]?")
+#test_function("typeof", "x",
+#              not_called_msg = "Make sure to call the function [`typeof()`].",
+#              incorrect_msg = "Have you passed the correct variable to the function [`typeof()`]?")
+#test_function("mode", "x",
+#              not_called_msg = "Make sure to call the function [`mode()`].",
+#              incorrect_msg = "Have you passed the correct variable to the function [`mode()`]?")
+#test_function("class", "x",
+#              not_called_msg = "Make sure to call the function [`class()`].",
+#              incorrect_msg = "Have you passed the correct variable to the function [`class()`]?")
+#test_function("attributes", "x",
+#              not_called_msg = "Make sure to call the function [`attributes()`].",
+#              incorrect_msg = "Have you passed the correct variable to the function [`attributes()`]?")
 success_msg("Good Job!")
 ```
 
@@ -769,18 +769,18 @@ c(typeof(my_var), mode(my_var), class(my_var))
 test_error()
 msg <- "Do not remove or change the definition of the variable `my_var`."
 test_object("my_var", undefined_msg = msg, incorrect_msg = msg)
-test_function("typeof", "x",
-              not_called_msg = "Make sure to call the function [`typeof()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`typeof()`]?")
-test_function("mode", "x",
-              not_called_msg = "Make sure to call the function [`mode()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`mode()`]?")
-test_function("class", "x",
-              not_called_msg = "Make sure to call the function [`class()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`class()`]?")
-test_function("attributes", "x",
-              not_called_msg = "Make sure to call the function [`attributes()`].",
-              incorrect_msg = "Have you passed the correct variable to the function [`attributes()`]?")
+#test_function("typeof", "x",
+#              not_called_msg = "Make sure to call the function [`typeof()`].",
+#              incorrect_msg = "Have you passed the correct variable to the function [`typeof()`]?")
+#test_function("mode", "x",
+#              not_called_msg = "Make sure to call the function [`mode()`].",
+#              incorrect_msg = "Have you passed the correct variable to the function [`mode()`]?")
+#test_function("class", "x",
+#              not_called_msg = "Make sure to call the function [`class()`].",
+#              incorrect_msg = "Have you passed the correct variable to the function [`class()`]?")
+#test_function("attributes", "x",
+#              not_called_msg = "Make sure to call the function [`attributes()`].",
+#              incorrect_msg = "Have you passed the correct variable to the function [`attributes()`]?")
 success_msg("Good Job!")
 ```
 
@@ -1064,7 +1064,7 @@ glob2rx("abc.*")
 ```{r}
 #replace "is" with "XX"
 my_string <- c("is", "XX", "is this gratis?")
-gsub(my_string)
+gsub("is", "XX", my_string)
 
 #get indexes of elements in a vector that contains certain string
 grep("b+", c("abc", "xyz", "cba d", "bbb"))
