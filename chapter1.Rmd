@@ -1503,7 +1503,7 @@ vec_tor[vec_tor > 0.5]
 which(vec_tor > 0.5)
 
 # use which() and "[]" to extract elements greater than 0.5
-vec_tor[which(vector > 0.5)
+vec_tor[which(vector > 0.5)]
 ```
 
 
@@ -2108,7 +2108,7 @@ mat_2 <- mat_rix[1, ]
 mat_rix["row2", "col3"]
 
 # try to get the subset of only "row1"
-matrix["row1", ]
+mat_rix["row1", ]
 
 # subset columns boolean vector
 mat_rix[, c(TRUE, FALSE, TRUE)]
@@ -2418,7 +2418,7 @@ median(sam_ple)
 sd(sam_ple)
 
 # try to complete the code, save length, mean and sd for higher moments calculation
-len <- length()
+len <- length(sam_ple)
 me_an <- mean(sam_ple)
 s_d <- sd(sam_ple)
 
