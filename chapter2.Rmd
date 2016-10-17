@@ -293,35 +293,20 @@ test_object("var_char", incorrect_msg = sprintf(msg, "var_char"))
 success_msg("Nice one! Now you see how to compare in various ways.")
 ```
 
---- type:VideoExercise lang:r xp:50 skills:1 key:b47466f033
-## Vector Arithmetic
-
-*** =video_link
-//player.vimeo.com/video/141163398
-
-*** =video_hls
-//videos.datacamp.com/transcoded/732_intro_to_r/v1/hls-ch2_2.master.m3u8
-
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:6b17fc50b9
-## Calculate your earnings
+## Lookup and Matching
 
-Now that you understand how R does arithmetic calculations with vectors, it is time to get those Ferraris in your garage! First, you need to understand what the overall profit or loss per day of the week was. The total daily profit is the sum of the profit/loss you realized on poker per day, and the profit/loss you realized on roulette per day.
+The function which() returns the indices of the TRUE elements of a boolean vector or array.
+If the argument is an array and arr.ind=TRUE, then which() returns a matrix with rows containing the indices of the TRUE elements.
+The functions which.max() and which.min() return the index of the minimum or maximum of a numeric or boolean vector.
 
-Remember that vector calculations happen element-wise; the following three statements are completely equivalent:
-
-```
-c(1, 2, 3) + c(4, 5, 6)
-c(1 + 4, 2 + 5, 3 + 6)
-c(5, 7, 9)
-```
 
 *** =instructions
-- Assign to the variable `total_daily` how much you won or lost on each day in total (poker and roulette combined). `total_daily` should be a vector with 5 values.
-- Print out `total_daily`.
+- Use which.max() to search for the maximum value
 
 *** =hint
-Similar to the previous exercise, assign the sum of two vectors to a new variable, `total_daily`.
+Similar to the previous codes, use which.max() on desired object, like the latter example.
 
 *** =pre_exercise_code
 ```{r}
@@ -330,119 +315,141 @@ Similar to the previous exercise, assign the sum of two vectors to a new variabl
 
 *** =sample_code
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# create a vector and a matrix
+vec_tor <- sample(1:9)
+mat_rix <- matrix(vec_tor, ncol=3)
+vec_tor
 
-# Calculate your daily earnings: total_daily
+# search the vector for particular value
+which(vec_tor == 5)
+
+# equivalent but less efficient than above
+(1:length(vec_tor))[vec_tor == 5]
+
+# find indices of TRUE elements of boolean matrix
+which((mat_rix == 5)|(mat_rix == 6), arr.ind=TRUE)
+
+# equivalent but less efficient than above
+arrayInd(which((mat_rix == 5)|(mat_rix == 6)),
+ dim(mat_rix), dimnames(mat_rix))
+
+# find the maximum of a vector
 
 
-# Print out total_daily
+# equivalent but less efficient than above
+which(vec_tor == max(vec_tor))
 ```
 
 *** =solution
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# create a vector and a matrix
+vec_tor <- sample(1:9)
+mat_rix <- matrix(vec_tor, ncol=3)
+vec_tor
 
-# Calculate your daily earnings: total_daily
-total_daily <- poker_vector + roulette_vector
+# search the vector for particular value
+which(vec_tor == 5)
 
-# Print out total_daily
-total_daily
+# equivalent but less efficient than above
+(1:length(vec_tor))[vec_tor == 5]
+
+# find indices of TRUE elements of boolean matrix
+which((mat_rix == 5)|(mat_rix == 6), arr.ind=TRUE)
+
+# equivalent but less efficient than above
+arrayInd(which((mat_rix == 5)|(mat_rix == 6)), dim(mat_rix), dimnames(mat_rix))
+
+# find the maximum of a vector
+which.max(vec_tor)
+
+# equivalent but less efficient than above
+which(vec_tor == max(vec_tor))
 ```
 
 *** =sct
 ```{r}
-msg = "Do not change anything about the definition and naming of `poker_vector` and `roulette_vector`."
-test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("poker_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("roulette_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("total_daily", 
-            incorrect_msg = "Make sure that you assign the sum of `poker_vector` and `roulette_vector` to `total_daily`. Simply use `+`.")
-test_output_contains("total_daily", incorrect_msg = "Don't forget to print out `total_daily`.")
+msg = "Do not change anything about the definition and naming of `vec_tor` and `mat_rix`."
+test_object("vec_tor", undefined_msg = msg, incorrect_msg = msg)
+test_object("mat_rix", undefined_msg = msg, incorrect_msg = msg)
 success_msg("Great! Continue to the next exercise.")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:a9a1a50a31
-## Calculate total winnings: sum()
+## Lookup and Matching (cont.)
 
-Based on the previous analysis, it looks like you had a mix of good and bad days. This is not what your ego expected, and you wonder if there may be a (very very very) tiny chance you have lost money over the week in total? 
+match() returns the index of the ﬁrst element of its second argument, that matches its ﬁrst argument.
 
-You can answer this question using the [`sum()`](http://www.rdocumentation.org/packages/base/functions/sum) function. As mentioned in the video, it calculates the sum of all elements of a vector.
+The binary operator %in% returns a boolean vector with TRUE values corresponding to elements that have matches, %in% is a wrapper for match() deﬁned as follows:
+"%in%" <- function(x, table) match(x, table, nomatch=0) > 0, %in% never returns NA, so it’s preferred in if () statements, any() returns TRUE if at least one element of a boolean vector is TRUE, and FALSE otherwise.
+
+Given a single argument, any() is equivalent to %in%, but is much faster because it’s a compiled function.
+
 
 *** =instructions
-- Calculate the total amount of money that you have won/lost with poker and assign it to the variable `total_poker`.
-- Do the same thing for roulette and assign the result to `total_roulette`.
-- Use `+` to sum the `total_poker` and `total_roulette`, which is the sum of all gains and losses of the week. Simply print the result to the console.
+- Learn to use `match()` on objects
+- Learn to use `%in%` on objects
 
 *** =hint
-Use the [`sum()`](http://www.rdocumentation.org/packages/base/functions/sum) function to get the total of the `poker_vector`. Do the same thing for `roulette_vector`.
+For comparing two values to one vector, you can group values into one vector, and use 'match' or '%in%' to the vector you want to check.
 
 *** =pre_exercise_code
 ```{r}
-# no pec
+vec_tor <- sample(1:9)
 ```
 
 *** =sample_code
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# search in a different way with match()
+match(-5, vec_tor)
 
-# Total winnings with poker: total_poker
+# use '%in%' operator to see if some value is in the vector
+5 %in% vec_tor
+
+# equivalent to above
+match(5, vec_tor, nomatch=0) > 0
+
+# search for a value not in the vector
+-5 %in% vec_tor
+
+# now try to see -5 and 5 are in the vec_tor
 
 
-# Total winnings with roulette: total_roulette
+# equivalent to the previous
+any(vec_tor == 5)
 
-
-# Total winnings overall: print out the result
-
+# change the content in the if-clause to see if any negative value in vec_tor
+if (any(vec_tor)) cat("vector contains negative values\n")
 ```
 
 *** =solution
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# search in a different way with match()
+match(-5, vec_tor)
 
-# Total winnings with poker: total_poker
-total_poker <- sum(poker_vector)
+# use '%in%' operator to see if some value is in the vector
+5 %in% vec_tor
 
-# Total winnings with roulette: total_roulette
-total_roulette <-  sum(roulette_vector)
+# equivalent to above
+match(5, vec_tor, nomatch=0) > 0
 
-# Total winnings overall: print out the result
-total_roulette + total_poker
+# search for a value not in the vector
+-5 %in% vec_tor
+
+# now try to see -5 and 5 are in the vec_tor
+c(5, -5) %in% vec_tor
+
+# equivalent to the previous
+any(vec_tor == 5)
+
+# change the content in the if-clause to see if any negative value in vec_tor
+if (any(vec_tor < 0)) cat("vector contains negative values\n")
 ```
 
 *** =sct
 ```{r}
-msg <- "Do not change anything about the definition and naming of `poker_vector` and `roulette_vector`."
+msg <- "Do not change anything about the definition and naming of `vec_tor`."
 test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("poker_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("roulette_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("total_poker", 
-            undefined_msg = "Please make sure to define a variable `total_poker`.",
-            incorrect_msg = "Make sure that you assign to `total_poker` the sum of the `poker_vector`.")
-test_object("total_roulette",
-            undefined_msg = "Please make sure to define a variable `total_roulette`.",
-            incorrect_msg = "Make sure that you assign to `total_roulette` the sum of the `roulette_vector`.")
-test_output_contains("total_poker + total_roulette", incorrect_msg = "Print the sum of `total_poker` and `total_roulette` to the console.")
 success_msg("Oops, it seems like you are losing money. Time to rethink and adapt your strategy! This will require some deeper analysis...")
 ```
 
