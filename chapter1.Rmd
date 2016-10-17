@@ -1503,7 +1503,7 @@ vec_tor[vec_tor > 0.5]
 which(vec_tor > 0.5)
 
 # use which() and "[]" to extract elements greater than 0.5
-vec_tor[which(vector > 0.5)]
+vec_tor[which(vec_tor > 0.5)]
 ```
 
 
