@@ -1,44 +1,38 @@
 --- 
 title_meta  : Chapter 2
-title       : Vectors
-description : We take you on a trip to Vegas, where you will learn how to analyze your gambling results using vectors in R! After completing this chapter, you will be able to create vectors in R, name them, select elements from them and compare different vectors.
+title       : R Operations
+description : In this chapter more details about R manipulation will be executed.
 attachments : 
-  slides_link: https://s3.amazonaws.com/assets.datacamp.com/course/introduction_to_r/slides/ch2_slides.pdf
+  slides_link: 
   
---- type:VideoExercise lang:r xp:50 skills:1 key:b91dd847a0
-## Create and Name Vectors
-
-*** =video_link
-//player.vimeo.com/video/138173896
-
-*** =video_hls
-//videos.datacamp.com/transcoded/732_intro_to_r/v1/hls-ch2_1.master.m3u8
-
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:2d1cb04427
-## Create a vector (1)
+## Logical Operators
 
-Feeling lucky? You better, because we'll take you on a trip to Las Vegas!
+R has the following logical operators: 
+`<` less than, 
+`<=` less than or equal to, 
+`>` greater than, 
+`>=` greater than or equal to, 
+`==` exactly equal to, 
+`!=` not equal to, 
+`!x` Not x, 
+`x & y` x AND y, 
+`x | y` x OR y, 
 
-Thanks to R and your new data science skills, you will learn how to uplift your performance at the tables and fire off your career as a professional gambler. This chapter will show how you can easily keep track of your betting progress and how you can do some simple analyses on past actions.
+These operators are applied to vectors element-wise.
 
-You will use vectors. As Filip explained you, vectors are one dimensional arrays that can hold numeric data, character data or logical data. You create a vector with the combine function [`c()`](http://www.rdocumentation.org/packages/base/functions/c). You place the vector elements separated by a comma between the brackets. For example:
-
-```
-numeric_vector <- c(1, 2, 3)
-character_vector <- c("a", "b", "c")
-logical_vector <- c(TRUE, FALSE)
-```
 
 *** =instructions 
-Create a vector, `logical_vector`, that contains the three elements: `TRUE`, `FALSE` and `TRUE` (in that order). 
+Use logical operators to create, combine or negate logical vectors. 
 
 *** =hint 
-Assign `c(TRUE, FALSE, TRUE)` to the variable `logical_vector` with the `<-` operator.
+Type code as instructed in the comment.
 
 *** =pre_exercise_code
 ```{r}
 # no pec
+
 ```
 
 *** =sample_code
