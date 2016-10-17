@@ -46,11 +46,28 @@ character_vector <- c("x", "y", "z")
 
 *** =solution
 ```{r}
-numeric_vector <- c(1, 10, 49)
-character_vector <- c("x", "y", "z")
+# test the '|' operator
+TRUE | FALSE
+TRUE | NA
 
-# Create logical_vector
-logical_vector <- c(TRUE, FALSE, TRUE)
+# test the comparison operator
+vec_tor1 <- c(2, 4, 6)
+vec_tor1 < 5  # element-wise comparison
+
+# combine two comparison with '&'
+(vec_tor1 < 5) & (vec_tor1 > 3)
+vec_tor1[(vec_tor1 < 5) & (vec_tor1 > 3)]
+
+# compare two vectors
+vec_tor2 <- c(-10, 0, 10)
+vec_tor1 < vec_tor2
+
+
+c(FALSE, TRUE, FALSE) & c(TRUE, TRUE, FALSE)
+c(FALSE, TRUE, FALSE) | c(TRUE, TRUE, FALSE)
+
+c(FALSE, TRUE, FALSE) && c(TRUE, TRUE, FALSE)
+c(FALSE, TRUE, FALSE) || c(TRUE, TRUE, FALSE)
 ```
 
 *** =sct
