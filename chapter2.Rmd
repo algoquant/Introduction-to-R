@@ -37,10 +37,26 @@ Type code as instructed in the comment.
 
 *** =sample_code
 ```{r}
-numeric_vector <- c(1, 10, 49)
-character_vector <- c("x", "y", "z")
+# test the '|' operator
+TRUE | FALSE
+TRUE | NA
 
-# Create logical_vector
+# test the comparison operator
+vec_tor1 <- c(2, 4, 6)
+vec_tor1 < 5
+
+# combine two comparison with '&'
+(vec_tor1 < 5) & (vec_tor1 > 3)
+vec_tor1[(vec_tor1 < 5) & (vec_tor1 > 3)]
+
+# compare two vectors
+vec_tor2 <- c(-10, 0, 10)
+vec_tor1 < vec_tor2
+
+# use '&' for two different boolean vector
+c(FALSE, TRUE, FALSE) & c(TRUE, TRUE, FALSE)
+
+# now use '|' for the same two boolean vector
 
 ```
 
@@ -52,7 +68,7 @@ TRUE | NA
 
 # test the comparison operator
 vec_tor1 <- c(2, 4, 6)
-vec_tor1 < 5  # element-wise comparison
+vec_tor1 < 5
 
 # combine two comparison with '&'
 (vec_tor1 < 5) & (vec_tor1 > 3)
@@ -62,50 +78,39 @@ vec_tor1[(vec_tor1 < 5) & (vec_tor1 > 3)]
 vec_tor2 <- c(-10, 0, 10)
 vec_tor1 < vec_tor2
 
-
+# use '&' for two different boolean vector
 c(FALSE, TRUE, FALSE) & c(TRUE, TRUE, FALSE)
-c(FALSE, TRUE, FALSE) | c(TRUE, TRUE, FALSE)
 
-c(FALSE, TRUE, FALSE) && c(TRUE, TRUE, FALSE)
-c(FALSE, TRUE, FALSE) || c(TRUE, TRUE, FALSE)
+# now use '|' for the same two boolean vector
+c(FALSE, TRUE, FALSE) | c(TRUE, TRUE, FALSE)
 ```
 
 *** =sct
 ```{r}
-msg <- "Do not change how `numeric_vector` and `character_vector` are created!"
-lapply(c("numeric_vector", "character_vector"), test_object, undefined_msg = msg, incorrect_msg = msg)
-test_object("logical_vector", incorrect_msg = "Make sure that you assign the correct values to `logical_vector`. The order matters!")
-success_msg("Perfect! Let's practice some more with vector creation.")
+msg <- "Do not change how `vec_tor1` and `vec_tor2` are created!"
+lapply(c("vec_tor1", "vec_tor2"), test_object, undefined_msg = msg, incorrect_msg = msg)
+success_msg("Perfect! Let's explore logical operators further.")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:c6e056b9c3
-## Create a vector (2)
+## Long Form Logical Operators
 
-After one week in Las Vegas and still zero Ferraris in your garage, you decide that it is time to start using your data science superpowers.
+R also has two long form logical operators: 
+`x && y` x AND y, 
+`x || y` x OR y
 
-Before doing your first analysis, you decide to collect all the winnings and losses for the last week: 
+These operators diﬀer from the short form operators in two ways: 
+They only evaluate the ﬁrst elements of their vector arguments, 
+They short-circuit (stop evaluation as soon as the expression is determined).
 
-For `poker_vector`: 
-- On Monday you won \$140
-- Tuesday you **lost** \$50
-- Wednesday you won \$20 
-- Thursday you **lost** \$120
-- Friday you won \$240
-
-For `roulette_vector`: 
-- On Monday you **lost** \$24
-- Tuesday you **lost** \$50
-- Wednesday you won \$100
-- Thursday you **lost** \$350
-- Friday you won \$10
-
-To be able to use this data in R, you decide to create the variables `poker_vector` and `roulette_vector`.
+Rule of Thumb
+Use `&&` and `||` in if-clauses
 
 *** =instructions
-Assign the winnings/losses for roulette as a vector to the variable `roulette_vector`. Make sure to use the correct order.
+Use '&&' and '||' in if-clause valuation.
 
 *** =hint
-To help you with this step, the script already contains the code for creating `poker_vector`. Assign the correct values to `roulette_vector` based on the numbers in the assignment. Do not forget that losses are negative numbers.
+Use '&&' and '||' in if-clause valuation for two or more long objects.
 
 
 *** =pre_exercise_code
@@ -114,51 +119,71 @@ To help you with this step, the script already contains the code for creating `p
 
 *** =sample_code
 ```{r}
-# Poker winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
+# test with boolean vectors
+c(FALSE, TRUE, FALSE) && c(TRUE, TRUE, FALSE)
+c(FALSE, TRUE, FALSE) || c(TRUE, TRUE, FALSE)
 
-# Roulette winnings from Monday to Friday: roulette_vector
+# test long logical operators with functions
+echo_true <- function() {cat("echo_true\t"); TRUE}
+echo_false <- function() {cat("echo_false\t"); FALSE}
+echo_true() | echo_false()
+echo_true() || echo_false()
 
+# define a new vector
+vec_tor <- c(2, 4, 6)
+
+# change the code to make sure evaluations in if-clause works with no flaw
+if (is.matrix(vec_tor) & (vec_tor[2, 3] > 0)) {
+  vec_tor[2, 3] <- 1
+}
 ```
 
 *** =solution
 
 ```{r}
-# Poker winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
+# test with boolean vectors
+c(FALSE, TRUE, FALSE) && c(TRUE, TRUE, FALSE)
+c(FALSE, TRUE, FALSE) || c(TRUE, TRUE, FALSE)
 
-# Roulette winnings from Monday to Friday: roulette_vector
-roulette_vector <- c(-24, -50, 100, -350, 10)
+# test long logical operators with functions
+echo_true <- function() {cat("echo_true\t"); TRUE}
+echo_false <- function() {cat("echo_false\t"); FALSE}
+echo_true() | echo_false()
+echo_true() || echo_false()
+
+# define a new vector
+vec_tor <- c(2, 4, 6)
+
+# change the code to make sure evaluations in if-clause works with no flaw
+if (is.matrix(vec_tor) && (vec_tor[2, 3] > 0)) {
+  vec_tor[2, 3] <- 1
+}
 ```
 
 *** =sct
 ```{r}
-test_object("poker_vector", 
-            incorrect_msg = "Don't change how `poker_vector` is defined.")
-test_object("roulette_vector", 
-            incorrect_msg = paste("Make sure that you assign a vector with the correct values to `roulette_vector`.",
-                                  "If you lost money, you should use a `-` sign."))
-success_msg("Very good! To check out the contents of your vectors, remember that you can always simply type the variable in the console and hit Enter. Proceed to the next exercise!")
+test_object("vec_tor", 
+            incorrect_msg = "Don't change how `vec_tor` is defined.")
+success_msg("Very good! Now you see the long and short logical operators is quite different!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:ebb5aae2ff
-## Naming a vector (1)
+## Arithmetic Operators
 
-As a data analyst, it is important to have a clear view on the data that you are using. Understanding what each element refers to is essential. 
+Arithmetic operators perform arithmetic operations on numeric or complex vectors:
+`+` performs addition, 
+`-` performs subtraction, 
+`*` performs multiplication, 
+`/` performs division, 
+`^` and `**` perform exponentiation,
 
-In the previous exercise, we created a vector with your winnings over the week. Each vector element refers to a day of the week but it is hard to tell which element belongs to which day. It would be nice if you could show that in the vector itself. Remember the [`names()`](http://www.rdocumentation.org/packages/base/functions/names) function to name the elements of a vector?
-
-```
-some_vector <- c("Johnny", "Poker Player")
-names(some_vector) <- c("Name", "Profession")
-```
 
 *** =instructions
-`poker_vector` has already been named with the days of the week. Do the same thing for `roulette_vector`. Beware: R is case sensitive!
+Utilize arithmetic operators to do everyday calculation.
 
 *** =hint
-Assign `c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")` to `names(roulette_vector)`.
+Remember '**' and '^' are interchangeable
 
 *** =pre_exercise_code
 ```{r}
@@ -166,61 +191,53 @@ Assign `c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")` to `names(rou
 
 *** =sample_code
 ```{r}
-# Poker winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
+# multiplication
+4.7 * 0.5
 
-# Roulette winnings from Monday to Friday
-roulette_vector <- c(-24, -50, 100, -350, 10)
+# division
+4.7 / 0.5
 
-# Add names to poker_vector
-names(poker_vector) <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+# exponentiation
+2**3
 
-# Add names to roulette_vector
+# replicate the former example using another way of exponentiation
 
 ```
 
 *** =solution
 ```{r}
-# Poker winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
+# multiplication
+4.7 * 0.5
 
-# Roulette winnings from Monday to Friday
-roulette_vector <- c(-24, -50, 100, -350, 10)
+# division
+4.7 / 0.5
 
-# Add names to poker_vector
-names(poker_vector) <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+# exponentiation
+2**3
 
-# Add names to roulette_vector
-names(roulette_vector) <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+# replicate the former example using another way of exponentiation
+2^3
 ```
 
 *** =sct
 ```{r}
-msg <- "Do not change the values inside `%s`; they were already coded for you."
-test_object("poker_vector", incorrect_msg = sprintf(msg, "poker_vector"))
-test_object("roulette_vector", incorrect_msg = sprintf(msg, "roulette_vector"))
-msg <- "Make sure that you assign the correct names vector to `%s`. The names of the day should start with a capital letter!"
-test_object("poker_vector", eq_condition = "equal", incorrect_msg = sprintf(msg, "poker_vector"))
-test_object("roulette_vector", eq_condition = "equal", incorrect_msg = sprintf(msg, "roulette_vector"))
 success_msg("Well done!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:5c026ed9fb
-## Naming a vector (2)
+## Comparing Objects With identical()
 
-If you want to become a good statistician, you have to become lazy. (If you are already lazy, chances are high you are one of those exceptional, natural-born statistical talents!)
+The function identical() tests if two objects are exactly the same, and always returns a single logical TRUE or FALSE (never NA or logical vectors).
+For atomic arguments identical() often gives the same result as the "==" operator, but it’s not synonymous with it in general.
+The "==" operator applies the recycling rule to vector arguments and returns logical vectors, but identical() doesn’t and returns a single logical value.
 
-In the previous exercises you probably experienced that it is boring and frustrating to type and retype information such as the days of the week. However, there is a more efficient way to do this, namely, to assign the days of the week vector to a variable! 
-
-Just like you did with your poker and roulette returns, you can also create a variable that contains the days of the week. This way you can use and re-use it. This variable, `days_vector`, has already been coded for you.
 
 *** =instructions
-- Use the variable `days_vector` to set the names of `poker_vector`.
-- Use the variable `days_vector` to set the names of `roulette_vector`.
+Compare the return value of `==` and `identical()`
 
 *** =hint
-You can use `names(poker_vector) <- ` to set the names of the variable `poker_vector`.
+Use `==` instead of `identical`
 
 *** =pre_exercise_code
 ```{r}
@@ -229,51 +246,51 @@ You can use `names(poker_vector) <- ` to set the names of the variable `poker_ve
 
 *** =sample_code
 ```{r}
-# Poker winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
+# compare with atomic object
+num_var <- 2
+num_var==2
+identical(num_var, 2)
 
-# Roulette winnings from Monday to Friday
-roulette_vector <- c(-24, -50, 100, -350, 10)
+# compare with null
+identical(num_var, NULL)
+num_var==NULL
 
-# Create the variable days_vector
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
- 
-# Use days_vector to name poker_vector
+# compare with different vector
+var_num <- 1:5
+var_char <- letters[1:5]
+identical(var_num, var_char)
 
+# use '==' and see results
 
-# Use days_vector to name roulette_vector
 ```
 
 *** =solution
 ```{r}
-# Poker winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
+# compare with atomic object
+num_var <- 2
+num_var==2
+identical(num_var, 2)
 
-# Roulette winnings from Monday to Friday
-roulette_vector <- c(-24, -50, 100, -350, 10)
+# compare with null
+identical(num_var, NULL)
+num_var==NULL
 
-# Create the variable days_vector
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+# compare with different vector
+var_num <- 1:5
+var_char <- letters[1:5]
+identical(var_num, var_char)
 
-# Use days_vector to name poker_vector
-names(poker_vector) <- days_vector
-
-# Use days_vector to name roulette_vector
-names(roulette_vector) <- days_vector
+# use '==' and see results
+var_num == var_char
 ```
 
 *** =sct
 ```{r}
-msg <- "Do not change the values inside `%s`; they were already coded for you."
-test_object("poker_vector", incorrect_msg = sprintf(msg, "poker_vector"))
-test_object("roulette_vector", incorrect_msg = sprintf(msg, "roulette_vector"))
-test_object("days_vector", incorrect_msg = sprintf(msg, "days_vector"))
-
-msg <- "Make sure that you assign `days_vector` to the names of `%s`. Use the `names()` function."
-test_object("poker_vector", eq_condition = "equal", incorrect_msg = sprintf(msg, "poker_vector"))
-test_object("roulette_vector", eq_condition = "equal", incorrect_msg = sprintf(msg, "roulette_vector"))
-
-success_msg("Nice one! A word of advice: try to avoid code duplication at all times.")
+msg <- "Do not change the values of defined vector; they were already coded for you."
+test_object("num_var", incorrect_msg = sprintf(msg, "num_var"))
+test_object("var_num", incorrect_msg = sprintf(msg, "var_num"))
+test_object("var_char", incorrect_msg = sprintf(msg, "var_char"))
+success_msg("Nice one! Now you see how to compare in various ways.")
 ```
 
 --- type:VideoExercise lang:r xp:50 skills:1 key:b47466f033
