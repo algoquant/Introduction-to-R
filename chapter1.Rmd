@@ -64,7 +64,7 @@ success_msg("Awesome! See how the console shows the result of the R code you sub
 
 *R* uses the hash `#` sign to mark text as comments.  
 All text after the hash `#` sign is treated as a comment, and is not executed as code.  
-For example, the text *Calculate 3 + 4* in the script window on the upper right is a comment and is ignored during execution.
+For example, the text *Calculate 3 + 4* is a comment and is ignored during execution.
 
 *** =instructions
 Add a line with the comment mark *#* and  text *myvariable <- 1*, in the script window.
