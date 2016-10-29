@@ -449,7 +449,7 @@ if (any(vec_tor < 0)) cat("vector contains negative values\n")
 *** =sct
 ```{r}
 msg <- "Do not change anything about the definition and naming of `vec_tor`."
-test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
+test_object("vec_tor", undefined_msg = msg, incorrect_msg = msg)
 success_msg("Oops, it seems like you are losing money. Time to rethink and adapt your strategy! This will require some deeper analysis...")
 ```
 
