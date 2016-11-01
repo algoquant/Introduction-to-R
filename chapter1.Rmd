@@ -221,7 +221,8 @@ Sys.setenv("env var=value") sets the environment variable "env var" equal to "va
 
 
 *** =instructions
-Change parameters as instructed and see the results.
+Use `Sys.getenv()` to display values of environment variables.
+/nChange parameters as instructed and see the results.
 
 *** =hint
 Simply copy the function name and change parameters inside.
@@ -233,34 +234,32 @@ Simply copy the function name and change parameters inside.
 
 *** =sample_code
 ```{r}
-#type Sys.getenv() and get the subset from 5th to 7th element for list of environment variable
+# get the subset from 5th to 7th element for list of environment variable by subsetting
 Sys.getenv()[5:7]
 
-#change the parameter to "Home" to see the get R user HOME directory
+# get user HOME directory 
 
 
-#change the parameter to "R_home" to see the R_HOME directory
+# get R_HOME directory 
 
 
-#change the parameter to "env_var" to see environment variables
-
+# get "etc" sub-directory of R_HOME
 
 ```
 
 *** =solution
 ```{r}
-#type Sys.getenv() and get the subset from 5th to 7th element for list of environment variable
+# get the subset from 5th to 7th element for list of environment variable by subsetting
 Sys.getenv()[5:7]
 
-#change the parameter to "Home" to see the get R user HOME directory
+# get user HOME directory 
 Sys.getenv("Home")
 
-#change the parameter to "R_home" to see the R_HOME directory
+# get R_HOME directory 
 Sys.getenv("R_home")
 
-#change the parameter to "env_var" to see environment variables
+# get "etc" sub-directory of R_HOME
 Sys.getenv("env_var")
-
 ```
 
 
@@ -272,10 +271,10 @@ success_msg("Correct! Remeber to see what's pop up in the console")
 --- type:NormalExercise lang:r xp:100 skills:1 key:4d04bf29c2
 ## Global Options Settings
 
-R uses a list of global options which aﬀect how R computes and displays results.
-The function options() either sets or displays the values of global options: 
-  options("globop") displays the current value of option "globop";
-  getOption("globop") displays the current value of option "globop";
+R uses a list of global options which aﬀect how R computes and displays results./n
+The function options() either sets or displays the values of global options:/n 
+  options("globop") displays the current value of option "globop";/n
+  getOption("globop") displays the current value of option "globop";/n
   options(globop=value) sets the option "globop" equal to "value";
 
 
@@ -292,29 +291,27 @@ Remeber to capitalize TRUE and don't use commas for the last code!
 
 *** =sample_code
 ```{r}
-#type options("digits")
+# get number of digits printed for numeric values
 options("digits")
 
-#use getOption to see the current value of "digits"
+# get the current value of "digits"
 
 
-#set the digits option to 3, type 0.12345 and see results
-
+# set the digits option to 3, type 0.12345 and see results
 
 ```
 
 *** =solution
 ```{r}
-#type options("digits")
+# get number of digits printed for numeric values
 getOption("digits")
 
-#use getOption to see the current value of "digits"
+# get the current value of "digits"
 options("digits")
 
-#change the parameter to "R_home" to see the R_HOME directory
-options(digits=3)
+# set the digits option to 3, type 0.12345 and see results
+options(digits = 3)
 0.12345
-
 ```
 
 
@@ -326,20 +323,21 @@ success_msg("OK, now see what's pop up in the console")
 --- type:NormalExercise lang:r xp:100 skills:1 key:58ca8cb732
 ## The R Workspace
 
-The workspace is the current R working environment, which includes all user-deﬁned objects and the command history.
-The function ls() returns names of objects in the R workspace.
-The function rm() removes objects from the R workspace.
-The workspace can be saved into and loaded back from an *.RData ﬁle (binary ﬁle format).
-The function save.image() saves the whole workspace. 
-The function save() saves just the selected objects.
-The function load() reads data from *.RData ﬁles, and invisibly returns a vector of names of objects created in the workspace.
+The workspace is the current R working environment, which includes all user-deﬁned objects and the command history./n
+The function ls() returns names of objects in the R workspace./n
+The function rm() removes objects from the R workspace./n
+The workspace can be saved into and loaded back from an *.RData ﬁle (binary ﬁle format)./n
+The function save.image() saves the whole workspace. /n
+The function save() saves just the selected objects./n
+The function load() reads data from *.RData ﬁles, and invisibly returns a vector of names of objects created in the workspace./n
 
-When you quit R you’ll be prompted ”Save workspace image?” If you answer YES then the workspace will be saved into the .RData ﬁle in the cwd, When you start R again, the workspace will be automatically loaded from the existing .RData ﬁle,
-
-The function history() displays recent commands, You can also save and load the command history from a ﬁle.
+When you quit R you’ll be prompted ”Save workspace image?” If you answer YES then the workspace will be saved into the .RData ﬁle in the cwd./n
+When you start R again, the workspace will be automatically loaded from the existing .RData ﬁle./n
+/n
+The function history() displays recent commands, You can also save and load the command history from a ﬁle./n
 
 *** =instructions
-Type the function ls() and rm().
+Use the function ls() and rm().
 
 *** =hint
 Simply the function name, copy & paste as instructed by comments.
@@ -351,33 +349,31 @@ Simply the function name, copy & paste as instructed by comments.
 
 *** =sample_code
 ```{r}
-#type ls() to see what variable is currently in the workspace
 variable_1 <- 5
 variable_2 <- "sand"
 
+# see what variable is currently in the workspace
 
-#use rm() to remove all elements in the workspace
+
+# remove all elements in the workspace
 rm(list = ls())
 
-#check what is left in the workspace by type ls()
-
+# check what is left in the workspace
 
 ```
 
 *** =solution
 ```{r}
-#type ls() to see what variable is currently in the workspace
 variable_1 <- 5
 variable_2 <- "sand"
+# see what variable is currently in the workspace
 ls()
 
-#use rm() to remove all elements in the workspace
+# remove all elements in the workspace
 rm(list = ls())
 
-#check what is left in the workspace by type ls()
+# check what is left in the workspace
 ls()
-
-
 ```
 
 
