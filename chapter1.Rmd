@@ -30,21 +30,21 @@ The variable assignments are already presented, just type the variable name and 
 
 *** =sample_code
 ```{r}
-#assign number to a variable
+# assign number to a variable
 myvariable1 <- 2
 
-#assign a string to a variable
+# assign a string to a variable
 myvariable2 <- "Hello World!"
 
-# now write R code to check if the assignments are successfull
+# now write R code of variable names to check if the assignments are successfull
 ```
 
 *** =solution
 ```{r}
-#assign number to a variable
+# assign number to a variable
 myvariable1 <- 2
 
-#assign a string to a variable
+# assign a string to a variable
 myvariable2 <- "Hello World!"
 
 # now write R code to check if the assignments are successfull
@@ -81,13 +81,13 @@ Simply add the line `# add comments to myvariable <- 1` above the *R* code that 
 ```{r}
 myvariable <- 10
 
-#assign number to a variable
+# assign number to a variable
 myvariable1 <- 2
 
-#assign a string to a variable
+# assign a string to a variable
 myvariable2 <- "Hello World!"
 
-#add comments
+# add comments mark before assign 1 to 'myvariable1'
 
 
 # now write R code to check if the assignments are successfull
@@ -97,14 +97,14 @@ myvariable2 <- "Hello World!"
 ```{r}
 myvariable <- 10
 
-#assign number to a variable
+# assign number to a variable
 myvariable1 <- 2
 
-#assign a string to a variable
+# assign a string to a variable
 myvariable2 <- "Hello World!"
 
-#add comments
-#myvariable <- 1
+# add comments
+# myvariable <- 1
 
 # now write R code to check if the assignments are successfull
 myvariable
@@ -127,7 +127,7 @@ The function setwd() accepts a character string as input (the name of the direct
 With Sys.time() you can get system time with time zone of the R session; or you can just get system date with Sys.Date().
 
 *** =instructions
-Type the function getwd(), Sys.time() and Sys.Date().
+Use the function getwd(), Sys.time() and Sys.Date() to get strings of working directory, system time and system date.
 
 *** =hint
 Simply the function name, copy & paste.
@@ -139,28 +139,26 @@ Simply the function name, copy & paste.
 
 *** =sample_code
 ```{r}
-#type getwd()
+# get string with the name of the current working directory
 
 
-#type Sys.time()
+# get current system time with time zone
 
 
-#type Sys.Date()
-
+# get current date
 
 ```
 
 *** =solution
 ```{r}
-#type getwd()
+# get string with the name of the current working directory
 getwd()
 
-#type Sys.time()
+# get current system time with time zone
 Sys.time()
 
-#type Sys.Date()
+# get current date
 Sys.Date()
-
 ```
 
 
@@ -181,7 +179,7 @@ list of packages that are loaded, but not attached to the search path
 
 
 *** =instructions
-Type the function sessionInfo().
+Use the function sessionInfo() to get detailed information about current R session.
 
 *** =hint
 Simply the function name, copy & paste.
@@ -193,16 +191,14 @@ Simply the function name, copy & paste.
 
 *** =sample_code
 ```{r}
-#type sessionInfo()
-
+# get information about the current R session
 
 ```
 
 *** =solution
 ```{r}
-#type sessionInfo()
+# get information about the current R session
 sessionInfo()
-
 ```
 
 
