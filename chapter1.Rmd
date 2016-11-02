@@ -337,7 +337,7 @@ When you start R again, the workspace will be automatically loaded from the exis
 The function history() displays recent commands, You can also save and load the command history from a ﬁle./n
 
 *** =instructions
-Use the function ls() and rm().
+Use the function ls() and rm() to see all objects in the environment and remove some of them.
 
 *** =hint
 Simply the function name, copy & paste as instructed by comments.
@@ -404,47 +404,47 @@ Check if object names and function names are correctly typed.
 
 *** =sample_code
 ```{r}
-#define objects of single number, vector, list and dataframe
+# define objects of single number, vector, list and dataframe
 v1 <- 1
 v2 <- 1:10
 v3 <- list(aa=c('a', 'b'), bb=1:5)
 v4 <- data.frame(aa=c('a', 'b'), bb=1:2)
 
-#find out if single number is atomic or recursive
+# find out if v1, v2 is atomic or recursive
 is.atomic(v1)
 is.recursive(v1)
 
-#find out if vector is atomic or recursive
-is.atomic(v2)
-is.recursive(v2)
-
-#now use similar process to find out if list is atomic or recursive
+# find out if v2 (vector) is atomic or recursive
 
 
-#do the same to data frame
+# use similar process to find out if v3 (list) is atomic or recursive
+
+
+# do the same to v4 (dataframe)
+
 ```
 
 *** =solution
 ```{r}
-#define objects of single number, vector, list and dataframe
+# define objects of single number, vector, list and dataframe
 v1 <- 1
 v2 <- 1:10
 v3 <- list(aa=c('a', 'b'), bb=1:5)
 v4 <- data.frame(aa=c('a', 'b'), bb=1:2)
 
-#find out if single number is atomic or recursive
+# find out if v1, v2 is atomic or recursive
 is.atomic(v1)
 is.recursive(v1)
 
-#find out if vector is atomic or recursive
+# find out if v2 (vector) is atomic or recursive
 is.atomic(v2)
 is.recursive(v2)
 
-#now use similar process to find out if list is atomic or recursive
+# use similar process to find out if v3 (list) is atomic or recursive
 is.atomic(v3)
 is.recursive(v3)
 
-#do the same to data frame
+# do the same to v4 (dataframe)
 is.atomic(v4)
 is.recursive(v4)
 ```
@@ -480,37 +480,35 @@ Check if object names and function names are correctly typed.
 
 *** =sample_code
 ```{r}
-#define objects of vector, matrix, list and dataframe
+# define objects of vector, matrix, list and dataframe
 v1 <- 1:10
 v2 <- matrix(1:10, 2, 5)
 v3 <- list(aa=c('a', 'b'), bb=1:5)
 v4 <- data.frame(aa=c('a', 'b'), bb=1:2)
 
-#find out the type, mode and class of vector and matrix
+# find out the type, mode and class of vector and matrix
 c(typeof(v1), mode(v1), class(v1))
 c(typeof(v2), mode(v2), class(v2))
 
-#now use the same code to check list and dataframe
-
+# use the same code to check list and dataframe
 
 ```
 
 *** =solution
 ```{r}
-#define objects of vector, matrix, list and dataframe
+# define objects of vector, matrix, list and dataframe
 v1 <- 1:10
 v2 <- matrix(1:10, 2, 5)
 v3 <- list(aa=c('a', 'b'), bb=1:5)
 v4 <- data.frame(aa=c('a', 'b'), bb=1:2)
 
-#find out the type, mode and class of vector and matrix
+# find out the type, mode and class of vector and matrix
 c(typeof(v1), mode(v1), class(v1))
 c(typeof(v2), mode(v2), class(v2))
 
-#now use the same code to check list and dataframe
+# now use the same code to check list and dataframe
 c(typeof(v3), mode(v3), class(v3))
 c(typeof(v4), mode(v4), class(v4))
-
 ```
 
 
@@ -545,53 +543,59 @@ Check if object names and function names are correctly typed.
 
 *** =sample_code
 ```{r}
-#a simple vector has no attributes
-attributes(1:10)
+# check the attributes of a simple vector 1:10
 
-# named vector has "names" attribute
+
 my_var <- c(pi=pi, euler=exp(1), gamma=-digamma(1))
-attributes(my_var)
+# check the attributes of names vector `my_var`
 
-#modify the attributes of an object
-attributes(my_var) <- list(class = "Date")
 
-#print the object and see what's changed
-my_var
+# modify the attributes of an object, convert the class to "Date"
 
-#also we can use structure to change attributes
-structure(1:10, class = "Date")
 
-#now use attributes assignment method to change the class attributes of a list to character
+# print the object and see what's changed
+
+
+# use structure to create a vector of Date from 1:10
+
+
 my_list <- list(1, 2)
+# now use attributes assignment method to change the attributes of my_list to a vector of Dates
 
-#print out my_list, check if it is a vector
+
+# print out your result
+
+
+# check if it is a vector
 
 ```
 
 *** =solution
 ```{r}
-#a simple vector has no attributes
+# check the attributes of a simple vector 1:10
 attributes(1:10)
 
-# named vector has "names" attribute
 my_var <- c(pi=pi, euler=exp(1), gamma=-digamma(1))
+# check the attributes of names vector `my_var`
 attributes(my_var)
 
-#modify the attributes of an object
+# modify the attributes of an object, convert the class to "Date"
 attributes(my_var) <- list(class = "Date")
 
-#print the object and see what's changed
+# print the object and see what's changed
 my_var
 
-#also we can use structure to change attributes
+# use structure to create a vector of Date from 1:10
 structure(1:10, class = "Date")
 
-#now use attributes assignment method to change the attributes of a list to vector
 my_list <- list(1, 2)
+# now use attributes assignment method to change the attributes of my_list to a vector of Dates
 attributes(my_list) <- list(class = "Date")
 
-#print out your result
+# print out your result
 my_list
+
+# check if it is a vector
 is.vector(my_list)
 ```
 
@@ -633,20 +637,29 @@ Check if object names and function names are correctly typed. Remember to use al
 ```{r}
 # integer implicit class derived from type
 my_var_1 <- vector(mode="integer", length=10)
-c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
+
+# check the type, mode and class of my_var1
+
 
 # numeric implicit class derived from mode
 my_var_2 <- vector(mode="numeric", length=10)
-c(typeof(my_var_2), mode(my_var_2), class(my_var_2))
 
-# adding dim attribute changes implicit class to matrix
-dim(my_var_1) <- c(5, 2)
-c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
+# check the type, mode and class of my_var2
+
+
+# add c(5,2) to dim attribute of `my_var_1` changes implicit class to matrix
+
+
+# check the type, mode and class of my_var1
+
 
 # define a new dataframe
 my_var <- data.frame(aa=c('a', 'b'), bb=1:2)
 
-# now explore the type, class, mode and attributes of a data frame
+# now explore the type, class, mode of a data frame
+
+
+# check the attributes of my_var
 
 ```
 
@@ -654,21 +667,29 @@ my_var <- data.frame(aa=c('a', 'b'), bb=1:2)
 ```{r}
 # integer implicit class derived from type
 my_var_1 <- vector(mode="integer", length=10)
+
+# check the type, mode and class of my_var1
 c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
 
 # numeric implicit class derived from mode
 my_var_2 <- vector(mode="numeric", length=10)
+
+# check the type, mode and class of my_var2
 c(typeof(my_var_2), mode(my_var_2), class(my_var_2))
 
-# adding dim attribute changes implicit class to matrix
+# add c(5,2) to dim attribute of `my_var_1` changes implicit class to matrix
 dim(my_var_1) <- c(5, 2)
+
+# check the type, mode and class of my_var1
 c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
 
 # define a new dataframe
 my_var <- data.frame(aa=c('a', 'b'), bb=1:2)
 
-# now explore the type, class, mode and attributes of a data frame
+# now explore the type, class, mode of a data frame
 c(typeof(my_var), mode(my_var), class(my_var))
+
+# check the attributes of my_var
 attributes(my_var)
 ```
 
@@ -708,7 +729,7 @@ Notice: Coercion can introduce bad data, such as NA values.
 
 
 *** =instructions
-Use coercison to convert object types.
+Use coercison to convert object types with functions of `as.*`.
 
 *** =hint
 Check if object names and function names are correctly typed.
@@ -722,17 +743,26 @@ Check if object names and function names are correctly typed.
 ```{r}
 # create a numeric vector
 my_var_1 <- vector(mode="integer", length=10)
-c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
 
-# coerce the vector into character and check itd type, mode and class
-my_var_1 <- as.character(my_var_1)
-c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
+# check the type, mode and class of my_var_1
+
+
+# coerce the vector into character
+
+
+# check the type, mode and class of my_var_1 after the change
+
 
 # create a mixed vector
 my_var <- c(2, "a", 3.2)
-c(typeof(my_var), mode(my_var), class(my_var))
 
-# now coerce the vector into integer and see type, mode and class
+# check the type, mode and class of my_var
+
+
+# now coerce the vector into integer
+
+
+# check the type, mode and class of my_var
 
 ```
 
@@ -740,18 +770,26 @@ c(typeof(my_var), mode(my_var), class(my_var))
 ```{r}
 # create a numeric vector
 my_var_1 <- vector(mode="integer", length=10)
+
+# check the type, mode and class of my_var_1
 c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
 
-# coerce the vector into character and check itd type, mode and class
+# coerce the vector into character
 my_var_1 <- as.character(my_var_1)
+
+# check the type, mode and class of my_var_1 after the change
 c(typeof(my_var_1), mode(my_var_1), class(my_var_1))
 
 # create a mixed vector
 my_var <- c(2, "a", 3.2)
+
+# check the type, mode and class of my_var
 c(typeof(my_var), mode(my_var), class(my_var))
 
-# now coerce the vector into integer and see type, mode and class
+# now coerce the vector into integer
 my_var <- as.integer(my_var)
+
+# check the type, mode and class of my_var
 c(typeof(my_var), mode(my_var), class(my_var))
 ```
 
