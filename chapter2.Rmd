@@ -1,10 +1,1901 @@
 --- 
 title_meta  : Chapter 2
-title       : R Operations
-description : In this chapter more details about R manipulation will be executed.
+title       : R Objects
+description : In this chapter details about R objects will be covered.
 attachments : 
   slides_link: 
   
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:b1b1305012
+## Basic R Objects
+
+The quotation marks "" (or ’’) around a character string tell R that it’s a string, not a variable name.
+Vectors are the basic building blocks of R objects, There are no scalars in R, and single values are stored as vectors of length "1".
+A character string is also a vector with a single element, with the ﬁrst element of the vector containing the string of text.
+The colon binary operator ’:’ produces a vector.
+The function c() combines objects into a vector.
+The "[1]" symbol means the return value is a vector.
+The function is.vector() returns TRUE if its argument is a vector, and returns FALSE otherwise,
+
+
+*** =instructions
+Try to explore different kinds of vector and make use of vector's basic operations.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# create a character vector
+vec_char <- "some string"
+
+# explore the vector with basic operations of vector
+is.vector(vec_char)
+vec_char[1]
+
+# create a numeric vector
+vec_num <- 1:10
+
+# print and explore the vector with basic operations of vector
+vec_num
+is.vector(vec_num)
+vec_num[2]
+
+#now use c() to combine vec_char and vec_num and create vec_c
+
+
+#check if vec_c is a vector and print the second element of vec_c
+```
+
+*** =solution
+```{r}
+# create a character vector
+vec_char <- "some string"
+
+# explore the vector with basic operations of vector
+is.vector(vec_char)
+vec_char[1]
+
+# create a numeric vector
+vec_num <- 1:10
+
+# print and explore the vector with basic operations of vector
+vec_num
+is.vector(vec_num)
+vec_num[2]
+
+#now use c() to combine vec_char and vec_num and create vec_c
+vec_c <- c(vec_char, vec_num)
+
+#check if vec_c is a vector and print the second element of vec_c
+is.vector(vec_c)
+vec_c[2]
+#
+```
+
+
+*** =sct
+```{r}
+test_error()
+msg <- "Do not remove or change the definition of the variable `vec_num`."
+test_object("vec_num", undefined_msg = msg, incorrect_msg = msg)
+success_msg("Great!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:05697caf6a
+## Character Strings
+
+Character strings are sequences of characters (and vectors of length one), The function nchar() returns the length of a string.
+
+Special characters in strings: 
+"\t" for TAB, "\n" for new-line, 
+”\\” for a (single) backslash character
+
+The function cat() concatenates strings and echos them to console, without returning any values
+The function cat() is useful in user-deﬁned functions.
+
+
+*** =instructions
+Explore characters and strings with functions and basic features.
+
+*** =hint
+Check if object names and function names are correctly typed. Don't miss any variables or functions!
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#create a character string
+str_var <- "Some string"
+
+#print the entire vector and its first element
+str_var
+str_var[1]
+
+#try to print its second element
+
+
+#see the length of vector and string
+length(str_var)
+nchar(str_var)
+
+#concatenate and echo to console
+cat("Hello", "World!")
+
+#use \n to start a new line when concatenating
+
+```
+
+*** =solution
+```{r}
+#create a character string
+str_var <- "Some string"
+
+#print the entire vector and its first element
+str_var
+str_var[1]
+
+#try to print its second element
+str_var[2]
+
+#see the length of vector and string
+length(str_var)
+nchar(str_var)
+
+#concatenate and echo to console
+cat("Hello", "World!")
+
+#use \n to start a new line when concatenating
+cat("Enter\nnewline")
+```
+
+
+*** =sct
+```{r}
+test_error()
+msg <- "Do not remove or change the definition of the variable `str_var`."
+test_object("str_var", undefined_msg = msg, incorrect_msg = msg)
+success_msg("Excellent!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:b99299073f
+## Manipulating Strings
+
+The function paste() concatenates its arguments into a string, coerces them to characters if needed, and returns the string.
+If a vector or list is passed to paste(), together with a collapse string, then paste() concatenates the elements into a string, separated by the collapse string.
+The function strsplit() splits the elements of a character vector.
+Splitting on the "." character requires surrounding it with brackets: "[.]", or using argument fixed=TRUE.
+The function substring() extracts or replaces substrings in a character string, The recycling rule extends the length to match the longest object.
+
+*** =instructions
+Use functions to manipulate strings.
+
+*** =hint
+Check if object names and function names are correctly typed. Don't miss the square bracket!
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#create two character string and combine
+str_var1 <- "Hello"
+str_var2 <- "World!"
+paste(str_var1, str_var2, sep=' ')
+
+#create a character string and a numeric vector
+str_var3 <- "a"
+num_var <- 1:4
+
+#try to combine them together with "," and see results
+
+
+#create a new string
+hello <- "Hello.World"
+
+#split the string into seperate strings using strsplit() on "[.]"
+
+
+#use substring to get from the third to the sixth elements
+
+```
+
+*** =solution
+```{r}
+#create two character string and combine
+str_var1 <- "Hello"
+str_var2 <- "World!"
+paste(str_var1, str_var2, sep=' ')
+
+#create a character string and a numeric vector
+str_var3 <- "a"
+num_var <- 1:4
+
+#try to combine them together with "," and see results
+paste(str_var3, num_var, sep = ",")
+
+#create a new string
+hello <- "Hello.World"
+
+#split the string into seperate strings using strsplit() on "[.]"
+strsplit(hello, split = "[.]")
+
+#use substring to get from the third to the sixth elements
+substring(hello, 3, 6)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Excellent!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:ab03e239aa
+## Regular Expressions in R
+
+R has Regex functions for pattern matching and replacement.
+The function gsub() replaces all matches of a pattern in a string.
+The function grep() searches for matches of a pattern in a string.
+The function glob2rx() converts globbing wildcard patterns into regular expressions.
+
+*** =instructions
+Use functions to manipulate strings.
+
+*** =hint
+Check if object names and function names are correctly typed. Don't forget to use "i+" instead of "i"
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#replace "is" with "XX"
+my_string <- c("is", "XX", "is this gratis?")
+gsub(my_string)
+
+#get indexes of elements in a vector that contains certain string
+grep("b+", c("abc", "xyz", "cba d", "bbb"))
+
+#get values among elements in a vector that contains certain string
+grep("b+", c("abc", "xyz", "cba d", "bbb"), value=TRUE)
+
+# convert globs into regex (regular expression)
+glob2rx("abc.*")
+
+#now try to get the index of elements that contain character "i" in my_string
+
+
+#convert my_string to regex
+
+```
+
+*** =solution
+```{r}
+#replace "is" with "XX"
+my_string <- c("is", "XX", "is this gratis?")
+gsub("is", "XX", my_string)
+
+#get indexes of elements in a vector that contains certain string
+grep("b+", c("abc", "xyz", "cba d", "bbb"))
+
+#get values among elements in a vector that contains certain string
+grep("b+", c("abc", "xyz", "cba d", "bbb"), value=TRUE)
+
+# convert globs into regex (regular expression)
+glob2rx("abc.*")
+
+#now try to get the index of elements that contain character "i+" in my_string
+grep("i+", my_string)
+
+#convert my_string to regex
+glob2rx(my_string)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Remember to look at what's popped up in the console")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:540b8c57a5
+## Vectors
+
+Vectors are the basic building blocks of R objects.
+
+For a brief review, we already know that:
+There are no scalars in R, and single values are stored as vectors of length "1"
+The function c() combines values into a vector
+The function is.vector() returns TRUE if its argument is a vector, and returns FALSE otherwise
+
+Beside, we need to knwo that the object letters is a constant and a vector.
+
+To create a vector, R provides several way to do it:
+1) The colon operator (":") provides a simple way of creating a numeric vector
+2) The function vector() returns a vector of the speciﬁed mode
+3) The functions seq(), seq_len(), and seq_along() return a sequence (vector) of numbers
+4) The function rep() replicates an object multiple times
+5) The functions numeric() and character() return empty (zero length) vectors of the speciﬁed type (not to be confused with a NULL object)
+6) Zero length vectors are not NULL objects,
+
+
+*** =instructions
+Use mentioned functions to create vector.
+
+*** =hint
+Check if object names and function names are correctly typed. Use "by=" instead of "len=".
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#create vectors using ":", vector() and rep()
+1:10
+vector(mode = "numeric", length = 10)
+rep(10, times = 5)
+
+#create vectors using seq
+seq(10)
+seq(along=(-5:5))
+seq_along(c("a", "b", "c"))
+seq(from=0, to=1, len=11)
+
+#now try to use seq() to create a vector from 0 to 1, each step is 0.1, using "by="
+
+
+#use character() to create empty vector of characters
+character(5)
+
+#now try to use numeric() to create empty vector of numerics of length 0
+
+```
+
+*** =solution
+```{r}
+#create vectors using ":", vector() and rep()
+1:10
+vector(mode = "numeric", length = 10)
+rep(10, times = 5)
+
+#create vectors using seq
+seq(10)
+seq(along=(-5:5))
+seq_along(c("a", "b", "c"))
+seq(from=0, to=1, len=11)
+
+#now try to use seq() to create a vector from 0 to 1, each step is 0.1, using "by="
+seq(from = 0, to = 1, by = 0.1)
+
+#use character() to create empty vector of characters
+character(5)
+
+#now try to use numeric() to create empty vector of numerics of length 0
+numeric(0)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("See? Empty vector with zero length is not equal to NULL!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:5a2dc65a8a
+## Arithmetic and Logical Operations on Vectors
+
+Vectors can be multiplied and squared element by element, as if they were single elements.
+
+When vectors are manipulated as if they were single elements, then R automatically performs a loop over the vector elements, and applies the operation element-wise. This is a very powerful feature of R called vectorized arithmetic. Vectorized arithmetic avoids writing loops and simpliﬁes notation.
+
+Vectors can be combined together and appended.
+
+*** =instructions
+Use mentioned functions to conduct vector arithmetic and logical operation.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+#multiply a vector
+2*4:8
+2*(4:8)
+
+#divide a vector
+4:8/2
+(0:10)/10
+
+#create vector
+vec_tor <- c(8, 6, 5, 7)
+vec_tor
+
+#boolean vector TRUE if element is equal to second one, otherwise FALSE
+vec_tor == vec_tor[2]
+
+#try to create boolean vector TRUE for elements greater than six, otherwise FALSE
+
+
+#square all elements
+vec_tor^2
+
+#now try to multiply all elements by 2
+
+
+#combine two vectors
+c(11, 5:10)
+
+#now try to append number to vector
+
+```
+
+*** =solution
+```{r}
+#multiply a vector
+2*4:8
+2*(4:8)
+
+#divide a vector
+4:8/2
+(0:10)/10
+
+#create vector
+vec_tor <- c(8, 6, 5, 7)
+vec_tor
+
+#boolean vector TRUE if element is equal to second one
+vec_tor == vec_tor[2]
+
+#try to create boolean vector TRUE for elements greater than six
+vec_tor > 6
+
+#square all elements
+vec_tor^2
+
+#now try to multiply all elements by 2
+2*vec_tor
+
+#combine two vectors
+c(11, 5:10)
+
+#now try to append number to vector
+c(vec_tor, 2.0)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Beautiful! Appreciate results in the console!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:2635635720
+## Naming and Manipulating Vectors
+
+Vector elements can be assigned names using a list of symbol-value pairs.
+The function names() returns the names attribute of an object.
+The names attribute of a vector can be modiﬁed by assigning to the names() function (”names() <-” assignment).
+The function unname() removes the names attribute.
+The function structure() adds attributes (speciﬁed as symbol=value pairs) to an object, and returns it,
+
+*** =instructions
+Use names() to get names and assign names. Also learn to use structure() to assign names to a vector.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# create named vector
+vec_tor <- c(pi_const=pi, euler=exp(1), gamma=-digamma(1))
+
+# get names of elements
+names(vec_tor)
+
+# remove names attribute
+unname(vec_tor)
+
+# combine two vectors of letters
+c('a', letters[5:10])
+
+# create named vector using structure
+structure(sample(1:5), names=paste0("el", 1:5))
+
+# now try to assign 1:3 to names of vec_tor
+
+
+# print out vec_tor
+
+
+# use structure to create a vector of 1:3, naming it with vec_tor
+
+```
+
+*** =solution
+```{r}
+# create named vector
+vec_tor <- c(pi_const=pi, euler=exp(1), gamma=-digamma(1))
+
+# get names of elements
+names(vec_tor)
+
+# remove names attribute
+unname(vec_tor)
+
+# combine two vectors of letters
+c('a', letters[5:10])
+
+# create named vector using structure
+structure(sample(1:5), names=paste0("el", 1:5))
+
+# now try to assign 1:3 to names of vec_tor
+names(vec_tor) <- 1:3
+
+# print out vec_tor
+vec_tor
+
+# use structure to create a vector of 1:3, naming it by vec_tor
+structure(1:3, names = vec_tor)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Now you can name a vector with names() and structure() methods!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:e2b1d979f4
+## Subsetting Vectors
+
+Vector elements can be subset (indexed, dereferenced) using the "[]" operator.
+
+Vectors can be subset using vectors of:
+positive integers, 
+negative integers, 
+characters (names),
+boolean vectors. 
+
+Negative integers remove the vector elements.
+Subsetting with zero returns a zero-length vector.
+A named vector can be subset using element names.
+
+*** =instructions
+Vec_tor has been recreated in this exercise. 
+Use "[]" combined with integers, characters and boolean vectors to subset a vector.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+vec_tor <- c(pi_const=pi, euler=exp(1), gamma=-digamma(1))
+```
+
+*** =sample_code
+```{r}
+# extract second element
+vec_tor[2]
+
+# extract all elements, except the second element
+vec_tor[-2]
+
+# extract zero elements - returns zero-length vector
+vec_tor[0]
+
+# extract second and third elements
+vec_tor[c(FALSE, TRUE, TRUE)]
+
+# extract a element using their names
+vec_tor["eulery"]
+
+# extract multiple elements using a vector of their names
+vec_tor[c("pie", "gammy")]
+
+# now create a boolean vector comparing vec_tor to 2, name it as "bool"
+
+
+# subset vec_tor with bool to see which element is bigger than 2
+
+```
+
+*** =solution
+```{r}
+# extract second element
+vec_tor[2]
+
+# extract all elements, except the second element
+vec_tor[-2]
+
+# extract zero elements - returns zero-length vector
+vec_tor[0]
+
+# extract second and third elements
+vec_tor[c(FALSE, TRUE, TRUE)]
+
+# extract a element using their names
+vec_tor["eulery"]
+
+# extract multiple elements using a vector of their names
+vec_tor[c("pie", "gammy")]
+
+# now create a boolean vector comparing vec_tor to 2, name it as "bool"
+bool <- vec_tor > 2
+
+# subset vec_tor with bool to see which element is bigger than 2
+vec_tor[bool]
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("The subsetting provides support for filtering")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:47e9ca9b81
+## Filtering Vectors
+
+Filtering means extracting elements from a vector that satisfy a logical condition.
+When logical comparison operators are applied to vectors, they produce boolean vectors.
+Boolean vectors can then be applied to subset the original vectors, to extract their elements.
+The function which() returns the indices of the TRUE elements of a boolean vector or array.
+
+
+*** =instructions
+Vec_tor has been recreated in this exercise. 
+Use "[]"  or "which()" to filter vector elements.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+vec_tor <- runif(5)
+```
+
+*** =sample_code
+```{r}
+# first, print the vec_tor
+vec_tor
+
+# compare vec_tor to 0.5, in this way you actually created a boolean vector
+vec_tor > 0.5
+
+# boolean vector of elements equal to the second one
+vec_tor == vec_tor[2]
+
+# extract all elements equal to the second one
+vec_tor[vec_tor == vec_tor[2]]
+
+# now extract all elements greater than 0.5
+
+
+# use which() and returns the index of filtered element greater than 0.5
+which(vec_tor > 0.5)
+
+# use which() and "[]" to extract elements greater than 0.5
+
+```
+
+*** =solution
+```{r}
+# first, print the vec_tor
+vec_tor
+
+# compare vec_tor to 0.5, in this way you actually created a boolean vector
+vec_tor > 0.5
+
+# boolean vector of elements equal to the second one
+vec_tor == vec_tor[2]
+
+# extract all elements equal to the second one
+vec_tor[vec_tor == vec_tor[2]]
+
+# now extract all elements greater than 0.5
+vec_tor[vec_tor > 0.5]
+
+# use which() and returns the index of filtered element greater than 0.5
+which(vec_tor > 0.5)
+
+# use which() and "[]" to extract elements greater than 0.5
+vec_tor[which(vec_tor > 0.5)]
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Now you can filter a vector with '[]' and which()!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:ab3a8365ff
+## Factors
+
+Factors are similar to vectors, but their elements can only take values from a set of levels.
+Factors are designed for categorical data which can only take certain values.
+
+The function factor() converts a vector into a factor, Factors have two attributes: class (equal to "factor") and levels (the allowed values).
+Although factors aren’t vectors, the data underlying a factor is an integer vector, called an encoding vector.
+The function as.numeric() extracts the encoding vector (indices) of a factor.
+The function as.vector() coerces a factor to a character vector.
+
+*** =instructions
+Create factors with factor(). 
+See attributes of factor using attributes() and levels().
+Coerce factor using as.numeric() and as.vector().
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+fac_tor <- factor(c('b', 'c', 'd', 'a', 'c', 'b'))
+```
+
+*** =sample_code
+```{r}
+# have a look at the factor vector
+fac_tor
+
+# factor can be subsetted the same way using "[]"
+fac_tor[3]
+
+# get factor attributes
+attributes(fac_tor)
+
+# get factor levels
+levels(fac_tor)
+
+# get encoding vector
+as.numeric(fac_tor)
+
+# coerce vector of 1:5 to factor, and then coerce it back using as.vector()
+
+```
+
+*** =solution
+```{r}
+# have a look at the factor vector
+fac_tor
+
+# factor can be subsetted the same way using "[]"
+fac_tor[3]
+
+# get factor attributes
+attributes(fac_tor)
+
+# get factor levels
+levels(fac_tor)
+
+# get encoding vector
+as.numeric(fac_tor)
+
+# coerce vector of 1:5 to factor, and then coerce it back using as.vector()
+as.vector(factor(1:5))
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("See! The numeric vector turned to be a character vector!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:771f2e9f50
+## Tables of Categorical Data
+
+The function table() calculates the frequency distribution of categorical data.
+A contingency table is a matrix that contains the frequency distribution of variables (factors) contained in a set of data, sapply() applies a function to a vector or a list of objects and returns a vector or a list,
+
+
+*** =instructions
+Use functions and variables as insturcted in the comment.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+fac_tor <- factor(c('b', 'c', 'd', 'a', 'c', 'b'))
+```
+
+*** =sample_code
+```{r}
+# have a look at the factor vector
+fac_tor
+
+# get encoding vector
+as.numeric(fac_tor)
+
+# get unique values
+unique(fac_tor)
+
+# get contingency table using sapply 
+sapply(levels(fac_tor), 
+ function(le_vel) {
+   sum(fac_tor==le_vel)
+ })
+
+# get contingency (frequency) table using table() on fac_tor
+
+```
+
+*** =solution
+```{r}
+# have a look at the factor vector
+fac_tor
+
+# get encoding vector
+as.numeric(fac_tor)
+
+# get unique values
+unique(fac_tor)
+
+# get contingency table using sapply 
+sapply(levels(fac_tor), 
+ function(le_vel) {
+   sum(fac_tor==le_vel)
+ })
+
+# get contingency (frequency) table using table() on fac_tor
+table(fac_tor)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Compared the results you get with sapply() and table()")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:748763cc09
+## Classifying Continuous Numeric Data Into Categories
+
+Numeric data that represents a magnitude, intensity, or score can be classiﬁed into categorical data, given a vector of breakpoints.
+
+The breakpoints create intervals that correspond to diﬀerent categories.
+
+The categories combine elements that have a similar numeric magnitude, findInterval() returns the indices of the intervals speciﬁed by "vec" that contain the elements of "x".
+If there’s an exact match, then findInterval() returns the same index as function match().
+If there’s no exact match, then findInterval() ﬁnds the element of "vec" that is closest to, but not greater than, the element of "x".
+If all the elements of "vec" are greater than the element of "x", then findInterval() returns zero,
+
+
+*** =instructions
+Use functions and variables as insturcted in the comment.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# see how we can tweak the outcome findInterval() function with five parameters
+str(findInterval)
+
+# get index of the element of "vec" that matches 5
+findInterval(x=5, vec=c(3, 5, 7))
+match(5, c(3, 5, 7))
+
+# no exact match
+findInterval(x=6, vec=c(3, 5, 7))
+match(6, c(3, 5, 7))
+
+# indices of "vec" that match elements of "x"
+findInterval(x=1:8, vec=c(3, 5, 7))
+
+# return only indices of inside intervals
+
+
+# make rightmost interval inclusive
+
+```
+
+*** =solution
+```{r}
+# see how we can tweak the outcome findInterval() function with five parameters
+str(findInterval)
+
+# get index of the element of "vec" that matches 5
+findInterval(x=5, vec=c(3, 5, 7))
+match(5, c(3, 5, 7))
+
+# no exact match
+findInterval(x=6, vec=c(3, 5, 7))
+match(6, c(3, 5, 7))
+
+# indices of "vec" that match elements of "x"
+findInterval(x=1:8, vec=c(3, 5, 7))
+
+# return only indices of inside intervals
+findInterval(x=1:8, vec=c(3, 5, 7), all.inside=TRUE)
+
+# make rightmost interval inclusive
+findInterval(x=1:8, vec=c(3, 5, 7), rightmost.closed=TRUE)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Congrats! This is the very first step in dividing continuous values")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:91aa35a650
+## Classifying Continuous Numeric Data Into Categories, Continued
+
+Temperature can be categorized into ”cold”, ”warm”, ”hot”, etc. 
+A named numeric vector of breakpoints can be used to convert a temperature into one of the categories.
+Breakpoints correspond to categories of the data.
+The ﬁrst breakpoint should correspond to the lowest category, and should have a value less than any of the data.
+
+
+*** =instructions
+Use functions and variables as insturcted in the comment.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# creat named numeric vector of breakpoints
+brea_ks <- c("freezing"=0, "very_cold"=30,
+       "cold"=50, "pleasant"=60,
+       "warm"=80, "hot"=90)
+
+# print out the breakpoints vector
+brea_ks
+
+# create a vector of temperatures
+tempe_ratures <- runif(10, min=10, max=100)
+
+# name values according to breakpoints
+feels_like <- names(
+  brea_ks[findInterval(x=tempe_ratures,
+                 vec=brea_ks)])
+
+names(tempe_ratures) <- feels_like
+
+# print the categorized vector
+
+```
+
+*** =solution
+```{r}
+# creat named numeric vector of breakpoints
+brea_ks <- c("freezing"=0, "very_cold"=30,
+       "cold"=50, "pleasant"=60,
+       "warm"=80, "hot"=90)
+
+# print out the breakpoints vector
+brea_ks
+
+# create a vector of temperatures
+tempe_ratures <- runif(10, min=10, max=100)
+
+# name values according to breakpoints
+feels_like <- names(
+  brea_ks[findInterval(x=tempe_ratures,
+                 vec=brea_ks)])
+
+names(tempe_ratures) <- feels_like
+
+# print the categorized vector
+tempe_ratures
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Congrats! This is the your first value categorization results!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:ca09ff3670
+## Converting Numeric Data Into Factors Using cut()
+
+The function cut() converts a numeric vector into a vector of factors, representing the intervals to which the numeric values belong, cut() divides the range of values into intervals, based on a vector of breaks, cut() then assigns factors to the numeric values, representing the intervals to which the numeric values belong. 
+The argument "breaks" is a numeric vector of break points that divide the range of values into intervals.
+The argument "labels" is a vector of labels for the intervals.
+The argument "right" is a boolean indicating if the intervals should be closed on the right (and open on the left), or vice versa, cut() can produce the same classiﬁcation as findInterval(), but findInterval() is faster than cut(), because it’s a compiled function,
+
+The library microbenchmark is already loaded to the environment
+
+*** =instructions
+Use functions and variables as insturcted in the comment.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+library(microbenchmark)
+```
+
+*** =sample_code
+```{r}
+# create a vector of random value
+foo <- sample(0:6) + 0.1
+
+# print the vector
+foo
+
+# use cut to vector
+cut(x=foo, breaks=c(2, 4, 6, 8))
+rbind(foo, cut(x=foo, breaks=c(2, 4, 6, 8)))
+
+# use findInterval() to cut the vector and compare the results
+
+
+# findInterval() is a compiled function, so it is faster than cut()
+vec_tor <- rnorm(1000)
+summary(microbenchmark(
+  find_interval=
+    findInterval(x=vec_tor, vec=c(3, 5, 7)),
+  cuut=
+    cut(x=vec_tor, breaks=c(3, 5, 7)),
+  times=10))[, c(1, 4, 5)]
+```
+
+*** =solution
+```{r}
+# create a vector of random value
+foo <- sample(0:6) + 0.1
+
+# print the vector
+foo
+
+# use cut to vector
+cut(x=foo, breaks=c(2, 4, 6, 8))
+rbind(foo, cut(x=foo, breaks=c(2, 4, 6, 8)))
+
+# use findInterval() to cut the vector and compare the results
+findInterval(x=1:8, vec=c(2, 4, 6, 8))
+
+# findInterval() is a compiled function, so it is faster than cut()
+vec_tor <- rnorm(1000)
+summary(microbenchmark(
+  find_interval=
+    findInterval(x=vec_tor, vec=c(3, 5, 7)),
+  cuut=
+    cut(x=vec_tor, breaks=c(3, 5, 7)),
+  times=10))[, c(1, 4, 5)]
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Althogh slower and a little bit different, cut() has similar functionality as findInternval()")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:cd32ce976a
+## Matrices
+
+The function matrix() creates a matrix from a vector, and the matrix dimensions.
+By default matrix() creates matrices column-wise, unless the argument byrow=TRUE is used.
+The elements of matrices can be subset (dereferenced) using the "[]" operator.
+The functions nrow() and ncol() return the number of rows and columns of a matrix.
+The functions NROW() and NCOL() also return the number of rows or columns of a matrix, but they can also be applied to vectors, and treat vectors as single column matrices.
+
+*** =instructions
+Use matrix() to construct matrices, and nrow(), ncol() and NROW(), NCOL().
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+vec_tor <- runif(5)
+```
+
+*** =sample_code
+```{r}
+# create a matrix
+mat_rix <- matrix(5:10, nrow=2, ncol=3)
+
+# by default matrices are constructed column-wise
+mat_rix
+
+# create a matrix row-wise
+matrix(5:10, nrow=2, byrow=TRUE)
+
+# extract third element from second row
+mat_rix[2, 3]
+
+# extract second row
+mat_rix[2, ]
+
+# now try to extract third column
+
+
+# extract first and third column
+mat_rix[, c(1,3)]
+
+# remove second column
+mat_rix[, -2]
+
+# get the number of rows or columns
+nrow(mat_rix); ncol(mat_rix)
+NROW(mat_rix); NCOL(mat_rix)
+
+# apply nrow() and NROW() on vec_tor
+
+```
+
+*** =solution
+```{r}
+# create a matrix
+mat_rix <- matrix(5:10, nrow=2, ncol=3)
+
+# by default matrices are constructed column-wise
+mat_rix
+
+# create a matrix row-wise
+matrix(5:10, nrow=2, byrow=TRUE)
+
+# extract third element from second row
+mat_rix[2, 3]
+
+# extract second row
+mat_rix[2, ]
+
+# now try to extract third column
+mat_rix[, 3]
+
+# extract first and third column
+mat_rix[, c(1,3)]
+
+# remove second column
+mat_rix[, -2]
+
+# get the number of rows or columns
+nrow(mat_rix); ncol(mat_rix)
+NROW(mat_rix); NCOL(mat_rix)
+
+# apply nrow() and NROW() on vec_tor
+nrow(vec_tor)
+NROW(vec_tor)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("So the capitalized functions can be applied to vectors and matrixes")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:9cb7dccabe
+## Matrix attributes
+
+Arrays are vectors with a dimension attribute.
+Matrices are two-dimensional arrays.
+The dimension attribute of a matrix is an integer vector of length 2 (nrow, ncol).
+The dimnames attribute is a list, with vector elements containing row and column names.
+A named matrix can be subset using row and column names.
+
+
+*** =instructions
+Use attributes(), dim(), rownames(), colnames() and rownames() as instructed.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+mat_rix <- matrix(5:10, nrow=2, ncol=3)
+```
+
+*** =sample_code
+```{r}
+# get matrix attributes
+attributes(mat_rix)
+
+# get dimension attribute
+dim(mat_rix)
+
+# get class attribute
+class(mat_rix)
+
+# rownames and colnames attribute
+rownames(mat_rix) <- c("row1", "row2")
+colnames(mat_rix) <- c("col1", "col2", "col3")
+
+# use dimnames() to see row and column names
+
+
+# get the name attributes of mat_rix
+
+```
+
+*** =solution
+```{r}
+# get matrix attributes
+attributes(mat_rix)
+
+# get dimension attribute
+dim(mat_rix)
+
+# get class attribute
+class(mat_rix)
+
+# rownames and colnames attribute
+rownames(mat_rix) <- c("row1", "row2")
+colnames(mat_rix) <- c("col1", "col2", "col3")
+
+# use dimnames() to see row and column names
+dimnames(mat_rix)
+
+# get the name attributes of mat_rix
+names(mat_rix)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("dimname and name is different!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:cb0ddb5306
+## Matrix Subsetting
+
+Matrices can be subset in a similar way as Vectors, either by indices (integers), by characters (names), or boolean vectors.
+Subsetting a matrix to a single row or column produces a vector, unless the parameter "drop=FALSE" is used.
+Subsetting with the parameter "drop=FALSE" prevents the implicit coercion and preserves the matrix class.
+This is an example of implicit coercion in R, which can cause diﬃcult to trace bugs.
+
+
+*** =instructions
+Use "[]" for matrix subsetting, beware of the parameter "drop=FALSE"
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+mat_rix <- matrix(5:10, nrow=2, ncol=3)
+rownames(mat_rix) <- c("row1", "row2")
+colnames(mat_rix) <- c("col1", "col2", "col3")
+```
+
+*** =sample_code
+```{r}
+# use name of dimension for subsetting
+mat_rix["row2", "col3"]
+
+# try to get the subset of only "row1"
+
+
+# subset columns boolean vector
+mat_rix[, c(TRUE, FALSE, TRUE)]
+
+# get subset of row 1 by index
+mat_rix[1, ]
+
+# drop=FALSE preserves matrix
+mat_rix[1, , drop=FALSE]
+
+# revise the code to create two subsets with and without drop = FALSE argument
+mat_1 <- mat_rix[1, ]
+mat_2 <- mat_rix[1, ]
+
+# check if the two subsets are matrix using is.matrix()
+
+```
+
+*** =solution
+```{r}
+# use name of dimension for subsetting
+mat_rix["row2", "col3"]
+
+# try to get the subset of only "row1"
+mat_rix["row1", ]
+
+# subset columns boolean vector
+mat_rix[, c(TRUE, FALSE, TRUE)]
+
+# get subset of row 1 by index
+mat_rix[1, ]
+
+# drop=FALSE preserves matrix
+mat_rix[1, , drop=FALSE]
+
+# revise the code to create two subsets with and without drop = FALSE argument
+mat_1 <- mat_rix[1, ]
+mat_2 <- mat_rix[1, , drop=FALSE]
+
+# check if the two subsets are matrix using is.matrix()
+is.matrix(mat_1)
+is.matrix(mat_2)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Add or drop the 'drop = FALSE' argument does make differences!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:5db23f19b0
+## Generating Pseudo-Random Numbers
+
+Random number generators produce the same deterministic sequence of numbers after their seed value is reset.
+The function set.seed() initializes the random number generator by specifying the seed value.
+The function runif() produces random numbers from the uniform distribution.
+The function rnorm() produces random numbers from the normal distribution.
+The function pnorm() calculates the cumulative normal distribution.
+The function qnorm() calculates the inverse cumulative normal distribution.
+
+
+*** =instructions
+Learn to use set.seed() initializers, as well as runif(), rnorm(), pnorm() and qnorm()
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# reset random number generator
+set.seed(1121)
+
+# three random numbers from the uniform distribution
+runif(3)
+
+# produce another three numbers
+runif(3)
+
+# reset random number generator
+set.seed(1121)
+
+# produce another three numbers
+
+
+# produce five random numbers from standard normal distribution using rnorm()
+
+
+# produce five random numbers from the normal distribution
+rnorm(n=5, mean=1, sd=2)
+
+# calculate cumulative standard normal distribution
+c(pnorm(-2), pnorm(2))
+
+# calculate inverse cumulative standard normal distribution
+c(qnorm(0.75), qnorm(0.25))
+```
+
+*** =solution
+```{r}
+# reset random number generator
+set.seed(1121)
+
+# three random numbers from the uniform distribution
+runif(3)
+
+# produce another three numbers
+runif(3)
+
+# reset random number generator
+set.seed(1121)
+
+# produce another three numbers
+runif(3)
+
+# produce five random numbers from standard normal distribution using rnorm()
+rnorm(5)
+
+# produce five random numbers from the normal distribution
+rnorm(n=5, mean=1, sd=2)
+
+# calculate cumulative standard normal distribution
+c(pnorm(-2), pnorm(2))
+
+# calculate inverse cumulative standard normal distribution
+c(qnorm(0.75), qnorm(0.25))
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Don't forget to compare output of those runif()")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:7f3b5009e9
+## Generating Binomial Random Numbers
+
+A binomial trial is a coin ﬂip, that results in either a success or failure.
+The binomial distribution speciﬁes the probability of obtaining a certain number of successes in a sequence of independent binomial trials.
+Let p be the probability of obtaining a success in a binomial trial, and let (1−p) be the probability of failure, p = 0.5 corresponds to ﬂipping an unbiased coin.
+
+The function rbinom() produces random numbers from the binomial distribution.
+
+*** =instructions
+Learn to use rnorm() and sample() to generate binomial random numbers.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# reset random number generator
+set.seed(1121)
+
+# flip unbiased coin once, 20 times
+rbinom(n=20, size=1, 0.5)
+
+# number of heads after flipping twice, 20 times
+
+
+# flip unbiased coin once, 20 times
+sample(x=0:1, size=20, replace=TRUE)  # fast
+as.numeric(runif(20) < 0.5)  # slower
+```
+
+*** =solution
+```{r}
+# reset random number generator
+set.seed(1121)
+
+# flip unbiased coin once, 20 times
+rbinom(n=20, size=1, 0.5)
+
+# number of heads after flipping twice, 20 times
+rbinom(n=20, size=2, 0.5)
+
+# flip unbiased coin once, 20 times
+sample(x=0:1, size=20, replace=TRUE)  # fast
+as.numeric(runif(20) < 0.5)  # slower
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Same results, varied speeds!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:dcee782458
+## Generating Random Samples and Permutations
+
+A sample is a subset of elements taken from a set of data elements.
+The function sample() produces a random sample form a vector of data elements, By default the size of the sample (the size argument) is equal to the number of elements in the data vector.
+So the call sample(data) produces a random permutation of all the elements of data.
+If replace=TRUE, then sample() produces samples with replacement.
+
+*** =instructions
+Learn to use sample() to generate permutations with or without replacement.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# permutation of five numbers
+sample(x=5)
+
+# permutation of four strings
+sample(x=c("apple", "grape", "orange", "peach"))
+
+# sample of size three
+sample(x=5, size=3)
+
+# try to change the code and sample with replacement with 'replace = TRUE'
+sample(x=5)
+
+# sample of strings, change the size to 6
+sample(x=c("apple", "grape", "orange", "peach"), size=12, replace=TRUE)
+```
+
+*** =solution
+```{r}
+# permutation of five numbers
+sample(x=5)
+
+# permutation of four strings
+sample(x=c("apple", "grape", "orange", "peach"))
+
+# sample of size three
+sample(x=5, size=3)
+
+# sample with replacement
+sample(x=5, replace=TRUE)
+
+# sample of strings
+sample(x=c("apple", "grape", "orange", "peach"), size=6, replace=TRUE)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Change the 'size' argument to get permutation of differing length")
+```
+
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:d5766325a6
+## Statistical Estimators
+
+A data sample is a set of observations of a random variable.
+Let {x1,...,xn} be a data sample of a random variable x.
+Let x follow a probability distribution with population mean equal to µ and population standard deviation equal to σ.
+A statistic is a function of a data sample: f (x1,...,xn).
+A statistic is itself a random variable.
+A statistical estimator is a statistic that provides an estimate of a distribution parameter.
+
+R has the build-in function to calculate mean `mean()` and standard deviation `sd()`. To calculate the skewness and kurtosis you need to type your own formula.
+
+*** =instructions
+Learn to use mean(), sd() to calculate statistical estimators.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# reset random number generator
+set.seed(1121)
+
+# sample from Standard Normal Distribution
+sam_ple <- rnorm(1000)
+
+# sample mean
+mean(sam_ple)
+
+# sample median
+median(sam_ple)
+
+# sample standard deviation
+sd(sam_ple)
+
+# try to complete the code, save length, mean and sd for higher moments calculation
+len <- length()
+me_an <- mean()
+s_d <- sd()
+
+# calculate the skewness
+len / (len - 1) * (len - 2) * sum(((sam_ple - me_an) / s_d) ^ 3)
+
+# calculate the kurtosis
+len * (len + 1) / ((len - 1) ^ 3) * sum(((sam_ple - me_an) / s_d) ^ 4)
+```
+
+*** =solution
+```{r}
+# reset random number generator
+set.seed(1121)
+
+# sample from Standard Normal Distribution
+sam_ple <- rnorm(1000)
+
+# sample mean
+mean(sam_ple)
+
+# sample median
+median(sam_ple)
+
+# sample standard deviation
+sd(sam_ple)
+
+# try to complete the code, save length, mean and sd for higher moments calculation
+len <- length(sam_ple)
+me_an <- mean(sam_ple)
+s_d <- sd(sam_ple)
+
+# calculate the skewness
+len / (len - 1) * (len - 2) * sum(((sam_ple - me_an) / s_d) ^ 3)
+
+# calculate the kurtosis
+len * (len + 1) / ((len - 1) ^ 3) * sum(((sam_ple - me_an) / s_d) ^ 4)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Change the 'size' argument to get permutation of differing length")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:0b1fc2e81d
+## Functions in R
+
+R functions have three components: a list of formal arguments, a body containing R code, an environment.
+An R function plus its environment is referred to as a function closures, The function body should be enclosed in curly braces {}, unless it contains a single command, then it doesn’t have to enclosed.
+The function body doesn’t require a return statement, since by default R functions return the last statement evaluated in the body, args() displays the formal arguments of a function.
+
+*** =instructions
+Learn to define your own function in R.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# define a function with two arguments
+test_func <- function(first_arg, second_arg) {
+  first_arg + second_arg  # returns last evaluated statement
+}  # end test_func
+
+# apply the function
+test_func(1, 2)
+
+# display argument
+
+
+# define function that uses variable from enclosure environment
+test_func <- function(first_arg, second_arg) {
+  first_arg + second_arg + glob_var
+}  # end test_func
+
+# create glob_var
+glob_var <- 10
+
+# type 3 and 2 as the first, second input of test_func
+
+```
+
+*** =solution
+```{r}
+# define a function with two arguments
+test_func <- function(first_arg, second_arg) {
+  first_arg + second_arg  # returns last evaluated statement
+}  # end test_func
+
+# apply the function
+test_func(1, 2)
+
+# display argument using args() on test_func()
+args(test_func)
+
+# define function that uses variable from enclosure environment
+test_func <- function(first_arg, second_arg) {
+  first_arg + second_arg + glob_var
+}  # end test_func
+
+# create glob_var
+glob_var <- 10
+
+# type 3 and 2 as the first, second input of test_func
+test_func(3, 2)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Great! Now what if you redefine test_func() and forget to create glob_var? An error!")
+```
+
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:8d1dbe414e
+## Binding Arguments and Default Argument
+
+The formal arguments of a function are deﬁned in its argument list.
+When a function is called, it’s passed a list of actual function arguments, Formal arguments can be bound to actual arguments either by name or by position: 
+by name: formal arguments are bound to actual arguments with the same name;
+by position: the ﬁrst formal argument is bound to the ﬁrst actual argument, etc. 
+
+Binding by name takes precedence over binding by position: ﬁrst all the named arguments are bound, then the remaining arguments are bound by position.
+Partial argument names are bound to full names.
+
+Formal arguments may be assigned default values, so that when the actual arguments are missing then their default values are used instead.
+Default values are often assigned to function parameters, that determine the function’s behavior.
+Default values can be speciﬁed as a vector of strings, representing the possible values of a function’s parameter.
+The function match.arg() matches a string to one of the possible values, and returns the matched value, or produces an error if it can’t match it.
+The function str() displays the structure of an R object, for example a function name and its formal arguments,
+
+
+*** =instructions
+Learn to bind function arguments, and set default values.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# define a function, with one default value
+test_func <- function(first_arg, second_arg, third_arg = 10) {
+# last statement of function is return value
+  first_arg + 2*second_arg + third_arg
+}  # end test_func
+
+# bind by name without defining third argument
+test_func(first_arg=3, second_arg=2)
+
+# partial name binding without defining third argument
+test_func(first=3, second=2)
+
+# partial name binding, override default value with 12
+
+
+# bind by position
+test_func(3, 2)
+
+# mixed binding
+test_func(second_arg=2, third_arg=6, 3)
+```
+
+*** =solution
+```{r}
+# define a function, with one default value
+test_func <- function(first_arg, second_arg, third_arg = 10) {
+# last statement of function is return value
+  first_arg + 2*second_arg + third_arg
+}  # end test_func
+
+# bind by name without defining third argument
+test_func(first_arg=3, second_arg=2)
+
+# partial name binding without defining third argument
+test_func(first=3, second=2)
+
+# partial name binding, override default value with 12
+test_func(first=3, second=2, third=12)
+
+# bind by position
+test_func(3, 2)
+
+# mixed binding
+test_func(second_arg=2, third_arg=6, 3)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Enjoy playing the function arguments!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:1c856dfc6f
+## Return Values and Invisible Return
+
+The function body doesn’t require a return statement, since by default R functions return the last statement evaluated in the body, return() statements are inserted in logical branches to terminate function execution and return its intended value,
+
+If a return value is wrapped in the function invisible() then the return value isn’t printed.
+But if the function is assigned to a variable, then its return value is assigned to that variable, invisible() allows creating functions whose return values can be assigned, but which do not print when they’re not assigned.
+
+
+*** =instructions
+Use return() and invisible() to return value from within a function.
+
+*** =hint
+Remember to change the code for the 'return_invisible()' function.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# define function that returns NULL for non-numeric argument
+test_func <- function(in_put) {
+  if (!is.numeric(in_put)) {
+    warning(paste("argument", in_put, "isn't numeric"))
+    return(NULL)
+  }
+  2*in_put
+}
+
+# test function output with numeric and character input
+test_func(2)
+test_func("hello")
+
+# change the code to 'invisible()' and define a function that returns invisibly
+return_invisible <- function(in_put) {
+  return(in_put)
+}
+
+# call function with input 2
+return_invisible(2)
+```
+
+*** =solution
+```{r}
+# define function that returns NULL for non-numeric argument
+test_func <- function(in_put) {
+  if (!is.numeric(in_put)) {
+    warning(paste("argument", in_put, "isn't numeric"))
+    return(NULL)
+  }
+  2*in_put
+}
+
+# test function output with numeric and character input
+test_func(2)
+test_func("hello")
+
+# change the code to 'invisible()' and define a function that returns invisibly
+return_invisible <- function(in_put) {
+  invisible(in_put)
+}
+
+# call function with input 2
+return_invisible(2)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Enjoy playing the function arguments!")
+```
+
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:2d1cb04427
 ## Logical Operators
