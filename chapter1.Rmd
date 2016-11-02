@@ -171,6 +171,7 @@ success_msg("Great! Look at the results, play with them if you would like to")
 ## More about R sessions
 
 The function sessionInfo() returns information about the current R session:
+
 R version;
 OS platform;
 locale settings;
@@ -212,6 +213,7 @@ success_msg("Correct! Remeber to see what's pop up in the console")
 ## Environment Variables
 
 R uses environment variables to store information about its environment, such as paths to directories containing ﬁles used by R (startup, history, OS).
+
 For example the environment variables: 
 R USER and HOME store the R user Home directory, 
 R HOME stores the root directory of the R installation, 
@@ -222,7 +224,8 @@ Sys.setenv("env var=value") sets the environment variable "env var" equal to "va
 
 *** =instructions
 Use `Sys.getenv()` to display values of environment variables.
-/nChange parameters as instructed and see the results.
+
+Change parameters as instructed and see the results.
 
 *** =hint
 Simply copy the function name and change parameters inside.
@@ -271,10 +274,10 @@ success_msg("Correct! Remeber to see what's pop up in the console")
 --- type:NormalExercise lang:r xp:100 skills:1 key:4d04bf29c2
 ## Global Options Settings
 
-R uses a list of global options which aﬀect how R computes and displays results./n
-The function options() either sets or displays the values of global options:/n 
-  options("globop") displays the current value of option "globop";/n
-  getOption("globop") displays the current value of option "globop";/n
+R uses a list of global options which aﬀect how R computes and displays results.
+The function options() either sets or displays the values of global options:
+  options("globop") displays the current value of option "globop";
+  getOption("globop") displays the current value of option "globop";
   options(globop=value) sets the option "globop" equal to "value";
 
 
@@ -323,18 +326,18 @@ success_msg("OK, now see what's pop up in the console")
 --- type:NormalExercise lang:r xp:100 skills:1 key:58ca8cb732
 ## The R Workspace
 
-The workspace is the current R working environment, which includes all user-deﬁned objects and the command history./n
-The function ls() returns names of objects in the R workspace./n
-The function rm() removes objects from the R workspace./n
-The workspace can be saved into and loaded back from an *.RData ﬁle (binary ﬁle format)./n
-The function save.image() saves the whole workspace. /n
-The function save() saves just the selected objects./n
-The function load() reads data from *.RData ﬁles, and invisibly returns a vector of names of objects created in the workspace./n
+The workspace is the current R working environment, which includes all user-deﬁned objects and the command history.
+The function ls() returns names of objects in the R workspace.
+The function rm() removes objects from the R workspace.
+The workspace can be saved into and loaded back from an *.RData ﬁle (binary ﬁle format).
+The function save.image() saves the whole workspace.
+The function save() saves just the selected objects.
+The function load() reads data from *.RData ﬁles, and invisibly returns a vector of names of objects created in the workspace.
 
-When you quit R you’ll be prompted ”Save workspace image?” If you answer YES then the workspace will be saved into the .RData ﬁle in the cwd./n
-When you start R again, the workspace will be automatically loaded from the existing .RData ﬁle./n
-/n
-The function history() displays recent commands, You can also save and load the command history from a ﬁle./n
+When you quit R you’ll be prompted ”Save workspace image?” If you answer YES then the workspace will be saved into the .RData ﬁle in the cwd.
+When you start R again, the workspace will be automatically loaded from the existing .RData ﬁle.
+
+The function history() displays recent commands, You can also save and load the command history from a ﬁle.
 
 *** =instructions
 Use the function ls() and rm() to see all objects in the environment and remove some of them.
@@ -718,7 +721,9 @@ success_msg("Good Job!")
 ## Object Coercion
 
 Coercion means changing the type, mode, or class of an object, often without changing the underlying data. 
+
 Changing the mode of an object can change its class as well, but not always.
+
 Objects can be explicitly coerced using the "as.*" coercion functions.
 Most coercion functions strip the attributes from the object.
 Implicit coercion occurs when objects with diﬀerent modes are combined into a vector, forcing the elements to have the same mode.

@@ -2,20 +2,21 @@
 title_meta  : Chapter 2
 title       : R Objects
 description : In this chapter details about R objects will be covered.
-attachments : 
-  slides_link: 
-  
+
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:b1b1305012
 ## Basic R Objects
 
 The quotation marks "" (or ’’) around a character string tell R that it’s a string, not a variable name.
+
 Vectors are the basic building blocks of R objects, There are no scalars in R, and single values are stored as vectors of length "1".
+
 A character string is also a vector with a single element, with the ﬁrst element of the vector containing the string of text.
+
 The colon binary operator ’:’ produces a vector.
 The function c() combines objects into a vector.
 The "[1]" symbol means the return value is a vector.
-The function is.vector() returns TRUE if its argument is a vector, and returns FALSE otherwise,
+The function is.vector() returns TRUE if its argument is a vector, and returns FALSE otherwise.
 
 
 *** =instructions
@@ -34,22 +35,29 @@ Check if object names and function names are correctly typed.
 # create a character vector
 vec_char <- "some string"
 
-# explore the vector with basic operations of vector
-is.vector(vec_char)
-vec_char[1]
+# check if the single character is a vector
+
+
+# subset to get the first and second element of the vector
+
 
 # create a numeric vector
 vec_num <- 1:10
 
-# print and explore the vector with basic operations of vector
-vec_num
-is.vector(vec_num)
-vec_num[2]
-
-#now use c() to combine vec_char and vec_num and create vec_c
+# check if the vec_num is a vector
 
 
-#check if vec_c is a vector and print the second element of vec_c
+# subset to get the second and third element of vec_num
+
+
+# now use c() to combine vec_char and vec_num and create vec_c
+vec_c <- c(vec_char, vec_num)
+
+# check if vec_c is a vector
+
+
+# print the second element of vec_c
+
 ```
 
 *** =solution
@@ -57,25 +65,31 @@ vec_num[2]
 # create a character vector
 vec_char <- "some string"
 
-# explore the vector with basic operations of vector
+# check if the single character is a vector
 is.vector(vec_char)
+
+# subset to get the first and second element of the vector
 vec_char[1]
+vec_char[2]
 
 # create a numeric vector
 vec_num <- 1:10
 
-# print and explore the vector with basic operations of vector
-vec_num
+# check if the vec_num is a vector
 is.vector(vec_num)
-vec_num[2]
 
-#now use c() to combine vec_char and vec_num and create vec_c
+# subset to get the second and third element of vec_num
+vec_num[2]
+vec_num[3]
+
+# now use c() to combine vec_char and vec_num and create vec_c
 vec_c <- c(vec_char, vec_num)
 
-#check if vec_c is a vector and print the second element of vec_c
+# check if vec_c is a vector
 is.vector(vec_c)
+
+# print the second element of vec_c
 vec_c[2]
-#
 ```
 
 
@@ -101,7 +115,7 @@ The function cat() is useful in user-deﬁned functions.
 
 
 *** =instructions
-Explore characters and strings with functions and basic features.
+Explore characters and strings with functions and basic features. Learn to use `length()` and `nchar()`
 
 *** =hint
 Check if object names and function names are correctly typed. Don't miss any variables or functions!
@@ -113,47 +127,39 @@ Check if object names and function names are correctly typed. Don't miss any var
 
 *** =sample_code
 ```{r}
-#create a character string
+# create a character string
 str_var <- "Some string"
 
-#print the entire vector and its first element
-str_var
-str_var[1]
-
-#try to print its second element
+# print the entire vector and its second element
 
 
-#see the length of vector and string
-length(str_var)
-nchar(str_var)
+# get the length of vector and string
 
-#concatenate and echo to console
+
+# concatenate and echo to console
 cat("Hello", "World!")
 
-#use \n to start a new line when concatenating
+# use \n to start a new line when concatenating
 
 ```
 
 *** =solution
 ```{r}
-#create a character string
+# create a character string
 str_var <- "Some string"
 
-#print the entire vector and its first element
+# print the entire vector and its second element
 str_var
 str_var[1]
 
-#try to print its second element
-str_var[2]
-
-#see the length of vector and string
+# get the length of vector and string
 length(str_var)
 nchar(str_var)
 
-#concatenate and echo to console
+# concatenate and echo to console
 cat("Hello", "World!")
 
-#use \n to start a new line when concatenating
+# use \n to start a new line when concatenating
 cat("Enter\nnewline")
 ```
 
@@ -176,7 +182,7 @@ Splitting on the "." character requires surrounding it with brackets: "[.]", or 
 The function substring() extracts or replaces substrings in a character string, The recycling rule extends the length to match the longest object.
 
 *** =instructions
-Use functions to manipulate strings.
+Use functions to manipulate strings. Learn to use `paste()`, `strsplit()`, `substring()`
 
 *** =hint
 Check if object names and function names are correctly typed. Don't miss the square bracket!
@@ -188,49 +194,53 @@ Check if object names and function names are correctly typed. Don't miss the squ
 
 *** =sample_code
 ```{r}
-#create two character string and combine
+# create two character string
 str_var1 <- "Hello"
 str_var2 <- "World!"
-paste(str_var1, str_var2, sep=' ')
 
-#create a character string and a numeric vector
+# concatenate the two strings and return value
+
+
+# create a character string and a numeric vector
 str_var3 <- "a"
 num_var <- 1:4
 
-#try to combine them together with "," and see results
+# convert, recycle and concatenate
 
 
-#create a new string
+# create a new string
 hello <- "Hello.World"
 
-#split the string into seperate strings using strsplit() on "[.]"
+# split string on "[.]"
 
 
-#use substring to get from the third to the sixth elements
+# extract characters from 3 to 6
 
 ```
 
 *** =solution
 ```{r}
-#create two character string and combine
+# create two character string
 str_var1 <- "Hello"
 str_var2 <- "World!"
+
+# concatenate the two strings and return value
 paste(str_var1, str_var2, sep=' ')
 
-#create a character string and a numeric vector
+# create a character string and a numeric vector
 str_var3 <- "a"
 num_var <- 1:4
 
-#try to combine them together with "," and see results
+# convert, recycle and concatenate
 paste(str_var3, num_var, sep = ",")
 
-#create a new string
+# create a new string
 hello <- "Hello.World"
 
-#split the string into seperate strings using strsplit() on "[.]"
+# split string on "[.]"
 strsplit(hello, split = "[.]")
 
-#use substring to get from the third to the sixth elements
+# extract characters from 3 to 6
 substring(hello, 3, 6)
 ```
 
@@ -245,6 +255,7 @@ success_msg("Excellent!")
 ## Regular Expressions in R
 
 R has Regex functions for pattern matching and replacement.
+
 The function gsub() replaces all matches of a pattern in a string.
 The function grep() searches for matches of a pattern in a string.
 The function glob2rx() converts globbing wildcard patterns into regular expressions.
@@ -262,45 +273,45 @@ Check if object names and function names are correctly typed. Don't forget to us
 
 *** =sample_code
 ```{r}
-#replace "is" with "XX"
 my_string <- c("is", "XX", "is this gratis?")
-gsub(my_string)
+# replace "is" with "XX"
 
-#get indexes of elements in a vector that contains certain string
+
+# get indexes of elements in a vector that contains certain string
 grep("b+", c("abc", "xyz", "cba d", "bbb"))
 
-#get values among elements in a vector that contains certain string
-grep("b+", c("abc", "xyz", "cba d", "bbb"), value=TRUE)
+# change from the code above to return elements instead of index number
+
 
 # convert globs into regex (regular expression)
 glob2rx("abc.*")
 
-#now try to get the index of elements that contain character "i" in my_string
+# get the index of elements that contain character "i+" in my_string
 
 
-#convert my_string to regex
+# convert my_string to regex
 
 ```
 
 *** =solution
 ```{r}
-#replace "is" with "XX"
 my_string <- c("is", "XX", "is this gratis?")
+# replace "is" with "XX"
 gsub("is", "XX", my_string)
 
-#get indexes of elements in a vector that contains certain string
+# get indexes of elements in a vector that contains certain string
 grep("b+", c("abc", "xyz", "cba d", "bbb"))
 
-#get values among elements in a vector that contains certain string
+# change from the code above to return elements instead of index number
 grep("b+", c("abc", "xyz", "cba d", "bbb"), value=TRUE)
 
 # convert globs into regex (regular expression)
 glob2rx("abc.*")
 
-#now try to get the index of elements that contain character "i+" in my_string
+# get the index of elements that contain character "i+" in my_string
 grep("i+", my_string)
 
-#convert my_string to regex
+# convert my_string to regex
 glob2rx(my_string)
 ```
 
@@ -345,47 +356,61 @@ Check if object names and function names are correctly typed. Use "by=" instead 
 
 *** =sample_code
 ```{r}
-#create vectors using ":", vector() and rep()
+# create vectors from 1 to 10 using ":"
 1:10
+
+# create numeric vector of length 10 using `vector()`
 vector(mode = "numeric", length = 10)
+
+# create a vector containing five number `10`
 rep(10, times = 5)
 
-#create vectors using seq
+# create a vector of sequence from 1 to 10
 seq(10)
+
+# create a vector of sequence along -5:5
 seq(along=(-5:5))
+
+# create a vector of sequence along c("a", "b", "c")
 seq_along(c("a", "b", "c"))
+
+# create a vector of decimals from 0 to 1 containing 11 elements
 seq(from=0, to=1, len=11)
 
-#now try to use seq() to create a vector from 0 to 1, each step is 0.1, using "by="
-
-
-#use character() to create empty vector of characters
+# create empty character vector of length 5
 character(5)
 
-#now try to use numeric() to create empty vector of numerics of length 0
-
+# create empty vector of numerics of length 0
+numeric(0)
 ```
 
 *** =solution
 ```{r}
-#create vectors using ":", vector() and rep()
+# create vectors from 1 to 10 using ":"
 1:10
+
+# create numeric vector of length 10 using `vector()`
 vector(mode = "numeric", length = 10)
+
+# create a vector containing five number `10`
 rep(10, times = 5)
 
-#create vectors using seq
+# create a vector of sequence from 1 to 10
 seq(10)
+
+# create a vector of sequence along -5:5
 seq(along=(-5:5))
+
+# create a vector of sequence along c("a", "b", "c")
 seq_along(c("a", "b", "c"))
+
+# create a vector of decimals from 0 to 1 containing 11 elements
 seq(from=0, to=1, len=11)
 
-#now try to use seq() to create a vector from 0 to 1, each step is 0.1, using "by="
-seq(from = 0, to = 1, by = 0.1)
-
-#use character() to create empty vector of characters
+# create empty character vector of length 5
 character(5)
 
-#now try to use numeric() to create empty vector of numerics of length 0
+# create empty vector of numerics of length 0
 numeric(0)
 ```
 
@@ -418,67 +443,49 @@ Check if object names and function names are correctly typed.
 
 *** =sample_code
 ```{r}
-#multiply a vector
-2*4:8
-2*(4:8)
+# multiply the vector 4:8 by 2 without bracket
 
-#divide a vector
-4:8/2
-(0:10)/10
 
-#create vector
+# multiply the vector 4:8 by 2 with bracket
+
+
+# divide the vector 4:8 by 2
+
+
+# create vector
 vec_tor <- c(8, 6, 5, 7)
-vec_tor
 
-#boolean vector TRUE if element is equal to second one, otherwise FALSE
-vec_tor == vec_tor[2]
-
-#try to create boolean vector TRUE for elements greater than six, otherwise FALSE
+# boolean vector TRUE if element is equal to second one
 
 
-#square all elements
-vec_tor^2
-
-#now try to multiply all elements by 2
+# boolean vector TRUE for elements greater than six
 
 
-#combine two vectors
-c(11, 5:10)
-
-#now try to append number to vector
+# append number 2.0 to vector
 
 ```
 
 *** =solution
 ```{r}
-#multiply a vector
+# multiply the vector 4:8 by 2 without bracket
 2*4:8
+
+# multiply the vector 4:8 by 2 with bracket
 2*(4:8)
 
-#divide a vector
+# divide the vector 4:8 by 2
 4:8/2
-(0:10)/10
 
-#create vector
+# create vector
 vec_tor <- c(8, 6, 5, 7)
-vec_tor
 
-#boolean vector TRUE if element is equal to second one
+# boolean vector TRUE if element is equal to second one
 vec_tor == vec_tor[2]
 
-#try to create boolean vector TRUE for elements greater than six
+# boolean vector TRUE for elements greater than six
 vec_tor > 6
 
-#square all elements
-vec_tor^2
-
-#now try to multiply all elements by 2
-2*vec_tor
-
-#combine two vectors
-c(11, 5:10)
-
-#now try to append number to vector
+# append number 2.0 to vector
 c(vec_tor, 2.0)
 ```
 
@@ -516,24 +523,21 @@ Check if object names and function names are correctly typed.
 vec_tor <- c(pi_const=pi, euler=exp(1), gamma=-digamma(1))
 
 # get names of elements
-names(vec_tor)
+
 
 # remove names attribute
-unname(vec_tor)
+
 
 # combine two vectors of letters
-c('a', letters[5:10])
 
-# create named vector using structure
+
+# create named vector using structure, names are recycled from 'el1' to 'el5'
 structure(sample(1:5), names=paste0("el", 1:5))
 
 # now try to assign 1:3 to names of vec_tor
 
 
 # print out vec_tor
-
-
-# use structure to create a vector of 1:3, naming it with vec_tor
 
 ```
 
@@ -559,9 +563,6 @@ names(vec_tor) <- 1:3
 
 # print out vec_tor
 vec_tor
-
-# use structure to create a vector of 1:3, naming it by vec_tor
-structure(1:3, names = vec_tor)
 ```
 
 
@@ -601,25 +602,25 @@ vec_tor <- c(pi_const=pi, euler=exp(1), gamma=-digamma(1))
 *** =sample_code
 ```{r}
 # extract second element
-vec_tor[2]
+
 
 # extract all elements, except the second element
-vec_tor[-2]
+
 
 # extract zero elements - returns zero-length vector
-vec_tor[0]
 
-# extract second and third elements
-vec_tor[c(FALSE, TRUE, TRUE)]
 
-# extract a element using their names
-vec_tor["eulery"]
+# extract second and third elements by boolean vector
+
+
+# extract a element using its name "eulery"
+
 
 # extract multiple elements using a vector of their names
-vec_tor[c("pie", "gammy")]
+
 
 # now create a boolean vector comparing vec_tor to 2, name it as "bool"
-
+bool <- vec_tor > 2
 
 # subset vec_tor with bool to see which element is bigger than 2
 
@@ -636,10 +637,10 @@ vec_tor[-2]
 # extract zero elements - returns zero-length vector
 vec_tor[0]
 
-# extract second and third elements
+# extract second and third elements by boolean vector
 vec_tor[c(FALSE, TRUE, TRUE)]
 
-# extract a element using their names
+# extract a element using its name "eulery"
 vec_tor["eulery"]
 
 # extract multiple elements using a vector of their names
@@ -683,24 +684,24 @@ vec_tor <- runif(5)
 *** =sample_code
 ```{r}
 # first, print the vec_tor
-vec_tor
 
-# compare vec_tor to 0.5, in this way you actually created a boolean vector
-vec_tor > 0.5
+
+# compare vec_tor to 0.5
+
 
 # boolean vector of elements equal to the second one
-vec_tor == vec_tor[2]
+
 
 # extract all elements equal to the second one
-vec_tor[vec_tor == vec_tor[2]]
-
-# now extract all elements greater than 0.5
 
 
-# use which() and returns the index of filtered element greater than 0.5
-which(vec_tor > 0.5)
+# extract all elements greater than 0.5
 
-# use which() and "[]" to extract elements greater than 0.5
+
+# get index of elements > 0.5
+
+
+# combine which() and "[]" to extract elements greater than 0.5
 
 ```
 
@@ -709,7 +710,7 @@ which(vec_tor > 0.5)
 # first, print the vec_tor
 vec_tor
 
-# compare vec_tor to 0.5, in this way you actually created a boolean vector
+# compare vec_tor to 0.5
 vec_tor > 0.5
 
 # boolean vector of elements equal to the second one
@@ -718,13 +719,13 @@ vec_tor == vec_tor[2]
 # extract all elements equal to the second one
 vec_tor[vec_tor == vec_tor[2]]
 
-# now extract all elements greater than 0.5
+# extract all elements greater than 0.5
 vec_tor[vec_tor > 0.5]
 
-# use which() and returns the index of filtered element greater than 0.5
+# get index of elements > 0.5
 which(vec_tor > 0.5)
 
-# use which() and "[]" to extract elements greater than 0.5
+# combine which() and "[]" to extract elements greater than 0.5
 vec_tor[which(vec_tor > 0.5)]
 ```
 
@@ -761,31 +762,31 @@ fac_tor <- factor(c('b', 'c', 'd', 'a', 'c', 'b'))
 
 *** =sample_code
 ```{r}
-# have a look at the factor vector
+# print the factor vector 'fac_tor'
 fac_tor
 
-# factor can be subsetted the same way using "[]"
-fac_tor[3]
+# subset fac_tor for the third element
+
 
 # get factor attributes
-attributes(fac_tor)
+
 
 # get factor levels
-levels(fac_tor)
+
 
 # get encoding vector
-as.numeric(fac_tor)
 
-# coerce vector of 1:5 to factor, and then coerce it back using as.vector()
+
+# coerce factor to character vector
 
 ```
 
 *** =solution
 ```{r}
-# have a look at the factor vector
+# print the factor vector 'fac_tor'
 fac_tor
 
-# factor can be subsetted the same way using "[]"
+# subset fac_tor for the third element
 fac_tor[3]
 
 # get factor attributes
@@ -797,7 +798,7 @@ levels(fac_tor)
 # get encoding vector
 as.numeric(fac_tor)
 
-# coerce vector of 1:5 to factor, and then coerce it back using as.vector()
+# coerce factor to character vector
 as.vector(factor(1:5))
 ```
 
@@ -833,18 +834,18 @@ fac_tor <- factor(c('b', 'c', 'd', 'a', 'c', 'b'))
 fac_tor
 
 # get encoding vector
-as.numeric(fac_tor)
+
 
 # get unique values
-unique(fac_tor)
 
-# get contingency table using sapply 
-sapply(levels(fac_tor), 
+
+# change the code below to get contingency table
+sapply(fac_tor, 
  function(le_vel) {
-   sum(fac_tor==le_vel)
+   sum(fac_tor=le_vel)
  })
 
-# get contingency (frequency) table using table() on fac_tor
+# get contingency (frequency) table
 
 ```
 
@@ -859,13 +860,13 @@ as.numeric(fac_tor)
 # get unique values
 unique(fac_tor)
 
-# get contingency table using sapply 
+# change the code below to get contingency table using sapply 
 sapply(levels(fac_tor), 
  function(le_vel) {
    sum(fac_tor==le_vel)
  })
 
-# get contingency (frequency) table using table() on fac_tor
+# get contingency (frequency) table
 table(fac_tor)
 ```
 
@@ -905,16 +906,20 @@ Check if object names and function names are correctly typed.
 # see how we can tweak the outcome findInterval() function with five parameters
 str(findInterval)
 
-# get index of the element of "vec" that matches 5
-findInterval(x=5, vec=c(3, 5, 7))
-match(5, c(3, 5, 7))
+# get index of the element of "vec" c(3,5,7) that matches 5
+
+
+# use match()
+
 
 # no exact match
-findInterval(x=6, vec=c(3, 5, 7))
-match(6, c(3, 5, 7))
+
+
+# use match()
+
 
 # indices of "vec" that match elements of "x"
-findInterval(x=1:8, vec=c(3, 5, 7))
+
 
 # return only indices of inside intervals
 
@@ -928,12 +933,16 @@ findInterval(x=1:8, vec=c(3, 5, 7))
 # see how we can tweak the outcome findInterval() function with five parameters
 str(findInterval)
 
-# get index of the element of "vec" that matches 5
+# get index of the element of "vec" c(3,5,7) that matches 5
 findInterval(x=5, vec=c(3, 5, 7))
+
+# use match()
 match(5, c(3, 5, 7))
 
 # no exact match
 findInterval(x=6, vec=c(3, 5, 7))
+
+# use match()
 match(6, c(3, 5, 7))
 
 # indices of "vec" that match elements of "x"
@@ -986,10 +995,10 @@ brea_ks
 # create a vector of temperatures
 tempe_ratures <- runif(10, min=10, max=100)
 
-# name values according to breakpoints
+# change the code to name values according to breakpoints
 feels_like <- names(
-  brea_ks[findInterval(x=tempe_ratures,
-                 vec=brea_ks)])
+  brea_ks,findInterval(x=tempe_ratures,
+                 vec=brea_ks))
 
 names(tempe_ratures) <- feels_like
 
@@ -1010,7 +1019,7 @@ brea_ks
 # create a vector of temperatures
 tempe_ratures <- runif(10, min=10, max=100)
 
-# name values according to breakpoints
+# change the code to name values according to breakpoints
 feels_like <- names(
   brea_ks[findInterval(x=tempe_ratures,
                  vec=brea_ks)])
@@ -1055,23 +1064,26 @@ library(microbenchmark)
 # create a vector of random value
 foo <- sample(0:6) + 0.1
 
-# print the vector
-foo
+# print the vector foo
+
 
 # use cut to vector
 cut(x=foo, breaks=c(2, 4, 6, 8))
+
+# bind the cutted vector with rbind()
 rbind(foo, cut(x=foo, breaks=c(2, 4, 6, 8)))
 
-# use findInterval() to cut the vector and compare the results
-
+# cut the vector with findInterval()
+findInterval(x=1:8, vec=c(2, 4, 6, 8))
 
 # findInterval() is a compiled function, so it is faster than cut()
+# change the code to compare their speed
 vec_tor <- rnorm(1000)
 summary(microbenchmark(
   find_interval=
-    findInterval(x=vec_tor, vec=c(3, 5, 7)),
+    findInterval(vec=c(3, 5, 7)),
   cuut=
-    cut(x=vec_tor, breaks=c(3, 5, 7)),
+    cut(breaks=c(3, 5, 7)),
   times=10))[, c(1, 4, 5)]
 ```
 
@@ -1080,17 +1092,20 @@ summary(microbenchmark(
 # create a vector of random value
 foo <- sample(0:6) + 0.1
 
-# print the vector
+# print the vector foo
 foo
 
 # use cut to vector
 cut(x=foo, breaks=c(2, 4, 6, 8))
+
+# bind the cutted vector with rbind()
 rbind(foo, cut(x=foo, breaks=c(2, 4, 6, 8)))
 
-# use findInterval() to cut the vector and compare the results
+# cut the vector with findInterval()
 findInterval(x=1:8, vec=c(2, 4, 6, 8))
 
 # findInterval() is a compiled function, so it is faster than cut()
+# change the code to compare their speed
 vec_tor <- rnorm(1000)
 summary(microbenchmark(
   find_interval=
@@ -1140,19 +1155,19 @@ mat_rix
 matrix(5:10, nrow=2, byrow=TRUE)
 
 # extract third element from second row
-mat_rix[2, 3]
+
 
 # extract second row
-mat_rix[2, ]
+
 
 # now try to extract third column
 
 
 # extract first and third column
-mat_rix[, c(1,3)]
+
 
 # remove second column
-mat_rix[, -2]
+
 
 # get the number of rows or columns
 nrow(mat_rix); ncol(mat_rix)

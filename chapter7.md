@@ -1,3 +1,3 @@
 ---
-title       : Insert the chapter title here
-description : Insert the chapter description here
+title       : More on R
+description : More details about R will be placed here
