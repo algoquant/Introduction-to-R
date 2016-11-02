@@ -1,20 +1,1358 @@
 --- 
 title_meta  : Chapter 3
-title       : Matrices
-description : In this chapter you will learn how to work with matrices in R. By the end of the chapter, you will be able to create matrices and to understand how you can do basic computations with them. You will analyze the box office numbers of Star Wars to illustrate the use of matrices in R. May the force be with you!
-attachments : 
-  slides_link: https://s3.amazonaws.com/assets.datacamp.com/course/introduction_to_r/slides/ch3_slides.pdf
+title       : R functional operations
+description : In this chapter you will learn to use the functional operations which is essential for more powerful operations. May the force be with you!
   
---- type:VideoExercise lang:r xp:50 skills:1 key:82d8734b17
-## Create and Name Matrices
 
-*** =video_link
-//player.vimeo.com/video/138173926
+--- type:NormalExercise lang:r xp:100 skills:1 key:5db23f19b0
+## Generating Pseudo-Random Numbers
 
-*** =video_hls
-//videos.datacamp.com/transcoded/732_intro_to_r/v1/hls-ch3_1.master.m3u8
+Random number generators produce the same deterministic sequence of numbers after their seed value is reset.
+
+The function set.seed() initializes the random number generator by specifying the seed value.
+The function runif() produces random numbers from the uniform distribution.
+The function rnorm() produces random numbers from the normal distribution.
+The function pnorm() calculates the cumulative normal distribution.
+The function qnorm() calculates the inverse cumulative normal distribution.
 
 
+*** =instructions
+Learn to use set.seed() initializers, as well as runif(), rnorm(), pnorm() and qnorm()
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# reset random number generator 1121
+set.seed(1121)
+
+# three random numbers from the uniform distribution
+
+
+# produce another three numbers
+
+
+# reset random number generator 1121
+set.seed(1121)
+
+# produce another three numbers
+
+
+# produce five random numbers from standard normal distribution
+
+
+# produce five random numbers from the normal distribution
+
+
+# calculate cumulative standard normal distribution within 2 sigma from mean
+
+
+# calculate inverse cumulative standard normal distribution within 0.75 to 0.25
+
+```
+
+*** =solution
+```{r}
+# reset random number generator
+set.seed(1121)
+
+# three random numbers from the uniform distribution
+runif(3)
+
+# produce another three numbers
+runif(3)
+
+# reset random number generator
+set.seed(1121)
+
+# produce another three numbers
+runif(3)
+
+# produce five random numbers from standard normal distribution using rnorm()
+rnorm(5)
+
+# produce five random numbers from the normal distribution
+rnorm(n=5, mean=1, sd=2)
+
+# calculate cumulative standard normal distribution within 2 sigma from mean
+c(pnorm(-2), pnorm(2))
+
+# calculate inverse cumulative standard normal distribution within 0.75 to 0.25
+c(qnorm(0.75), qnorm(0.25))
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Don't forget to compare output of those runif()")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:7f3b5009e9
+## Generating Binomial Random Numbers
+
+A binomial trial is a coin ﬂip, that results in either a success or failure.
+The binomial distribution speciﬁes the probability of obtaining a certain number of successes in a sequence of independent binomial trials.
+Let p be the probability of obtaining a success in a binomial trial, and let (1−p) be the probability of failure, p = 0.5 corresponds to ﬂipping an unbiased coin.
+
+The function rbinom() produces random numbers from the binomial distribution.
+
+*** =instructions
+Learn to use rnorm() and sample() to generate binomial random numbers.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# reset random number generator
+set.seed(1121)
+
+# flip unbiased coin once, 20 times
+
+
+# number of heads after flipping twice, 20 times
+
+
+# flip unbiased coin once, 20 times with faster and slower ways
+
+```
+
+*** =solution
+```{r}
+# reset random number generator
+set.seed(1121)
+
+# flip unbiased coin once, 20 times
+rbinom(n=20, size=1, 0.5)
+
+# number of heads after flipping twice, 20 times
+rbinom(n=20, size=2, 0.5)
+
+# flip unbiased coin once, 20 times with faster and slower ways
+sample(x=0:1, size=20, replace=TRUE)
+as.numeric(runif(20) < 0.5)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Same results, varied speeds!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:dcee782458
+## Generating Random Samples and Permutations
+
+A sample is a subset of elements taken from a set of data elements.
+The function sample() produces a random sample form a vector of data elements, By default the size of the sample (the size argument) is equal to the number of elements in the data vector.
+So the call sample(data) produces a random permutation of all the elements of data.
+If replace=TRUE, then sample() produces samples with replacement.
+
+*** =instructions
+Learn to use sample() to generate permutations with or without replacement.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# permutation of five numbers
+
+
+# change codes to permutate of four strings
+c("apple", "grape", "orange", "peach")
+
+# sample of size three
+
+
+# change the code and sample with replacement with 'replace = TRUE'
+sample(x=5)
+
+# sample of strings, change the size to 6
+sample(x=c("apple", "grape", "orange", "peach"), size=12, replace=TRUE)
+```
+
+*** =solution
+```{r}
+# permutation of five numbers
+sample(x=5)
+
+# change codes to permutate of four strings
+sample(x=c("apple", "grape", "orange", "peach"))
+
+# sample of size three
+sample(x=5, size=3)
+
+# change the code and sample with replacement with 'replace = TRUE'
+sample(x=5, replace=TRUE)
+
+# sample of strings,change the size to 6
+sample(x=c("apple", "grape", "orange", "peach"), size=6, replace=TRUE)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Change the 'size' argument to get permutation of differing length")
+```
+
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:d5766325a6
+## Statistical Estimators
+
+A data sample is a set of observations of a random variable.
+Let {x1,...,xn} be a data sample of a random variable x.
+Let x follow a probability distribution with population mean equal to µ and population standard deviation equal to σ.
+A statistic is a function of a data sample: f (x1,...,xn).
+A statistic is itself a random variable.
+A statistical estimator is a statistic that provides an estimate of a distribution parameter.
+
+R has the build-in function to calculate mean `mean()` and standard deviation `sd()`. To calculate the skewness and kurtosis you need to type your own formula.
+
+*** =instructions
+Learn to use mean(), sd() to calculate statistical estimators.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# reset random number generator
+set.seed(1121)
+
+# sample from Standard Normal Distribution
+sam_ple <- rnorm(1000)
+
+# sample mean
+
+
+# sample median
+
+
+# sample standard deviation
+
+
+# try to complete the code, save length, mean and sd for higher moments calculation
+len <- length()
+me_an <- mean()
+s_d <- sd()
+
+# calculate the skewness
+
+
+# calculate the kurtosis
+
+```
+
+*** =solution
+```{r}
+# reset random number generator
+set.seed(1121)
+
+# sample from Standard Normal Distribution
+sam_ple <- rnorm(1000)
+
+# sample mean
+mean(sam_ple)
+
+# sample median
+median(sam_ple)
+
+# sample standard deviation
+sd(sam_ple)
+
+# try to complete the code, save length, mean and sd for higher moments calculation
+len <- length(sam_ple)
+me_an <- mean(sam_ple)
+s_d <- sd(sam_ple)
+
+# calculate the skewness
+len / (len - 1) * (len - 2) * sum(((sam_ple - me_an) / s_d) ^ 3)
+
+# calculate the kurtosis
+len * (len + 1) / ((len - 1) ^ 3) * sum(((sam_ple - me_an) / s_d) ^ 4)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Change the 'size' argument to get permutation of differing length")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:0b1fc2e81d
+## Functions in R
+
+R functions have three components: a list of formal arguments, a body containing R code, an environment.
+An R function plus its environment is referred to as a function closures, The function body should be enclosed in curly braces {}, unless it contains a single command, then it doesn’t have to enclosed.
+The function body doesn’t require a return statement, since by default R functions return the last statement evaluated in the body, args() displays the formal arguments of a function.
+
+*** =instructions
+Learn to define your own function in R.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# define a function with two arguments
+test_func <- function(first_arg, second_arg) {
+  first_arg + second_arg  # returns last evaluated statement
+}
+
+# apply the function
+test_func(1, 2)
+
+# display argument
+
+
+# define function that uses variable from enclosure environment
+test_func <- function(first_arg, second_arg) {
+  first_arg + second_arg + glob_var
+}
+
+# create glob_var of 10
+
+
+# type 3 and 2 as the first, second input of test_func
+
+```
+
+*** =solution
+```{r}
+# define a function with two arguments
+test_func <- function(first_arg, second_arg) {
+  first_arg + second_arg  # returns last evaluated statement
+}
+
+# apply the function
+test_func(1, 2)
+
+# display argument
+args(test_func)
+
+# define function that uses variable from enclosure environment
+test_func <- function(first_arg, second_arg) {
+  first_arg + second_arg + glob_var
+}
+
+# create glob_var of 10
+glob_var <- 10
+
+# type 3 and 2 as the first, second input of test_func
+test_func(3, 2)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Great! Now what if you redefine test_func() and forget to create glob_var? An error!")
+```
+
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:8d1dbe414e
+## Binding Arguments and Default Argument
+
+The formal arguments of a function are deﬁned in its argument list.
+When a function is called, it’s passed a list of actual function arguments, Formal arguments can be bound to actual arguments either by name or by position: 
+by name: formal arguments are bound to actual arguments with the same name;
+by position: the ﬁrst formal argument is bound to the ﬁrst actual argument, etc. 
+
+Binding by name takes precedence over binding by position: ﬁrst all the named arguments are bound, then the remaining arguments are bound by position.
+Partial argument names are bound to full names.
+
+Formal arguments may be assigned default values, so that when the actual arguments are missing then their default values are used instead.
+Default values are often assigned to function parameters, that determine the function’s behavior.
+Default values can be speciﬁed as a vector of strings, representing the possible values of a function’s parameter.
+The function match.arg() matches a string to one of the possible values, and returns the matched value, or produces an error if it can’t match it.
+The function str() displays the structure of an R object, for example a function name and its formal arguments,
+
+
+*** =instructions
+Learn to bind function arguments, and set default values.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# define a function, with one default value
+test_func <- function(first_arg, second_arg, third_arg = 10) {
+# last statement of function is return value
+  first_arg + 2*second_arg + third_arg
+}  # end test_func
+
+# bind by name with first argument to 3, second argument to 2, without defining third argument
+
+
+# partial name binding with first argument to 3, second argument to 2, without defining third argument 
+
+
+# partial name binding, override default value with 12
+
+
+# bind by position with first argument to 3, second argument to 2, without defining third argument
+
+
+# mixed binding with first argument to 3 at the last, second argument to 2 at the first and third argument to 6 at the middle
+
+```
+
+*** =solution
+```{r}
+# define a function, with one default value
+test_func <- function(first_arg, second_arg, third_arg = 10) {
+# last statement of function is return value
+  first_arg + 2*second_arg + third_arg
+}  # end test_func
+
+# bind by name with first argument to 3, second argument to 2, without defining third argument
+test_func(first_arg=3, second_arg=2)
+
+# partial name binding with first argument to 3, second argument to 2, without defining third argument 
+test_func(first=3, second=2)
+
+# partial name binding, override default value with 12
+test_func(first=3, second=2, third=12)
+
+# bind by position with first argument to 3, second argument to 2, without defining third argument
+test_func(3, 2)
+
+# mixed binding with first argument to 3 at the last, second argument to 2 at the first and third argument to 6 at the middle
+test_func(second_arg=2, third_arg=6, 3)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Enjoy playing the function arguments!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:1c856dfc6f
+## Return Values and Invisible Return
+
+The function body doesn’t require a return statement, since by default R functions return the last statement evaluated in the body, return() statements are inserted in logical branches to terminate function execution and return its intended value,
+
+If a return value is wrapped in the function invisible() then the return value isn’t printed.
+But if the function is assigned to a variable, then its return value is assigned to that variable, invisible() allows creating functions whose return values can be assigned, but which do not print when they’re not assigned.
+
+
+*** =instructions
+Use return() and invisible() to return value from within a function.
+
+*** =hint
+Remember to change the code for the 'return_invisible()' function.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# define function that returns NULL for non-numeric argument
+test_func <- function(in_put) {
+  if (!is.numeric(in_put)) {
+    warning(paste("argument", in_put, "isn't numeric"))
+    return(NULL)
+  }
+  2*in_put
+}
+
+# test function output with numeric and character input
+test_func(2)
+test_func("hello")
+
+# change the code to 'invisible()' and define a function that returns invisibly
+return_invisible <- function(in_put) {
+  return(in_put)
+}
+
+# call function with input 2
+return_invisible(2)
+```
+
+*** =solution
+```{r}
+# define function that returns NULL for non-numeric argument
+test_func <- function(in_put) {
+  if (!is.numeric(in_put)) {
+    warning(paste("argument", in_put, "isn't numeric"))
+    return(NULL)
+  }
+  2*in_put
+}
+
+# test function output with numeric and character input
+test_func(2)
+test_func("hello")
+
+# change the code to 'invisible()' and define a function that returns invisibly
+return_invisible <- function(in_put) {
+  invisible(in_put)
+}
+
+# call function with input 2
+return_invisible(2)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Enjoy playing the function arguments!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:2d1cb04427
+## Logical Operators
+
+R has the following logical operators: 
+`<` less than, 
+`<=` less than or equal to, 
+`>` greater than, 
+`>=` greater than or equal to, 
+`==` exactly equal to, 
+`!=` not equal to, 
+`!x` Not x, 
+`x & y` x AND y, 
+`x | y` x OR y, 
+
+These operators are applied to vectors element-wise.
+
+
+*** =instructions 
+Use logical operators to create, combine or negate logical vectors. 
+
+*** =hint 
+Type code as instructed in the comment.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+
+```
+
+*** =sample_code
+```{r}
+# test the '|' operator
+TRUE | FALSE
+TRUE | NA
+
+vec_tor1 <- c(2, 4, 6)
+# element-wise comparison
+vec_tor1 < 5
+
+# combine two comparison with '&'
+(vec_tor1 < 5) & (vec_tor1 > 3)
+
+# compare two vectors
+vec_tor2 <- c(-10, 0, 10)
+vec_tor1 < vec_tor2
+
+# use '&' for two different boolean vector
+c(FALSE, TRUE, FALSE);c(TRUE, TRUE, FALSE)
+
+# use '|' for the same two boolean vector
+c(FALSE, TRUE, FALSE);c(TRUE, TRUE, FALSE)
+```
+
+*** =solution
+```{r}
+# test the '|' operator
+TRUE | FALSE
+TRUE | NA
+
+vec_tor1 <- c(2, 4, 6)
+# element-wise comparison
+vec_tor1 < 5
+
+# combine two comparison with '&'
+(vec_tor1 < 5) & (vec_tor1 > 3)
+
+# compare two vectors
+vec_tor2 <- c(-10, 0, 10)
+vec_tor1 < vec_tor2
+
+# use '&' for two different boolean vector
+c(FALSE, TRUE, FALSE) & c(TRUE, TRUE, FALSE)
+
+# use '|' for the same two boolean vector
+c(FALSE, TRUE, FALSE) | c(TRUE, TRUE, FALSE)
+```
+
+*** =sct
+```{r}
+msg <- "Do not change how `vec_tor1` and `vec_tor2` are created!"
+lapply(c("vec_tor1", "vec_tor2"), test_object, undefined_msg = msg, incorrect_msg = msg)
+success_msg("Perfect! Let's explore logical operators further.")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:c6e056b9c3
+## Long Form Logical Operators
+
+R also has two long form logical operators: 
+`x && y` x AND y, 
+`x || y` x OR y
+
+These operators diﬀer from the short form operators in two ways: 
+They only evaluate the ﬁrst elements of their vector arguments, 
+They short-circuit (stop evaluation as soon as the expression is determined).
+
+Rule of Thumb
+Use `&&` and `||` in if-clauses
+
+*** =instructions
+Use '&&' and '||' in if-clause valuation.
+
+*** =hint
+Use '&&' and '||' in if-clause valuation for two or more long objects.
+
+
+*** =pre_exercise_code
+```{r}
+```
+
+*** =sample_code
+```{r}
+# test long logical operators with boolean vectors
+c(FALSE, TRUE, FALSE);c(TRUE, TRUE, FALSE)
+c(FALSE, TRUE, FALSE);c(TRUE, TRUE, FALSE)
+
+# test long logical operators with functions
+echo_true <- function() {cat("echo_true\t"); TRUE}
+echo_false <- function() {cat("echo_false\t"); FALSE}
+echo_true();echo_false()
+echo_true();echo_false()
+
+# define a new vector
+vec_tor <- c(2, 4, 6)
+
+# change the code to make sure evaluations in if-clause works with no flaw
+if (is.matrix(vec_tor) & (vec_tor[2, 3] > 0)) {
+  vec_tor[2, 3] <- 1
+}
+```
+
+*** =solution
+
+```{r}
+# test long logical operators with boolean vectors
+c(FALSE, TRUE, FALSE) && c(TRUE, TRUE, FALSE)
+c(FALSE, TRUE, FALSE) || c(TRUE, TRUE, FALSE)
+
+# test long logical operators with functions
+echo_true <- function() {cat("echo_true\t"); TRUE}
+echo_false <- function() {cat("echo_false\t"); FALSE}
+echo_true() | echo_false()
+echo_true() || echo_false()
+
+# define a new vector
+vec_tor <- c(2, 4, 6)
+
+# change the code to make sure evaluations in if-clause works with no flaw
+if (is.matrix(vec_tor) && (vec_tor[2, 3] > 0)) {
+  vec_tor[2, 3] <- 1
+}
+```
+
+*** =sct
+```{r}
+test_object("vec_tor", 
+            incorrect_msg = "Don't change how `vec_tor` is defined.")
+success_msg("Very good! Now you see the long and short logical operators is quite different!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:ebb5aae2ff
+## Arithmetic Operators
+
+Arithmetic operators perform arithmetic operations on numeric or complex vectors:
+`+` performs addition, 
+`-` performs subtraction, 
+`*` performs multiplication, 
+`/` performs division, 
+`^` and `**` perform exponentiation,
+
+
+*** =instructions
+Utilize arithmetic operators to do everyday calculation.
+
+*** =hint
+Remember '**' and '^' are interchangeable
+
+*** =pre_exercise_code
+```{r}
+```
+
+*** =sample_code
+```{r}
+# multiplication
+4.7 * 0.5
+
+# division
+4.7 / 0.5
+
+# exponentiation, 2 to the power 3
+2**3
+
+# replicate the former example using another way of exponentiation
+
+```
+
+*** =solution
+```{r}
+# multiplication
+4.7 * 0.5
+
+# division
+4.7 / 0.5
+
+# exponentiation, 2 to the power 3
+2**3
+
+# replicate the former example using another way of exponentiation
+2^3
+```
+
+*** =sct
+```{r}
+success_msg("Well done!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:5c026ed9fb
+## Comparing Objects With identical()
+
+The function identical() tests if two objects are exactly the same, and always returns a single logical TRUE or FALSE (never NA or logical vectors).
+For atomic arguments identical() often gives the same result as the "==" operator, but it’s not synonymous with it in general.
+The "==" operator applies the recycling rule to vector arguments and returns logical vectors, but identical() doesn’t and returns a single logical value.
+
+
+*** =instructions
+Compare the return value using `==` and `identical()`
+
+*** =hint
+Use `==` instead of `identical`
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# compare with atomic object
+num_var <- 2
+num_var==2
+identical(num_var, 2)
+
+# compare with null using both methods in the instruction
+
+
+# compare with different vector
+var_num <- 1:5
+var_char <- letters[1:5]
+
+# compare using both methods in the instruction
+
+```
+
+*** =solution
+```{r}
+# compare with atomic object
+num_var <- 2
+num_var==2
+identical(num_var, 2)
+
+# compare with null using both methods in the instruction
+identical(num_var, NULL)
+num_var == NULL
+
+# compare with different vector
+var_num <- 1:5
+var_char <- letters[1:5]
+
+# compare using both methods in the instruction
+identical(var_num, var_char)
+var_num == var_char
+```
+
+*** =sct
+```{r}
+msg <- "Do not change the values of defined vector; they were already coded for you."
+test_object("num_var", incorrect_msg = sprintf(msg, "num_var"))
+test_object("var_num", incorrect_msg = sprintf(msg, "var_num"))
+test_object("var_char", incorrect_msg = sprintf(msg, "var_char"))
+success_msg("Nice one! Now you see how to compare in various ways.")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:6b17fc50b9
+## Lookup and Matching
+
+The function which() returns the indices of the TRUE elements of a boolean vector or array.
+If the argument is an array and arr.ind=TRUE, then which() returns a matrix with rows containing the indices of the TRUE elements.
+The functions which.max() and which.min() return the index of the minimum or maximum of a numeric or boolean vector.
+
+
+*** =instructions
+- Use which.max() to search for the maximum value
+
+*** =hint
+Similar to the previous codes, use which.max() on desired object, like the latter example.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# create a vector and a matrix
+vec_tor <- sample(1:9)
+mat_rix <- matrix(vec_tor, ncol=3)
+vec_tor
+
+# search the vector for those equal to 5
+
+
+# equivalent but less efficient than the above code
+
+
+# find indices of TRUE elements of boolean matrix
+
+
+# equivalent but less efficient than above
+
+
+# find the maximum of a vector
+
+
+# equivalent but less efficient than above
+
+```
+
+*** =solution
+```{r}
+# create a vector and a matrix
+vec_tor <- sample(1:9)
+mat_rix <- matrix(vec_tor, ncol=3)
+vec_tor
+
+# search the vector for particular value
+which(vec_tor == 5)
+
+# equivalent but less efficient than above
+(1:length(vec_tor))[vec_tor == 5]
+
+# find indices of TRUE elements of boolean matrix
+which((mat_rix == 5)|(mat_rix == 6), arr.ind=TRUE)
+
+# equivalent but less efficient than above
+arrayInd(which((mat_rix == 5)|(mat_rix == 6)), dim(mat_rix), dimnames(mat_rix))
+
+# find the maximum of a vector
+which.max(vec_tor)
+
+# equivalent but less efficient than above
+which(vec_tor == max(vec_tor))
+```
+
+*** =sct
+```{r}
+msg = "Do not change anything about the definition and naming of `vec_tor` and `mat_rix`."
+test_object("vec_tor", undefined_msg = msg, incorrect_msg = msg)
+test_object("mat_rix", undefined_msg = msg, incorrect_msg = msg)
+success_msg("Great! Continue to the next exercise.")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:a9a1a50a31
+## Lookup and Matching (cont.)
+
+match() returns the index of the ﬁrst element of its second argument, that matches its ﬁrst argument.
+
+The binary operator %in% returns a boolean vector with TRUE values corresponding to elements that have matches, %in% is a wrapper for match() deﬁned as follows:
+"%in%" <- function(x, table) match(x, table, nomatch=0) > 0, %in% never returns NA, so it’s preferred in if () statements, any() returns TRUE if at least one element of a boolean vector is TRUE, and FALSE otherwise.
+
+Given a single argument, any() is equivalent to %in%, but is much faster because it’s a compiled function.
+
+
+*** =instructions
+- Learn to use `match()` on objects
+- Learn to use `%in%` on objects
+
+*** =hint
+For comparing two values to one vector, you can group values into one vector, and use 'match' or '%in%' to the vector you want to check.
+
+*** =pre_exercise_code
+```{r}
+vec_tor <- sample(1:9)
+```
+
+*** =sample_code
+```{r}
+# search in a different way with match()
+match(-5, vec_tor)
+
+# use '%in%' operator to see if 5 is in the vector
+
+
+# equivalent to above
+
+
+# search for -5 which not in the vector using '%in%'
+
+
+# now try to see -5 and 5 are in the vec_tor using '%in%'
+
+
+# equivalent to the previous
+
+
+# change the content in the if-clause to see if any negative value in vec_tor
+if (any(vec_tor)) cat("vector contains negative values\n")
+```
+
+*** =solution
+```{r}
+# search in a different way with match()
+match(-5, vec_tor)
+
+# use '%in%' operator to see if 5 is in the vector
+5 %in% vec_tor
+
+# equivalent to above
+match(5, vec_tor, nomatch=0) > 0
+
+# search for -5 which not in the vector using '%in%'
+-5 %in% vec_tor
+
+# now try to see -5 and 5 are in the vec_tor using '%in%'
+c(5, -5) %in% vec_tor
+
+# equivalent to the previous
+any(vec_tor == 5)
+
+# change the content in the if-clause to see if any negative value in vec_tor
+if (any(vec_tor < 0)) cat("vector contains negative values\n")
+```
+
+*** =sct
+```{r}
+msg <- "Do not change anything about the definition and naming of `vec_tor`."
+test_object("vec_tor", undefined_msg = msg, incorrect_msg = msg)
+success_msg("Oops, it seems like you are losing money. Time to rethink and adapt your strategy! This will require some deeper analysis...")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:6112e74425
+## Selection by index (1)
+
+After you figured that roulette is not your forte, you decide to compare your performance at the beginning of the week to your performance at the end of the week. You did have a couple of Margarita cocktails at the end of the week...
+
+To answer that question, you only want to focus on a selection of the `total_vector`. In other words, our goal is to select specific elements of the vector.
+
+*** =instructions
+- Assign the poker results of Wednesday to the variable `poker_wednesday`.
+- Assign the roulette results of Friday to the variable `roulette_friday`.
+
+*** =hint
+Wednesday is the third element of `poker_vector`, and can thus be selected with `poker_vector[3]`.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# Casino winnings from Monday to Friday
+poker_vector <- c(140, -50, 20, -120, 240)
+roulette_vector <- c(-24, -50, 100, -350, 10)
+days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+names(poker_vector) <- days_vector
+names(roulette_vector) <- days_vector
+
+# Poker results of Wednesday: poker_wednesday
+
+
+# Roulette results of Friday: roulette_friday
+
+```
+
+*** =solution
+```{r}
+# Casino winnings from Monday to Friday
+poker_vector <- c(140, -50, 20, -120, 240)
+roulette_vector <- c(-24, -50, 100, -350, 10)
+days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+names(poker_vector) <- days_vector
+names(roulette_vector) <- days_vector
+
+# Poker results of Wednesday: poker_wednesday
+poker_wednesday <- poker_vector[3]
+
+# Roulette results of Friday: roulette_friday
+roulette_friday <- roulette_vector[5]
+```
+
+*** =sct
+```{r}
+
+msg = "Do not change anything about the definition and naming of `poker_vector` and `roulette_vector`."
+test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
+test_object("poker_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
+test_object("roulette_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
+test_object("poker_wednesday",
+            incorrect_msg = "It looks like `poker_wednesday` does not contain the correct value of `poker_vector`.")
+test_object("roulette_friday",
+            incorrect_msg = "It looks like `roulette_friday` does not contain the correct value of `roulette_vector`.")
+success_msg("Great! R also makes it possible to select multiple elements from a vector at once, remember? Put the theory to practice in the next exercise!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:ae2832fbd1
+## Selection by index (2) 
+
+How about analyzing your midweek results? 
+
+Instead of using a single number to select a single element, you can also select multiple elements by passing a vector inside the square brackets. For example,
+
+```
+poker_vector[c(1,5)]
+```
+
+selects the first and the fifth element of `poker_vector`.
+
+
+*** =instructions
+- Assign the poker results of Tuesday, Wednesday and Thursday to the variable `poker_midweek`.
+- Assign the roulette results of Thursday and Friday to the variable `roulette_endweek`.
+
+*** =hint
+Use the vector `c(2,3,4)` between square brackets to select the correct elements of `poker_vector`.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+``` 
+
+*** =sample_code
+```{r}
+# Casino winnings from Monday to Friday
+poker_vector <- c(140, -50, 20, -120, 240)
+roulette_vector <- c(-24, -50, 100, -350, 10)
+days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+names(poker_vector) <- days_vector
+names(roulette_vector) <- days_vector
+
+# Mid-week poker results: poker_midweek
+
+
+# End-of-week roulette results: roulette_endweek
+
+
+```
+
+*** =solution
+```{r}
+# Casino winnings from Monday to Friday
+poker_vector <- c(140, -50, 20, -120, 240)
+roulette_vector <- c(-24, -50, 100, -350, 10)
+days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+names(poker_vector) <- days_vector
+names(roulette_vector) <- days_vector
+
+# Mid-week poker results: poker_midweek
+poker_midweek <- poker_vector[c(2, 3, 4)]
+
+# End-of-week roulette results: roulette_endweek
+roulette_endweek <- roulette_vector[c(4,5)]
+```
+
+*** =sct
+```{r}
+msg <- "Do not change anything about the definition and naming of `poker_vector` and `roulette_vector`."
+test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
+test_object("poker_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
+test_object("roulette_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
+
+msg <- "It looks like `%s` does not contain the correct elements from `%s`."
+test_object("poker_midweek", 
+            incorrect_msg = sprintf(msg, "poker_midweek", "poker_vector"))
+test_object("roulette_endweek",
+            incorrect_msg = sprintf(msg, "roulette_endweek", "roulette_vector"))
+
+success_msg("Well done! Another way to find the mid-week results is `poker_vector[2:4]`. Continue to the next exercise to specialize in vector selection some more!");
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:5919f3fc05
+## Selection by name
+
+Another way to tackle the previous exercise is by using the names of the vector elements (Monday, Tuesday, ...) instead of their numeric positions. For example, 
+
+```
+poker_vector["Monday"]
+```
+
+will select the first element of `poker_vector` since `"Monday"` is the name of that first element.
+
+*** =instructions
+- Select the fourth element, corresponding to Thursday, from `roulette_vector`. Name it `roulette_thursday`.
+- Select Tuesday's poker gains using subsetting by name. Assign the result to `poker_tuesday`.
+
+*** =hint
+You can use `mean(my_vector)` to get the mean of the vector `my_vector`.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# Casino winnings from Monday to Friday
+poker_vector <- c(140, -50, 20, -120, 240)
+roulette_vector <- c(-24, -50, 100, -350, 10)
+days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+names(poker_vector) <- days_vector
+names(roulette_vector) <- days_vector
+
+# Select Thursday's roulette gains: roulette_thursday
+
+
+# Select Tuesday's poker gains: poker_tuesday
+
+```
+
+*** =solution
+```{r}
+# Casino winnings from Monday to Friday
+poker_vector <- c(140, -50, 20, -120, 240)
+roulette_vector <- c(-24, -50, 100, -350, 10)
+days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+names(poker_vector) <- days_vector
+names(roulette_vector) <- days_vector
+
+# Select Thursday's roulette gains: roulette_thursday
+roulette_thursday <- roulette_vector["Thursday"]
+
+# Select Tuesday's poker gains: poker_tuesday
+poker_tuesday <- poker_vector["Tuesday"]
+```
+
+*** =sct
+```{r}
+msg <- "Do not change anything about the definition and naming of `poker_vector` and `roulette_vector`."
+test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
+test_object("poker_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
+test_object("roulette_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
+
+test_object("roulette_thursday")
+test_object("poker_tuesday")
+success_msg("Good job! Head over to the next exercise.");
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:22121c6c46
+## Selection by logicals (1)
+
+There are basically three ways to subset vectors: by using the indices, by using the names (if the vectors are named) and by using logical vectors. Filip already told you about the internals in the instructional video. As a refresher, have a look at the following statements to select elements from `poker_vector`, which are all equivalent:
+
+```
+# selection by index
+poker_vector[c(1,3)]
+
+# selection by name
+poker_vector[c("Monday", "Wednesday")]
+
+# selection by logicals
+poker_vector[c(TRUE, FALSE, TRUE, FALSE, FALSE)]
+```
+
+*** =instructions
+- Assign the roulette results from the first, third and fifth day to `roulette_subset`.
+- Select the first three days from `poker_vector` using a vector of logicals. Assign the result to `poker_start`.
+
+*** =hint
+The logical vector to use inside square brackets for the first instruction is `c(TRUE, FALSE, TRUE, FALSE, TRUE)`.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# Casino winnings from Monday to Friday
+poker_vector <- c(140, -50, 20, -120, 240)
+roulette_vector <- c(-24, -50, 100, -350, 10)
+days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+names(poker_vector) <- days_vector
+names(roulette_vector) <- days_vector
+
+# Roulette results for day 1, 3 and 5: roulette_subset
+
+  
+# Poker results for first three days: poker_start
+```
+
+*** =solution
+```{r}
+# Casino winnings from Monday to Friday
+poker_vector <- c(140, -50, 20, -120, 240)
+roulette_vector <- c(-24, -50, 100, -350, 10)
+days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+names(poker_vector) <- days_vector
+names(roulette_vector) <- days_vector
+
+# Roulette relsults for day 1, 3 and 5: roulette_subset
+roulette_subset <- roulette_vector[c(TRUE, FALSE, TRUE, FALSE, TRUE)]
+  
+# Poker results for first three days: poker_start
+poker_start <- poker_vector[c(TRUE, TRUE, TRUE, FALSE, FALSE)]
+```
+
+*** =sct
+```{r}
+msg = "Do not change anything about the definition and naming of `poker_vector` and `roulette_vector`."
+test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
+test_object("poker_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
+test_object("roulette_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
+test_object("roulette_subset")
+test_object("poker_start")
+success_msg("Nice one! Using logical vectors to perform subsetting might seem somewhat tedious, but its true power will become clear in the next exercise!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:aa2e5f6e97
+## Selection by logicals (2)
+
+By making use of a combination of comparison operators and subsetting using logicals, you can investigate your casino performance in a more pro-active way.
+
+The (logical) comparison operators known to R are:
+- `<` for less than
+- `>` for greater than
+- `<=` for less than or equal to
+- `>=` for greater than or equal to
+- `==` for equal to each other
+- `!=` not equal to each other
+
+Experiment with these operators in the console:
+
+```
+lost_roulette_days <- roulette_vector < 0
+lost_roulette_days
+```
+
+The result will be a logical vector, which you can use to perform subsetting, like this example:
+
+```
+roulette_vector[lost_roulette_days]
+```
+
+The result is a subset of `roulette_vector` that contains only your losses in roulette.
+
+*** =instructions
+- Check if your poker winnings are positive on the different days of the week (i.e. > 0), and assign this to `selection_vector`.
+- Assign the amounts that you won on the profitable days to the variable `poker_profits` by using `selection_vector`.
+
+*** =hint
+- In order to check for which days your poker gains are positive, R should check for each element of `poker_vector` whether it is larger than zero. `some_vector > 0` is the way to tell R what you are after.
+- After creating `selection_vector`, you can use it to subset `poker_vector` like this: `poker_vector[selection_vector]`.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# Casino winnings from Monday to Friday
+poker_vector <- c(140, -50, 20, -120, 240)
+roulette_vector <- c(-24, -50, 100, -350, 10)
+days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+names(poker_vector) <- days_vector
+names(roulette_vector) <- days_vector
+
+# Create logical vector corresponding to profitable poker days: selection_vector
+
+
+# Select amounts for profitable poker days: poker_profits
+ 
+```
+
+*** =solution
+```{r}
+# Casino winnings from Monday to Friday
+poker_vector <- c(140, -50, 20, -120, 240)
+roulette_vector <- c(-24, -50, 100, -350, 10)
+days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+names(poker_vector) <- days_vector
+names(roulette_vector) <- days_vector
+
+# Create logical vector corresponding to profitable poker days: selection_vector
+selection_vector <- poker_vector > 0
+
+# Select amounts for profitable poker days: poker_profits
+poker_profits <- poker_vector[selection_vector]
+```
+
+*** =sct
+```{r}
+msg = "Do not change anything about the definition and naming of `poker_vector` and `roulette_vector`."
+test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
+test_object("poker_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
+test_object("roulette_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
+test_object("selection_vector", 
+            undefined_msg = "Please make sure to define a variable `selection_vector`.",
+            incorrect_msg = "It looks like `selection_vector` does not contain the correct result. Remember that R uses element wise operations for vectors.")
+test_object("poker_profits",
+            undefined_msg =  "Please make sure to define a variable `poker_profits`.",
+            incorrect_msg =  "It looks like `poker_profits` does not contain the correct result. Remember that R uses element wise operations for vectors.")
+success_msg("Great! Move on to the Matrices chapter!")
+```
 --- type:NormalExercise lang:r xp:100 skills:1 key:834a0e546c
 ## Analyzing matrices, you shall (1)
 
