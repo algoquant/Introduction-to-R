@@ -1795,18 +1795,16 @@ success_msg("Wonderful! Continue with the next exercise!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:30a0c39c10
-## The total box office revenue for the entire saga
+## Data Frames and Factors
 
-Just like every [`cbind()`](http://www.rdocumentation.org/packages/base/functions/cbind) has a [`rbind()`](http://www.rdocumentation.org/packages/base/functions/cbind), every [`colSums()`](http://www.rdocumentation.org/packages/base/functions/colSums) has a [`rowSums()`](http://www.rdocumentation.org/packages/base/functions/colSums). 
+By default data.frame() coerces character vectors to factors, unless the stringsAsFactors=FALSE option is passed into data.frame(), The function options() sets global options, that determine how R computes and displays its results, If the global option stringsAsFactors=FALSE is set, then character vectors will not be coerced to factors in all subsequent data frame operations.
 
-Your R workspace already contains the `all_wars_matrix` that you constructed in the previous exercise. Let us now calculate the total box office revenue for the entire saga.
 
 *** =instructions
-- Create a vector of length two with the total revenue for the US and the non-US region. Name this vector `total_revenue_vector`.
-- Print `total_revenue_vector`.
+- Specify the strings and factor in data frame.
 
 *** =hint
-You should use the [`colSums()`](http://www.rdocumentation.org/packages/base/functions/colSums) function with `star_wars_matrix` as the argument to find the total box office per region.
+Follow the instruction in introduction.
 
 *** =pre_exercise_code
 ```{r}
@@ -1832,49 +1830,68 @@ rm(star_wars_matrix, star_wars_matrix2)
 
 *** =sample_code
 ```{r}
-# Print box office Star Wars
-all_wars_matrix
+# create a data frame
+data_frame <- data.frame(
+                type=c('rose', 'daisy', 'tulip'),
+                color=c('red', 'white', 'yellow'),
+                price=c(1.5, 0.5, 1.0),
+                row.names=c('flower1', 'flower2', 'flower3'),
+                stringsAsFactors=FALSE
+              )
+              
+# print the data frame
 
-# Total revenue for US and non-US: total_revenue_vector
+
+# get column class of type
 
 
-# Print total_revenue_vector
+# get column class of price
+
+
+# set option to not coerce character vectors to factors
+
+
+# check if the option setting is successful
+
+
+# check if the default setting is successful
+
 ```
 
 *** =solution
 ```{r}
-# Print box office Star Wars
-all_wars_matrix
+# create a data frame
+data_frame <- data.frame(
+                type=c('rose', 'daisy', 'tulip'),
+                color=c('red', 'white', 'yellow'),
+                price=c(1.5, 0.5, 1.0),
+                row.names=c('flower1', 'flower2', 'flower3'),
+                stringsAsFactors=FALSE
+              )
+              
+# print the data frame
+data_frame
 
-# Total revenue for US and non-US: total_revenue_vector
-total_revenue_vector <- colSums(all_wars_matrix)
+# get column class
+class(data_frame$type)
 
-# Print total_revenue_vector
-total_revenue_vector
+# get column class
+class(data_frame$price)
+
+# set option to not coerce character vectors to factors
+options(stringsAsFactors=FALSE)
+
+# check if the option setting is successful
+options("stringsAsFactors")
+
+# check if the default setting is successful
+default.stringsAsFactors()
 ```
 
 *** =sct
 ```{r}
-msg <- "Do not override the variables that have been defined for you in the workspace."
-test_object("all_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_function("colSums", "x", incorrect_msg = "Did you use the [`colSums()`](http://www.rdocumentation.org/packages/base/functions/colSums) function on `all_wars_matrix`?")
-test_object("total_revenue_vector",
-            undefined_msg = "Please make sure to define a variable `total_revenue_vector`.",
-            incorrect_msg = "Have you correctly assigned the result of [`colSums()`](http://www.rdocumentation.org/packages/base/functions/colSums) to `total_revenue_vector?`")
-test_output_contains("total_revenue_vector", incorrect_msg = "Don't forget to print out `total_revenue_vector`.")
 success_msg("Wonderful!")
 ```
-
-
---- type:VideoExercise lang:r xp:50 skills:1 key:7ab632b301
-## Subsetting Matrices
-
-*** =video_link
-//player.vimeo.com/video/138173935
-
-*** =video_hls
-//videos.datacamp.com/transcoded/732_intro_to_r/v1/hls-ch3_2.master.m3u8
-
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:b4007d31b3
 ## Select elements
