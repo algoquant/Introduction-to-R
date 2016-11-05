@@ -17,7 +17,7 @@ The function qnorm() calculates the inverse cumulative normal distribution.
 
 
 *** =instructions
-Learn to use set.seed() initializers, as well as runif(), rnorm(), pnorm() and qnorm()
+- Learn to use set.seed() initializers, as well as runif(), rnorm(), pnorm() and qnorm()
 
 *** =hint
 Check if object names and function names are correctly typed.
@@ -107,7 +107,7 @@ The function rbinom() produces random numbers from the binomial distribution.
 Learn to use rnorm() and sample() to generate binomial random numbers.
 
 *** =hint
-Check if object names and function names are correctly typed.
+- Check if object names and function names are correctly typed.
 
 *** =pre_exercise_code
 ```{r}
@@ -165,7 +165,7 @@ If replace=TRUE, then sample() produces samples with replacement.
 Learn to use sample() to generate permutations with or without replacement.
 
 *** =hint
-Check if object names and function names are correctly typed.
+- Check if object names and function names are correctly typed.
 
 *** =pre_exercise_code
 ```{r}
@@ -233,7 +233,7 @@ R has the build-in function to calculate mean `mean()` and standard deviation `s
 Learn to use mean(), sd() to calculate statistical estimators.
 
 *** =hint
-Check if object names and function names are correctly typed.
+- Check if object names and function names are correctly typed.
 
 *** =pre_exercise_code
 ```{r}
@@ -314,7 +314,7 @@ An R function plus its environment is referred to as a function closures, The fu
 The function body doesn’t require a return statement, since by default R functions return the last statement evaluated in the body, args() displays the formal arguments of a function.
 
 *** =instructions
-Learn to define your own function in R.
+- Learn to define your own function in R.
 
 *** =hint
 Check if object names and function names are correctly typed.
@@ -402,7 +402,7 @@ The function str() displays the structure of an R object, for example a function
 
 
 *** =instructions
-Learn to bind function arguments, and set default values.
+- Learn to bind function arguments, and set default values.
 
 *** =hint
 Check if object names and function names are correctly typed.
@@ -478,7 +478,7 @@ But if the function is assigned to a variable, then its return value is assigned
 
 
 *** =instructions
-Use return() and invisible() to return value from within a function.
+- Use return() and invisible() to return value from within a function.
 
 *** =hint
 Remember to change the code for the 'return_invisible()' function.
@@ -565,7 +565,7 @@ These operators are applied to vectors element-wise.
 Use logical operators to create, combine or negate logical vectors. 
 
 *** =hint 
-Type code as instructed in the comment.
+- Type code as instructed in the comment.
 
 *** =pre_exercise_code
 ```{r}
@@ -643,7 +643,7 @@ Rule of Thumb
 Use `&&` and `||` in if-clauses
 
 *** =instructions
-Use '&&' and '||' in if-clause valuation.
+- Use '&&' and '||' in if-clause valuation.
 
 *** =hint
 Use '&&' and '||' in if-clause valuation for two or more long objects.
@@ -716,7 +716,7 @@ Arithmetic operators perform arithmetic operations on numeric or complex vectors
 
 
 *** =instructions
-Utilize arithmetic operators to do everyday calculation.
+- Utilize arithmetic operators to do everyday calculation.
 
 *** =hint
 Remember '**' and '^' are interchangeable
@@ -770,7 +770,7 @@ The "==" operator applies the recycling rule to vector arguments and returns log
 
 
 *** =instructions
-Compare the return value using `==` and `identical()`
+- Compare the return value using `==` and `identical()`
 
 *** =hint
 Use `==` instead of `identical`
@@ -988,18 +988,20 @@ success_msg("Oops, it seems like you are losing money. Time to rethink and adapt
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:6112e74425
-## Selection by index (1)
+## Assignment Operators
 
-After you figured that roulette is not your forte, you decide to compare your performance at the beginning of the week to your performance at the end of the week. You did have a couple of Margarita cocktails at the end of the week...
+The standard assignment operator in R is `<-`. Both `<-` and `=` are valid assignment operators in R.
 
-To answer that question, you only want to focus on a selection of the `total_vector`. In other words, our goal is to select specific elements of the vector.
+The `<-` operator may cause an error if R confuses it with the `<` logical operator. But they diﬀer in scope and precedence (`<-` has higher precedence than `=`). The `=` operator is used for named arguments in function calls, When variables are assigned within an argument list using the `=` operator, their scope is limited to the function.
+
+Rule of Thumb: Use `<-` in R scripts and inside functions, Use `=` only in function calls.
 
 *** =instructions
-- Assign the poker results of Wednesday to the variable `poker_wednesday`.
-- Assign the roulette results of Friday to the variable `roulette_friday`.
+- Distinguish `<-` assignment and `<`.
+- Compare the usage and `<-` and `=`.
 
 *** =hint
-Wednesday is the third element of `poker_vector`, and can thus be selected with `poker_vector[3]`.
+Follow the instruction and introduction. 
 
 *** =pre_exercise_code
 ```{r}
@@ -1008,143 +1010,149 @@ Wednesday is the third element of `poker_vector`, and can thus be selected with 
 
 *** =sample_code
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# "<-" and "=" are valid assignment operators
+num_var1 <- 3
 
-# Poker results of Wednesday: poker_wednesday
+# print the variable
 
 
-# Roulette results of Friday: roulette_friday
+# use "=" to the variable
+
+
+# "<" operator confused with "<-"
+
+
+# add space or brackets to avoid confusion
+
+
+# x doesn't exist outside the function
+
+
+# "<-" assignment within argument list
+
+
+# x exists outside the function
 
 ```
 
 *** =solution
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# "<-" and "=" are valid assignment operators
+num_var1 <- 3
 
-# Poker results of Wednesday: poker_wednesday
-poker_wednesday <- poker_vector[3]
+# print the variable
+num_var1
 
-# Roulette results of Friday: roulette_friday
-roulette_friday <- roulette_vector[5]
+# use "=" to the variable
+num_var1 = 3
+
+# "<" operator confused with "<-"
+2 <- 3
+
+# add space or brackets to avoid confusion
+2 < -3
+
+# x doesn't exist outside the function
+x
+
+# "<-" assignment within argument list
+median(x <- 1:10)
+
+# x exists outside the function
+x
 ```
 
 *** =sct
 ```{r}
-
-msg = "Do not change anything about the definition and naming of `poker_vector` and `roulette_vector`."
-test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("poker_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("roulette_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("poker_wednesday",
-            incorrect_msg = "It looks like `poker_wednesday` does not contain the correct value of `poker_vector`.")
-test_object("roulette_friday",
-            incorrect_msg = "It looks like `roulette_friday` does not contain the correct value of `roulette_vector`.")
-success_msg("Great! R also makes it possible to select multiple elements from a vector at once, remember? Put the theory to practice in the next exercise!")
+success_msg("Great! Assignment operator `<-` is unique in R languages, remember to practice in the future!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:ae2832fbd1
-## Selection by index (2) 
+## The "if () else" Control Statement
 
-How about analyzing your midweek results? 
+R has the familiar "if () {...} else {...}" statement to control execution ﬂow depending on logical conditions.
 
-Instead of using a single number to select a single element, you can also select multiple elements by passing a vector inside the square brackets. For example,
+The logical conditions must be either a logical or numeric type, otherwise an error is produced.
 
-```
-poker_vector[c(1,5)]
-```
-
-selects the first and the fifth element of `poker_vector`.
+The "else" statement can also be omitted, "if" statements can be nested using multiple "else if" statements,
 
 
 *** =instructions
-- Assign the poker results of Tuesday, Wednesday and Thursday to the variable `poker_midweek`.
-- Assign the roulette results of Thursday and Friday to the variable `roulette_endweek`.
+- Learn to use the `if () else` structure.
 
 *** =hint
-Use the vector `c(2,3,4)` between square brackets to select the correct elements of `poker_vector`.
+Follow the instructions and introductions.
 
 *** =pre_exercise_code
 ```{r}
 # no pec
+num_var1 <- 1
 ``` 
 
 *** =sample_code
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# numeric zero is FALSE, all other numbers are TRUE
+if (num_var1) {
+  num_var2 <- 4
 
-# Mid-week poker results: poker_midweek
+# change the code for 'else if' together on same line
+} else (num_var1 == 0) {
+  num_var2 <- 0
+  
+# 'else' together with curly braces
+} else {
+  num_var2 <- -4
+
+# end if
 
 
-# End-of-week roulette results: roulette_endweek
-
+# print the "num_var" to see the result
 
 ```
 
 *** =solution
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# numeric zero is FALSE, all other numbers are TRUE
+if (num_var1) {
+  num_var2 <- 4
 
-# Mid-week poker results: poker_midweek
-poker_midweek <- poker_vector[c(2, 3, 4)]
+# change the code for 'else if' together on same line
+} else if (num_var1 == 0) {
+  num_var2 <- 0
+  
+# 'else' together with curly braces
+} else {
+  num_var2 <- -4
 
-# End-of-week roulette results: roulette_endweek
-roulette_endweek <- roulette_vector[c(4,5)]
+# end if
+}
+
+# print the "num_var" to see the result
+num_var2
 ```
 
 *** =sct
 ```{r}
-msg <- "Do not change anything about the definition and naming of `poker_vector` and `roulette_vector`."
-test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("poker_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("roulette_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-
-msg <- "It looks like `%s` does not contain the correct elements from `%s`."
-test_object("poker_midweek", 
-            incorrect_msg = sprintf(msg, "poker_midweek", "poker_vector"))
-test_object("roulette_endweek",
-            incorrect_msg = sprintf(msg, "roulette_endweek", "roulette_vector"))
-
-success_msg("Well done! Another way to find the mid-week results is `poker_vector[2:4]`. Continue to the next exercise to specialize in vector selection some more!");
+msg <- "Do not change anything about the definition and naming of `num_var1`."
+test_object("num_var1", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
+success_msg("Well done!!");
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:5919f3fc05
-## Selection by name
+## The switch() Control Statement
 
-Another way to tackle the previous exercise is by using the names of the vector elements (Monday, Tuesday, ...) instead of their numeric positions. For example, 
+The function `switch()` evaluates its ﬁrst argument `EXPR`, and depending on its value, chooses one of the named arguments passed to the dots `...` argument
 
-```
-poker_vector["Monday"]
-```
+The dots `...` argument accepts a named list (symbol-value pairs), If `EXPR` is a character string, then the element with that name is returned by switch(). If switch() can’t match the string to any name, then it returns NULL, If `EXPR` is an integer, then switch() returns the element from that position. Using switch() is a convenient alternative to a cascade of "if () else" statements. 
 
-will select the first element of `poker_vector` since `"Monday"` is the name of that first element.
+The function match.arg() matches a string to one of the possible values, and returns the matched value, or produces an error if it can’t match it,
 
 *** =instructions
-- Select the fourth element, corresponding to Thursday, from `roulette_vector`. Name it `roulette_thursday`.
-- Select Tuesday's poker gains using subsetting by name. Assign the result to `poker_tuesday`.
+- Use `swithc()` to produce similar results to if-else.
 
 *** =hint
-You can use `mean(my_vector)` to get the mean of the vector `my_vector`.
+Follow the instructions and introductions.
 
 *** =pre_exercise_code
 ```{r}
@@ -1153,70 +1161,99 @@ You can use `mean(my_vector)` to get the mean of the vector `my_vector`.
 
 *** =sample_code
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# change the code and switch to the first argument by name
+switch(0, a="aaahh", b="bee", c="see", d=2, "else this")
 
-# Select Thursday's roulette gains: roulette_thursday
+# change the code and switch to the third argument by name
+switch(0, a="aaahh", b="bee", c="see", d=2, "else this")
+
+# change the code and switch to the third argument by number
+switch(0, a="aaahh", b="bee", c="see", d=2, "else this")
+
+# type a random name and see where the result is switched
+switch(0, a="aaahh", b="bee", c="see", d=2, "else this")
+
+# measure of central tendency
+centra_lity <- function(in_put,
+    meth_od=c("mean", "mean_narm", "median")) {
+    
+# change the code and validate "meth_od" argument
+  meth_od <- meth_od
+  switch(meth_od,
+ mean=mean(in_put),
+ mean_narm=mean(in_put, na.rm=TRUE),
+ median=median(in_put))
+}
+
+# create 100 random normal number, mean is 2
 
 
-# Select Tuesday's poker gains: poker_tuesday
+# apply centra_lity to the variable for mean
+
+
+# apply centra_lity to the variable for mean with NA removed
+
+
+# apply centra_lity to the variable for median
 
 ```
 
 *** =solution
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# change the code and switch to the first argument by name
+switch("a", a="aaahh", b="bee", c="see", d=2, "else this")
 
-# Select Thursday's roulette gains: roulette_thursday
-roulette_thursday <- roulette_vector["Thursday"]
+# change the code and switch to the third argument by name
+switch("c", a="aaahh", b="bee", c="see", d=2, "else this")
 
-# Select Tuesday's poker gains: poker_tuesday
-poker_tuesday <- poker_vector["Tuesday"]
+# change the code and switch to the third argument by number
+switch(3, a="aaahh", b="bee", c="see", d=2, "else this")
+
+# type a random name and see where the result is switched
+switch("cc", a="aaahh", b="bee", c="see", d=2, "else this")
+
+# measure of central tendency
+centra_lity <- function(in_put,
+    meth_od=c("mean", "mean_narm", "median")) {
+    
+# change the code and validate "meth_od" argument
+  meth_od <- match.arg(meth_od)
+  switch(meth_od,
+ mean=mean(in_put),
+ mean_narm=mean(in_put, na.rm=TRUE),
+ median=median(in_put))
+}
+
+# create 100 random normal number, mean is 2
+my_var <- rnorm(100, mean=2)
+
+# apply centra_lity to the variable for mean
+centra_lity(my_var, "mean")
+
+# apply centra_lity to the variable for mean with NA removed
+centra_lity(my_var, "mean_narm")
+
+# apply centra_lity to the variable for median
+centra_lity(my_var, "median")
 ```
 
 *** =sct
 ```{r}
-msg <- "Do not change anything about the definition and naming of `poker_vector` and `roulette_vector`."
-test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("poker_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("roulette_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-
-test_object("roulette_thursday")
-test_object("poker_tuesday")
 success_msg("Good job! Head over to the next exercise.");
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:22121c6c46
-## Selection by logicals (1)
+## Iteration Using for() and while() Loops
 
-There are basically three ways to subset vectors: by using the indices, by using the names (if the vectors are named) and by using logical vectors. Filip already told you about the internals in the instructional video. As a refresher, have a look at the following statements to select elements from `poker_vector`, which are all equivalent:
+The "for() {...}" statement iterates a bound variable over elements of a vector or list. The for() loop creates the bound variable, which then iterates over the elements of the vector, and upon loop exit the bound variable is left equal to the last element of the vector, R also has a "while() {...}" loop, while() loops start by testing their logical condition, and they repeat executing the loop body until that condition is FALSE, But while() loops risk producing inﬁnite loops if not written properly, so Use Them With Care!
 
-```
-# selection by index
-poker_vector[c(1,3)]
-
-# selection by name
-poker_vector[c("Monday", "Wednesday")]
-
-# selection by logicals
-poker_vector[c(TRUE, FALSE, TRUE, FALSE, FALSE)]
-```
 
 *** =instructions
-- Assign the roulette results from the first, third and fifth day to `roulette_subset`.
-- Select the first three days from `poker_vector` using a vector of logicals. Assign the result to `poker_start`.
+- Create loop with `for()`.
+- Create loop with `while()`.
 
 *** =hint
-The logical vector to use inside square brackets for the first instruction is `c(TRUE, FALSE, TRUE, FALSE, TRUE)`.
+Follow the indstruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
@@ -1225,82 +1262,72 @@ The logical vector to use inside square brackets for the first instruction is `c
 
 *** =sample_code
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# create a list
+color_list <- list("red", "white", "blue")
 
-# Roulette results for day 1, 3 and 5: roulette_subset
+# change the code to start loop over list
+for (some_color in color_list) {
+  print(some)
+}
 
-  
-# Poker results for first three days: poker_start
+# change the code to correct loop over vector
+for (in_dex in 3:6) {
+  print(color_list[[in_dex]])
+}
+
+# while loops need initialization
+in_dex
+
+# change the code to start while loop
+while (in_ < 4) {
+  print(color_list[[in_dex]])
+  in_dex <- in_dex + 1
+}
 ```
 
 *** =solution
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# create a list
+color_list <- list("red", "white", "blue")
 
-# Roulette relsults for day 1, 3 and 5: roulette_subset
-roulette_subset <- roulette_vector[c(TRUE, FALSE, TRUE, FALSE, TRUE)]
-  
-# Poker results for first three days: poker_start
-poker_start <- poker_vector[c(TRUE, TRUE, TRUE, FALSE, FALSE)]
+# change the code to start loop over list
+for (some_color in color_list) {
+  print(some_color)
+}
+
+# change the code to correct loop over vector
+for (in_dex in 1:3) {
+  print(color_list[[in_dex]])
+}
+
+# while loops need initialization
+in_dex <- 1
+
+# change the code to start while loop
+while (in_dex < 4) {
+  print(color_list[[in_dex]])
+  in_dex <- in_dex + 1
+}
 ```
 
 *** =sct
 ```{r}
-msg = "Do not change anything about the definition and naming of `poker_vector` and `roulette_vector`."
-test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("poker_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("roulette_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("roulette_subset")
-test_object("poker_start")
-success_msg("Nice one! Using logical vectors to perform subsetting might seem somewhat tedious, but its true power will become clear in the next exercise!")
+success_msg("Nice one! Using loops help automate the processing for repetitive operations!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:aa2e5f6e97
-## Selection by logicals (2)
+## Fibonacci Sequence Using for() Loop
 
-By making use of a combination of comparison operators and subsetting using logicals, you can investigate your casino performance in a more pro-active way.
+The Fibonacci sequence was invented by Indian mathematicians, and later described by Fibonacci in his famous treatise Liber Abaci, Very often variables are initialized to NULL before the start of iteration, A more eﬃcicent way to perform iteration is by pre-allocating the vector.
 
-The (logical) comparison operators known to R are:
-- `<` for less than
-- `>` for greater than
-- `<=` for less than or equal to
-- `>=` for greater than or equal to
-- `==` for equal to each other
-- `!=` not equal to each other
-
-Experiment with these operators in the console:
-
-```
-lost_roulette_days <- roulette_vector < 0
-lost_roulette_days
-```
-
-The result will be a logical vector, which you can use to perform subsetting, like this example:
-
-```
-roulette_vector[lost_roulette_days]
-```
-
-The result is a subset of `roulette_vector` that contains only your losses in roulette.
+The function numeric(k) returns a numeric vector of zeros of length k, The function numeric(0) returns an empty (zero length) numeric vector (not to be confused with a NULL object).
 
 *** =instructions
-- Check if your poker winnings are positive on the different days of the week (i.e. > 0), and assign this to `selection_vector`.
-- Assign the amounts that you won on the profitable days to the variable `poker_profits` by using `selection_vector`.
+- Use for() loop to extract and store data in a vector.
 
 *** =hint
-- In order to check for which days your poker gains are positive, R should check for each element of `poker_vector` whether it is larger than zero. `some_vector > 0` is the way to tell R what you are after.
-- After creating `selection_vector`, you can use it to subset `poker_vector` like this: `poker_vector[selection_vector]`.
+- Follow the instruction and introduction. The Fibonacci sequence of integers is deﬁned by the recurrence relation: Fn = Fn−1 + Fn−2, F1 = 0,F2 = 1, Fn = 0,1,1,2,3,5,8,13,... 
 
 *** =pre_exercise_code
 ```{r}
@@ -1309,72 +1336,60 @@ The result is a subset of `roulette_vector` that contains only your losses in ro
 
 *** =sample_code
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# pre-allocate vector instead of "growing" it
+fib_seq <- numeric(10)
 
-# Create logical vector corresponding to profitable poker days: selection_vector
+# initialize the first element
+fib_seq[1]
 
+# initialize the second element
+fib_seq[2]
 
-# Select amounts for profitable poker days: poker_profits
- 
+# change the code and perform recurrence loop
+for (i in 3:10) {
+  fib_seq[i-1] + fib_seq[i-2]
+}
+
+# print the result
+fib_seq
 ```
 
 *** =solution
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# pre-allocate vector instead of "growing" it
+fib_seq <- numeric(10)
 
-# Create logical vector corresponding to profitable poker days: selection_vector
-selection_vector <- poker_vector > 0
+# initialize the first element
+fib_seq[1] <- 0
 
-# Select amounts for profitable poker days: poker_profits
-poker_profits <- poker_vector[selection_vector]
+# initialize the second element
+fib_seq[2] <- 1
+
+# change the code and perform recurrence loop
+for (i in 3:10) {
+  fib_seq[i] <- fib_seq[i-1] + fib_seq[i-2]
+}
+
+# print the result
+fib_seq
 ```
 
 *** =sct
 ```{r}
-msg = "Do not change anything about the definition and naming of `poker_vector` and `roulette_vector`."
-test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("poker_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("roulette_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("selection_vector", 
-            undefined_msg = "Please make sure to define a variable `selection_vector`.",
-            incorrect_msg = "It looks like `selection_vector` does not contain the correct result. Remember that R uses element wise operations for vectors.")
-test_object("poker_profits",
-            undefined_msg =  "Please make sure to define a variable `poker_profits`.",
-            incorrect_msg =  "It looks like `poker_profits` does not contain the correct result. Remember that R uses element wise operations for vectors.")
-success_msg("Great! Move on to the Matrices chapter!")
+success_msg("Great! Move on to the next exercise!")
 ```
 --- type:NormalExercise lang:r xp:100 skills:1 key:834a0e546c
-## Analyzing matrices, you shall (1)
+## List
 
-It is now time to get your hands dirty. In the following exercises you will analyze the box office numbers of the Star Wars franchise. May the force be with you!
+Lists are a type of vector that contain elements of diﬀerent types, Lists are recursive object types, meaning each list element can contain other vectors or lists.
 
-As a reminder, look at this line of code that constructs a matrix with numbers 1 through 9, filled row by row:
-
-```
-matrix(1:9, byrow = TRUE, nrow = 3)
-```
-
-In the script, a vector `box` is defined that represents the box office numbers from the first three Star Wars movies. The first, third and fifth element correspond to the US box office revenue for the movies, the second, fourth and sixth element represent the non-US box office revenue.
+The function list() creates a list from a list of vectors, list() creates a named list from a list of symbol-value pairs, The function is.list() returns TRUE if its argument is a list, and FALSE otherwise, The function unlist() ﬂattens a list into a vector that contains the atomic elements of the list (which typically causes coercion).
 
 *** =instructions
-Construct a matrix `star_wars_matrix`:
-
-- Each row represents a movie.
-- The first column is for the US box office revenue, and the second column for the non-US box office revenue. 
-- Use the function `matrix()` with `box` as the first input, and the additional arguments `nrow` and `byrow`.
+- Explore the attributes of list.
 
 *** =hint
-Set `nrow` to `3` and `byrow` to `TRUE` inside `matrix()`.
+Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
@@ -1383,69 +1398,88 @@ Set `nrow` to `3` and `byrow` to `TRUE` inside `matrix()`.
 
 *** =sample_code
 ```{r}
-# Star Wars box office in millions (!)
-box <- c(460.998, 314.4, 290.475, 247.900, 309.306, 165.8)
+# create a list with two elements
+list_var <- list(c('a', 'b'), 1:4)
 
-# Create star_wars_matrix
+# print the list
+
+
+# see the type, mode and class of the list
+
+
+# lists are also vectors
+
+
+# get the length of the list
+
+
+# create named list
+list_var <- list(first=c('a', 'b'), second=1:4)
+
+# print the list
+
+
+# get the name of the list
+
+
+# flatten the list
 
 ```
 
 *** =solution
 ```{r}
-# Star Wars box office in millions (!)
-box <- c(460.998, 314.4, 290.475, 247.900, 309.306, 165.8)
+# create a list with two elements
+list_var <- list(c('a', 'b'), 1:4)
 
-# Create star_wars_matrix
-star_wars_matrix <- matrix(box, nrow = 3, byrow = TRUE) 
+# print the list
+list_var
+
+# see the type, mode and class of the list
+c(typeof(list_var), mode(list_var), class(list_var))
+
+# lists are also vectors
+c(is.vector(list_var), is.list(list_var))
+
+# get the length of the list
+length(list_var)
+
+# create named list
+list_var <- list(first=c('a', 'b'), second=1:4)
+
+# print the list
+list_var
+
+# get the name of the list
+names(list_var)
+
+# flatten the list
+unlist(list_var)
 ```
 
 *** =sct
 ```{r}
-test_error()
-msg <- "Do not change or remove the definition of `box`!"
-test_object("box", undefined_msg = msg, incorrect_msg = msg)
-
-# TODO: Fix in testwhat
-test_object("star_wars_matrix", eval = FALSE)
-test_what(
-  expect_equal(
-    dim(get("star_wars_matrix", get_solution_env())), 
-    dim(get("star_wars_matrix", .GlobalEnv))),
-  feedback = 
-    paste("Be sure to use the `byrow` and `nrow` arguments of the function `matrix()`",
-          "to form a matrix of the correct dimensions: 3 rows and 2 columns."))
-
-test_correct({
-  test_object("star_wars_matrix",
-              undefined_msg = "Please make sure to define a variable `star_wars_matrix`.",
-              incorrect_msg = "Did you assign the correct matrix containing the vector that holds all three movies to `star_wars_matrix`?")
-}, {
-  test_function("matrix", "data")
-  test_function("matrix", "nrow")
-  test_function("matrix", "byrow")
-})
 success_msg("Great job!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:0dfb4c5e70
-## Analyzing matrices, you shall (2)
+## Subsetting Lists
 
-Instead of as a single vector, the box office numbers for the three Star Wars movies are represented as three vectors. Remember the [`rbind()`](http://www.rdocumentation.org/packages/base/functions/cbind) function to paste together different vectors as if they were rows of a matrix? Take this example, that pastes together 2 vectors as if they were rows of a matrix:
+Lists can be subset (indexed) using: 
 
 ```
-a <- c(1, 2, 3)
-b <- c(4, 5, 6)
-rbind(a, b)
-```
+the "[" operator (returns sublist);
+the "[[" operator (returns an element);
+the "$" operator (for named lists only),
 
-Try a similar thing on the astronomical Star Wars numbers!
+```
+Partial name matching allows subsetting with partial name, as long as it can be resolved,
 
 *** =instructions
-Again, construct the matrix `star_wars_matrix` with one row for each movie.
+Experiment list subsetting with `[]` and `[[]]`.
 
 *** =hint
-Simply pass the three vectors to the [`rbind()`](http://www.rdocumentation.org/packages/base/functions/cbind) function.
+Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
