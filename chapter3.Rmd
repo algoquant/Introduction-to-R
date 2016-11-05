@@ -1802,24 +1802,7 @@ Follow the instruction in introduction.
 
 *** =pre_exercise_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
-
-# Construct matrix2
-box_office_all2 <- c(474.5, 552.5, 310.7, 338.7, 380.3, 468.5)
-movie_names2 <- c("The Phantom Menace", "Attack of the Clones", "Revenge of the Sith")
-star_wars_matrix2 <- matrix(box_office_all2, nrow = 3, byrow = TRUE)
-colnames(star_wars_matrix2) <- c("US", "non-US")
-rownames(star_wars_matrix2) <- c("The Phantom Menace", "Attack of the Clones", "Revenge of the Sith")
-
-# Combine both Star Wars trilogies in one matrix
-all_wars_matrix <- rbind(star_wars_matrix, star_wars_matrix2)
-rm(star_wars_matrix, star_wars_matrix2)
+# no spec
 ```
 
 *** =sample_code
@@ -1888,278 +1871,302 @@ success_msg("Wonderful!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:b4007d31b3
-## Select elements
+## Exploring Data Frames
 
-In the previous video, Filip explained how subsetting, using square brackets, extended from vectors to matrices. In general, the following line selects an element that's on row `i` and column `j` from a matrix `m`:
+The function str() displays the structure of an R object.
 
-```
-m[i,j]
-```
+The functions head() and tail() display the ﬁrst and last rows of an R object,
 
-Let's go intergalactic on subsetting now! You'll continue working on `star_wars_matrix`, which is still a matrix containing both US and non-US box office figures for the first three movies.
 
 *** =instructions
-- Select the US box office figure for "The Empire Strikes Back".
-- Select the non-US box office number for "A New Hope"
-No need to assign these elements to new variables; simply print them.
+- Explore parts of the data with `str()`, `head()` and `tail()`.
 
 *** =hint
 To select the element on row 3 and column 2, you can use `star_wars_matrix[3, 2]`.
 
 *** =pre_exercise_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-colnames(star_wars_matrix) <- c("US", "non-US")
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
+# no
+data_frame <- data.frame(
+                type=c('rose', 'daisy', 'tulip'),
+                color=c('red', 'white', 'yellow'),
+                price=c(1.5, 0.5, 1.0),
+                row.names=c('flower1', 'flower2', 'flower3'),
+                stringsAsFactors=FALSE
+              )
 ```
 
 *** =sample_code
 ```{r}
-# star_wars_matrix is already defined in your workspace
-
-# US box office revenue for "The Empire Strikes Back"
+# display the data_frame structure
 
 
-# non-US box office revenue for "A New Hope"
+# the cars data frame has 50 rows
 
+
+# get first five rows
+
+
+# get last five rows
 
 ```
 
 *** =solution
 ```{r}
-# star_wars_matrix is already defined in your workspace
+# display the object structure
+str(data_frame)
 
-# US box office revenue for "The Empire Strikes Back"
-star_wars_matrix[2,1]
+# the cars data frame has 50 rows
+dim(cars)
 
-# non-US box office revenue for "A New Hope"
-star_wars_matrix[1,2]
+# get first five rows
+head(cars, n=5)
+
+# get last five rows
+tail(cars, n=5)
 ```
 
 *** =sct
 ```{r}
 
-msg <- "Do not remove or override `star_wars_matrix`, it has already been defined for you!"
-test_object("star_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-msg <- "Have another look at the %s instruction. Are you sure you selected the correct element(s)?"
-test_output_contains("star_wars_matrix[2,1]", incorrect_msg = sprintf(msg, "first"))
-test_output_contains("star_wars_matrix[1,2]", incorrect_msg = sprintf(msg, "second"))
+msg <- "Do not remove or override `data_frame`, it has already been defined for you!"
+test_object("data_frame", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
 success_msg("Great! That wasn't too hard was it? Head over to the next exercise.")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:3b3ab3e40a
-## Select rows and columns
+## Coercing Data Frames Into Matrices Using as.matrix()
 
-In the previous exercise, you covered the selection of a single element from a matrix. The result was a vector of length 1. However, as the matrix is two-dimensional, you can also extract one-dimensional parts from it. More specifically, to select all elements on row `i` of a matrix `m`, you use:
-
-```
-m[i,]
-```
-
-Likewise, to select all elements on column `j`, 
-
-```
-m[,j]
-```
-
-will help you out. Notice that the result of these subsetting operators are also vectors, but they're typically contain more than 1 element.
+The function as.matrix() coerces vectors and data frames into matrices, Coercing a data frame into a matrix causes coercion of numeric values into character, as.matrix() coerces vectors into single column matrices, as opposed to matrix(), which produces a matrix.
 
 *** =instructions
-- Select all US box office revenue from `star_wars_matrix`, so the entire first column.
-- Extract all the revenue information for "A New Hope", so the entire first row.
+- Use `as.matrix()` to coerce object to matrix, compare it with `matrix()`.
 
 *** =hint
-- To select the first row from `star_wars_matrix`, you can use `star_wars_matrix[1,]`.
+- Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
+data_frame <- data.frame(
+                type=c('rose', 'daisy', 'tulip'),
+                color=c('red', 'white', 'yellow'),
+                price=c(1.5, 0.5, 1.0),
+                row.names=c('flower1', 'flower2', 'flower3'),
+                stringsAsFactors=FALSE
+              )
 ```
 
 *** =sample_code
 ```{r}
-# star_wars_matrix is already defined in your workspace
-
-# Select all US box office revenue
+# coerce data_frame to matrix
 
 
-# Select revenue for "A New Hope"
+# create a randomly-sampled vec_tor of length 9
 
+
+# coerce into a matrix of 3 columns using matrix()
+
+
+# coerce into a matrix of 3 columns using as.matrix()
 
 ```
 
 *** =solution
 ```{r}
-# star_wars_matrix is already defined in your workspace
+# coerce data_frame to matrix
+as.matrix(data_frame)
 
-# Select all US box office revenue
-star_wars_matrix[,1]
+# create a random vec_tor of length 9
+vec_tor <- sample(9)
 
-# Select revenue for "A New Hope"
-star_wars_matrix[1,]
+# coerce into a matrix of 3 columns using matrix()
+matrix(vec_tor, ncol = 3)
+
+# coerce into a matrix of 3 columns using as.matrix()
+as.matrix(vec_tor, ncol = 3)
 ```
 
 *** =sct
 ```{r}
 
-msg <- "Do not remove or override `star_wars_matrix`, it has already been defined for you!"
-test_object("star_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-msg <- "Have another look at the %s instruction. Are you sure you selected the correct element(s)?"
-test_output_contains("star_wars_matrix[,1]", incorrect_msg = sprintf(msg, "first"))
-test_output_contains("star_wars_matrix[1,]", incorrect_msg = sprintf(msg, "second"))
+msg <- "Do not remove or override `data_frame`, it has already been defined for you!"
+test_object("data_frame", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
 success_msg("Great! Continue to the next exercise.")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:32d3cedaba
-## Create submatrices
+## Coercing Matrices Into Data Frames and Lists
 
-Last but not least, you can create submatrices from larger matrices. If a vector is not sufficient to store the information you want to select, you need to create a new matrix. If you want to create a submatrix that comprises rows 1 and 4 and columns 2 and 3 of a matrix `m`, to following call will help you out:
+The generic function as.data.frame() coerces matrices and other objects into data frames.
 
-```
-m[c(1,4), c(2,3)]
-```
+The method as.data.frame.matrix() coerces only matrices into data frames.
+
+`as.data.frame.matrix()` is about 50% faster than as.data.frame(), because it skips extra R code in as.data.frame() needed for argument validation, error checking, and method dispatch.
+
+As a general rule, calling generic functions is slower than directly calling individual methods, because generic functions must execute extra R code for method dispatch.
+
+The function data.frame() can also be used to coerce matrices into data frames, but is much slower than even as.data.frame().
+
+`as.data.frame()` is about three times faster than data.frame(), because it doesn’t require extra R code in data.frame() needed for handling diﬀerent types of vectors, and for method dispatch.
+
+Matrices can be coerced into lists in at least two diﬀerent ways, Matrices can be ﬁrst coerced into a data frame, and then into a list using function as.list().
+
+Matrices can be directly coerced into a list using function lapply(), Using lapply() is the faster of the two methods, because lapply() is a compiled function.
+
 
 *** =instructions
-Select all revenue figures for "A New Hope" and "Return of the Jedi" from `star_wars_matrix`.
+- Use function method instead of callling generic functions.
 
 *** =hint
-No hint on this one, you're on your own here!
+Follow the instructions and introductions.
 
 *** =pre_exercise_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
+library(microbenchmark)
 ```
 
 *** =sample_code
 ```{r}
-# star_wars_matrix is already defined in your workspace
+# call method instead of generic function
+as.data.frame.matrix(mat_rix)
 
-# All figures for "A New Hope" and "Return of the Jedi"
+# a few methods for generic function as.data.frame()
 
+
+# change the code to see that function method is faster than generic function
+summary(microbenchmark(
+  as_data_frame_matrix=
+    as.data.frame(mat_rix),
+  as_data_frame=as.data.frame(mat_rix),
+  data_frame=mat_rix, 
+  times=10))[c(1, 4, 5), ]
+
+# change the code to see that lapply is faster than coercion function
+summary(microbenchmark(
+  as_list=
+    as.list(as.data.frame.matrix(mat_rix)),
+  l_apply=
+    apply(seq_along(mat_rix[1, ]),
+     function(in_dex) mat_rix[, in_dex]),
+  times=10))[c(1, 4, 5), ]
 ```
 
 *** =solution
 ```{r}
-# star_wars_matrix is already defined in your workspace
+# call method instead of generic function
+as.data.frame.matrix(mat_rix)
 
-# All figures for "A New Hope" and "Return of the Jedi"
-star_wars_matrix[c(1,3), c(1,2)]   # option 1
-star_wars_matrix[c(1,3), ]         # option 2
+# a few methods for generic function as.data.frame()
+sample(methods(as.data.frame), size=4)
+
+# change the code to see that function method is faster than generic function
+summary(microbenchmark(
+  as_data_frame_matrix=
+    as.data.frame.matrix(mat_rix),
+  as_data_frame=as.data.frame(mat_rix),
+  data_frame=data.frame(mat_rix), 
+  times=10))[, c(1, 4, 5)]
+
+# change the code to see that lapply is faster than coercion function
+summary(microbenchmark(
+  as_list=
+    as.list(as.data.frame.matrix(mat_rix)),
+  l_apply=
+    lapply(seq_along(mat_rix[1, ]),
+     function(in_dex) mat_rix[, in_dex]),
+  times=10))[, c(1, 4, 5)]
 ```
 
 *** =sct
 ```{r}
-
-msg <- "Do not remove or override `star_wars_matrix`, it has already been defined for you!"
-test_object("star_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_output_contains("star_wars_matrix[c(1,3), c(1,2)]", 
-                     incorrect_msg = "Hmm, that's not totally correct. Make sure you end up with another matrix, containing 4 elements in total.")
-success_msg("Nice one! You could have used both `star_wars_matrix[c(1,3), c(1,2)]` and `star_wars_matrix[c(1,3), ]` to solve this exercise. Not defining any index for a dimension, is actually keeping all the indices for that dimension.")
+success_msg("Nice one! Even small, these coding tricks will save a lot of time when handling big data sets")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:a6e32664a3
-## Alternative ways of subsetting
+## The iris Data Frame
 
-Just as with vectors, you can also subset matrices using names and logical vectors. Of course, you can only subset by name if the matrix you're working with actually has names associated with it. Logical vectors on the other hand, can always be used to select the element(s) of interest.
+The iris data frame is included in the datasets base package, iris contains sepal and petal dimensions of 50 ﬂowers from 3 species of iris.
+
+The function unique() extracts unique elements of an object, sapply() applies a function to a list or a vector of objects and returns a vector, sapply() performs a loop over the list of objects, and can replace "for" loops in R.
 
 *** =instructions
-- Select the US revenues for "A New Hope" and "The Empire Strikes Back".
-- Select the last two rows and both columns from `star_wars_matrix`.
+- Apply unique() and sapply() on a classical dataset.
 
 *** =hint
-To select the US revenue for "Return of The Jedi", you can use the following command:
-```
-star_wars_matrix["Return of the Jedi", "US"]
-```
+Sapply should be used with dataset in the first argument and function name in the second argument.
 
 *** =pre_exercise_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
+#
+data(iris)
 ```
 
 *** =sample_code
 ```{r}
-# star_wars_matrix is already defined in your workspace
-
-# Select the US revenues for "A New Hope" and "The Empire Strikes Back"
+# get dimension information on iris
 
 
-# Select the last two rows and both columns
+# get the first few rows of iris
 
+
+# get column names of iris
+
+
+# list of unique elements of iris
+
+
+# get the class of the unique value of Species column
+
+
+# find which columns of iris are numeric
+
+
+# calculate means of iris columns
 
 ```
 
 *** =solution
 ```{r}
-# star_wars_matrix is already defined in your workspace
+# get dimension information on iris
+dim(iris)
 
-# Select the US revenues for "A New Hope" and "The Empire Strikes Back"
-star_wars_matrix[c("A New Hope", "The Empire Strikes Back"), "US"]
+# get the first few rows of iris
+head(iris, 2)
 
-# Select the last two rows and both columns
-star_wars_matrix[c(FALSE, TRUE, TRUE), c(TRUE, TRUE)]
+# get column names of iris
+colnames(iris)
+
+# list of unique elements of iris
+unique(iris$Species)
+
+# get the class of the unique value of Species column
+class(unique(iris$Species))
+
+# find which columns of iris are numeric
+sapply(iris, is.numeric)
+
+# calculate means of iris columns
+sapply(iris, mean)
 ```
 
 *** =sct
 ```{r}
-msg <- "Do not remove or override `star_wars_matrix`, it has already been defined for you!"
-test_object("star_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-msg <- "Have another look at the %s instruction. Are you sure you selected the correct element(s) using the correct methods?"
-test_output_contains("star_wars_matrix[c(\"A New Hope\", \"The Empire Strikes Back\"), \"US\"]", incorrect_msg = sprintf(msg, "first"))
-test_output_contains("star_wars_matrix[c(FALSE, TRUE, TRUE), c(TRUE, TRUE)]", incorrect_msg = sprintf(msg, "second"))
-success_msg("Awesome! Remember that you can combine subsetting by indices, by names and using logical vectors: you can for example select the rows using indices, but the columns using a vector of `TRUE`s and `FALSE`s. You name it, R can handle it!")
+success_msg("Awesome!")
 ```
 
-
---- type:VideoExercise lang:r xp:50 skills:1 key:f49d1498f5
-## Matrix Arithmetic
-
-*** =video_link
-//player.vimeo.com/video/141163423
-
-*** =video_hls
-//videos.datacamp.com/transcoded/732_intro_to_r/v1/hls-ch3_3.master.m3u8
-
 --- type:NormalExercise lang:r xp:100 skills:1 key:c099d6de31
-## Arithmetic with matrices (1)
+## 'mtcars' data
 
-Similar to what you have learned with vectors, the standard operators like `+`, `-`, `/`, `*`, etc. work in an element-wise way on matrices in R. 
-
-As a newly-hired data analyst for StarWarsStudios, it is your job is to find out how many visitors went to each movie for each geographical area. 
-
-You already have the total revenue figures in `star_wars_matrix`. Assume that the price of a ticket was 5 dollars. Box office numbers divided by the ticket price gives you the number of visitors.
+The mtcars data frame is included in the datasets base package, and contains design and performance data for 32 automobiles,
 
 *** =instructions
-- Assign the matrix with the estimated number of Non-US and US visitors (in millions) for the three movies to `visitors`.
-- Print the resulting variable to the console.
+- Apply similar functions to the `mtcars` dataset
 
 *** =hint
-The number of visitors is the revenue (which is stored in `star_wars_matrix`) divided by the price of ticket (assumed to be $5).
+You can press `Ctrl` + `j` to go back to the previous exercise for reference!
 
 *** =pre_exercise_code
 ```{r}
@@ -2168,115 +2175,122 @@ The number of visitors is the revenue (which is stored in `star_wars_matrix`) di
 
 *** =sample_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
+# get dimension information on mtcars
 
-# Estimation of visitors
 
-  
-# Print the estimate to the console
+# get the first few rows of mtcars
+
+
+# get column names of mtcars
+
+
+# list of unique elements of cylinders
+
+
+# get the class of the unique value of cylinder column
+
+
+# find which columns of mtcars are numeric
+
+
+# calculate means of mtcars columns
 
 ```
 
 *** =solution
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
+# get dimension information on mtcars
+dim(mtcars)
 
-# Estimation of visitors
-visitors <- star_wars_matrix / 5
+# get the first few rows of mtcars
+head(mtcars, 2)
 
-# Print the estimate to the console
-visitors
+# get column names of mtcars
+colnames(mtcars)
+
+# list of unique elements of cylinders
+unique(mtcars$cyl)
+
+# get the class of the unique value of cylinder column
+class(unique(mtcars$cyl))
+
+# find which columns of mtcars are numeric
+sapply(mtcars, is.numeric)
+
+# calculate means of mtcars columns
+sapply(mtcars, mean)
 ```
 
 *** =sct
 ```{r}
-msg <- "Do not remove or override `star_wars_matrix`, it has already been defined for you!"
-test_object("star_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("visitors",
-            incorrect_msg = "It looks like `visitors` does not contain the correct value. Remember that operations on matrices are element-wise.")
-test_output_contains("visitors", 
-                     incorrect_msg = "Don't forget to also print the variable `visitors` to the console.")
-success_msg("Great! What do these results tell you? A staggering 92 million people went to see A New Hope in theaters! Continue to the next exercise.");
+success_msg("Great!");
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:57d4c926e3
-## Arithmetic with matrices (2)
+## The Cars93 Data Frame
 
-Just like `2 * my_matrix` multiplies every element of `my_matrix` by 2, `my_matrix1 * my_matrix2` creates a matrix where each element is the product of the corresponding elements in `my_matrix1` and `my_matrix2`. 
+The Cars93 data frame is included in the MASS package, and contains design and performance data for 93 automobiles, The function hist() calculates and plots a histogram, The parameter breaks is the number of cells of the histogram, "FD" stands for the Freedman-Diaconis rule for calculating histogram breaks.
 
-After looking at the result of the previous exercise, the boss of StarWarsStudios points out that the ticket prices went up over time with one dollar per movie. He asks to redo the analysis based on the prices you can find in `ticket_prices_matrix` (source: imagination).
-
-_Those who are familiar with linear algebra: this is not the standard matrix multiplication for which you should use `%*%` in R._
+MASS library is already loaded for you.
 
 *** =instructions
-- Assign to `visitors` the matrix with your estimated number of Non-US and US visitors (in millions) for the three movies. Use ticket_prices_matrix` this time to take into account the movie-specific ticket prices.
-- Subset `visitors` so that you keep only the US visitors, and calculate the average number of this column. You have to use [`mean()`](http://www.rdocumentation.org/packages/base/functions/mean) here; this R function gives you the average of a numerical vector. Store the result in a variable `average_us_visitors`.
+- Use similar methods to explore the dataset.
 
 *** =hint
-- You can use the function [`mean()`](http://www.rdocumentation.org/packages/base/functions/mean) to calculate the average of the inputs to the function.
-- To get the number of visitors in the US, select the first column from `visitors` using `visitors[ ,1]`.
+You can press `Ctrl` + `j` to go back to the previous exercise for reference!
 
 *** =pre_exercise_code
 ```{r}
 # no pec
+library(MASS)
 ```
 
 *** =sample_code
 ```{r}
-# Star Wars box office in millions (!)
-box_office_all <- c(461, 314.4, 290.5, 247.9, 309.3, 165.8)
-movie_names <- c("A New Hope","The Empire Strikes Back","Return of the Jedi")
-col_titles <- c("US","non-US")
-star_wars_matrix <- matrix(box_office_all, nrow = 3, byrow = TRUE, dimnames = list(movie_names, col_titles))
-
-# Definition of ticket_prices_matrix
-ticket_prices_matrix <- matrix(c(5, 5, 6, 6, 7, 7), nrow = 3, byrow = TRUE, dimnames = list(movie_names, col_titles)) 
-
-# Estimated number of visitors
+# get the dimension of Cars93
 
 
-# Average number of US visitors
+# get the first few element of Cars93's column name
 
 
+# get the first two rows of Cars93
+
+
+# extract list of car types
+
+
+# calculate means of Cars93 columns
+
+
+# change the code to plot histogram of Highway MPG using the Freedman-Diaconis rule
+hist(Cars93$MPG.highway)
 ```
 
 *** =solution
 ```{r}
-# Star Wars box office in millions (!) 
-# Construct matrix 
-box_office_all <- c(461, 314.4, 290.5, 247.9, 309.3, 165.8)
-movie_names <- c("A New Hope","The Empire Strikes Back","Return of the Jedi")
-col_titles <- c("US","non-US")
-star_wars_matrix <- matrix(box_office_all, nrow = 3, byrow = TRUE, dimnames = list(movie_names, col_titles))
-ticket_prices_matrix <- matrix(c(5, 5, 6, 6, 7, 7), nrow = 3, byrow = TRUE, dimnames = list(movie_names,col_titles))
+# get the dimension of Cars93
+dim(Cars93)
 
-# Estimated number of visitors
-visitors <- star_wars_matrix / ticket_prices_matrix
+# get the first few element of Cars93's column name
+head(colnames(Cars93))
 
-# Average number of US visitors
-average_us_visitors <- mean(visitors[ ,1])
+# get the first two rows of Cars93
+head(Cars93, 2)
+
+# extract list of car types
+unique(Cars93$Type)
+
+# calculate means of Cars93 columns
+sapply(Cars93, mean)
+
+# change the code to plot histogram of Highway MPG using the Freedman-Diaconis rule
+hist(Cars93$MPG.highway, col="lightblue1", 
+     main="Distance per Gallon 1993", xlab="Highway MPG", breaks="FD")
 ```
 
 *** =sct
 ```{r}
-msg <- "Do not change anything about the preset variables!"
-test_object("star_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("ticket_prices_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("visitors", incorrect_msg = "It looks like `visitors` does not contain the correct value. Remember that you can divide two matrices.")
-test_object("average_us_visitors", incorrect_msg = "It looks like `average_us_visitors` does not contain the average of the US visitors. Use [`mean()`](http://www.rdocumentation.org/packages/base/functions/mean) in combination with a subset of `visitors`.")
-success_msg("It's a fact: the R force is with you! You are now ready for the final exercise on matrices!")
+success_msg("Rock with these data!")
 ```
 
