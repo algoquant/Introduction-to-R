@@ -1019,9 +1019,6 @@ num_var1 <- 3
 # use "=" to the variable
 
 
-# "<" operator confused with "<-"
-
-
 # add space or brackets to avoid confusion
 
 
@@ -1045,9 +1042,6 @@ num_var1
 
 # use "=" to the variable
 num_var1 = 3
-
-# "<" operator confused with "<-"
-2 <- 3
 
 # add space or brackets to avoid confusion
 2 < -3
@@ -1686,15 +1680,6 @@ is.data.frame(data_frame)
 
 *** =sct
 ```{r}
-msg = "Do not change anything about the construction and naming of `star_wars_matrix`!"
-test_object("star_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-
-test_function("rowSums", "x", 
-              not_called_msg = "Have you used the function `rowSums()</code?",
-              incorrect_msg = "Did you use the [`rowSums()`](http://www.rdocumentation.org/packages/base/functions/colSums) function on the correct vector?")
-
-test_object("worldwide_vector",
-            incorrect_msg = "Have you specified `worldwide_vector` correctly?")
 success_msg("Well done! Continue to the next exercise.")
 ```
 
