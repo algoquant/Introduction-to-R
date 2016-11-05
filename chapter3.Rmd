@@ -1484,81 +1484,93 @@ Follow the instruction and introduction.
 *** =pre_exercise_code
 ```{r}
 # no pec
+list_var <- list(first=c('a', 'b'), second=1:4)
 ```
 
 *** =sample_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
+# extract second element as sublist
 
-# Create star_wars_matrix
+
+# extract second element
+
+
+# extract third element of second element
+
+
+# third element of second element
+
+
+# extract second element
+
+
+# extract second element - partial name matching
+
+
+# third element of second element
+
+
+# empty list
+list_var <- list()
+
+# element assignment
+list_var$a <- 1
+list_var[2] <- 2
+
+# print the list
 
 ```
 
 *** =solution
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
+# extract second element as sublist
+list_var[2]
 
-# Create star_wars_matrix
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
+# extract second element
+list_var[[2]]
+
+# extract third element of second element
+list_var[[2]][3]
+
+# third element of second element
+list_var[[c(2, 3)]]
+
+# extract second element
+list_var$second
+
+# extract second element - partial name matching
+list_var$s
+
+# third element of second element
+list_var$second[3]
+
+# empty list
+list_var <- list()
+
+# element assignment
+list_var$a <- 1
+list_var[2] <- 2
+
+# print the list
+list_var
 ```
 
 *** =sct
 ```{r}
-test_error()
-msg = "Do not change anything about the box office variables `new_hope`, `empire_strikes` and `return_jedi`!"
-test_object("new_hope", undefined_msg = msg, incorrect_msg = msg)
-test_object("empire_strikes", undefined_msg = msg, incorrect_msg = msg)
-test_object("return_jedi", undefined_msg = msg, incorrect_msg = msg)
-
-# Fix untill testwhat gets updated again
-# TODO: Fix in testwhat
-test_object("star_wars_matrix", eval = FALSE)
-test_what(
-  expect_equal(
-    dim(get("star_wars_matrix", get_solution_env())), 
-    dim(get("star_wars_matrix", .GlobalEnv))),
-  feedback = 
-    paste("Be sure to use the the function `rbind()` with 3 arguments: `new_hope`,",
-          "`empire_strikes` and `return_jedi`. You should end up with a matrix",
-          "of the correct dimensions: 3 rows and 2 columns."))
-
-
-
-test_correct({
-  test_object("star_wars_matrix",
-            incorrect_msg = "Did you assign the correct matrix containing the vector that holds all three movies to `star_wars_matrix`?")
-}, {
-  test_function("rbind", not_called_msg = "You should use the [`rbind()`](http://www.rdocumentation.org/packages/base/functions/cbind) function to create the matrix.")
-})
 success_msg("The force is actually with you! Continue to the next exercise.")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:ca3dbb8a9f
-## Naming a matrix
+## Coercing Vectors Into Lists Using as.list()
 
-To help you remember what is stored in `star_wars_matrix`, you would like to add the names of the movies for the rows. Not only does this help you to read the data, but it is also useful to select certain elements from the matrix later. 
-
-Similar to vectors, you can add names for the rows and the columns of a matrix
-
-```
-rownames(my_matrix) <- row_names_vector
-colnames(my_matrix) <- col_names_vector
-```
+The function as.list() coerces vectors and other objects into lists, as.list() returns a list with the same elements as the vector, list() called on a vector returns a single element equal to the vector.
 
 *** =instructions
-- Two vectors containing the row names and column names have been created for you: `movie_names` and `col_titles`.
-- Name the rows of `star_wars_matrix` with `movie_names`.
-- Name the columns of `star_wars_matrix` with the pre-defined `col_titles`.
+- Use `as.list()` and `list()` for list coercion.
 
 *** =hint
-To name the rows, start with `rownames(star_wars_matrix) <-`; can you finish the command?
+Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
@@ -1567,76 +1579,43 @@ To name the rows, start with `rownames(star_wars_matrix) <-`; can you finish the
 
 *** =sample_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-
-# Build col_names_vector and row_names_vector
-movie_names <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-col_titles <- c("US", "non-US")
-
-# Add row names to star_wars_matrix
+# coerce c(1,2,3) into list
 
 
-# Add column names to star_wars_matrix
+# coerce c(1,2,3) into list in another way
 
 ```
 
 *** =solution
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
+# coerce c(1,2,3) into list
+as.list(c(1,2,3))
 
-# Build col_names_vector and row_names_vector
-movie_names <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-col_titles <- c("US", "non-US")
-
-# Add row names to star_wars_matrix
-rownames(star_wars_matrix) <- movie_names
-
-# Add column names to star_wars_matrix
-colnames(star_wars_matrix) <- col_titles
+# coerce c(1,2,3) into list in another way
+list(c(1,2,3))
 ```
 
 *** =sct
 ```{r}
-msg = "Do not change anything about the box office variables `new_hope`, `empire_strikes` and `return_jedi`!"
-lapply(c("new_hope", "empire_strikes", "return_jedi"), test_object, undefined_msg = msg, incorrect_msg = msg)
-msg <- "Do not change anything about the creation of `star_wars_matrix`."
-test_object("star_wars_matrix", undefined_msg = msg, incorrect_msg = msg)
-msg <- paste("Do not change or remove the vectors `col_names_vector` and `row_names_vector`;",
-             "you can use them to name the columns and rows of `star_wars_matrix`.")
-lapply(c("movie_names", "col_titles"), test_object, undefined_msg = msg, incorrect_msg = msg)
-test_object("star_wars_matrix", eq_condition = "equal",
-            incorrect_msg = paste("Did you set the row and column names of `star_wars_matrix` correctly?",
-                                  "Have another look at your code."))
 success_msg("Great! You're on your way of becoming an R jedi!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:3b60b1a49a
-## Calculating the worldwide box office 
+## Data Frames
 
-The single most important thing for a movie in order to become an instant legend in Tinseltown is its worldwide box office figures. 
+Data frames are 2-D objects (like matrices), but their columns can be of diﬀerent types.
 
-To calculate the total box office revenue for the three Star Wars movies, you have to take the sum of the US revenue column and the non-US revenue column.
+Data frames can be thought of as lists of vectors of the same length.
 
-In R, the function [`rowSums()`](http://www.rdocumentation.org/packages/base/functions/colSums) conveniently calculates the totals for each row of a matrix. This function creates a new vector:
+The function data.frame() creates a data frame from vectors assigned to column names.
 
-```
-sum_of_rows_vector <- rowSums(my_matrix)
-```
 
 *** =instructions
-Calculate the worldwide box office figures for the three movies and put these in the vector named `worldwide_vector`.
+- Learn the baiscs of dataframe.
 
 *** =hint
-The ['rowSums'](http://www.rdocumentation.org/packages/base/functions/colSums) function will calculate the total box office for each row of the `star_wars_matrix`, if you supply `star_wars_matrix` as an argument to that function by putting it between the parentheses.
+Follow the instruction and intorduction.
 
 *** =pre_exercise_code
 ```{r}
@@ -1645,30 +1624,64 @@ The ['rowSums'](http://www.rdocumentation.org/packages/base/functions/colSums) f
 
 *** =sample_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
+# create a data frame
+data_frame <- data.frame(
+                type=c('rose', 'daisy', 'tulip'),
+                color=c('red', 'white', 'yellow'),
+                price=c(1.5, 0.5, 1.0)
+              )
 
-# Calculate the worldwide box office: worldwide_vector
+# print the data frame
+
+
+# get dimension attribute
+
+
+# get the colnames attribute
+
+
+# get the rownames attribute
+
+
+# get object class
+
+
+# check if data frames are lists
+
+
+# check if the data frame is a dataframe
 
 ```
 
 *** =solution
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
+# create a data frame
+data_frame <- data.frame(
+                type=c('rose', 'daisy', 'tulip'),
+                color=c('red', 'white', 'yellow'),
+                price=c(1.5, 0.5, 1.0)
+              )
 
-# Calculate the worldwide box office: worldwide_vector
-worldwide_vector <- rowSums(star_wars_matrix)
+# print the data frame
+data_frame
+
+# get dimension attribute
+dim(data_frame)
+
+# get the colnames attribute
+colnames(data_frame)
+
+# get the rownames attribute
+rownames(data_frame)
+
+# get object class
+class(data_frame)
+
+# check if data frames are lists
+typeof(data_frame)
+
+# check if the data frame is a dataframe
+is.data.frame(data_frame)
 ```
 
 *** =sct
@@ -1686,76 +1699,113 @@ success_msg("Well done! Continue to the next exercise.")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:4e0c938d72
-## Adding a row
+## Subsetting Data Frames
 
-Your R workspace contains two matrices: 
-- `star_wars_matrix`: the matrix that you just created for the first trilogy.
-- `star_wars_matrix2`: similar information for the second trilogy. 
-Type the names of the matrices in the console and press enter if you want to have a closer look.
+Data frames can be subset in a similar way to lists and matrices.
+Depending on how a data frame is subset, the result can be either a data frame or a vector. Extracting a single column from a data frame produces a vector.
+
+The data frame class attribute can be preserved by using the parameter "drop=FALSE", Extracting a single row from a data frame produces a data frame, The function unlist() applied to a single row extracted from a data frame coerces it to a vector,
+
 
 *** =instructions
-Use [`rbind()`](http://www.rdocumentation.org/packages/base/functions/cbind) to create `all_wars_matrix`, a new matrix with `star_wars_matrix` in the first three rows and `star_wars_matrix2` in the next three rows.
+- Expriment with different data frame subsetting methodology.
 
 *** =hint
-You can check out the contents of the workspace by executing [`ls()`](http://www.rdocumentation.org/packages/base/functions/ls) in the console.
-
-Bind the two matrices together in the following way: 
-```
-rbind(matrix1, matrix2)
-```
-Assign the result to `all_wars_matrix`.
+Use methods and functions mentioned in vector and list chapters. Potential candidates are `[]`, `[[]]`, `$`.
 
 
 *** =pre_exercise_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
-
-# Construct matrix2
-box_office_all2 <- c(474.5, 552.5, 310.7, 338.7, 380.3, 468.5)
-movie_names2 <- c("The Phantom Menace", "Attack of the Clones", "Revenge of the Sith")
-star_wars_matrix2 <- matrix(box_office_all2, nrow = 3, byrow = TRUE)
-rownames(star_wars_matrix2) <- c("The Phantom Menace", "Attack of the Clones", "Revenge of the Sith")
-colnames(star_wars_matrix2) <- c("US", "non-US")
+data_frame <- data.frame(  # create a data frame
+                type=c('rose', 'daisy', 'tulip'),
+                color=c('red', 'white', 'yellow'),
+                price=c(1.5, 0.5, 1.0)
+              )
 ```
 
 *** =sample_code
 ```{r}
-# Matrix that contains the first trilogy box office
-star_wars_matrix  
+# extract third column as vector
+data_frame[, 3]
 
-# Matrix that contains the second trilogy box office
-star_wars_matrix2 
+# extract third column as vector
+data_frame[[3]]
 
-# Combine both Star Wars trilogies in one matrix: all_wars_matrix
+# extract third column as data frame
+data_frame[3]
 
+# extract third column as data frame
+data_frame[, 3, drop=FALSE]
+
+# second element from third column
+data_frame[[3]][2]
+
+# second element from 'price' column
+data_frame$price[2]
+
+# check if the third column is a dataframe and if it is a vector
+is.data.frame(data_frame[[3]]); is.vector(data_frame[[3]])
+
+# extract second row
+data_frame[2, ]
+
+# third element from second column
+data_frame[2, ][3]
+
+# third element from second column
+data_frame[2, 3]
+
+# coerce to vector
+unlist(data_frame[2, ])
+
+# check if the second row is a vector or a dataframe
+is.data.frame(data_frame[2, ]); is.vector(data_frame[2, ])
 ```
 
 *** =solution
 ```{r}
-# Matrix that contains the first trilogy box office
-star_wars_matrix  
+# extract third column as vector
+data_frame[, 3]
 
-# Matrix that contains the second trilogy box office
-star_wars_matrix2 
+# extract third column as vector
+data_frame[[3]]
 
-# Combine both Star Wars trilogies in one matrix: all_wars_matrix
-all_wars_matrix <- rbind(star_wars_matrix, star_wars_matrix2)
+# extract third column as data frame
+data_frame[3]
+
+# extract third column as data frame
+data_frame[, 3, drop=FALSE]
+
+# second element from third column
+data_frame[[3]][2]
+
+# second element from 'price' column
+data_frame$price[2]
+
+# check if the third column is a dataframe and if it is a vector
+is.data.frame(data_frame[[3]]); is.vector(data_frame[[3]])
+
+# extract second row
+data_frame[2, ]
+
+# third element from second column
+data_frame[2, ][3]
+
+# third element from second column
+data_frame[2, 3]
+
+# coerce to vector
+unlist(data_frame[2, ])
+
+# check if the second row is a vector or a dataframe
+is.data.frame(data_frame[2, ]); is.vector(data_frame[2, ])
 ```
 
 *** =sct
 ```{r}
-msg <- "Do not override the variables that have been defined for you in the workspace (`star_wars_matrix` and `star_wars_matrix2`)."
-test_object("star_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("star_wars_matrix2", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("all_wars_matrix",
-            incorrect_msg = "Did you use the [`rbind()`](http://www.rdocumentation.org/packages/base/functions/cbind) function with the correct arguments to build `all_wars_matrix`?")
-success_msg("Wonderful! Continue with the next exercise and see how you can combine the results of the [`rbind()`](http://www.rdocumentation.org/packages/base/functions/cbind) function with the [`colSums()`](http://www.rdocumentation.org/packages/base/functions/colSums) function!")
+msg <- "Do not override the variables that have been defined for you in the workspace."
+test_object("data_frame", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
+success_msg("Wonderful! Continue with the next exercise!")
 ```
 
 
