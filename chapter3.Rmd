@@ -1022,9 +1022,6 @@ num_var1 <- 3
 # add space or brackets to avoid confusion
 
 
-# x doesn't exist outside the function
-
-
 # "<-" assignment within argument list
 
 
@@ -1045,9 +1042,6 @@ num_var1 = 3
 
 # add space or brackets to avoid confusion
 2 < -3
-
-# x doesn't exist outside the function
-x
 
 # "<-" assignment within argument list
 median(x <- 1:10)
