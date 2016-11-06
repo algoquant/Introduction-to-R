@@ -2025,6 +2025,9 @@ Follow the instructions and introductions.
 *** =pre_exercise_code
 ```{r}
 library(microbenchmark)
+mat_rix <- matrix(5:10, nrow=2, ncol=3)  # create a matrix
+rownames(mat_rix) <- c("row1", "row2")  # rownames attribute
+colnames(mat_rix) <- c("col1", "col2", "col3")  # colnames attribute
 ```
 
 *** =sample_code
@@ -2294,3 +2297,107 @@ hist(Cars93$MPG.highway, col="lightblue1",
 success_msg("Rock with these data!")
 ```
 
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:c990b311e0
+## Types of Bad Data
+
+Possible sources of bad data are: imported data, class coercion, numeric overﬂow.
+
+Types of bad data: NA means Not Available (missing) data, NaN means Not a Number data, Inf means numeric overﬂow divide by zero.
+
+When a function produces NA or NaN values, then it also produces a warning condition, but not an error, NA or NaN values are not errors, The functions is.na() and is.nan() test for NA and NaN values, Many functions have a na.rm parameter to remove NAs from input data.
+
+*** =instructions
+- Distinguish different types of bad data.
+
+*** =hint
+Follow the instruction and introduction.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+library(MASS)
+```
+
+*** =sample_code
+```{r}
+# NA from coercion
+
+
+# NaN from ambiguous math
+0/0
+
+# Inf from divide by zero
+
+
+# test for NA
+is.na(c(NA, NaN, 0/0, 1/0))
+
+# test for NaN
+
+
+# create vector of Nas
+
+
+# create vector with some NA values
+da_ta <- c(1, 2, NA, 4, NA, 5)
+
+# print to see the result
+
+
+# mean returns NA, when NAs are input
+
+
+# remove NAs from input data
+
+
+# delete the NA values
+
+
+# count non-NA values
+
+```
+
+*** =solution
+```{r}
+# NA from coercion
+as.numeric(c(1:3, "a"))
+
+# NaN from ambiguous math
+0/0
+
+# Inf from divide by zero
+1/0
+
+# test for NA
+is.na(c(NA, NaN, 0/0, 1/0))
+
+# test for NaN
+is.nan(c(NA, NaN, 0/0, 1/0))
+
+# create vector of Nas
+NA*1:4
+
+# create vector with some NA values
+da_ta <- c(1, 2, NA, 4, NA, 5)
+
+# print to see the result
+da_ta
+
+# returns NA, when NAs are input
+mean(da_ta)
+
+# remove NAs from input data
+mean(da_ta, na.rm=TRUE)
+
+# delete the NA values
+da_ta[!is.na(da_ta)]
+
+# count non-NA values
+sum(!is.na(da_ta))
+```
+
+*** =sct
+```{r}
+success_msg("Bad data are everywhere!")
+```
