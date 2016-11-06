@@ -1,33 +1,20 @@
 --- 
 title_meta  : Chapter 4
-title       : Factors
-description : Very often, data falls into a limited number of categories.In R, categorical data is stored in factors. Given the importance of these factors in data analysis, you should start learning how to create, subset and compare them now!
-attachments : 
-  slides_link: https://s3.amazonaws.com/assets.datacamp.com/course/introduction_to_r/slides/ch4_slides.pdf
-
---- type:VideoExercise lang:r xp:50 skills:1 key:c9cff655dd
-## Factors
-
-*** =video_link
-//player.vimeo.com/video/138173962
-
-*** =video_hls
-//videos.datacamp.com/transcoded/732_intro_to_r/v1/hls-ch4_1.master.m3u8
+title       : R Functionals
+description : See details in R function settings
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:36ba783482
-## Vector to factor
+## Lazy Evaluation of Function Arguments
 
-In the following exercises, we'll be working with handedness as a categorical variable that can be either "Left" or "Right". In general, you're either left-handed or you're right-handed (not both), so this complies with the conditions of a categorical variable.
+R functions delay evaluation of their arguments until they’re needed by their R code, This is called lazy evaluation, If the function body doesn’t evaluate an argument, then the function won’t produce an error, even if the argument is missing.
 
-To create factors in R, you make use of the function [`factor()`](http://www.rdocumentation.org/packages/base/functions/factor). The first thing you do is creating a vector that contains all the observations that belong to a limited number of categories. For example, `hand_vector` contains the handedness of 5 different individuals. Next, you pass this vector to the function [`factor()`](http://www.rdocumentation.org/packages/base/functions/factor).
 
 *** =instructions
-- Assign to `hand_factor` the character vector `hand_vector` converted to a factor. Look at the console and note that R prints out the factor levels below the actual values.
-- Have a look at the underlying structure of `hand_factor` using [`str()`](http://www.rdocumentation.org/packages/utils/functions/str).
+- Input varied arguments to R functions
 
 *** =hint
-Simply use the function [`factor()`](http://www.rdocumentation.org/packages/base/functions/factor) on `hand_vector`. Have a look at the assignment, the answer is already there somewhere...
+Follow the instructions and introductions.
 
 *** =pre_exercise_code
 ```{r}
@@ -36,67 +23,72 @@ Simply use the function [`factor()`](http://www.rdocumentation.org/packages/base
 
 *** =sample_code
 ```{r}
-# Definition of hand_vector
-hand_vector <- c("Right", "Left", "Left", "Right", "Left")
+# define function lazy_func
+lazy_func <- function(arg1, arg2) {
+  2*arg1
+}
 
-# Convert hand_vector to a factor: hand_factor
+# bind arguments by position
 
 
-# Display the structure of hand_factor
+# second argument was never evaluated!
+
+
+# define function lazy_func
+lazy_func <- function(arg1, arg2) {
+  cat(arg1, '\n')
+  cat(arg2)
+}
+
+# bind arguments by position
+
+
+# first argument written to output, without second argument
+
 ```
 
 *** =solution
 ```{r}
-# Definition of hand_vector
-hand_vector <- c("Right", "Left", "Left", "Right", "Left")
+# define function lazy_func
+lazy_func <- function(arg1, arg2) {
+  2*arg1
+}
 
-# Convert hand_vector to a factor: hand_factor
-hand_factor <- factor(hand_vector)
+# bind arguments by position
+lazy_func(3, 2)
 
-# Display the structure of hand_factor
-str(hand_factor)
+# second argument was never evaluated!
+lazy_func(3)
+
+# define function lazy_func
+lazy_func <- function(arg1, arg2) {
+  cat(arg1, '\n')
+  cat(arg2)
+}
+
+# bind arguments by position
+lazy_func(3, 2)
+
+# first argument written to output, without the second argument
+lazy_func(3)
 ```
 
 *** =sct
 ```{r}
-test_error()
-test_object("hand_factor",
-            incorrect_msg = "Did you correctly convert `hand_vector` to a factor and assign the result to `hand_factor`?")
-test_function("str", "object",
-              not_called_msg = "Make sure to use the [`str()`](http://www.rdocumentation.org/packages/utils/functions/str) to show the structure of `hand_factor`",
-              incorrect_msg = "Have you correctly passed `hand_factor` to [`str()`](http://www.rdocumentation.org/packages/utils/functions/str)?")
-success_msg("Great! If you want to find out more about the [`factor()`](http://www.rdocumentation.org/packages/base/functions/factor) function, do not hesitate to type `?factor` in the console.");
+success_msg("Great!");
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:56d9d5409e
-## Factor levels
+## The dots "..." Function Argument
 
-When you first get a data set, you will often notice that it contains factors with specific factor levels. Of course, you can also change these factor levels. You can either do this with the [`levels()`](http://www.rdocumentation.org/packages/base/functions/levels) function, after you defined the factor, or using the `labels` argument inside [`factor()`](http://www.rdocumentation.org/packages/base/functions/factor). The following options are equivalent:
-
-```
-my_vector <- c("L", "S", "L", "M", "M")
-
-# Option 1
-my_factor <- factor(my_vector)
-levels(my_factor) <- c("Large", "Medium", "Small")
-
-# Option 2
-my_factor <- factor(my_vector, 
-                    levels = c("S", "M", "L"),
-                    labels = c("Small", "Medium", "Large"))
-```
-
-In the first option, you have to pass the levels in alphabetical order. To not make mistakes, you better use the second option, but that's up to you!
-
-You performed a street questionnaire, and recorded the respondents' handedness using the letters "R" and "L". This information is stored in a vector `survey_vector`, which is already coded on the right.
+The dots `...` function argument is a formal argument without a name, as opposed to the other formal arguments which all have names, The dots `...` bind with any number of additional arguments, that aren’t already bound by name or position to the named arguments, The dots "..." are used when the number of arguments isn’t known in advance, and allows functions to accept an indeﬁnite number of arguments, The dots `...` are sometimes placed after the named arguments, to allow passing of additional parameters into a function, Functionals often place the dots `...` argument after the named arguments, to allow passing the dots `...` to the function being called by the functional.
 
 *** =instructions
-- Convert the character vector `survey_vector` into a factor vector, `survey_factor`, with the levels "Right" and "Left".
-- Print `survey_factor` to inspect its contents.
+- Learn to use `...` for flexible length of argument
 
 *** =hint
-If you're using the first approach outlined above, mind the order in which you have to type in the factor levels.
+Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
@@ -105,64 +97,134 @@ If you're using the first approach outlined above, mind the order in which you h
 
 *** =sample_code
 ```{r}
-# Definition of survey_vector
-survey_vector <- c("R", "L", "L", "R", "R")
-
-# Encode survey_vector as a factor with the correct names: survey_factor
+# dots for additional plot parameters
 
 
-# Print survey_factor
+# change the code to create a function that accepts undefined length of arguments
+bind_dots <- function(in_put, ...) {
+  paste0("in_put=", in_put,
+ ", dots=", paste(..., sep=", "))
+}
+
+# "in_put" bound by position
+
+
+# "in_put" bound by name
+
+
+# named argument bound to dots
+
+
+# define a new function with at least two argument for input
+bind_dots <- function(arg1, arg2, ...) {
+  arg1 + 2*arg2 + sum(...)
+}
+
+# bind arguments by position
+bind_dots(3, 2)
+
+# extra arguments bound to dots
+
+
+# dots before other arguments
+
+
+# dots bind before other arguments
+
+
+# change the default argument
+
+
+# define a new function with default argument at the end
+bind_dots <- function(..., in_put=10) {
+  paste0("in_put=", in_put,
+ ", dots=", paste(..., sep=", "))
+}
+
+# arguments after dots must be bound by full name
+
+
+# dots bound
+
+
+# "in_put" not bound, but has default
 
 ```
 
 *** =solution
 ```{r}
-# Definition of survey_vector
-survey_vector <- c("R", "L", "L", "R", "R")
+# dots for additional plot parameters
+str(plot)
 
-# Encode survey_vector as a factor with the correct names: survey_factor
-survey_factor <- factor(survey_vector, levels = c("R", "L"), labels = c("Right", "Left"))
-survey_factor_2 <- factor(survey_vector, levels = c("L", "R"), labels = c("Left", "Right")) # also possible
+# change the code to create a function that accepts undefined length of arguments
+bind_dots <- function(in_put, ...) {
+  paste0("in_put=", in_put,
+ ", dots=", paste(..., sep=", "))
+}
 
-# Print survey_factor
-survey_factor
+# "in_put" bound by position
+bind_dots(1, 2, 3)
+
+# "in_put" bound by name
+bind_dots(2, in_put=1, 3)
+
+# named argument bound to dots
+bind_dots(1, 2, 3, foo=10)
+
+# define a new function with at least two argument for input
+bind_dots <- function(arg1, arg2, ...) {
+  arg1 + 2*arg2 + sum(...)
+}
+
+# bind arguments by position
+bind_dots(3, 2)
+
+# extra arguments bound to dots
+bind_dots(3, 2, 5, 8)
+
+# dots before other arguments
+str(sum)
+
+# dots bind before other arguments
+sum(1, 2, 3)
+
+# change the default argument
+sum(1, 2, NA, 3, na.rm=TRUE)
+
+# define a new function with default argument at the end
+bind_dots <- function(..., in_put=10) {
+  paste0("in_put=", in_put,
+ ", dots=", paste(..., sep=", "))
+}
+
+# arguments after dots must be bound by full name
+bind_dots(1, 2, 3, in_put=10)
+
+# dots bound
+bind_dots(1, 2, 3, in_put=10, foo=4)
+
+# "in_put" not bound, but has default
+bind_dots(1, 2, 3)
 ```
 
 *** =sct
 ```{r}
-msg <- "Do not change the definition of `survey_vector`!"
-test_object("survey_vector", undefined_msg = msg, incorrect_msg = msg)
-msg <- "Have you correctly converted `survey_vector` to a factor? Make sure to correctly specify the new factor levels (R is case sensitive!)."
-test_object("survey_factor")
-test_or(test_object("survey_factor", eq_condition = "equal", undefined_msg = msg),
-        test_an_object("survey_factor_2", eq_condition = "equal", undefined_msg =  msg))
-test_output_contains("survey_factor", incorrect_msg = "Don't forget to print `survey_factor`!")
 success_msg("Wonderful! Proceed to the next exercise.")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:e09996c475
-## Nominal versus Ordinal, Unordered versus Ordered
+## Functions that takes functions and returns functions
 
-Remember that there are two types of categorical variables? On the one hand there's the _nominal categorical variable_, which does not have an implied order. The _ordinal categorical variable_, on the other hand, does have a natural ordering.
+Functions in R are ﬁrst class objects, which means they can be treated like any other R object: Functions can be passed as arguments to other functions, Functions can be nested (deﬁned inside other functions), Functions can return functions as their return value, Higher-order functions are R functions that either accept a function as their argument (input) or return a function as their value (output).
 
-By default, the function [`factor()`](http://www.rdocumentation.org/packages/base/functions/factor) transforms a vector into an unordered factor. To create an ordered factor, you have to add two additional arguments: `ordered` and `levels`. 
-
-```
-factor(some_vector, 
-       ordered = TRUE, 
-       levels = c("Level_1", "Level_2" ...))
-``` 
-
-By setting the argument `ordered` to `TRUE`, you indicate that the factor is ordered. With the argument `levels` you give the values of the factor in the correct order.
+R functions can also return a function as their value, Functions returned by a function are called closures, Functions that return closures can be used as function factories.
 
 *** =instructions
-- Convert `animal_vector` to a factor, `animal_factor`. Make it an ordered factor if that's appropriate.
-- Encode `temperature_vector` as a factor called `temperature_factor`. Again, order this factor if that makes sense.
-- Print out both factors and compare the outputs.
+- Use function name as input, and get returns as some functions.
 
 *** =hint
-`animal_factor` should not be ordered; `temperature_factor` should!
+Follow the instructions and introductions.
 
 *** =pre_exercise_code
 ```{r}
@@ -171,69 +233,111 @@ By setting the argument `ordered` to `TRUE`, you indicate that the factor is ord
 
 *** =sample_code
 ```{r}
-# Definition of animal_vector and temperature_vector
-animal_vector <- c("Elephant", "Giraffe", "Donkey", "Horse")
-temperature_vector <- c("High", "Low", "High", "Low", "Medium")
+# create functional that accepts a function as input argument
+func_tional <- function(func_name) {
 
-# Convert animal_vector to a factor: animal_factor
+# set seed to random numbers
+  set.seed(1)
+
+# change the code to apply the function name
+  func(runif(1e4))
+}
+
+# get mean
+func_tional(mean)
+
+# get standard deviation
+func_tional(sd)
+
+# define a power function factory
+make_func <- function(arg_param) {
+  function(in_put) {
+    in_put^arg_param
+  }
+}
+
+# define square function
+square_func <- make_func(2)
+
+# input 4
+square_func(4)
+
+# define cube function
+cube_func <- make_func(3)
+
+# apply 2
+cube_func(2)
+
+# define cube root function
 
 
-# Encode temperature_vector as a factor: temperature_factor
-
-
-# Print out animal_factor and temperature_factor
+# apply 8
 
 ```
 
 *** =solution
 ```{r}
-# Definition of animal_vector and temperature_vector
-animal_vector <- c("Elephant", "Giraffe", "Donkey", "Horse")
-temperature_vector <- c("High", "Low", "High", "Low", "Medium")
+# create functional that accepts a function as input argument
+func_tional <- function(func_name) {
 
-# Convert animal_vector to a factor: animal_factor
-animal_factor <- factor(animal_vector)
+# set seed to random numbers
+  set.seed(1)
 
-# Encode temperature_vector as a factor: temperature_factor
-temperature_factor <- factor(temperature_vector, ordered = TRUE, levels = c("Low", "Medium", "High"))
+# change the code to apply the function name
+  func(runif(1e4))
+}
 
-# Print out animal_factor and temperature_factor
-animal_factor
-temperature_factor
+# get mean
+
+
+# get standard deviation
+
+
+# define a power function factory
+make_func <- function(arg_param) {
+  function(in_put) {
+    in_put^arg_param
+  }
+}
+
+# define square function
+
+
+# input 4
+
+
+# define cube function
+
+
+# apply 2
+
+
+# define cube root function
+
+
+# apply 8
+
 ```
 
 *** =sct
 ```{r}
-msg <- "Do not change or remove the code that defines `animal_vector` and `temperature_vector`!"
-test_object("animal_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("temperature_vector", undefined_msg = msg, incorrect_msg = msg)
-
-test_object("animal_factor", eq_condition = "equal",
-            incorrect_msg = "Have you correctly converted `animal_vector` to a factor? You shouldn't order this factor!")
-
-test_object("temperature_factor", eq_condition = "equal",
-            incorrect_msg = "Have you correctly encoded `temperature_vector` as a factor? In this case, an ordered factor makes sense!")
-
-msg <- "Don't forget to print out both `animal_factor` and `temperature_factor`."
-test_output_contains("animal_factor", incorrect_msg = msg)
-test_output_contains("temperature_factor", incorrect_msg = msg)
-
-success_msg("Awesome! You correctly figured out that `animal_factor` shouldn't be ordered while `temperature_factor` should.")
+success_msg("Awesome! You correctly figured them out.")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:f6eb0a5c5f
-## Left better than right?
+## Functionals
 
-In `survey_factor` you have a two-level factor, containing "Left" and "Right". But how does R value these relatively to each other? In other words, who does R think is better, left or right?
+Functionals are functions that accept a function or a function name as one of their input arguments, Functionals are able to execute function calls using the function names, The function match.fun() returns a function name that is speciﬁed by a string, match.fun() produces an error condition if it fails to ﬁnd a function with the speciﬁed name.
+
+The dots "..." argument in functionals can be used to pass additional arguments to the function being called by the functional, If named values are passed to the dots "..." argument, then the functional can bind them to the correct formal arguments of the function being called by the functional.
 
 *** =instructions
-- Select the first element from `survey_factor` and store it in the variable `right`.
-- Select the second element form `survey_factor` and store it in the variable `left`.
-- Using the greater than sign, find out whether `right` is greater than `left`.
+- Use function name and dots for function inputs. 
 
 *** =hint
-You can subset factors exactly the same as you subset vectors: using square brackets. To select the fourth element from `survey_factor`, you can type `survey_factor[4]`.
+Follow the instruction and introductions.
+Use `match.fun()` to convert function name to function.
 
 *** =pre_exercise_code
 ```{r}
@@ -242,34 +346,90 @@ You can subset factors exactly the same as you subset vectors: using square brac
 
 *** =sample_code
 ```{r}
-# Definition of survey_vector and survey_factor
-survey_vector <- c("R", "L", "L", "R", "R")
-survey_factor <- factor(survey_vector, levels = c("R", "L"), labels = c("Right", "Left"))
+# func_tional accepts function name and additional argument
+func_tional <- function(func_name, in_put) {
 
-# First element from survey_factor: right
+# change the code to produce function name from argument
+  func_name <- func_name
+
+# change the code to execute function call
+  func_name()
+}
+
+# get the square root of 4
 
 
-# Second element from survey_factor: left
+# sum() accepts multiple arguments
+# func_tional can't accept indefinite number of arguments
 
 
-# Right 'greater than' left?
+# func_tional accepts function name and dots '...' argument
+func_tional <- function(func_name, ...) {
+  func_name <- match.fun(func_name)
+  func_name(...)
+}
+
+# get the sum of 1, 2, 3
+
+
+# get the sum containing NAs
+
+
+# get the sum removing NAs
+
+
+# function with three arguments and dots '...' arguments
+my_func <- function(in_put, param1, param2, ...) {
+  c(input=in_put, param1=param1, param2=param2,
+dots=c(...))
+}
+
+# get a named vector
 
 ```
 
 *** =solution
 ```{r}
-# Definition of survey_vector and survey_factor
-survey_vector <- c("R", "L", "L", "R", "R")
-survey_factor <- factor(survey_vector, levels = c("R", "L"), labels = c("Right", "Left"))
+# func_tional accepts function name and additional argument
+func_tional <- function(func_name, in_put) {
 
-# First element from survey_factor: right
-right <- survey_factor[1] 
+# change the code to produce function name from argument
+  func_name <- match.fun(func_name)
 
-# Second element from survey_factor: left
-left <- survey_factor[2] 
+# change the code to execute function call
+  func_name(in_put)
+}
 
-# Right 'greater than' left?
-right > left
+# get the square root of 4
+func_tional(sqrt, 4)
+
+# sum() accepts multiple arguments
+# func_tional can't accept indefinite number of arguments
+str(sum)
+
+# func_tional accepts function name and dots '...' argument
+func_tional <- function(func_name, ...) {
+  func_name <- match.fun(func_name)
+  func_name(...)
+}
+
+# get the sum of 1, 2, 3
+func_tional(sum, 1, 2, 3)
+
+# get the sum containing NAs
+func_tional(sum, 1, 2, NA, 4, 5)
+
+# get the sum removing NAs
+func_tional(sum, 1, 2, NA, 4, 5, na.rm=TRUE)
+
+# function with three arguments and dots '...' arguments
+my_func <- function(in_put, param1, param2, ...) {
+  c(input=in_put, param1=param1, param2=param2,
+dots=c(...))
+}
+
+# get a named vector
+my_func(1, 2, 3, param2=4, param1=5)
 ```
 
 *** =sct
@@ -283,27 +443,17 @@ success_msg("Phew, it seems that R is neutral ;-).")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:d65e71390a
-## Ordered factors
+## Anonymous Functions and Functionals
 
-Sometimes you will deal with factors that do have a natural ordering between its categories. In this case, we have to tell R about it.
+R allows deﬁning functions without assigning a name to them, Anonymous functions are functions that are not assigned to a name, Anonymous functions can be passed as arguments to functionals.
 
-Suppose you're leading a research team of five data analysts and that you want to evaluate their performance. To do this, you track their speed, evaluate each analyst as `"Slow"`, `"OK"` or `"Fast"`, and save the results in `speed_vector`.
-
-`speed_vector` should be converted to an ordinal factor since its categories have a natural ordening. You already know how to do this. Here's a template to define an ordered factor once more:
-
-```
-factor(some_vector, ordered = TRUE, levels = c("Level_1", "Level_2", ...))
-``` 
+Anonymous functions can be passed as arguments to functionals, Anonymous functions can also be used as default values for function arguments.
 
 *** =instructions
-- Use the example code above to define `speed_factor`, that contains the speed information as an ordered factor. You can start from `speed_vector`, which is already created for you.
-- Print `speed_factor` to the console.
-- Use [`summary()`](http://www.rdocumentation.org/packages/base/functions/summary) to generate a summary of `speed_factor`: automagically, R prints the factor levels in the right order.
+- Produce compact functionality with the anonymous functions and apply them to functionals.
 
 *** =hint
-- Use the function [`factor()`](http://www.rdocumentation.org/packages/base/functions/factor) to create `factor_speed_vector` based on `speed_character_vector`. 
-- The argument `ordered` should be set to `TRUE` since there is a natural ordering. 
-- The argument `levels` should be equal to `c("Slow", "OK", "Fast")`.
+Remember to write anonymous functions with complete structure.
 
 *** =pre_exercise_code
 ```{r}
@@ -312,65 +462,76 @@ factor(some_vector, ordered = TRUE, levels = c("Level_1", "Level_2", ...))
 
 *** =sample_code
 ```{r}
-# Create speed_vector
-speed_vector <- c("OK", "Slow", "Slow", "OK", "Fast") 
+# simple anonymous function
+(function(x) (x + 3)) (10)
 
-# Convert speed_vector to ordered speed_factor
+# anonymous function passed to func_tional
+func_tional(func_name=(function(x) (x + 3)), 5)
 
+# change the code to make anonymous function is default value
+func_tional <-
+  function(..., func_name=function(x, y, z) {x+y+z}) {
+    func_name <- func_name
+    func_name()
+}
 
-# Print speed_factor
+# use default func_name
+# more arguments result an error
+func_tional(2, 3, 4)
 
+# func_name bound by name
+func_tional(func_name=sum, 2, 3, 4, 5)
 
-# Summarize speed_factor
-
+# change the code to pass anonymous function to func_name
+func_tional(func_name=function(x, y, z),
+    2, 3, 4)
 ```
 
 *** =solution
 ```{r}
-# Create speed_vector
-speed_vector <- c("OK", "Slow", "Slow", "OK", "Fast") 
+# simple anonymous function
+(function(x) (x + 3)) (10)
 
-# Convert speed_vector to ordered speed_factor
-speed_factor <- factor(speed_vector, ordered = TRUE, levels = c("Slow", "OK", "Fast"))
+# anonymous function passed to func_tional
+func_tional(func_name=(function(x) (x + 3)), 5)
 
-# Print speed_factor
-speed_factor
+# change the code to make anonymous function is default value
+func_tional <-
+  function(..., func_name=function(x, y, z) {x+y+z}) {
+    func_name <- match.fun(func_name)
+    func_name(...)
+}
 
-# Summarize speed_factor
-summary(speed_factor)
+# use default func_name
+# more arguments result an error
+func_tional(2, 3, 4)
+
+# func_name bound by name
+func_tional(func_name=sum, 2, 3, 4, 5)
+
+# pass anonymous function to func_name
+func_tional(func_name=function(x, y, z) {x*y*z},
+    2, 3, 4)
 ```
 
 *** =sct
 ```{r}
-test_error()
-msg <- "Do not change anything about the command that defines `speed_vector`."
-test_object("speed_vector", undefined_msg = msg, incorrect_msg = msg)
-test_correct({
-  test_object("speed_factor", eq_condition = "equal",
-              incorrect_msg = "Make sure that you assigned the correct factor to `speed_factor`. Pay attention to the correct order of the `levels` argument.")
-},{
-  test_function("factor", "x")
-  test_function("factor", "levels")
-  test_function("factor", "ordered")
-})
-test_output_contains("summary(speed_factor)", incorrect_msg = "Don't forget to summarise `speed_factor`. Use [`summary()`](http://www.rdocumentation.org/packages/base/functions/summary).")
-success_msg("Great! Have a look at the console. It is now indicated that the Levels indeed have an order associated, with the `<` sign. Continue to the next exercise.");
 success_msg("A job well done! Continue to the next exercise.")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:e23011c42b
-## Comparing ordered factors
+## Executing Function Calls Using the do.call() Functional
 
-'Data analyst number two' is having a bad day at work. He enters your office and starts complaining that 'data analyst number five' is slowing down the entire project. Since you know that 'data analyst number two' has the reputation of being a smarty-pants, you first decide to check if his statement is true. 
+The functional do.call() executes a function call using a function name and a list of arguments, do.call() allows calling a function on arguments that are elements of a list, do.call() passes the list elements individually, instead of passing the whole list as one argument: do.call(fun, list)= fun(list[[1]], list[[2]], ...)
 
-The fact that `speed_factor` is now ordered enables us to compare different elements (the data analysts in this case). You can simply do this by using a well-known operator: `>`.
+do.call() can be called inside other functionals to allow them to execute function calls, The function str() displays the structure of an R object, for example a function name and its formal arguments.
 
 *** =instructions
-Check whether data analyst 2 is faster than data analyst 5. Simply print out the result, which should be a logical.
+Use `do.call()` to execute function.
 
 *** =hint
-`vector[1] > vector[2]` checks whether the first element of vector is larger than the second element.
+Always call function name as the first argument and inputs as following arguments.
 
 *** =pre_exercise_code
 ```{r}
@@ -379,30 +540,467 @@ Check whether data analyst 2 is faster than data analyst 5. Simply print out the
 
 *** =sample_code
 ```{r}
-# Definition of speed_vector and speed_factor
-speed_factor <- factor(c("Fast", "Slow", "Slow", "Fast", "Ultra-fast"), 
-                       ordered = TRUE, levels = c("Slow", "Fast", "Ultra-fast"))
+# "what" argument is a function
 
-# Compare data analyst 2 with data analyst 5
+
+# do.call passes list elements into "sum" individually
+
+
+# passes list element containing NA
+
+
+# filter NAs in list elements
+
+
+# func_tional() accepts list with function name and arguments
+func_tional <- function(list_arg) {
+
+# change the code to produce function name from argument
+  func_name <- match.fun(list_arg)
+  
+# change the code to execute function call uing do.call()
+  do.call(func_name, list_arg)
+}
+
+# construction an arg_list of function name and function input
+
+
+# pass the argument to functional
 
 ```
 
 *** =solution
 ```{r}
-# Definition of speed_factor
-speed_factor <- factor(c("Fast", "Slow", "Slow", "Fast", "Ultra-fast"), 
-                       ordered = TRUE, levels = c("Slow", "Fast", "Ultra-fast"))
+# "what" argument is a function
+str(do.call)
 
-# Compare data analyst 2 with data analyst 5
-speed_factor[2] > speed_factor[5]
+# do.call passes list elements into "sum" individually
+do.call(sum, list(1, 2, 3))
+
+# passes list element containing NA
+do.call(sum, list(1, 2, NA, 3))
+
+# filter NAs in list elements
+do.call(sum, list(1, 2, NA, 3, na.rm=TRUE))
+
+# func_tional() accepts list with function name and arguments
+func_tional <- function(list_arg) {
+
+# produce function name from argument
+  func_name <- match.fun(list_arg[[1]])
+  
+# execute function call uing do.call()
+  do.call(func_name, list_arg[-1])
+}
+
+# construction an argument list of function name and function input
+arg_list <- list("sum", 1, 2, 3)
+
+# pass the argument to functional
+func_tional(arg_list)
 ```
 
 *** =sct
 ```{r}
-msg <- "Do not change anything about the command that defines `speed_factor`!"
-test_object("speed_factor", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_output_contains("speed_factor[2] > speed_factor[5]", 
-                     incorrect_msg = paste("Have you correctly compared data analyst 2 to data analyst 5?",
-                                           "Use subsetting in combination with the `>` operator."))
-success_msg("Bellissimo! What does the result tell you? Data analyst two is complaining about the data analyst five while in fact he or she is the one slowing everything down!")
+success_msg("Bellissimo!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:59a81e117a
+## Performing Loops Using the apply() Functionals
+
+An important example of functionals are the apply() functions, The function apply() returns the result of applying a function to the rows or columns of an array or matrix, If MARGIN=1 then the function will be applied over the matrix rows, If MARGIN=2 then the function will be applied over the matrix columns, apply() performs a loop over the list of objects, and can replace "for" loops in R.
+
+
+*** =instructions
+Use `apply()` to execute function in loops.
+
+*** =hint
+Always call data object as the first argument of apply, second arguemnt is the dimension, and function name as following arguments.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# get list of arguments
+
+
+# create a matrix
+mat_rix <- matrix(6:1, nrow=2, ncol=3)
+
+# print the matrix
+
+
+# sum the rows
+
+
+# sum the columns
+
+
+# change the code define a matrix of sums and original matrix
+mat_rix <- c(sum(row_sums), col_sums)
+dimnames(mat_rix) <- list(c("col_sums", "row1", "row2"),
+                 c("row_sums", "col1", "col2", "col3"))
+
+# print the matrix
+
+```
+
+*** =solution
+```{r}
+# get list of arguments
+str(apply)
+
+# create a matrix
+mat_rix <- matrix(6:1, nrow=2, ncol=3)
+
+# print the matrix
+mat_rix
+
+# sum the rows
+row_sums <- apply(mat_rix, 1, sum)
+
+# sum the columns
+col_sums <- apply(mat_rix, 2, sum)
+
+# change the code define a matrix of sums and original matrix
+mat_rix <- cbind(c(sum(row_sums), row_sums),
+          rbind(col_sums, mat_rix))
+dimnames(mat_rix) <- list(c("col_sums", "row1", "row2"),
+                 c("row_sums", "col1", "col2", "col3"))
+
+# print the matrix
+mat_rix
+```
+
+*** =sct
+```{r}
+success_msg("Groß!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:8debcc371a
+## The apply() Functional with dots "..." Argument
+
+The dots "..." argument in apply() is designed to pass additional arguments to the function being called by apply(), The additional arguments to apply() must be bound by their full (complete) names.
+
+
+*** =instructions
+Use `apply()` to execute function in loops with additional arguments.
+
+*** =hint
+Always call data object as the first argument of apply, second arguemnt is the dimension, and function name as following arguments. More arguments can be passed as dot arguments.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# get list of arguments
+
+
+# create a matrix
+mat_rix <- matrix(sample(12), nrow=3, ncol=4)
+
+# print the code
+
+
+# sort matrix columns
+
+
+# sort decreasing order
+
+
+# introduce NA value
+
+
+# print the matrix
+
+
+# calculate median of columns
+
+
+# calculate median of columns with na.rm=TRUE
+
+```
+
+*** =solution
+```{r}
+# get list of arguments
+str(apply)
+
+# create a matrix
+mat_rix <- matrix(sample(12), nrow=3, ncol=4)
+
+# print the code
+mat_rix
+
+# sort matrix columns
+apply(mat_rix, 2, sort)
+
+# sort decreasing order
+apply(mat_rix, 2, sort, decreasing=TRUE)
+
+# introduce NA value
+mat_rix[2, 2] <- NA
+
+# print the matrix
+mat_rix
+
+# calculate median of columns
+apply(mat_rix, 2, median)
+
+# calculate median of columns with na.rm=TRUE
+apply(mat_rix, 2, median, na.rm=TRUE)
+```
+
+*** =sct
+```{r}
+success_msg("Doskonały!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:2ce2587280
+## The apply() Functional with Anonymous Functions
+
+The apply() functional combined with anonymous functions can be used to loop over function parameters, The dots "..." argument in apply() is designed to pass additional arguments to the function being called by apply(), The additional arguments to apply() must be bound by their full (complete) names.
+
+
+*** =instructions
+Use `apply()` to execute your customized function in loops.
+
+*** =hint
+Always call data object as the first argument of apply, second arguemnt is the dimension, and function name as following arguments. Your customized function could be defined in the third argument.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# DAX percent returns
+dax_rets
+
+# load package moments
+
+
+# get list of arguments of moment
+
+
+# apply moment function
+
+
+# 4x1 matrix of moment orders
+moment_orders <- as.matrix(1:4)
+
+# change the code so that anonymous function allows looping over function parameters
+apply(X=moment_orders, MARGIN=1,
+      FUN=function(moment_order) {
+
+}
+      )  # end apply
+
+# another way of passing parameters into moment() function
+apply(X=moment_orders, MARGIN=1, FUN=moment)
+```
+
+*** =solution
+```{r}
+# DAX percent returns
+dax_rets <- 100*diff(log(EuStockMarkets[, 1]))
+
+# load package moments
+library(moments)
+
+# get list of arguments of moment
+str(moment)
+
+# apply moment function
+moment(x=dax_rets, order=3)
+
+# 4x1 matrix of moment orders
+moment_orders <- as.matrix(1:4)
+
+# change the code so that anonymous function allows looping over function parameters
+apply(X=moment_orders, MARGIN=1,
+      FUN=function(moment_order) {
+  moment(x=dax_rets, order=moment_order)
+}
+      )  # end apply
+
+# another way of passing parameters into moment() function
+apply(X=moment_orders, MARGIN=1, FUN=moment,
+      x=dax_rets)
+```
+
+*** =sct
+```{r}
+success_msg("Strålende!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:ea0beb2602
+## apply() Calling Functions with Multiple Arguments
+
+When apply() calls a function with multiple arguments, then care must be taken for proper argument binding, The dots "..." argument in apply() allows passing additional arguments to the function being called by apply(), The additional arguments to apply() must be bound by their full (complete) names, The values of the "X" argument in apply() are bound by position to the ﬁrst unused argument in the function being called by apply().
+
+*** =instructions
+Use `apply()` to execute function in loops.
+
+*** =hint
+Always call data object as the first argument of apply, second arguemnt is the dimension, and function name as following arguments. 
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# function with three arguments
+my_func <- function(arg1, arg2, arg3) {
+  c(arg1=arg1, arg2=arg2, arg3=arg3)
+}
+
+# input 1,2,3 to function
+
+
+# define a matrix
+
+
+# pass da_ta to arg1
+
+
+# pass da_ta to arg2
+
+
+# pass da_ta to arg3
+
+```
+
+*** =solution
+```{r}
+# function with three arguments
+my_func <- function(arg1, arg2, arg3) {
+  c(arg1=arg1, arg2=arg2, arg3=arg3)
+}
+
+# input 1,2,3 to function
+my_func(1, 2, 3)
+
+# define a matrix
+da_ta <- as.matrix(1:4)
+
+# pass da_ta to arg1
+apply(X=da_ta, MAR=1, FUN=my_func, arg2=2, arg3=3)
+
+# pass da_ta to arg2
+apply(X=da_ta, MAR=1, FUN=my_func, arg1=1, arg3=3)
+
+# pass da_ta to arg3
+apply(X=da_ta, MAR=1, FUN=my_func, arg1=1, arg2=2)
+```
+
+*** =sct
+```{r}
+success_msg("Apply loop over a n*1 matrix and returns a full matrix!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:ce02dc9d63
+## The lapply() and sapply() Functional
+
+When apply() calls a function with multiple arguments, then care must be taken for proper argument binding, The dots "..." argument in apply() allows passing additional arguments to the function being called by apply(), The additional arguments to apply() must be bound by their full (complete) names, The values of the "X" argument in apply() are bound by position to the ﬁrst unused argument in the function being called by apply().
+
+*** =instructions
+Use `lapply()` and `sapply()` to execute function in loops.
+
+*** =hint
+Lapply accepts a list and returns a list, while sapply() tries to return a matrix.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# vector of means of numeric columns
+
+
+# list of means of numeric columns
+
+
+# change the code to fix bugs and let lapply use anonymous function
+unlist(lapply(iris,
+      function(col_umn) {
+        mean(col_umn)
+      }
+      )
+       )
+
+# change the code to get flattened results
+sapply(iris, function(col_umn) {
+  mean(col_umn)})
+
+# sapply on vector
+
+
+# sapply on list
+
+
+# calculate means of iris data frame columns
+
+
+# create a matrix
+
+
+# calculate column means using apply
+
+```
+
+*** =solution
+```{r}
+# vector of means of numeric columns
+sapply(iris[, -5], mean)
+
+# list of means of numeric columns
+lapply(iris[, -5], mean)
+
+# change the code to fix bugs and let lapply use anonymous function
+unlist(lapply(iris,
+      function(col_umn) {
+        if (is.numeric(col_umn)) mean(col_umn)
+      }
+      )
+       )
+
+# flatten the list or matrix
+unlist(sapply(iris, function(col_umn) {
+  if (is.numeric(col_umn)) mean(col_umn)}))
+
+# sapply on vector
+sapply(6:10, sqrt)
+
+# sapply on list
+sapply(list(6, 7, 8, 9, 10), sqrt)
+
+# calculate means of iris data frame columns
+sapply(iris, mean)
+
+# create a matrix
+mat_rix <- matrix(sample(100), ncol=4)
+
+# calculate column means using apply
+apply(mat_rix, 2, mean)
+```
+
+*** =sct
+```{r}
+success_msg("You've just learned to use two powerful weapons in the world of R")
 ```

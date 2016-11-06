@@ -1,6 +1,6 @@
 --- 
 title_meta  : Chapter 3
-title       : R functional operations
+title       : R Data Operations
 description : In this chapter you will learn to use the functional operations which is essential for more powerful operations. May the force be with you!
   
 
@@ -2400,4 +2400,191 @@ sum(!is.na(da_ta))
 *** =sct
 ```{r}
 success_msg("Bad data are everywhere!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:8b792b993e
+## Scrubbing Bad Data
+
+Rows containing bad data may be either removed or replaced with an estimated value.
+
+The function `complete.cases()` returns TRUE if a row has no NA values.
+
+The function `na.locf()` from package zoo replaces NAs with most recent non-NA prior to it.
+
+*** =instructions
+- Use `complete.cases()` and `na.locf()` to filter out NA values.
+
+*** =hint
+Follow the instruction and introduction.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+library(MASS)
+```
+
+*** =sample_code
+```{r}
+# airquality data has some NAs
+
+
+# look at the dimension of airquality
+
+
+# get the number of NAs
+
+
+# display rows containing NAs
+
+
+# remove rows containing NAs
+
+
+# look at the dimension of new dataframe
+
+
+# look at the first few rows to see that NAs are removed
+
+
+# load package zoo
+
+
+# replace NAs with another method, also name resulting object as good_air
+
+
+# look at the dimension of new 
+
+
+# look at the first few rows to see that NAs are removed
+
+```
+
+*** =solution
+```{r}
+# airquality data has some NAs
+head(airquality)
+
+# look at the dimension of airquality
+dim(airquality)
+
+# get the number of NAs
+sum(!complete.cases(airquality))
+
+# display rows containing NAs
+head(airquality[!complete.cases(airquality), ])
+
+# remove rows containing NAs
+good_air <- airquality[complete.cases(airquality), ]
+
+# look at the dimension of new dataframe
+dim(good_air)
+
+# look at the first few rows to see that NAs are removed
+head(good_air)
+
+# load package zoo
+library(zoo)
+
+# replace NAs with another method, also name resulting object as good_air
+good_air <- na.locf(airquality)
+
+# look at the dimension of new 
+dim(good_air)
+
+# look at the first few rows to see that NAs are removed
+head(good_air)
+```
+
+*** =sct
+```{r}
+success_msg("We can cure some of these bad data now.")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:5dc2a83c44
+## NULL Values
+
+NULL is a reserved word that represents a value that doesn’t exist.
+
+NULL is a legitimate value, not bad data, The function is.null() tests for NULL values, NULL is often returned by functions whose value is undeﬁned.
+
+Very often variables are initialized to NULL before the start of iteration, A more eﬃcicent way to perform iteration is by pre-allocating the vector.
+
+
+*** =instructions
+- Use `complete.cases()` and `na.locf()` to filter out NA values.
+
+*** =hint
+Follow the instruction and introduction.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+
+```
+
+*** =sample_code
+```{r}
+# NULL values have no mode or type
+
+
+# see the difference in type between NULL and NA
+
+
+# NULL and NA also differs in length
+
+
+# check for NULL values
+
+
+# NULL values are ignored when combined into a vector
+
+
+# change the code to see that vectors can be initialized to NULL in a loop
+da_ta <- NULL
+for (in_dex in 1:5)
+  da_ta <- da_ta
+da_ta
+
+# change the code to see that NA value isn't ignored in a loop
+da_ta <- NA
+for (in_dex in 1:5)
+  da_ta <- da_ta
+da_ta
+```
+
+*** =solution
+```{r}
+# NULL values have no mode or type
+c(mode(NULL), mode(NA))
+
+# see the difference in type between NULL and NA
+c(typeof(NULL), typeof(NA))
+
+# NULL and NA also differs in length
+c(length(NULL), length(NA))
+
+# check for NULL values
+is.null(NULL)
+
+# NULL values are ignored when combined into a vector
+c(1, 2, NULL, 4, 5)
+
+# change the code to see that vectors can be initialized to NULL in a loop
+da_ta <- NULL
+for (in_dex in 1:5)
+  da_ta <- c(da_ta, in_dex)
+da_ta
+
+# change the code to see that NA value isn't ignored in a loop
+da_ta <- NA
+for (in_dex in 1:5)
+  da_ta <- c(da_ta, in_dex)
+da_ta
+```
+
+*** =sct
+```{r}
+success_msg("Be alert to this new type of bad data!")
 ```
