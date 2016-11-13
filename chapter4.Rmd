@@ -31,9 +31,6 @@ lazy_func <- function(arg1, arg2) {
 # bind arguments by position
 
 
-# second argument was never evaluated!
-
-
 # define function lazy_func
 lazy_func <- function(arg1, arg2) {
   cat(arg1, '\n')
@@ -56,9 +53,6 @@ lazy_func <- function(arg1, arg2) {
 
 # bind arguments by position
 lazy_func(3, 2)
-
-# second argument was never evaluated!
-lazy_func(3)
 
 # define function lazy_func
 lazy_func <- function(arg1, arg2) {
@@ -434,11 +428,7 @@ my_func(1, 2, 3, param2=4, param1=5)
 
 *** =sct
 ```{r}
-msg = "Do not change anything about the first lines that define `survey_vector` and `survey_factor`."
-test_object("survey_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("survey_factor", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_output_contains("survey_factor[1] > survey_factor[2]", incorrect_msg = "Make sure to correctly perform the comparison between right and left; we want the battle of dexterity be sorted once and for all!")
-success_msg("Phew, it seems that R is neutral ;-).")
+success_msg("Phew, it seems that R is flexible enough ;-).")
 ```
 
 
@@ -458,6 +448,10 @@ Remember to write anonymous functions with complete structure.
 *** =pre_exercise_code
 ```{r}
 # no pec
+func_tional <- function(func_name, ...) {
+  func_name <- match.fun(func_name)
+  func_name(...)
+}
 ```
 
 *** =sample_code
