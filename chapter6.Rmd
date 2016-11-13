@@ -228,8 +228,6 @@ aggregate(x=mtcars, by=list(cyl=mtcars$cyl), FUN=mean)
 
 *** =sct
 ```{r}
-test_function("str","object",incorrect_msg = "Make sure to check the structure of the `mtcars` data set.")
-test_output_contains("str(mtcars)", incorrect_msg = "Make sure that you use the [`str()`](http://www.rdocumentation.org/packages/utils/functions/str) function on `mtcars`.")
 success_msg("Nice work!")
 ```
 
@@ -306,6 +304,7 @@ Follow the instruction and introduction!
 *** =pre_exercise_code
 ```{r}
 # no pec
+split_cars <- split(mtcars, mtcars$cyl)
 ```
 
 *** =sample_code
@@ -576,6 +575,7 @@ Avoid `for()` loop in R.
 
 *** =pre_exercise_code
 ```{r}
+library(microbenchmark)
 ```
 
 *** =sample_code

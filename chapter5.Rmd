@@ -520,9 +520,6 @@ vec_tor2 <- 6:4
 *** =sample_code
 
 ```{r}
-# multiply matrix by vector fails because dimensions aren't conformable
-
-
 # works after transpose
 
 
@@ -547,9 +544,6 @@ summary(microbenchmark(
 
 *** =solution
 ```{r}
-# multiply matrix by vector fails because dimensions aren't conformable
-vec_tor1 %*% mat_rix
-
 # works after transpose
 drop(vec_tor1 %*% t(mat_rix))
 
