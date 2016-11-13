@@ -633,173 +633,181 @@ success_msg("Nice work!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:c1a08e245c
-## Only planets with rings but shorter
+## Increasing Speed of Loops by Pre-allocating Memory
 
-So what exactly did you learn in the previous exercises? You selected a subset from a data frame (`planets_df`) based on whether or not a certain condition was true (rings or no rings), and you managed to pull out all relevant data. Pretty awesome! By now, NASA is probably already flirting with your CV!
-
-Instead of having to define a vector `rings_vector`, which you then use to subset `planets_df`, you could've also used either one of these:
-
-```
-planets_df[planets_df$has_rings, ]
-planets_df[planets_df$has_rings == TRUE, ]
-```
+R doesn’t require allocating memory for new vectors or lists, allowing for them to ”grow” each time a new element is added, R allows assigning a value to a vector element that doesn’t exist yet (hasn’t been allocated), But when R creates a bigger object from an existing one, it ﬁrst allocates memory for the new object, and then copies the existing values to the new memory, which is very memory intensive and slow, Using the functions `c()`, `append()`, `cbind()`, `rbind()`, and `paste()` to append data to objects is even slower than vector assignment, Adding elements to a vector in a loop is very slow, and therefore not recommended, Pre-allocating memory for large vectors before performing loops increases their speed, The function `numeric(k)` returns a numeric vector of zeros of length k, `numeric(0)` returns an empty (zero length) numeric vector (not to be confused with a NULL.
 
 *** =instructions
-- Create a data frame `small_planets_df` with planets that have a diameter smaller than the Earth. This means that the `diameter` variable should be smaller than 1, since diameter is a relative measure of the planet's diameter in relation to planet Earth.
-- Build another data frame, `slow_planets_df`, with the observations that have a longer rotation period than Earth. This means that the absolute value (use the function [`abs()`](http://www.rdocumentation.org/packages/base/functions/MathFun)) of the `rotation` variable should be greater than 1.
+- Pre-allocate memory to speed up loop.
 
 *** =hint
-Make use of the logical operators `>` and `<`. Use the [`abs()`](http://www.rdocumentation.org/packages/base/functions/MathFun) function for absolute values. 
+Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/course/introduction_to_r/chapter6.RData"))
 ```
 
 *** =sample_code
 ```{r}
-# planets_df is pre-loaded in your workspace
+# create big vector
+big_vector <- rnorm(5000)
 
-# Planets that are smaller than planet Earth: small_planets_df
-
-
-# Planets that rotate slower than planet Earth: slow_planets_df
-
+# change the code, allocate full memory for cumulative sum
+summary(microbenchmark(
+  for_loop={cum_sum <- numeric(length(big_vector))
+    cum_sum[1] <- big_vector[1]
+    for(i in 1:length(big_vector)) {
+      cum_sum[i] <- cum_sum[i] + big_vector[i]
+    }},
+  grow_vec={cum_sum <- numeric(k)
+    cum_sum[1] <- big_vector[1]
+    for(i in 1:length(big_vector)) {
+      cum_sum[i] <- cum_sum[i] + big_vector[i]
+    }},
+  com_bine={cum_sum <- numeric(k)
+    cum_sum[1] <- big_vector[1]
+    for(i in 1:length(big_vector)) {
+      cum_sum <- c(cum_sum, big_vector[i])
+    }},
+  ))[, c(1, 4, 5)]
 ```
 
 *** =solution
 ```{r}
-# planets_df is pre-loaded in your workspace
+# create big vector
+big_vector <- rnorm(5000)
 
-# Planets that are smaller than planet Earth: small_planets_df
-small_planets_df <- planets_df[planets_df$diameter < 1, ]        # option 1
-small_planets_df  <- subset(planets_df, subset = diameter < 1)   # option 2
-
-# Planets that rotate slower than planet Earth: slow_planets_df
-slow_planets_df <- planets_df[abs(planets_df$rotation) > 1, ]      # option 1
-slow_planets_df <- subset(planets_df, subset = abs(rotation) > 1)  # option 2
+# change the code, allocate full memory for cumulative sum
+summary(microbenchmark(
+  for_loop={cum_sum <- numeric(length(big_vector))
+    cum_sum[1] <- big_vector[1]
+    for(i in 2:length(big_vector)) {
+      cum_sum[i] <- cum_sum[i-1] + big_vector[i]
+    }},
+  grow_vec={cum_sum <- numeric(0)
+    cum_sum[1] <- big_vector[1]
+    for(i in 2:length(big_vector)) {
+      cum_sum[i] <- cum_sum[i-1] + big_vector[i]
+    }},
+  com_bine={cum_sum <- numeric(0)
+    cum_sum[1] <- big_vector[1]
+    for(i in 2:length(big_vector)) {
+      cum_sum <- c(cum_sum, big_vector[i])
+    }},
+  times=10))[, c(1, 4, 5)]
 ```
 
 *** =sct
 ```{r}
-
-msg <- "Do not remove or overwrite the `planets_df` data frame!"
-test_object("planets_df", undefined_msg = msg, incorrect_msg = msg)
-
-test_object("small_planets_df",
-            incorrect_msg = "It looks like `small_planets_df` does not contain the correct subset of `planets_df`.")
-
-test_object("slow_planets_df",
-            incorrect_msg = "It looks like `slow_planets_df` does not contains the correct subset of `planets_df`. Make sure to use the [`abs()`](http://www.rdocumentation.org/packages/base/functions/MathFun) function for absolute values.")
-
-success_msg("Great! Not only is the [`subset()`](http://www.rdocumentation.org/packages/base/functions/subset) function more concise, it is probably also more understandable for people who read your code. Continue to the next exercise.")
+success_msg("Great! Pre-allocation is a lot faster than growing memory at every cycle, this principle applies to other programming language as well.")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:e9ca3eeb99
-## Add variable/column
+## Vectorized Functions for Vector Computations
 
-There are many cases in which you'll want to add more variables to your data frame. This comes down to adding a column to the data frame. The exact same techniques to select columns from a data frame can be used here. To add a column `new_column` to `my_df`, with data from `my_vec`, you can use one of the following calls:
-
-```
-my_df$new_column <- my_vec
-my_df[["new_column"]] <- my_vec
-my_df <- cbind(my_df, new_column = my_vec)
-```
-
-You've browsed [Wikipedia](https://en.wikipedia.org/wiki/Planet) and also decide to add a column that lists the number of moons each of the planets has. Also the planets' masses can be a cool addition. The `moon` and `masses` vectors are already included in the workspace; up to you to add them to `planets_df`.
+Vectorized functions accept vectors as their arguments, and return a vector of the same length as their value, Many vectorized functions are also compiled (they pass their data to compiled C++ code), which makes them very fast, The following vectorized compiled functions calculate cumulative values over large vectors: 
+````
+cummax(),
+cummin(),
+cumsum(),
+cumprod()
+````
+Standard arithmetic operations ("+", "-", etc.) can be applied to vectors, and are implemented as vectorized compiled functions, ifelse() and which() are vectorized compiled functions for logical operations, But many vectorized functions perform their calculations in R code, and are therefore slow, but convenient to use.
 
 *** =instructions
-- Add `moons` to `planets_df` under the variable name "moon".
-- In a similar fashion, add `masses` under the variable name `"mass"`.
+- Utilize the vectorized compiled function to greatly enhance your speed.
 
 *** =hint
-To add a new column called "moon", you can use: `planets_df$moon <- moons`.
+Follow the instruction and introductions.
 
 *** =pre_exercise_code
 ```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/course/introduction_to_r/chapter6.RData"))
+
 ```
 
 *** =sample_code
 ```{r}
-# planets_df is already pre-loaded in your workspace
+# create large vectors
+vec_tor1 <- rnorm(1000000)
+vec_tor2 <- rnorm(1000000)
+big_vector <- numeric(1000000)
 
-# Definition of moons and masses
-moons <- c(0, 0, 1, 2, 67, 62, 27, 14)
-masses <- c(0.06, 0.82, 1.00, 0.11, 317.8, 95.2, 14.6, 17.2)
+# sum vectors using "for" loop
 
-# Add moons to planets_df under the name "moon"
+# sum vectors using vectorized "+"
 
 
-# Add masses to planets_df under the name "mass"
+# allocate memory for cumulative sum
+
+
+# set the value for the starting element
+
+
+# cumulative sum using "for" loop
+
+
+# cumulative sum using "cumsum"
 
 ```
 
 *** =solution
 ```{r}
-# planets_df is already pre-loaded in your workspace
+# create large vectors
+vec_tor1 <- rnorm(1000000)
+vec_tor2 <- rnorm(1000000)
+big_vector <- numeric(1000000)
 
-# Definition of moons and masses
-moons <- c(0, 0, 1, 2, 67, 62, 27, 14)
-masses <- c(0.06, 0.82, 1.00, 0.11, 317.8, 95.2, 14.6, 17.2)
+# sum vectors using "for" loop
+system.time(
+  for(i in 1:length(vec_tor1)) {
+    big_vector[i] <- vec_tor1[i] + vec_tor2[i]
+  }
+)
 
-# Add moons to planets_df under the name "moon"
-planets_df$moon <- moons
+# sum vectors using vectorized "+"
+system.time(big_vector <- vec_tor1 + vec_tor2)
 
-# Add masses to planets_df under the name "mass"
-planets_df$mass <- masses
+# allocate memory for cumulative sum
+cum_sum <- numeric(length(big_vector))
+
+# set the value for the starting element
+cum_sum[1] <- big_vector[1]
+
+# cumulative sum using "for" loop
+system.time(
+  for(i in 2:length(big_vector)) {
+    cum_sum[i] <- cum_sum[i-1] + big_vector[i]
+  }
+)
+
+# cumulative sum using "cumsum"
+system.time(cum_sum <- cumsum(big_vector))
 ```
 
 *** =sct
 ```{r}
-
-undef_msg <- "Do not remove `planets_df`!"
-msg <- "Do not change anything about the columns that were already in `planets_df`; you should only <i>add</i> columns."
-test_data_frame(name = "planets_df", 
-                columns = c("name", "type", "diameter", "rotation", "has_rings"),
-                undefined_msg = undef_msg, undefined_cols_msg = msg, incorrect_msg = msg)
-
-test_data_frame(name = "planets_df",
-                columns = "moon",
-                undefined_cols_msg = "Make sure to name the column to contain the moon information \"moon\".",
-                incorrect_msg = "The \"moon\" column does not contain the correct information. Try again.")
-
-test_data_frame(name = "planets_df",
-                columns = "mass",
-                undefined_cols_msg = "Make sure to name the column to contain the mass information \"mass\".",
-                incorrect_msg = "The \"mass\" column does not contain the correct information. Try again.")
-
-test_object("planets_df", incorrect_msg = "It appears that you have correctly specified the \"moon\" and \"mass\" columns, but there's still something wrong with the resulting `planets_df`. Make sure to add columns twice!")
-success_msg("Nice one! This data frame is beginning to contain quite some information!")
+success_msg("Nice one!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:8e5ade7078
-## Sorting
+## Vectorized Functions for Matrix Computations
 
-In data analysis you will often sort your data according to a certain variable in the data set. In R, this is done with the help of the function [`order()`](http://www.rdocumentation.org/packages/base/functions/order). 
-
-[`order()`](http://www.rdocumentation.org/packages/base/functions/order) is a function that gives you the ranked position of each element when it is applied on a variable, such as a vector for example:
-
-```
-a <- c(100,9,101)
-order(a)
-``` 
-
-this code returns the vector containing 2, 1 and 3; that's because 100 is the second largest element of the vector, 9 is the smallest element and 101 is the largest element.
-    
-```
-a[order(a)]
-```
-
-will thus give you the ordered vector (9, 100, 101), since it first picks the second element of `a`, then the first and then the last. Got it? If you are not sure, use the console to play with the [`order()`](http://www.rdocumentation.org/packages/base/functions/order) function. 
+`apply()` loops are very ineﬃcient for calculating statistics over rows and columns of very large matrices, R has very fast vectorized compiled functions for calculating sums and means of rows and columns: 
+````
+rowSums(),
+colSums(),
+rowMeans(),
+colMeans()
+````
+These vectorized functions are also compiled functions, so they’re very fast because they pass their data to compiled C++ code, which performs the loop calculations
 
 *** =instructions
-Experiment with the [`order()`](http://www.rdocumentation.org/packages/base/functions/order) function in the console. Click 'Submit Answer' when you are ready to continue.
+- Utilize compiled functions dedicated for matrix to save additional time. Compare their speed with `*apply()` family.
 
 *** =hint
-Just play with the [`order()`](http://www.rdocumentation.org/packages/base/functions/order) function in the console!
+Follow the instruction and introductions.
 
 *** =pre_exercise_code
 ```{r}
@@ -808,86 +816,625 @@ Just play with the [`order()`](http://www.rdocumentation.org/packages/base/funct
 
 *** =sample_code
 ```{r}
-# Just play around with the order function in the console to see how it works!
+# matrix with 5,000 rows
+big_matrix <- matrix(rnorm(10000), ncol=2)
+
+# calculate row sums two different ways
+
 ```
 
 *** =solution
 ```{r}
-# Just play around with the order function in the console to see how it works!
-# Some examples:
-order(1:10)
-order(2:11)
-order(c(5,4,6,7))
+# matrix with 5,000 rows
+big_matrix <- matrix(rnorm(10000), ncol=2)
+
+# calculate row sums two different ways
+summary(microbenchmark(
+  row_sums=rowSums(big_matrix),
+  ap_ply=apply(big_matrix, 1, sum),
+  times=10))[, c(1, 4, 5)]
 ```
 
 *** =sct
 ```{r}
-success_msg("Great! Now let's use the [`order()`](http://www.rdocumentation.org/packages/base/functions/order) function to sort your data frame!")
+success_msg("Great!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:ec87541ef1
-## Sorting your data frame
+## Fast R Code for Matrix Computations
 
-Alright, now let us do something useful with the [`order()`](http://www.rdocumentation.org/packages/base/functions/order) function! You would like to rearrange your data frame such that it starts with the smallest planet and ends with the largest one. A sort on the `diameter` column, if you will.
+The functions `pmax()` and `pmin()` calculate the ”parallel” maxima (minima) of multiple vector arguments, `pmax()` and `pmin()` return a vector, whose n-th element is equal to the maximum (minimum) of the n-th elements of the arguments, with shorter vectors recycled if necessary, `pmax.int()` and `pmin.int()` are methods of generic functions `pmax()` and `pmin()`, designed for atomic vectors, `pmax()` can be used to quickly calculate the maximum values of rows of a matrix, by ﬁrst converting the matrix columns into a list, and then passing them to `pmax()`, `pmax.int()` and `pmin.int()` are very fast because they are compiled functions (compiled from C++ code).
 
-Suppose you have a data frame `df`, with three columns `a`, `b` and `c`. The following code will print a version of df that is sorted on the column `a`.
-
-```
-pos <- order(df$a)
-df[pos, ]
-```
 
 *** =instructions
-- Assign to the variable `positions` the desired ordering for the new data frame that you will create in the next step. You can use the [`order()`](http://www.rdocumentation.org/packages/base/functions/order) function for that.
-- Now create the data frame `smallest_first_df`, which contains the same information as `planets_df`, but with the planets in increasing order of magnitude. Use the previously created variable `positions` as row indices inside square brackets to achieve this.
-- Print `smallest_first_df` to see what you've accomplished.
+- Use `pmax()` and `pmin()` family to search through the matrix.
 
 *** =hint
-- `order(planets_df$diameter)` will give you the ordering of the variable diameter from smallest to largest. This is what you should assign to `positions`.
-- Use the variable positions then to select from the data frame `planets_df`: `planets_df[positions, ]`.
+Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/course/introduction_to_r/chapter6.RData"))
 ```
 
 *** =sample_code
 ```{r}
-# planets_df is pre-loaded in your workspace
-
-# Create a desired ordering for planets_df: positions
+# load the microbenchmark package
 
 
-# Create a new, ordered data frame: smallest_first_df
+# see the structure of pmax function
 
 
-# Print smallest_first_df
+# calculate row maximums two different ways
+summary(microbenchmark(
+  p_max=
+    do.call(pmax.int,big_matrix),
+  l_apply=
+    lapply(seq_along(big_matrix[, 1]),
+  function(in_dex) max(big_matrix[in_dex, ])),
+  times=10)[, c(1, 4, 5)]
 ```
 
 *** =solution
 ```{r}
-# planets_df is pre-loaded in your workspace
+# load the microbenchmark package
+library(microbenchmark)
 
-# Create a desired ordering for planets_df: positions
-positions <- order(planets_df$diameter)
+# see the structure of pmax function
+str(pmax)
 
-# Create a new, ordered data frame: smallest_first_df
-smallest_first_df <- planets_df[positions, ]
-
-# Print smallest_first_df
-smallest_first_df
+# calculate row maximums two different ways
+summary(microbenchmark(
+  p_max=
+    do.call(pmax.int,
+lapply(seq_along(big_matrix[1, ]),
+  function(in_dex) big_matrix[, in_dex])),
+  l_apply=unlist(
+    lapply(seq_along(big_matrix[, 1]),
+  function(in_dex) max(big_matrix[in_dex, ]))),
+  times=10))[, c(1, 4, 5)]
 ```
 
 *** =sct
 ```{r}
-msg = "Do not remove or overwrite the `planets_df` data frame!"
-test_object("planets_df", undefined_msg = msg, incorrect_msg = msg)
-test_object("positions",
-            incorrect_msg = "It looks like `positions` does not contain all the correct ordering of the diameter column.")
-test_object("smallest_first_df",
-            incorrect_msg = "It looks like `smallest_first_df` does not contain the positions of the ordered `planets_df`.")
-test_output_contains("smallest_first_df", incorrect_msg = "Finish off by printing `smallest_first_df`.")
-success_msg("Wonderful! What does the resulting data frame look like? Order prevailed!")
+success_msg("Wonderful!")
 ```
 
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:3d8a9618b9
+## Package matrixStats for Fast Matrix Computations
+
+The package matrixStats contains functions for calculating aggregations over matrix columns and rows, and other matrix computations, such as: estimating location and scale: `rowRanges()`, `colRanges()`, and `rowMaxs()`, `rowMins()`, etc., testing and counting values: `colAnyMissings()`, `colAnys()`, etc., cumulative functions: `colCumsums()`, `colCummins()`, etc., binning and diﬀerencing: `binCounts()`, `colDiffs()`, etc.
+
+A summary of matrixStats functions can be found under: "https://cran.r-project.org/web/packages/matrixStats/ vignettes/matrixStats-methods.html"
+
+The matrixStats functions are very fast because they are compiled functions (compiled from C++ code)
+
+*** =instructions
+- Explore the functions in `matrixStats` package.
+
+*** =hint
+Follow the instruction and introductions.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+library(microbenchmark)
+```
+
+*** =sample_code
+```{r}
+# load package matrixStats
+
+
+# calculate row min values three different ways
+summary(microbenchmark(
+  row_mins=rowMins(big_matrix),
+  p_min=
+    do.call(pmin.int, big_matrix[, in_dex])),
+  as_data_frame=
+    do.call(pmin.int, big_matrix),
+  ))[, c(1, 4, 5)]
+```
+
+*** =solution
+```{r}
+# load package matrixStats
+library(matrixStats)
+
+# calculate row min values three different ways
+summary(microbenchmark(
+  row_mins=rowMins(big_matrix),
+  p_min=
+    do.call(pmin.int,
+      lapply(seq_along(big_matrix[1, ]),
+             function(in_dex)
+               big_matrix[, in_dex])),
+  as_data_frame=
+    do.call(pmin.int,
+      as.data.frame.matrix(big_matrix)),
+  times=10))[, c(1, 4, 5)]
+```
+
+*** =sct
+```{r}
+success_msg("Great!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:7b69825576
+## Writing Fast R Code Using Vectorized Operations
+
+R-style code is code that relies on vectorized compiled functions, instead of `for()` loops, `for()` loops in R are slow because they call functions multiple times, and individual function calls are compute-intensive and slow, The brackets `[]` operator is a vectorized compiled function, and is therefore very fast, Vectorized assignments using brackets `[]` and boolean or integer vectors to subset vectors or matrices are therefore preferable to `for()` loops, R code that uses vectorized compiled functions can be as fast as C++ code, R-style code is also very expressive, i.e. it allows performing complex operations with very few lines of code
+
+*** =instructions
+- Utilize vectorized operations.
+
+*** =hint
+Follow the instruction and introductions.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# assign values to vector three different ways
+summary(microbenchmark(
+
+# fast vectorized assignment loop performed in C using brackets "[]"
+  brack_ets={vec_tor <- numeric(10)
+    vec_tor <- 2},
+    
+# slow because loop is performed in R
+  for_loop={vec_tor <- numeric(10)
+    for (in_dex in vec_tor)
+      vec_tor[in_dex] <- 2},
+      
+# very slow because no memory is pre-allocated
+# "vec_tor" is "grown" with each new element
+  grow_vec={vec_tor <- numeric(0)
+    for (in_dex in 1:10)
+    
+# add new element to "vec_tor" ("grow" it)
+      vec_tor[in_dex] <- 2},
+  times=10))[, c(1, 4, 5)]
+```
+
+*** =solution
+```{r}
+# assign values to vector three different ways
+summary(microbenchmark(
+
+# fast vectorized assignment loop performed in C using brackets "[]"
+  brack_ets={vec_tor <- numeric(10)
+    vec_tor[] <- 2},
+    
+# slow because loop is performed in R
+  for_loop={vec_tor <- numeric(10)
+    for (in_dex in seq_along(vec_tor))
+      vec_tor[in_dex] <- 2},
+      
+# very slow because no memory is pre-allocated
+# "vec_tor" is "grown" with each new element
+  grow_vec={vec_tor <- numeric(0)
+    for (in_dex in 1:10)
+    
+# add new element to "vec_tor" ("grow" it)
+      vec_tor[in_dex] <- 2},
+  times=10))[, c(1, 4, 5)]
+```
+
+*** =sct
+```{r}
+success_msg("The speed difference can be enormous!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:cd816481aa
+## Vectorized Functions
+
+Functions which use vectorized operations and functions are automatically vectorized themselves, Functions which only call other compiled C vectorized functions, are also very fast, But not all functions are vectorized, or they’re not vectorized with respect to their parameters, Some vectorized functions perform their calculations in R code, and are therefore slow, but convenient to use.
+
+
+*** =instructions
+- Utilize vectorized functions.
+
+*** =hint
+Follow the instruction and introductions.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# define function vectorized automatically
+my_fun <- function(in_put, pa_ram) {
+  pa_ram*in_put
+}
+
+# "in_put" is vectorized
+
+
+# "pa_ram" is vectorized
+
+
+# define vectors of parameters of rnorm()
+std_devs <-
+  structure(1:3, names=paste0("sd=", 1:3))
+me_ans <-
+  structure(-1:1, names=paste0("mean=", -1:1))
+
+# "sd" argument of rnorm() isn't vectorized
+
+
+# "mean" argument of rnorm() isn't vectorized
+
+```
+
+*** =solution
+```{r}
+# define function vectorized automatically
+my_fun <- function(in_put, pa_ram) {
+  pa_ram*in_put
+}
+
+# "in_put" is vectorized
+my_fun(in_put=1:3, pa_ram=2)
+
+# "pa_ram" is vectorized
+my_fun(in_put=10, pa_ram=2:4)
+
+# define vectors of parameters of rnorm()
+std_devs <-
+  structure(1:3, names=paste0("sd=", 1:3))
+me_ans <-
+  structure(-1:1, names=paste0("mean=", -1:1))
+
+# "sd" argument of rnorm() isn't vectorized
+rnorm(1, sd=std_devs)
+
+# "mean" argument of rnorm() isn't vectorized
+rnorm(1, mean=me_ans)
+```
+
+*** =sct
+```{r}
+success_msg("Flexibility of R code helps with vectorized functions!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:d8823d128f
+## Performing sapply() Loops Over Function Parameters
+
+Many functions aren’t vectorized with respect to their parameters, Performing `sapply()` loops over a function’s parameters produces vector output
+
+*** =instructions
+- Utilize `sapply()` for vectorized parameter input.
+
+*** =hint
+Follow the instruction and introductions.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+std_devs <-
+  structure(1:3, names=paste0("sd=", 1:3))
+me_ans <-
+  structure(-1:1, names=paste0("mean=", -1:1))
+```
+
+*** =sample_code
+```{r}
+# sapply produces desired vector output
+set.seed(1121)
+sapply(std_devs, function(std_dev) rnorm(n=2, sd=std_dev))
+
+# reset seed
+
+
+# vectorize on rnorm
+
+
+# reset seed
+
+
+# vectorize on rnorm
+
+
+# reset seed
+
+
+# vectorize on rnorm
+
+```
+
+*** =solution
+```{r}
+# sapply produces desired vector output
+set.seed(1121)
+sapply(std_devs, function(std_dev) rnorm(n=2, sd=std_dev))
+
+# reset seed
+set.seed(1121)
+
+# vectorize on rnorm
+sapply(std_devs, rnorm, n=2, mean=0)
+
+# reset seed
+set.seed(1121)
+
+# vectorize on rnorm
+sapply(me_ans, function(me_an) rnorm(n=2, mean=me_an))
+
+# reset seed
+set.seed(1121)
+
+# vectorize on rnorm
+sapply(me_ans, rnorm, n=2)
+```
+
+*** =sct
+```{r}
+success_msg("Applause for your continued performance!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:737ea4a5e4
+## Creating Vectorized Functions
+
+In order to vectorize a function with respect to one of its parameters, it’s necessary to perform a loop over it, The function `Vectorize()` performs an `apply()` loop over the arguments of a function, and returns a vectorized version of the function, `Vectorize()` vectorizes the arguments passed to "vectorize.args", `Vectorize()` is an example of a higher-order function: it accepts a function as its argument and returns a function as its value, Functions that are vectorized using `Vectorize()` or `apply()` loops are just as slow as `apply()` loops, but convenient to use
+
+*** =instructions
+- `Vectorize()` can also make your functions vectorized.
+
+*** =hint
+Follow the instruction and introductions. Assign vectorized function back to the same function name and input results to it.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+std_devs <-
+  structure(1:3, names=paste0("sd=", 1:3))
+me_ans <-
+  structure(-1:1, names=paste0("mean=", -1:1))
+```
+
+*** =sample_code
+```{r}
+# rnorm() vectorized with respect to "std_dev"
+vec_rnorm <- function(n, mean=0, sd=1) {
+  if (length(sd)==1)
+    rnorm(n=n, mean=mean, sd=sd)
+  else
+    sapply(sd, rnorm, n=n, mean=mean)
+}
+
+# reset seed
+
+
+# run unvectorized function
+
+
+# rnorm() vectorized with respect to "mean" and "sd"
+vec_rnorm 
+
+# reset seed
+
+
+# run vectorized function, change sd
+
+
+# reset seed
+
+
+# run vectorized function, change mean
+
+```
+
+*** =solution
+```{r}
+# rnorm() vectorized with respect to "std_dev"
+vec_rnorm <- function(n, mean=0, sd=1) {
+  if (length(sd)==1)
+    rnorm(n=n, mean=mean, sd=sd)
+  else
+    sapply(sd, rnorm, n=n, mean=mean)
+}
+
+# reset seed
+set.seed(1121)
+
+# run unvectorized function
+vec_rnorm(n=2, sd=std_devs)
+
+# rnorm() vectorized with respect to "mean" and "sd"
+vec_rnorm <- Vectorize(FUN=rnorm,
+        vectorize.args=c("mean", "sd")
+)
+
+# reset seed
+set.seed(1121)
+
+# run vectorized function, change sd
+vec_rnorm(n=2, sd=std_devs)
+
+# reset seed
+set.seed(1121)
+
+# run vectorized function, change mean
+vec_rnorm(n=2, mean=me_ans)
+```
+
+*** =sct
+```{r}
+success_msg("Use the Vectorize() and save more time!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:530c1e1c92
+## The mapply() Functional
+
+The `mapply()` functional is a multivariate version of `sapply()`, that allows calling a non-vectorized function in a vectorized way, `mapply()` accepts a multivariate function passed to the "FUN" argument and any number of vector arguments passed to the dots "...", `mapply()` calls "FUN" on the vectors passed to the dots "...", one element at a time:
+````
+mapply(FUN = fun,vec1,vec2,...) = [fun(vec1,1,vec2,1,...),..., fun(vec1,i,vec2,i,...),...]
+````
+`mapply()` passes the ﬁrst vector to the ﬁrst argument of "FUN", the second vector to the second argument, etc. The ﬁrst element of the output vector is equal to "FUN" called on the ﬁrst elements of the input vectors, the second element is "FUN" called on the second elements, etc.
+
+The output of mapply() is a vector of length equal to the longest vector passed to the dots "..." argument, with the elements of the other vectors recycled if necessary.
+
+*** =instructions
+- Utilize `mapply()` on matrix.
+
+*** =hint
+Follow the instruction and introductions.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# get the structure of sum()
+
+
+# na.rm is bound by name
+
+
+# get the structure of rnorm
+
+
+# mapply vectorizes both arguments "mean" and "sd"
+
+
+# mapply vectorizes anonymous function
+
+
+# rnorm() vectorized with respect to "mean" and "sd", dealing with single value as well
+vec_rnorm <- function(n, mean=0, sd=1) {
+    mapply(rnorm, n=n, mean=mean, sd=sd)
+}
+
+# call vec_rnorm() on vector of "sd"
+
+
+# call vec_rnorm() on vector of "mean"
+
+```
+
+*** =solution
+```{r}
+# get the structure of sum()
+str(sum)
+
+# na.rm is bound by name
+mapply(sum, 6:9, c(5, NA, 3), 2:6, na.rm=TRUE)
+
+# get the structure of rnorm
+str(rnorm)
+
+# mapply vectorizes both arguments "mean" and "sd"
+mapply(rnorm, n=5, mean=me_ans, sd=std_devs)
+
+# mapply vectorizes anonymous function
+mapply(function(in_put, e_xp) in_put^e_xp, 1:5, seq(from=1, by=0.2, length.out=5))
+
+# rnorm() vectorized with respect to "mean" and "sd", dealing with single value as well
+vec_rnorm <- function(n, mean=0, sd=1) {
+  if (length(mean)==1 && length(sd)==1)
+    rnorm(n=n, mean=mean, sd=sd)
+  else
+    mapply(rnorm, n=n, mean=mean, sd=sd)
+}
+
+# call vec_rnorm() on vector of "sd"
+vec_rnorm(n=2, sd=std_devs)
+
+# call vec_rnorm() on vector of "mean"
+vec_rnorm(n=2, mean=me_ans)
+```
+
+*** =sct
+```{r}
+success_msg("Vectorization gets higher dimension!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:944a839cd1
+## Vectorized if-else Statements Using Function ifelse()
+
+The function ifelse() performs vectorized if-else statements on vectors, ifelse() is much faster than performing an element-wise loop in R.
+
+*** =instructions
+- Use `ifelse()` for vectorized comparison.
+
+*** =hint
+Follow the instruction and introductions.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# create two numeric vectors
+vec_tor1 <- sin(0.25*pi*1:10)
+vec_tor2 <- cos(0.25*pi*1:10)
+
+# create third vector using 'ifelse'
+
+
+# cbind all three together
+
+
+# set plotting parameters
+par(mar=c(7, 2, 1, 2), mgp=c(2, 1, 0),
+    cex.lab=0.8, cex.axis=0.8, cex.main=0.8,
+    cex.sub=0.5)
+
+# plot matrix
+matplot(type="l", lty="solid",
+col=c("green", "blue", "red"), xlab="", ylab="")
+
+# add legend
+legend(title="", inset=0.05, cex=0.8, lwd=2,
+       col=c("green", "blue", "red"))
+```
+
+*** =solution
+```{r}
+# create two numeric vectors
+vec_tor1 <- sin(0.25*pi*1:10)
+vec_tor2 <- cos(0.25*pi*1:10)
+
+# create third vector using 'ifelse'
+vec_tor3 <- ifelse(vec_tor1 > vec_tor2, vec_tor1, vec_tor2)
+
+# cbind all three together
+vec_tor4 <- cbind(vec_tor1, vec_tor2, vec_tor3)
+
+# set plotting parameters
+par(mar=c(7, 2, 1, 2), mgp=c(2, 1, 0),
+    cex.lab=0.8, cex.axis=0.8, cex.main=0.8,
+    cex.sub=0.5)
+
+# plot matrix
+matplot(vec_tor4, type="l", lty="solid",
+col=c("green", "blue", "red"),
+lwd=c(2, 2, 2), xlab="", ylab="")
+
+# add legend
+legend(x="bottomright", legend=colnames(vec_tor4),
+       title="", inset=0.05, cex=0.8, lwd=2,
+       lty=c(1, 1, 1), col=c("green", "blue", "red"))
+```
+
+*** =sct
+```{r}
+success_msg("Welcome to a colorful new world!")
+```
