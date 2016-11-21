@@ -501,14 +501,13 @@ success_msg("Bravo!")
 If the relationship between the response and explanatory variables is weak compared to the error terms (noise), then the regression will have low statistical signiﬁcance
 
 *** =instructions
-- Compare the speed of complied and uncompiled functions.
+- See results from a regression with weak linear relationships underneath.
 
 *** =hint
-Follow the instruction and introductions. Be careful that to see information about a function you can't add `()` after function name.
+Follow the instruction and introductions. 
 
 *** =pre_exercise_code
 ```{r}
-library(microbenchmark)
 ```
 
 *** =sample_code
