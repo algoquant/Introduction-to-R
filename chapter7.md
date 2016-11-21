@@ -311,9 +311,6 @@ reg_model <- lm(reg_formula)  # perform regression
 # set parameters for plot
 
 
-# open new windows with designated height and width
-
-
 # plot scatterplot using formula
 
 
@@ -331,9 +328,6 @@ reg_model <- lm(reg_formula)  # perform regression
 ```{r}
 # set parameters for plot
 par(oma=c(1, 2, 1, 0), mgp=c(2, 1, 0), mar=c(5, 1, 1, 1), cex.lab=0.8, cex.axis=1.0, cex.main=0.8, cex.sub=0.5)
-
-# open new windows with designated height and width
-x11(width=6, height=6)
 
 # plot scatterplot using formula
 plot(reg_formula)
@@ -441,6 +435,7 @@ res_ponse <- -3 + explana_tory + noise
 # specify regression formula
 reg_formula <- res_ponse ~ explana_tory
 reg_model <- lm(reg_formula)  # perform regression
+reg_model_sum <- summary(reg_model)
 ```
 
 *** =sample_code
@@ -508,6 +503,16 @@ Follow the instruction and introductions.
 
 *** =pre_exercise_code
 ```{r}
+set.seed(1121)  # initialize random number generator
+# define explanatory variable
+explana_tory <- rnorm(100, mean=2)
+noise <- rnorm(100)
+# response equals linear form plus error terms
+res_ponse <- -3 + explana_tory + noise
+# specify regression formula
+reg_formula <- res_ponse ~ explana_tory
+reg_model <- lm(reg_formula)  # perform regression
+reg_model_sum <- summary(reg_model)
 ```
 
 *** =sample_code
@@ -546,13 +551,13 @@ success_msg("Great!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:7aa0a94261
-## Writing Fast R Code Without Method Dispatch
+## Inﬂuence of Noise on Regression
 
-As a general rule, calling generic functions is slower than directly calling individual methods, because generic functions must execute extra R code for method dispatch, The generic function as.data.frame() coerces matrices and other objects into data frames, The method `as.data.frame.matrix()` coerces only matrices into data frames, `as.data.frame.matrix()` is about 50% faster than `as.data.frame()`, because it skips extra R code in `as.data.frame()` needed for argument validation, error checking, and method dispatch, Users can create even faster functions of their own by extracting only the essential R code into their own specialized functions, ignoring R code needed to handle diﬀerent types of data, Such specialized functions are faster but less ﬂexible, so they may fail with diﬀerent types of data.
+Generally speaking, noise will hinder regressions from producing accurate, or sensible results. We will spend the exercises on this effect.
 
 
 *** =instructions
-- Skip the method dispatch procedure to speed up your code!
+- Produce charts to reveal relationships between critial measures and noises.
 
 *** =hint
 Follow the instruction and introduction.
@@ -564,78 +569,108 @@ Follow the instruction and introduction.
 
 *** =sample_code
 ```{r}
-# load microbenchmark package
+# noisy regression
+reg_stats <- function(std_dev) {
+
+# initialize number generator
 
 
-# create matrix
-mat_rix <- matrix(1:9, ncol=3,
-  dimnames=list(paste0("row", 1:3),
-          paste0("col", 1:3)))
+# create explanatory and response variables
+  explana_tory
+  res_ponse
 
-# change the code to create specialized function
-matrix_to_dframe <- function(mat_rix) {
-  n_col <- ncol(mat_rix)
-  dframe <- vector("list", 2)
-  for(in_dex in 1:n_col)
-    dframe <- mat_rix[, in_dex]
-  attr(dframe, "row.names") <-
-    .set_row_names(row(mat_rix))
-  attr(dframe, "class") <- "data.frame"
-  dframe
+# specify regression formula
+
+
+# perform regression and get summary
+  
+
+# extract regression statistics
+
+
 }
 
-# compare speed of three methods
+# produce a vector of standard deviation
 
+
+# create x-axis labels
+
+
+# apply reg_stats() to vector of std dev values
+
+
+# change the code to plot in loop
+par(mfrow, 1))
+for (in_dex in 1:NCOL(mat_stats)) {
+  plot(mat_stats, type="o",
+ xaxt="l", xlab="n", ylab="s", main="False")
+  title(main=colnames(mat_stats), line=1.0)
+  axis(2, at=1:(NROW(mat_stats)),
+ labels=rownames(mat_stats))
+}
 ```
 
 *** =solution
 ```{r}
-# load microbenchmark package
-library(microbenchmark)
+# noisy regression
+reg_stats <- function(std_dev) {
 
-# create matrix
-mat_rix <- matrix(1:9, ncol=3,
-  dimnames=list(paste0("row", 1:3),
-          paste0("col", 1:3)))
+# initialize number generator
+  set.seed(1121)
 
-# change the code to create specialized function
-matrix_to_dframe <- function(mat_rix) {
-  n_col <- ncol(mat_rix)
-  dframe <- vector("list", n_col)
-  for(in_dex in 1:n_col)
-    dframe <- mat_rix[, in_dex]
-  attr(dframe, "row.names") <-
-    .set_row_names(NROW(mat_rix))
-  attr(dframe, "class") <- "data.frame"
-  dframe
+# create explanatory and response variables
+  explana_tory <- seq(from=0.1, to=3.0, by=0.1)
+  res_ponse <- 3 + 0.2*explana_tory +
+    rnorm(30, sd=std_dev)
+
+# specify regression formula
+  reg_formula <- res_ponse ~ explana_tory
+
+# perform regression and get summary
+  reg_model_sum <- summary(lm(reg_formula))
+
+# extract regression statistics
+  with(reg_model_sum, c(pval=coefficients[2, 4],
+   adj_rsquared=adj.r.squared,
+   fstat=fstatistic[1]))
 }
 
-# compare speed of three methods
-summary(microbenchmark(
-  matrix_to_dframe(mat_rix),
-  as.data.frame.matrix(mat_rix),
-  as.data.frame(mat_rix),
-  times=10))[, c(1, 4, 5)]
+# produce a vector of standard deviation
+vec_sd <- seq(from=0.1, to=0.5, by=0.1)
+
+# create x-axis labels
+names(vec_sd) <- paste0("sd=", vec_sd)
+
+# apply reg_stats() to vector of std dev values
+mat_stats <- t(sapply(vec_sd, reg_stats))
+
+# change the code to plot in loop
+par(mfrow=c(NCOL(mat_stats), 1))
+for (in_dex in 1:NCOL(mat_stats)) {
+  plot(mat_stats[, in_dex], type="l",
+ xaxt="n", xlab="", ylab="", main="")
+  title(main=colnames(mat_stats)[in_dex], line=-1.0)
+  axis(1, at=1:(NROW(mat_stats)),
+ labels=rownames(mat_stats))
+}
 ```
 
 *** =sct
 ```{r}
-success_msg("Great! Continue to the next exercise and discover yet another way of subsetting!")
+success_msg("Press on for your conquest!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:d6245c1bb1
-## Using apply() Instead of for() and while() Loops
+## Inﬂuence of Noise on Regression Another Method
 
-All the diﬀerent R loops have similar speed, with `apply()` the fastest, then `vapply()`, `lapply()` and `sapply()` slightly slower, and `for()` loops the slowest.
-
-More importantly, the `apply()` syntax is more readable and concise, and ﬁts the functional language paradigm of R, so is therefore preferred obver `for()` loops, Both `vapply()` and `lapply()` are compiled (primitive) functions, and therefore can be faster than other `apply()` functions
+Learn to investigate the influence of regressions on methods in another way round.
 
 *** =instructions
-- Compare speed of `*apply()` family and `for()`
+- Learn to investigate the influence of regressions on methods in another way round.
 
 *** =hint
-Avoid `for()` loop in R.
+Follow the instructions and introductions.
 
 
 *** =pre_exercise_code
@@ -645,50 +680,94 @@ library(microbenchmark)
 
 *** =sample_code
 ```{r}
-# matrix with 5,000 rows
-big_matrix <- matrix(rnorm(10000), ncol=2)
+# get regression
+reg_stats <- function(da_ta) {
 
-# allocate memory for row sums
+# perform regression and get summary
+  col_names
+  reg_formula <- paste(sep="~")
+  reg_model_sum <- summary(lm(reg_formula, data))
+                        
+# extract regression statistics
+  with(reg_model_sum)
+}
+
+# apply reg_stats() to vector of std dev values
 
 
-# change the code to compare speed of *apply() family and for() loop
-summary(microbenchmark(
-  ap_ply=apply(big_matrix, 1, sum),
-  l_apply=apply(1:NROW(big_matrix), function(in_dex)
-    sum(big_matrix[in_dex, ])),
-  v_apply=apply(1:NROW(big_matrix), function(in_dex)
-    sum(big_matrix[in_dex, ]),
-    FUN.VALUE=c(sum=0)),
-  s_apply=apply(1:NROW(big_matrix), function(in_dex)
-    sum(big_matrix[in_dex, ])),
-  for_loop=for(i in 1:NROW(big_matrix)) {
-    row_sums[i] <- sum(big_matrix[in_dex,])
-  },
-  ))[, c(1, 4, 5)]
+# create x-axis labels
+
+
+# apply reg_stats() to vector of std dev values
+mat_stats <-
+  t(sapply(vec_sd, function (std_dev) {
+
+# initialize number generator
+    
+
+# create explanatory and response variables
+    
+    reg_stats(data.frame(explana_tory, res_ponse))
+    }))
+
+# change the code to plot in loop
+par(mfrow=c(NCOL(mat_stats), 1))
+for (in_dex in 1:NCOL(mat_stats)) {
+  plot(mat_stats, type="o",
+ xaxt="l", xlab="n", ylab="", main="False")
+  title(main=colnames(mat_stats), line=1.0)
+  axis(2, at=1:(NROW(mat_stats)),
+ labels=rownames(mat_stats))
+}
 ```
 
 *** =solution
 ```{r}
-# matrix with 5,000 rows
-big_matrix <- matrix(rnorm(10000), ncol=2)
+# get regression
+reg_stats <- function(da_ta) {
 
-# allocate memory for row sums
-row_sums <- numeric(NROW(big_matrix))
+# perform regression and get summary
+  col_names <- colnames(da_ta)
+  reg_formula <-
+    paste(col_names[2], col_names[1], sep="~")
+  reg_model_sum <- summary(lm(reg_formula,
+                        data=da_ta))
+                        
+# extract regression statistics
+  with(reg_model_sum, c(pval=coefficients[2, 4],
+   adj_rsquared=adj.r.squared,
+   fstat=fstatistic[1]))
+}
 
-# change the code to compare speed of *apply() family and for() loop
-summary(microbenchmark(
-  ap_ply=apply(big_matrix, 1, sum),
-  l_apply=lapply(1:NROW(big_matrix), function(in_dex)
-    sum(big_matrix[in_dex, ])),
-  v_apply=vapply(1:NROW(big_matrix), function(in_dex)
-    sum(big_matrix[in_dex, ]),
-    FUN.VALUE=c(sum=0)),
-  s_apply=sapply(1:NROW(big_matrix), function(in_dex)
-    sum(big_matrix[in_dex, ])),
-  for_loop=for(i in 1:NROW(big_matrix)) {
-    row_sums[i] <- sum(big_matrix[i,])
-  },
-  times=10))[, c(1, 4, 5)]
+# apply reg_stats() to vector of std dev values
+vec_sd <- seq(from=0.1, to=0.5, by=0.1)
+
+# create x-axis labels
+names(vec_sd) <- paste0("sd=", vec_sd)
+
+# apply reg_stats() to vector of std dev values
+mat_stats <-
+  t(sapply(vec_sd, function (std_dev) {
+
+# initialize number generator
+    set.seed(1121)
+
+# create explanatory and response variables
+    explana_tory <- seq(from=0.1, to=3.0, by=0.1)
+    res_ponse <- 3 + 0.2*explana_tory +
+rnorm(30, sd=std_dev)
+    reg_stats(data.frame(explana_tory, res_ponse))
+    }))
+
+# change the code to plot in loop
+par(mfrow=c(NCOL(mat_stats), 1))
+for (in_dex in 1:NCOL(mat_stats)) {
+  plot(mat_stats[, in_dex], type="l",
+ xaxt="n", xlab="", ylab="", main="")
+  title(main=colnames(mat_stats)[in_dex], line=-1.0)
+  axis(1, at=1:(NROW(mat_stats)),
+ labels=rownames(mat_stats))
+}
 ```
 
 *** =sct
@@ -698,157 +777,107 @@ success_msg("Nice work!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:c1a08e245c
-## Increasing Speed of Loops by Pre-allocating Memory
+## Regression Diagnostic Plots
 
-R doesn’t require allocating memory for new vectors or lists, allowing for them to ”grow” each time a new element is added, R allows assigning a value to a vector element that doesn’t exist yet (hasn’t been allocated), But when R creates a bigger object from an existing one, it ﬁrst allocates memory for the new object, and then copies the existing values to the new memory, which is very memory intensive and slow, Using the functions `c()`, `append()`, `cbind()`, `rbind()`, and `paste()` to append data to objects is even slower than vector assignment, Adding elements to a vector in a loop is very slow, and therefore not recommended, Pre-allocating memory for large vectors before performing loops increases their speed, The function `numeric(k)` returns a numeric vector of zeros of length k, `numeric(0)` returns an empty (zero length) numeric vector (not to be confused with a NULL.
+`plot()` produces diagnostic scatterplots for the residuals, when called on the regression object.
+
+The diagnostic scatterplots allow for visual inspection to determine the quality of the regression ﬁt, ”Residuals vs Fitted” is a scatterplot of the residuals vs. the predicted responses, ”Scale-Location” is a scatterplot of the square root of the standardized residuals vs. the predicted responses, The residuals should be randomly distributed around the horizontal line representing zero residual error.
+
+A pattern in the residuals indicates that the model was not able to capture the relationship between the variables, or that the variables don’t follow the statistical assumptions of the regression model.
+
+”Normal Q-Q” is the standard Q-Q plot, and the points should fall on the diagonal line, indicating that the residuals are normally distributed, ”Residuals vs Leverage” is a scatterplot of the residuals vs. their leverage, Leverage measures the amount by which the predicted response would change if the observed response were shifted by a small amount, Cook’s distance measures the inﬂuence of a single observation on the predicted values, and is proportional.
 
 *** =instructions
-- Pre-allocate memory to speed up loop.
+- Use various plots to investigate model fit.
 
 *** =hint
 Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
-library(microbenchmark)
+set.seed(1121)  # initialize random number generator
+# define explanatory variable
+explana_tory <- rnorm(100, mean=2)
+noise <- rnorm(100)
+# response equals linear form plus error terms
+res_ponse <- -3 + explana_tory + noise
+# specify regression formula
+reg_formula <- res_ponse ~ explana_tory
+reg_model <- lm(reg_formula)
 ```
 
 *** =sample_code
 ```{r}
-# create big vector
-big_vector <- rnorm(5000)
+# plot 2x2 panels
+par(mfrow=c(2, 2))
 
-# change the code, allocate full memory for cumulative sum
-summary(microbenchmark(
-  for_loop={cum_sum <- numeric(length(big_vector))
-    cum_sum[1] <- big_vector[1]
-    for(i in 1:length(big_vector)) {
-      cum_sum[i] <- cum_sum[i] + big_vector[i]
-    }},
-  grow_vec={cum_sum <- numeric(k)
-    cum_sum[1] <- big_vector[1]
-    for(i in 1:length(big_vector)) {
-      cum_sum[i] <- cum_sum[i] + big_vector[i]
-    }},
-  com_bine={cum_sum <- numeric(k)
-    cum_sum[1] <- big_vector[1]
-    for(i in 1:length(big_vector)) {
-      cum_sum <- c(cum_sum, big_vector[i])
-    }},
-  ))[, c(1, 4, 5)]
+# plot diagnostic scatterplots
+plot(reg_model)
+
+# plot just Q-Q
+plot(reg_model, which=2)
 ```
 
 *** =solution
 ```{r}
-# create big vector
-big_vector <- rnorm(5000)
+# plot 2x2 panels
+par(mfrow=c(2, 2))
 
-# change the code, allocate full memory for cumulative sum
-summary(microbenchmark(
-  for_loop={cum_sum <- numeric(length(big_vector))
-    cum_sum[1] <- big_vector[1]
-    for(i in 2:length(big_vector)) {
-      cum_sum[i] <- cum_sum[i-1] + big_vector[i]
-    }},
-  grow_vec={cum_sum <- numeric(0)
-    cum_sum[1] <- big_vector[1]
-    for(i in 2:length(big_vector)) {
-      cum_sum[i] <- cum_sum[i-1] + big_vector[i]
-    }},
-  com_bine={cum_sum <- numeric(0)
-    cum_sum[1] <- big_vector[1]
-    for(i in 2:length(big_vector)) {
-      cum_sum <- c(cum_sum, big_vector[i])
-    }},
-  times=10))[, c(1, 4, 5)]
+# plot diagnostic scatterplots
+plot(reg_model)
+
+# plot just Q-Q
+plot(reg_model, which=2)
 ```
 
 *** =sct
 ```{r}
-success_msg("Great! Pre-allocation is a lot faster than growing memory at every cycle, this principle applies to other programming language as well.")
+success_msg("Beautiful!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:e9ca3eeb99
-## Vectorized Functions for Vector Computations
+## Durbin-Watson Test of Autocorrelation of Residuals
 
-Vectorized functions accept vectors as their arguments, and return a vector of the same length as their value, Many vectorized functions are also compiled (they pass their data to compiled C++ code), which makes them very fast, The following vectorized compiled functions calculate cumulative values over large vectors: 
-````
-cummax(),
-cummin(),
-cumsum(),
-cumprod()
-````
-Standard arithmetic operations ("+", "-", etc.) can be applied to vectors, and are implemented as vectorized compiled functions, ifelse() and which() are vectorized compiled functions for logical operations, But many vectorized functions perform their calculations in R code, and are therefore slow, but convenient to use.
+The Durbin-Watson test is designed to test the null hypothesis that the autocorrelations of regression residuals are equal to zero.
+
+The value of the Durbin-Watson statistic DW is close to zero for large positive autocorrelations, and close to four for large negative autocorrelations, The DW is close to two for autocorrelations close to zero, The p-value for the reg model regression is large, and we conclude that the null hypothesis is TRUE, and the regression residuals are uncorrelated.
 
 *** =instructions
-- Utilize the vectorized compiled function to greatly enhance your speed.
+- Conduct DW test on regression results.
 
 *** =hint
-Follow the instruction and introductions.
+Follow the instruction and introductions. Remember to load "lmtest" package.
 
 *** =pre_exercise_code
 ```{r}
-library(microbenchmark)
+set.seed(1121)  # initialize random number generator
+# define explanatory variable
+explana_tory <- rnorm(100, mean=2)
+noise <- rnorm(100)
+# response equals linear form plus error terms
+res_ponse <- -3 + explana_tory + noise
+# specify regression formula
+reg_formula <- res_ponse ~ explana_tory
+reg_model <- lm(reg_formula)
 ```
 
 *** =sample_code
 ```{r}
-# create large vectors
-vec_tor1 <- rnorm(1000000)
-vec_tor2 <- rnorm(1000000)
-big_vector <- numeric(1000000)
-
-# sum vectors using "for" loop
-
-# sum vectors using vectorized "+"
+# load lmtest
 
 
-# allocate memory for cumulative sum
-
-
-# set the value for the starting element
-
-
-# cumulative sum using "for" loop
-
-
-# cumulative sum using "cumsum"
+# perform Durbin-Watson test
 
 ```
 
 *** =solution
 ```{r}
-# create large vectors
-vec_tor1 <- rnorm(1000000)
-vec_tor2 <- rnorm(1000000)
-big_vector <- numeric(1000000)
+# load lmtest
+library(lmtest)
 
-# sum vectors using "for" loop
-system.time(
-  for(i in 1:length(vec_tor1)) {
-    big_vector[i] <- vec_tor1[i] + vec_tor2[i]
-  }
-)
-
-# sum vectors using vectorized "+"
-system.time(big_vector <- vec_tor1 + vec_tor2)
-
-# allocate memory for cumulative sum
-cum_sum <- numeric(length(big_vector))
-
-# set the value for the starting element
-cum_sum[1] <- big_vector[1]
-
-# cumulative sum using "for" loop
-system.time(
-  for(i in 2:length(big_vector)) {
-    cum_sum[i] <- cum_sum[i-1] + big_vector[i]
-  }
-)
-
-# cumulative sum using "cumsum"
-system.time(cum_sum <- cumsum(big_vector))
+# perform Durbin-Watson test
+dwtest(reg_model)
 ```
 
 *** =sct
