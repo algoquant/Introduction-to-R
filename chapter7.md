@@ -905,6 +905,7 @@ Follow the instruction and introductions.
 ```{r}
 # no pec
 library(lmtest)
+reg_formula <- res_ponse ~ explana_tory
 ```
 
 *** =sample_code
