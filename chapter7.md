@@ -887,19 +887,16 @@ success_msg("Nice one!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:8e5ade7078
-## Vectorized Functions for Matrix Computations
+## Omitted Variable Bias
 
-`apply()` loops are very ineﬃcient for calculating statistics over rows and columns of very large matrices, R has very fast vectorized compiled functions for calculating sums and means of rows and columns: 
-````
-rowSums(),
-colSums(),
-rowMeans(),
-colMeans()
-````
-These vectorized functions are also compiled functions, so they’re very fast because they pass their data to compiled C++ code, which performs the loop calculations
+Omitted Variable Bias occurs in a regression model that omits important predictors.
+
+The parameter estimates are biased, even though the t-statistics, p-values, and R-squared all indicate a statistically signiﬁcant regression.
+
+But the Durbin-Watson test shows residuals are autocorrelated, invalidating other tests.
 
 *** =instructions
-- Utilize compiled functions dedicated for matrix to save additional time. Compare their speed with `*apply()` family.
+- Examine the effects of DW test in autocorrelation.
 
 *** =hint
 Follow the instruction and introductions.
@@ -907,28 +904,93 @@ Follow the instruction and introductions.
 *** =pre_exercise_code
 ```{r}
 # no pec
-library(microbenchmark)
+
 ```
 
 *** =sample_code
 ```{r}
-# matrix with 5,000 rows
-big_matrix <- matrix(rnorm(10000), ncol=2)
+# design matrix
 
-# calculate row sums two different ways
+
+# response depends on both explanatory variables
+
+
+# mis-specified regression only one explanatory
+
+
+# get model summary
+
+
+# get model coefficients
+
+
+# get model r-square
+
+
+# Durbin-Watson test shows residuals are autocorrelated
+
+
+# set plot parameters
+
+
+# set plot panels
+
+
+# make plot
+
+
+# draw a line
+
+
+# set plot title
+
+
+# plot just Q-Q
 
 ```
 
 *** =solution
 ```{r}
-# matrix with 5,000 rows
-big_matrix <- matrix(rnorm(10000), ncol=2)
+# design matrix
+design_matrix <- data.frame(
+  explana_tory=1:30, omit_var=sin(0.2*1:30))
 
-# calculate row sums two different ways
-summary(microbenchmark(
-  row_sums=rowSums(big_matrix),
-  ap_ply=apply(big_matrix, 1, sum),
-  times=10))[, c(1, 4, 5)]
+# response depends on both explanatory variables
+res_ponse <- with(design_matrix,
+  0.2*explana_tory + omit_var + 0.2*rnorm(30))
+
+# mis-specified regression only one explanatory
+reg_model <- lm(res_ponse ~ explana_tory, data=design_matrix)
+
+# get model summary
+reg_model_sum <- summary(reg_model)
+
+# get model coefficients
+reg_model_sum$coefficients
+
+# get model r-square
+reg_model_sum$r.squared
+
+# Durbin-Watson test shows residuals are autocorrelated
+dwtest(reg_model)$p.value
+
+# set plot parameters
+par(oma=c(15, 1, 1, 1), mgp=c(0, 0.5, 0), mar=c(1, 1, 1, 1), cex.lab=0.8, cex.axis=0.8, cex.main=0.8, cex.sub=0.5)
+
+# set plot panels
+par(mfrow=c(2,1))
+
+# make plot
+plot(reg_formula, data=design_matrix)
+
+# draw a line
+abline(reg_model, lwd=2, col="red")
+
+# set plot title
+title(main="OVB Regression", line=-1)
+
+# plot just Q-Q
+plot(reg_model, which=2, ask=FALSE)
 ```
 
 *** =sct
@@ -938,58 +1000,121 @@ success_msg("Great!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:ec87541ef1
-## Fast R Code for Matrix Computations
+## Spurious Time Series Regression
 
-The functions `pmax()` and `pmin()` calculate the ”parallel” maxima (minima) of multiple vector arguments, `pmax()` and `pmin()` return a vector, whose n-th element is equal to the maximum (minimum) of the n-th elements of the arguments, with shorter vectors recycled if necessary, `pmax.int()` and `pmin.int()` are methods of generic functions `pmax()` and `pmin()`, designed for atomic vectors, `pmax()` can be used to quickly calculate the maximum values of rows of a matrix, by ﬁrst converting the matrix columns into a list, and then passing them to `pmax()`, `pmax.int()` and `pmin.int()` are very fast because they are compiled functions (compiled from C++ code).
+Regression of non-stationary time series creates spurious regressions.
+
+The t-statistics, p-values, and R-squared all indicate a statistically signiﬁcant regression, But the Durbin-Watson test shows residuals are autocorrelated, which invalidates the other tests, 
+
+The Q-Q plot also shows that residuals are not normally distributed.
 
 
 *** =instructions
-- Use `pmax()` and `pmin()` family to search through the matrix.
+- Examine several critical measures on spurious regression.
 
 *** =hint
 Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
-big_matrix <- matrix(rnorm(10000), ncol=2)
+set.seed(1121)
+library(lmtest)
 ```
 
 *** =sample_code
 ```{r}
-# load the microbenchmark package
+# unit root time series for explanatory variable
 
 
-# see the structure of pmax function
+# unit root time series for response variable
 
 
-# calculate row maximums two different ways
-summary(microbenchmark(
-  p_max=
-    do.call(pmax.int,big_matrix),
-  l_apply=
-    lapply(seq_along(big_matrix[, 1]),
-  function(in_dex) max(big_matrix[in_dex, ])),
-  times=10)[, c(1, 4, 5)]
+# construct formula
+
+
+# perform regression
+
+
+# summary indicates statistically significant regression
+
+
+# get model coefficients
+
+
+# get model r-squared
+
+
+# Durbin-Watson test shows residuals are autocorrelated
+
+
+# print DW test results
+
+
+# set plot parameters
+
+
+# set plot panels
+
+
+# plot scatterplot using formula
+
+
+# set plot title
+
+
+# add regression line
+
+
+# plot just Q-Q
+
 ```
 
 *** =solution
 ```{r}
-# load the microbenchmark package
-library(microbenchmark)
+# unit root time series for explanatory variable
+explana_tory <- cumsum(rnorm(100))
 
-# see the structure of pmax function
-str(pmax)
+# unit root time series for response variable
+res_ponse <- cumsum(rnorm(100))
 
-# calculate row maximums two different ways
-summary(microbenchmark(
-  p_max=
-    do.call(pmax.int,
-lapply(seq_along(big_matrix[1, ]),
-  function(in_dex) big_matrix[, in_dex])),
-  l_apply=unlist(
-    lapply(seq_along(big_matrix[, 1]),
-  function(in_dex) max(big_matrix[in_dex, ]))),
-  times=10))[, c(1, 4, 5)]
+# construct formula
+reg_formula <- res_ponse ~ explana_tory
+
+# perform regression
+reg_model <- lm(reg_formula)
+
+# summary indicates statistically significant regression
+reg_model_sum <- summary(reg_model)
+
+# get model coefficients
+reg_model_sum$coefficients
+
+# get model r-squared
+reg_model_sum$r.squared
+
+# Durbin-Watson test shows residuals are autocorrelated
+dw_test <- dwtest(reg_model)
+
+# print DW test results
+c(dw_test$statistic[[1]], dw_test$p.value)
+
+# set plot parameters
+par(oma=c(15, 1, 1, 1), mgp=c(0, 0.5, 0), mar=c(1, 1, 1, 1), cex.lab=0.8, cex.axis=0.8, cex.main=0.8, cex.sub=0.5)
+
+# set plot panels
+par(mfrow=c(2,1))
+
+# plot scatterplot using formula
+plot(reg_formula, xlab="", ylab="")
+
+# set plot title
+title(main="Spurious Regression", line=-1)
+
+# add regression line
+abline(reg_model, lwd=2, col="red")
+
+# plot just Q-Q
+plot(reg_model, which=2, ask=FALSE)
 ```
 
 *** =sct
@@ -999,16 +1124,12 @@ success_msg("Wonderful!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:3d8a9618b9
-## Package matrixStats for Fast Matrix Computations
+## Predictions Using Regression Models
 
-The package matrixStats contains functions for calculating aggregations over matrix columns and rows, and other matrix computations, such as: estimating location and scale: `rowRanges()`, `colRanges()`, and `rowMaxs()`, `rowMins()`, etc., testing and counting values: `colAnyMissings()`, `colAnys()`, etc., cumulative functions: `colCumsums()`, `colCummins()`, etc., binning and diﬀerencing: `binCounts()`, `colDiffs()`, etc.
-
-A summary of matrixStats functions can be found under: "https://cran.r-project.org/web/packages/matrixStats/ vignettes/matrixStats-methods.html"
-
-The matrixStats functions are very fast because they are compiled functions (compiled from C++ code)
+The function predict() is a generic function for performing predictions based on a given model, predict.lm() is the predict method for linear models (regressions).
 
 *** =instructions
-- Explore the functions in `matrixStats` package.
+- Make predictions based on regression models.
 
 *** =hint
 Follow the instruction and introductions.
@@ -1016,1011 +1137,90 @@ Follow the instruction and introductions.
 *** =pre_exercise_code
 ```{r}
 # no pec
-library(microbenchmark)
-big_matrix <- matrix(rnorm(10000), ncol=2)
+set.seed(1120)
 ```
 
 *** =sample_code
 ```{r}
-# load package matrixStats
+# explanatory variable
 
 
-# calculate row min values three different ways
-summary(microbenchmark(
-  row_mins=rowMins(big_matrix),
-  p_min=
-    do.call(pmin.int, big_matrix[, in_dex])),
-  as_data_frame=
-    do.call(pmin.int, big_matrix),
-  ))[, c(1, 4, 5)]
-```
-
-*** =solution
-```{r}
-# load package matrixStats
-library(matrixStats)
-
-# calculate row min values three different ways
-summary(microbenchmark(
-  row_mins=rowMins(big_matrix),
-  p_min=
-    do.call(pmin.int,
-      lapply(seq_along(big_matrix[1, ]),
-             function(in_dex)
-               big_matrix[, in_dex])),
-  as_data_frame=
-    do.call(pmin.int,
-      as.data.frame.matrix(big_matrix)),
-  times=10))[, c(1, 4, 5)]
-```
-
-*** =sct
-```{r}
-success_msg("Great!")
-```
+# response variable
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:7b69825576
-## Writing Fast R Code Using Vectorized Operations
-
-R-style code is code that relies on vectorized compiled functions, instead of `for()` loops, `for()` loops in R are slow because they call functions multiple times, and individual function calls are compute-intensive and slow, The brackets `[]` operator is a vectorized compiled function, and is therefore very fast, Vectorized assignments using brackets `[]` and boolean or integer vectors to subset vectors or matrices are therefore preferable to `for()` loops, R code that uses vectorized compiled functions can be as fast as C++ code, R-style code is also very expressive, i.e. it allows performing complex operations with very few lines of code
-
-*** =instructions
-- Utilize vectorized operations.
-
-*** =hint
-Follow the instruction and introductions.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-library(microbenchmark)
-big_matrix <- matrix(rnorm(10000), ncol=2)
-```
-
-*** =sample_code
-```{r}
-# assign values to vector three different ways
-summary(microbenchmark(
-
-# fast vectorized assignment loop performed in C using brackets "[]"
-  brack_ets={vec_tor <- numeric(10)
-    vec_tor <- 2},
-    
-# slow because loop is performed in R
-  for_loop={vec_tor <- numeric(10)
-    for (in_dex in vec_tor)
-      vec_tor[in_dex] <- 2},
-      
-# very slow because no memory is pre-allocated
-# "vec_tor" is "grown" with each new element
-  grow_vec={vec_tor <- numeric(0)
-    for (in_dex in 1:10)
-    
-# add new element to "vec_tor" ("grow" it)
-      vec_tor[in_dex] <- 2},
-  times=10))[, c(1, 4, 5)]
-```
-
-*** =solution
-```{r}
-# assign values to vector three different ways
-summary(microbenchmark(
-
-# fast vectorized assignment loop performed in C using brackets "[]"
-  brack_ets={vec_tor <- numeric(10)
-    vec_tor[] <- 2},
-    
-# slow because loop is performed in R
-  for_loop={vec_tor <- numeric(10)
-    for (in_dex in seq_along(vec_tor))
-      vec_tor[in_dex] <- 2},
-      
-# very slow because no memory is pre-allocated
-# "vec_tor" is "grown" with each new element
-  grow_vec={vec_tor <- numeric(0)
-    for (in_dex in 1:10)
-    
-# add new element to "vec_tor" ("grow" it)
-      vec_tor[in_dex] <- 2},
-  times=10))[, c(1, 4, 5)]
-```
-
-*** =sct
-```{r}
-success_msg("The speed difference can be enormous!")
-```
+# construct regression model
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:cd816481aa
-## Vectorized Functions
-
-Functions which use vectorized operations and functions are automatically vectorized themselves, Functions which only call other compiled C vectorized functions, are also very fast, But not all functions are vectorized, or they’re not vectorized with respect to their parameters, Some vectorized functions perform their calculations in R code, and are therefore slow, but convenient to use.
+# perform regression
 
 
-*** =instructions
-- Utilize vectorized functions.
-
-*** =hint
-Follow the instruction and introductions.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-library(microbenchmark)
-```
-
-*** =sample_code
-```{r}
-# define function vectorized automatically
-my_fun <- function(in_put, pa_ram) {
-  pa_ram*in_put
-}
-
-# "in_put" is vectorized
+# set new data range
 
 
-# "pa_ram" is vectorized
+# change code to make predictions
+predict_lm <- predict(object=reg_model)
+              
+# convert to data frame
 
 
-# define vectors of parameters of rnorm()
-std_devs <-
-  structure(1:3, names=paste0("sd=", 1:3))
-me_ans <-
-  structure(-1:1, names=paste0("mean=", -1:1))
-
-# "sd" argument of rnorm() isn't vectorized
+# print the first two lines
 
 
-# "mean" argument of rnorm() isn't vectorized
+# make the plot table
+
+     
+# draw the fitted line
+
+
+# plot points and prediction range
 
 ```
 
 *** =solution
 ```{r}
-# define function vectorized automatically
-my_fun <- function(in_put, pa_ram) {
-  pa_ram*in_put
-}
-
-# "in_put" is vectorized
-my_fun(in_put=1:3, pa_ram=2)
-
-# "pa_ram" is vectorized
-my_fun(in_put=10, pa_ram=2:4)
-
-# define vectors of parameters of rnorm()
-std_devs <-
-  structure(1:3, names=paste0("sd=", 1:3))
-me_ans <-
-  structure(-1:1, names=paste0("mean=", -1:1))
-
-# "sd" argument of rnorm() isn't vectorized
-rnorm(1, sd=std_devs)
-
-# "mean" argument of rnorm() isn't vectorized
-rnorm(1, mean=me_ans)
-```
-
-*** =sct
-```{r}
-success_msg("Flexibility of R code helps with vectorized functions!")
-```
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:d8823d128f
-## Performing sapply() Loops Over Function Parameters
-
-Many functions aren’t vectorized with respect to their parameters, Performing `sapply()` loops over a function’s parameters produces vector output
-
-*** =instructions
-- Utilize `sapply()` for vectorized parameter input.
-
-*** =hint
-Follow the instruction and introductions.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-std_devs <-
-  structure(1:3, names=paste0("sd=", 1:3))
-me_ans <-
-  structure(-1:1, names=paste0("mean=", -1:1))
-```
-
-*** =sample_code
-```{r}
-# sapply produces desired vector output
-set.seed(1121)
-sapply(std_devs, function(std_dev) rnorm(n=2, sd=std_dev))
-
-# reset seed
-
-
-# vectorize on rnorm
-
-
-# reset seed
-
-
-# vectorize on rnorm
-
-
-# reset seed
-
-
-# vectorize on rnorm
-
-```
-
-*** =solution
-```{r}
-# sapply produces desired vector output
-set.seed(1121)
-sapply(std_devs, function(std_dev) rnorm(n=2, sd=std_dev))
-
-# reset seed
-set.seed(1121)
-
-# vectorize on rnorm
-sapply(std_devs, rnorm, n=2, mean=0)
-
-# reset seed
-set.seed(1121)
-
-# vectorize on rnorm
-sapply(me_ans, function(me_an) rnorm(n=2, mean=me_an))
-
-# reset seed
-set.seed(1121)
-
-# vectorize on rnorm
-sapply(me_ans, rnorm, n=2)
-```
-
-*** =sct
-```{r}
-success_msg("Applause for your continued performance!")
-```
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:737ea4a5e4
-## Creating Vectorized Functions
-
-In order to vectorize a function with respect to one of its parameters, it’s necessary to perform a loop over it, The function `Vectorize()` performs an `apply()` loop over the arguments of a function, and returns a vectorized version of the function, `Vectorize()` vectorizes the arguments passed to "vectorize.args", `Vectorize()` is an example of a higher-order function: it accepts a function as its argument and returns a function as its value, Functions that are vectorized using `Vectorize()` or `apply()` loops are just as slow as `apply()` loops, but convenient to use
-
-*** =instructions
-- `Vectorize()` can also make your functions vectorized.
-
-*** =hint
-Follow the instruction and introductions. Assign vectorized function back to the same function name and input results to it.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-std_devs <-
-  structure(1:3, names=paste0("sd=", 1:3))
-me_ans <-
-  structure(-1:1, names=paste0("mean=", -1:1))
-```
-
-*** =sample_code
-```{r}
-# rnorm() vectorized with respect to "std_dev"
-vec_rnorm <- function(n, mean=0, sd=1) {
-  if (length(sd)==1)
-    rnorm(n=n, mean=mean, sd=sd)
-  else
-    sapply(sd, rnorm, n=n, mean=mean)
-}
-
-# reset seed
-
-
-# run unvectorized function
-
-
-# rnorm() vectorized with respect to "mean" and "sd"
-vec_rnorm 
-
-# reset seed
-
-
-# run vectorized function, change sd
-
-
-# reset seed
-
-
-# run vectorized function, change mean
-
-```
-
-*** =solution
-```{r}
-# rnorm() vectorized with respect to "std_dev"
-vec_rnorm <- function(n, mean=0, sd=1) {
-  if (length(sd)==1)
-    rnorm(n=n, mean=mean, sd=sd)
-  else
-    sapply(sd, rnorm, n=n, mean=mean)
-}
-
-# reset seed
-set.seed(1121)
-
-# run unvectorized function
-vec_rnorm(n=2, sd=std_devs)
-
-# rnorm() vectorized with respect to "mean" and "sd"
-vec_rnorm <- Vectorize(FUN=rnorm,
-        vectorize.args=c("mean", "sd")
-)
-
-# reset seed
-set.seed(1121)
-
-# run vectorized function, change sd
-vec_rnorm(n=2, sd=std_devs)
-
-# reset seed
-set.seed(1121)
-
-# run vectorized function, change mean
-vec_rnorm(n=2, mean=me_ans)
-```
-
-*** =sct
-```{r}
-success_msg("Use the Vectorize() and save more time!")
-```
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:530c1e1c92
-## The mapply() Functional
-
-The `mapply()` functional is a multivariate version of `sapply()`, that allows calling a non-vectorized function in a vectorized way, `mapply()` accepts a multivariate function passed to the "FUN" argument and any number of vector arguments passed to the dots "...", `mapply()` calls "FUN" on the vectors passed to the dots "...", one element at a time:
-````
-mapply(FUN = fun,vec1,vec2,...) = [fun(vec1,1,vec2,1,...),..., fun(vec1,i,vec2,i,...),...]
-````
-`mapply()` passes the ﬁrst vector to the ﬁrst argument of "FUN", the second vector to the second argument, etc. The ﬁrst element of the output vector is equal to "FUN" called on the ﬁrst elements of the input vectors, the second element is "FUN" called on the second elements, etc.
-
-The output of mapply() is a vector of length equal to the longest vector passed to the dots "..." argument, with the elements of the other vectors recycled if necessary.
-
-*** =instructions
-- Utilize `mapply()` on matrix.
-
-*** =hint
-Follow the instruction and introductions.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-std_devs <-
-  structure(1:3, names=paste0("sd=", 1:3))
-me_ans <-
-  structure(-1:1, names=paste0("mean=", -1:1))
-```
-
-*** =sample_code
-```{r}
-# get the structure of sum()
-
-
-# na.rm is bound by name
-
-
-# get the structure of rnorm
-
-
-# mapply vectorizes both arguments "mean" and "sd"
-
-
-# mapply vectorizes anonymous function
-
-
-# rnorm() vectorized with respect to "mean" and "sd", dealing with single value as well
-vec_rnorm <- function(n, mean=0, sd=1) {
-    mapply(rnorm, n=n, mean=mean, sd=sd)
-}
-
-# call vec_rnorm() on vector of "sd"
-
-
-# call vec_rnorm() on vector of "mean"
-
-```
-
-*** =solution
-```{r}
-# get the structure of sum()
-str(sum)
-
-# na.rm is bound by name
-mapply(sum, 6:9, c(5, NA, 3), 2:6, na.rm=TRUE)
-
-# get the structure of rnorm
-str(rnorm)
-
-# mapply vectorizes both arguments "mean" and "sd"
-mapply(rnorm, n=5, mean=me_ans, sd=std_devs)
-
-# mapply vectorizes anonymous function
-mapply(function(in_put, e_xp) in_put^e_xp, 1:5, seq(from=1, by=0.2, length.out=5))
-
-# rnorm() vectorized with respect to "mean" and "sd", dealing with single value as well
-vec_rnorm <- function(n, mean=0, sd=1) {
-  if (length(mean)==1 && length(sd)==1)
-    rnorm(n=n, mean=mean, sd=sd)
-  else
-    mapply(rnorm, n=n, mean=mean, sd=sd)
-}
-
-# call vec_rnorm() on vector of "sd"
-vec_rnorm(n=2, sd=std_devs)
-
-# call vec_rnorm() on vector of "mean"
-vec_rnorm(n=2, mean=me_ans)
-```
-
-*** =sct
-```{r}
-success_msg("Vectorization gets higher dimension!")
-```
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:944a839cd1
-## Vectorized if-else Statements Using Function ifelse()
-
-The function ifelse() performs vectorized if-else statements on vectors, ifelse() is much faster than performing an element-wise loop in R.
-
-*** =instructions
-- Use `ifelse()` for vectorized comparison.
-
-*** =hint
-Follow the instruction and introductions.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-```
-
-*** =sample_code
-```{r}
-# create two numeric vectors
-vec_tor1 <- sin(0.25*pi*1:10)
-vec_tor2 <- cos(0.25*pi*1:10)
-
-# create third vector using 'ifelse'
-
-
-# cbind all three together
-
-
-# set plotting parameters
-par(mar=c(7, 2, 1, 2), mgp=c(2, 1, 0),
-    cex.lab=0.8, cex.axis=0.8, cex.main=0.8,
-    cex.sub=0.5)
-
-# plot matrix
-matplot(type="l", lty="solid",
-col=c("green", "blue", "red"), xlab="", ylab="")
-
-# add legend
-legend(title="", inset=0.05, cex=0.8, lwd=2,
-       col=c("green", "blue", "red"))
-```
-
-*** =solution
-```{r}
-# create two numeric vectors
-vec_tor1 <- sin(0.25*pi*1:10)
-vec_tor2 <- cos(0.25*pi*1:10)
-
-# create third vector using 'ifelse'
-vec_tor3 <- ifelse(vec_tor1 > vec_tor2, vec_tor1, vec_tor2)
-
-# cbind all three together
-vec_tor4 <- cbind(vec_tor1, vec_tor2, vec_tor3)
-
-# set plotting parameters
-par(mar=c(7, 2, 1, 2), mgp=c(2, 1, 0),
-    cex.lab=0.8, cex.axis=0.8, cex.main=0.8,
-    cex.sub=0.5)
-
-# plot matrix
-matplot(vec_tor4, type="l", lty="solid",
-col=c("green", "blue", "red"),
-lwd=c(2, 2, 2), xlab="", ylab="")
-
-# add legend
-legend(x="bottomright", legend=colnames(vec_tor4),
-       title="", inset=0.05, cex=0.8, lwd=2,
-       lty=c(1, 1, 1), col=c("green", "blue", "red"))
-```
-
-*** =sct
-```{r}
-success_msg("Welcome to a colorful new world!")
-```
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:75657a12ba
-## Monte Carlo Simulation
-
-Monte Carlo simulation consists of generating random samples from a given probability distribution, The Monte Carlo data samples can then used to calculate diﬀerent parameters of the probability distribution (moments, quantiles, etc.), and its functionals.
-
-*** =instructions
-- Generate large random numbers to simulate.
-
-*** =hint
-Follow the instruction and introductions.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-```
-
-*** =sample_code
-```{r}
-# reset random number generator
-set.seed(1121)
-
-# set length of simulated sample
-sample_length <- 1000
-
-# sample from Standard Normal Distribution
-
-
-# sample mean - MC estimate
-
-
-# sample standard deviation - MC estimate
-
-
-# MC estimate of cumulative probability
-
-
-# probability of values no bigger than 1
-
-
-# frequency of less than 1
-
-
-# MC estimate of 3rd quantile
-
-
-# find the 75% value in sample
-
-```
-
-*** =solution
-```{r}
-# reset random number generator
-set.seed(1121)
-
-# set length of simulated sample
-sample_length <- 1000
-
-# sample from Standard Normal Distribution
-sam_ple <- rnorm(sample_length)
-
-# sample mean - MC estimate
-mean(sam_ple)
-
-# sample standard deviation - MC estimate
-sd(sam_ple)
-
-# MC estimate of cumulative probability
-sam_ple <- sort(sam_ple)
-
-# probability of values no bigger than 1
-pnorm(1)
-
-# frequency of less than 1
-sum(sam_ple<1)/sample_length
-
-# MC estimate of 3rd quantile
-qnorm(0.75)
-
-# find the 75% value in sample
-sam_ple[0.75*sample_length]
-```
-
-*** =sct
-```{r}
-success_msg("Congrats! Monte Carlo starts with random value!")
-```
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:a974740ed7
-## Simulating Brownian Motion Using while() Loops
-
-while() loops are often used in simulations, when the number of required loops is unknown in advance.
-
-*** =instructions
-- Use `while()` loop for specific conditions.
-
-*** =hint
-Follow the instruction and introductions.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-```
-
-*** =sample_code
-```{r}
-# reset random number generator
-set.seed(1121)
-
-# barrier level
-lev_el <- 20
-
-# number of simulation steps
-len_gth <- 1000
-
-# allocate path vector
-
-
-# initialize path
-
-
-# change the code to initialize simulation index
-in_dex <- 0
-while ((in_dex <= len_gth) &&
- (pa_th[in_dex - 1] < lev_el)) {
- 
-# change the code to simulate next step
-  pa_th[in_dex] <- pa_th[in_dex - 1]
-    
-# change the code to advance in_dex
-  in_dex <- in_dex
-}
-
-# fill remaining pa_th after it crosses lev_el
-
-
-# create daily time series starting 2011
-
-
-# create plot
-
-
-# add horizontal line
-
-
-# set title
-
-
-# set other parameters
-par(oma=c(1, 1, 1, 1), mgp=c(2, 1, 0), mar=c(5, 1, 1, 1), cex.lab=0.8, cex.axis=0.8, cex.main=0.8, cex.sub=0.5)
-```
-
-*** =solution
-```{r}
-# reset random number generator
-set.seed(1121)
-
-# barrier level
-lev_el <- 20
-
-# number of simulation steps
-len_gth <- 1000
-
-# allocate path vector
-pa_th <- numeric(len_gth)
-
-# initialize path
-pa_th[1] <- 0
-
-# change the code to initialize simulation index
-in_dex <- 2
-while ((in_dex <= len_gth) &&
- (pa_th[in_dex - 1] < lev_el)) {
- 
-# simulate next step
-  pa_th[in_dex] <-
-    pa_th[in_dex - 1] + rnorm(1)
-    
-# advance in_dex
-  in_dex <- in_dex + 1
-}
-
-# fill remaining pa_th after it crosses lev_el
-if (in_dex <= len_gth) pa_th[in_dex:len_gth] <- pa_th[in_dex - 1]
-
-# create daily time series starting 2011
-ts_var <- ts(data=pa_th, frequency=365, start=c(2011, 1))
-
-# create plot
-plot(ts_var, type="l", col="black", 
-     lty="solid", xlab="", ylab="")
-
-# add horizontal line
-abline(h=lev_el, lwd=2, col="red")
-
-# set title
-title(main="Brownian motion crossing a barrier level", line=0.5)
-
-# set other parameters
-par(oma=c(1, 1, 1, 1), mgp=c(2, 1, 0), mar=c(5, 1, 1, 1), cex.lab=0.8, cex.axis=0.8, cex.main=0.8, cex.sub=0.5)
-```
-
-*** =sct
-```{r}
-success_msg("Hooray! Your first simulated stock path is produced!")
-```
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:2f39aa9fee
-## Simulating Brownian Motion Using Vectorized Functions
-
-Simulations in R can be accelerated by pre-computing a vector of random numbers, instead of generatng them one at a time in a loop, Vectors of random numbers allow using vectorized functions, instead of ineﬃcient (slow) while() loops
-
-*** =instructions
-- Use vectorized function to speed up your simulation.
-
-*** =hint
-Follow the instruction and introductions.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-```
-
-*** =sample_code
-```{r}
-# reset random number generator
-set.seed(1121)
-
-# barrier level
-lev_el <- 20
-
-# number of simulation steps
-len_gth <- 1000
-
-# simulate path of Brownian motion
-
-
-# find index when pa_th crosses lev_el
-
-
-# fill remaining pa_th after it crosses lev_el
-
-
-# create daily time series starting 2011
-
-
-# create plot with horizontal line
-
-
-# add horizontal line
-
-
-# create title
-
-```
-
-*** =solution
-```{r}
-# reset random number generator
-set.seed(1121)
-
-# barrier level
-lev_el <- 20
-
-# number of simulation steps
-len_gth <- 1000
-
-# simulate path of Brownian motion
-pa_th <- cumsum(rnorm(len_gth))
-
-# find index when pa_th crosses lev_el
-cro_ss <- which(pa_th > lev_el)
-
-# fill remaining pa_th after it crosses lev_el
-if (length(cro_ss)>0) {
-  pa_th[(cro_ss[1]+1):len_gth] <-pa_th[cro_ss[1]]
-}
-
-# create daily time series starting 2011
-ts_var <- ts(data=pa_th, frequency=365, start=c(2011, 1))
-
-# create plot with horizontal line
-plot(ts_var, type="l", col="black", lty="solid", xlab="", ylab="")
-
-# add horizontal line
-abline(h=lev_el, lwd=2, col="red")
-
-# create title
-title(main="Brownian motion crossing a barrier level", line=0.5)
-```
-
-*** =sct
-```{r}
-success_msg("Your first simulated stock path is even faster!")
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:3452f1b7d3
-## Standard Errors of Estimators Using Bootstrap Simulation
-
-The standard errors of estimators can be calculated using a bootstrap simulation.
-
-The bootstrap procedure generates new data by randomly sampling with replacement from the observed data set.
-
-The bootstrapped data is then used to re-calculate the estimator many times, producing a vector of values.
-
-The bootstrapped estimator values can then be used to calculate the probability distribution of the estimator and its standard error.
-
-Bootstrapping doesn’t provide accurate estimates for estimators that are sensitive to the ordering and correlations in the data.
-
-*** =instructions
-- Check if the simulated standard deviation is consistent to hypothesis.
-
-*** =hint
-Follow the instruction and introductions.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-```
-
-*** =sample_code
-```{r}
-# reset random number generator
-set.seed(1121)
-
-# number of simualated steps
-sample_length <- 1000
-
-# sample from Standard Normal Distribution
-
-
-# sample mean
-
-
-# sample standard deviation
-
-
-# change the code to bootstrap of sample mean and median
-boot_strap <- sapply(1:10000, function(x) {
-  boot_sample <-
-    sam_ple[sample_length, replace=TRUE]
-  c(mean=mean(boot_sample),
-    median=median(boot_sample))
-})
-
-# check first three result
-
-
-# standard error from formula
-
-
-# standard error of mean from bootstrap
-
-
-# standard error of median from bootstrap
-
-```
-
-*** =solution
-```{r}
-# reset random number generator
-set.seed(1121)
-
-# number of simualated steps
-sample_length <- 1000
-
-# sample from Standard Normal Distribution
-sam_ple <- rnorm(sample_length)
-
-# sample mean
-mean(sam_ple)
-
-# sample standard deviation
-sd(sam_ple)
-
-# change the code to bootstrap of sample mean and median
-boot_strap <- sapply(1:10000, function(x) {
-  boot_sample <-
-    sam_ple[sample.int(sample_length, replace=TRUE)]
-  c(mean=mean(boot_sample),
-    median=median(boot_sample))
-})
-
-# check first three result
-boot_strap[, 1:3]
-
-# standard error from formula
-sd(sam_ple)/sqrt(sample_length)
-
-# standard error of mean from bootstrap
-sd(boot_strap["mean", ])
-
-# standard error of median from bootstrap
-sd(boot_strap["median", ])
-```
-
-*** =sct
-```{r}
-success_msg("Yes! The simulation has no problem with its variation!")
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:194a77a838
-## Standard Errors of Regression Coeﬃcients Using Bootstrap
-
-The standard errors of the regression coeﬃcients can be calculated using a bootstrap simulation.
-
-The bootstrap procedure creates new design matrices by randomly sampling with replacement from the design matrix.
-
-Regressions are performed on the bootstrapped design matrices, and the regression coeﬃcients are saved into a matrix of bootstrapped coeﬃcients.
-
-*** =instructions
-- Check the bootstrapped results!
-
-*** =hint
-Follow the instruction and introductions.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-```
-
-*** =sample_code
-```{r}
-# define explanatory variable
-explana_tory <- rnorm(100, mean=2)
-
-# produce random noise
-noise <- rnorm(100)
-
-# produce response variable
-
-
-# define design matrix and regression formula
-
-
-# produce formula
-
-
-# change the code to bootstrap the regression
-boot_strap <- sapply(1:100, function(x) {
-  boot_sample <-
-    sample(dim(design_matrix)[1], replace=TRUE)
-  reg_model <- lm(reg_formula)
-})
-```
-
-*** =solution
-```{r}
-# define explanatory variable
-explana_tory <- rnorm(100, mean=2)
-
-# produce random noise
-noise <- rnorm(100)
-
-# produce response variable
-res_ponse <- -3 + explana_tory + noise
-
-# define design matrix and regression formula
-design_matrix <- data.frame(res_ponse, explana_tory)
-
-# produce formula
-reg_formula <- paste(colnames(design_matrix)[1],
-  paste(colnames(design_matrix)[-1], collapse="+"),sep=" ~ ")
-
-# change the code to bootstrap the regression
-boot_strap <- sapply(1:100, function(x) {
-  boot_sample <-
-    sample.int(dim(design_matrix)[1], replace=TRUE)
-  reg_model <- lm(reg_formula,
-          data=design_matrix[boot_sample, ])
-  reg_model$coefficients
+# explanatory variable
+explana_tory <- seq(from=0.1, to=3.0, by=0.1)
+
+# response variable
+res_ponse <- 3 + 2*explana_tory + rnorm(30)
+
+# construct regression model
+reg_formula <- res_ponse ~ explana_tory
+
+# perform regression
+reg_model <- lm(reg_formula)
+
+# set new data range
+new_data <- data.frame(explana_tory=0.1*31:40)
+
+# change code to make predictions
+predict_lm <- predict(object=reg_model,
+              newdata=new_data, level=0.95,
+              interval="confidence")
+              
+# convert to data frame
+predict_lm <- as.data.frame(predict_lm)
+
+# print the first two lines
+head(predict_lm, 2)
+
+# make the plot table
+plot(reg_formula, xlim=c(1.0, 4.0),
+     ylim=range(res_ponse, predict_lm),
+     main="Regression predictions")
+     
+# draw the fitted line
+abline(reg_model, col="red")
+
+# plot points and prediction range
+with(predict_lm, {
+  points(x=new_data$explana_tory, y=fit, pch=16, col="blue")
+  lines(x=new_data$explana_tory, y=lwr, lwd=2, col="red")
+  lines(x=new_data$explana_tory, y=upr, lwd=2, col="red")
 })
 ```
 
 *** =sct
 ```{r}
-success_msg("Remember to see the result! Mont Carlo is powerful!")
+success_msg("Brilliant! You've became a statistician now!")
 ```
