@@ -904,7 +904,7 @@ Follow the instruction and introductions.
 *** =pre_exercise_code
 ```{r}
 # no pec
-
+library(lmtest)
 ```
 
 *** =sample_code
