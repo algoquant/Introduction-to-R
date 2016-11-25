@@ -414,9 +414,15 @@ success_msg("There's so much beyond a simple print!")
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:a80ae7fbe8
-## Benchmarking the Speed of R Code
+## Interpreting the Regression Statistics
 
-The function system.time() calculates the execution time (in seconds) used to evaluate a given expression, system.time() returns the ”user time” (execution time of user instructions), the ”system time” (execution time of operating system calls), and ”elapsed time” (total execution time, including system latency waiting), The function microbenchmark() from package microbenchmark calculates and compares the execution time of R expressions (in milliseconds), and is more accurate than system.time(), microbenchmark() executes the expression many times, and returns the distribution of total execution times.
+The regression summary is a list, and its elements can be accessed individually, The standard errors of the regression are the standard deviations of the coeﬃcients, given the residuals as the source of error.
+
+The key assumption in the above formula for the standard error and the p-value is that the residuals are normally distributed, independent, and stationary.
+
+If the residuals are not normally distributed, independent, and stationary, then the standard error and the p-value may be much bigger than reported by `summary.lm()`, and therefore the regression may not be statistically signiﬁcant.
+
+Market return time series are very far from normal, so the small p-values shouldn’t be automatically interpreted as meaning that the regression is statistically signiﬁcant.
 
 *** =instructions
 - Get the details about model coefficients

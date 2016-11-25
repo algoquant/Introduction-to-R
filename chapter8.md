@@ -20,7 +20,7 @@ The function suppressWarnings() evaluates its expressions and ignores all warnin
 
 
 *** =instructions
-- Learn how different exception conditions are handled. 
+- Learn how different exception conditions are handled. Please run the function without argument after you submit the answer for each of the following change
 
 *** =hint
 Follow the instruction and introduction. 
@@ -64,22 +64,14 @@ sqrt_safe <- function(in_put) {
 # input -1
 
 
+# please run the function without argument after you submit the answer for each of the following change
 # change warning setting to 0
-
-
-# test input result
 
 
 # change warning setting to 1
 
 
-# test result
-
-
 # change warning setting to 3
-
-
-# test result
 
 ```
 
@@ -117,23 +109,15 @@ options(warn=-1)
 # input -1
 sqrt_safe(-1)
 
+# please run the function without argument after you submit the answer for each of the following change
 # change warning setting to 0
 options(warn=0)
-
-# test input result
-sqrt_safe()
 
 # change warning setting to 1
 options(warn=1)
 
-# test result
-sqrt_safe()
-
 # change warning setting to 3
 options(warn=3)
-
-# test result
-sqrt_safe()
 ```
 
 *** =sct
@@ -155,7 +139,7 @@ Missing arguments can be detected by: 1. assigning a NULL default value to forma
 The function `return()` returns its argument and terminates futher function execution
 
 *** =instructions
-- Evaluate function arguments.
+- Evaluate function arguments. Please run the function without argument after you submit the answer for each of the following change.
 
 *** =hint
 Follow the instruction and introductions. 
@@ -184,9 +168,6 @@ vali_date <- function(in_put=NULL) {
 # input "a"
 
 
-# no input
-
-
 # vali_date validates arguments using missing()
 vali_date <- function(in_put) {
 # check if argument is valid and return double
@@ -201,9 +182,6 @@ vali_date <- function(in_put) {
 
 
 # input "a"
-
-
-# no input
 
 ```
 
@@ -226,9 +204,6 @@ vali_date(3)
 # input "a"
 vali_date("a")
 
-# no input
-vali_date()
-
 # vali_date validates arguments using missing()
 vali_date <- function(in_put) {
 # check if argument is valid and return double
@@ -244,9 +219,6 @@ vali_date(3)
 
 # input "a"
 vali_date("a")
-
-# no input
-vali_date()
 ```
 
 *** =sct
@@ -296,9 +268,6 @@ vali_date(3)
 # input "a"
 vali_date("a")
 
-# no input
-vali_date()
-
 # call traceback
 traceback()
 ```
@@ -322,9 +291,6 @@ vali_date(3)
 
 # input "a"
 vali_date("a")
-
-# no input
-vali_date()
 
 # call traceback
 traceback()
@@ -374,13 +340,10 @@ vali_date <- function(in_put) {
 }
 
 # check with input 3
-vali_date(3)
 
-# check with no input
-vali_date()
 
 # check with input "a"
-vali_date("a")
+
 
 # modify target function
 vali_date <- function(in_put) {
@@ -389,9 +352,6 @@ vali_date <- function(in_put) {
   !in_put | in_put)
   2*in_put
 }
-
-# check with no input
-
 
 # check with input 
 
@@ -411,9 +371,6 @@ vali_date <- function(in_put) {
 # check with input 3
 vali_date(3)
 
-# check with no input
-vali_date()
-
 # check with input "a"
 vali_date("a")
 
@@ -424,9 +381,6 @@ vali_date <- function(in_put) {
   stopifnot(!missing(in_put) & is.numeric(in_put))
   2*in_put
 }
-
-# check with no input
-vali_date()
 
 # check with input 
 vali_date("a")
@@ -499,9 +453,6 @@ sum_two <- function(in_put1, in_put2) {
 
 # input two characters
 
-
-# no input
-
 ```
 
 *** =solution
@@ -547,9 +498,6 @@ sum_two('a', 5)
 
 # input two characters
 sum_two('a', 'b')
-
-# no input
-sum_two()
 ```
 
 *** =sct
