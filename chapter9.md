@@ -575,6 +575,33 @@ Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
+set.seed(1121)
+# define explanatory and response variables
+explana_tory <- rnorm(100, mean=2)
+
+# generate random noise
+noise <- rnorm(100)
+
+# construct response variable
+res_ponse <- -3 + explana_tory + noise
+
+# define design matrix and regression formula
+design_matrix <- data.frame(res_ponse, explana_tory)
+
+# regression formula
+reg_formula <- paste(colnames(design_matrix)[1],
+  paste(colnames(design_matrix)[-1], collapse="+"),
+  sep=" ~ ")
+
+# chage the code to bootstrap the regression
+boot_strap <- sapply(1:100, function(x) {
+  boot_sample <-
+    sample.int(dim(design_matrix)[1], replace=TRUE)
+  reg_model <- lm(reg_formula,
+          data=design_matrix[boot_sample, ])
+  reg_model$coefficients
+})
+reg_model <- lm(reg_formula, data=design_matrix)
 ```
 
 *** =sample_code
