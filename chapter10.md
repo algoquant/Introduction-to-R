@@ -591,13 +591,13 @@ success_msg("Bellissimo!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:59a81e117a
-## Performing Loops Using the apply() Functionals
+## Modeling Cumulative Defaults Using Logistic Regression
 
-An important example of functionals are the apply() functions, The function apply() returns the result of applying a function to the rows or columns of an array or matrix, If MARGIN=1 then the function will be applied over the matrix rows, If MARGIN=2 then the function will be applied over the matrix columns, apply() performs a loop over the list of objects, and can replace "for" loops in R.
+The cumulative count of defaults with respect to a single predictor can be modelled as a logistic function, using the function `glm()`, The response variable should be speciﬁed as a matrix with two columns, one containing the number of defaults, and other the number of non-defaults.
 
 
 *** =instructions
-Use `apply()` to execute function in loops.
+- Fit data into logistic model.
 
 *** =hint
 Always call data object as the first argument of apply, second arguemnt is the dimension, and function name as following arguments.
@@ -605,145 +605,406 @@ Always call data object as the first argument of apply, second arguemnt is the d
 *** =pre_exercise_code
 ```{r}
 # no pec
+library(ISLR)  # load package ISLR
+# load credit default data
+attach(Default)
+summary(Default)
+sapply(Default, class)
+dim(Default); head(Default)
+x_lim <- range(balance)
+y_lim <- range(income)
 ```
 
 *** =sample_code
 ```{r}
-# get list of arguments
+# subset dataset
 
 
-# create a matrix
-mat_rix <- matrix(6:1, nrow=2, ncol=3)
-
-# print the matrix
+# sum of default
 
 
-# sum the rows
+# calculate cumulative defaults
 
 
-# sum the columns
+# perform logit regression
 
 
-# change the code define a matrix of sums and original matrix
-mat_rix <- c(sum(row_sums), col_sums)
-dimnames(mat_rix) <- list(c("col_sums", "row1", "row2"),
-                 c("row_sums", "col1", "col2", "col3"))
+# summary of regression model
 
-# print the matrix
+
+# make plot
+
+
+# order the balance
+
+
+# make lines
+
+
+# make legend
 
 ```
 
 *** =solution
 ```{r}
-# get list of arguments
-str(apply)
+# subset dataset
+default_ed <- (default=="Yes")
 
-# create a matrix
-mat_rix <- matrix(6:1, nrow=2, ncol=3)
+# sum of default
+to_tal <- sum(default_ed)
 
-# print the matrix
-mat_rix
+# calculate cumulative defaults
+default_s <- sapply(balance, function(ba_lance) {
+    sum(default_ed[balance <= ba_lance])
+})
 
-# sum the rows
-row_sums <- apply(mat_rix, 1, sum)
+# perform logit regression
+log_it <- glm(
+  cbind(default_s, to_tal-default_s) ~
+    balance,
+  family=binomial(logit))
 
-# sum the columns
-col_sums <- apply(mat_rix, 2, sum)
+# summary of regression model
+summary(log_it)
 
-# change the code define a matrix of sums and original matrix
-mat_rix <- cbind(c(sum(row_sums), row_sums),
-          rbind(col_sums, mat_rix))
-dimnames(mat_rix) <- list(c("col_sums", "row1", "row2"),
-                 c("row_sums", "col1", "col2", "col3"))
+# make plot
+plot(x=balance, y=default_s/to_tal, col="orange", lwd=1,
+     main="Cumulative defaults versus balance",
+     xlab="credit balance", ylab="cumulative defaults")
 
-# print the matrix
-mat_rix
+# order the balance
+or_der <- order(balance)
+
+# make lines
+lines(x=balance[or_der], y=log_it$fitted.values[or_der],
+col="blue", lwd=2)
+
+# make legend
+legend(x="topleft", inset=0.1,
+ legend=c("cumulative defaults", "fitted values"),
+ col=c("orange", "blue"), lty=c(NA, 1), pch=c(1, NA), lwd=c(3, 3))
 ```
 
 *** =sct
 ```{r}
-success_msg("Groß!")
+success_msg("Outstanding!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:8debcc371a
-## The apply() Functional with dots "..." Argument
+## Multifactor Logistic Regression
 
-The dots "..." argument in apply() is designed to pass additional arguments to the function being called by apply(), The additional arguments to apply() must be bound by their full (complete) names.
+Logistic regression calculates the probability of categorical variables, from the Odds Ratio of continuous explanatory variables.
 
+The generic function summary() produces a list of regression model summary and diagnostic statistics: 
+
+    coeﬃcients: matrix with estimated coeﬃcients, their z-values, and p-values, 
+
+    Null deviance: measures the diﬀerences betweeen the response values and the probabilities calculated using only the intercept, 
+
+    Residual deviance: measures the diﬀerences betweeen the response values and the model probabilities.
+
+The balance and student columns are statistically signiﬁcant, but the income column is not
 
 *** =instructions
-Use `apply()` to execute function in loops with additional arguments.
+- Perform logistic regression for multifactor situation.
 
 *** =hint
-Always call data object as the first argument of apply, second arguemnt is the dimension, and function name as following arguments. More arguments can be passed as dot arguments.
+Follow the instruction and introduction. 
 
 *** =pre_exercise_code
 ```{r}
 # no pec
+library(ISLR)  # load package ISLR
+# load credit default data
+attach(Default)
+summary(Default)
+sapply(Default, class)
+dim(Default); head(Default)
+x_lim <- range(balance)
+y_lim <- range(income)
+# plot data points for non-defaulters
+default_ed <- (default=="Yes")
 ```
 
 *** =sample_code
 ```{r}
-# get list of arguments
+# get column names
 
 
-# create a matrix
-mat_rix <- matrix(sample(12), nrow=3, ncol=4)
-
-# print the code
+# make formula
 
 
-# sort matrix columns
+# fit multifactor logistic regression model
 
 
-# sort decreasing order
-
-
-# introduce NA value
-
-
-# print the matrix
-
-
-# calculate median of columns
-
-
-# calculate median of columns with na.rm=TRUE
+# model summary
 
 ```
 
 *** =solution
 ```{r}
-# get list of arguments
-str(apply)
+# get column names
+col_names <- colnames(Default)
 
-# create a matrix
-mat_rix <- matrix(sample(12), nrow=3, ncol=4)
+# make formula
+for_mula <- as.formula(paste(col_names[1], 
+  paste(col_names[-1], collapse="+"), sep=" ~ "))
 
-# print the code
-mat_rix
+# fit multifactor logistic regression model
+log_it <- glm(for_mula, data=Default, 
+        family=binomial(logit))
 
-# sort matrix columns
-apply(mat_rix, 2, sort)
-
-# sort decreasing order
-apply(mat_rix, 2, sort, decreasing=TRUE)
-
-# introduce NA value
-mat_rix[2, 2] <- NA
-
-# print the matrix
-mat_rix
-
-# calculate median of columns
-apply(mat_rix, 2, median)
-
-# calculate median of columns with na.rm=TRUE
-apply(mat_rix, 2, median, na.rm=TRUE)
+# model summary
+summary(log_it)
 ```
 
 *** =sct
 ```{r}
 success_msg("Doskonały!")
 ```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:c1a08e245c
+## Confounding Variables in Multifactor Logistic Regression
+
+The student column is a confounding variable since it’s correlated with the balance column, Students are less likely to default than non-students with the same balance, But on average students have higher balances than non-students, which makes them more likely to default, That’s why the multifactor regression coeﬃcient for student is negative, while the single factor coeﬃcient for student is positive.
+
+*** =instructions
+- Examine the confounding effects of multicollinearity in logistic regression.
+
+*** =hint
+Follow the instruction and introduction.
+
+*** =pre_exercise_code
+```{r}
+# no prec
+```
+
+*** =sample_code
+```{r}
+# load package ISLR
+
+
+# load credit default data
+
+
+# subset defaulted 
+
+
+# subset student
+
+
+# complete the code and calculate cumulative defaults
+default_s <- sapply(balance,
+  function(ba_lance) {
+    c(stu_dent=?),
+non_student=?))
+})
+
+# sum of default rate
+
+
+# scale and transpose
+
+
+# set plot panels
+
+
+# make ordered balance
+
+
+# plot cumulative defaults
+
+     
+# draw line
+
+
+# make legend
+
+
+# balance boxplot for student factor
+
+```
+
+*** =solution
+```{r}
+# load package ISLR
+library(ISLR)
+
+# load credit default data
+attach(Default)
+
+# subset defaulted 
+default_ed <- (default=="Yes")
+
+# subset student
+stu_dent <- (student=="Yes")
+
+# complete the code and calculate cumulative defaults
+default_s <- sapply(balance,
+  function(ba_lance) {
+    c(stu_dent=sum(default_ed[stu_dent & (balance <= ba_lance)]),
+non_student=sum(default_ed[(!stu_dent) & (balance <= ba_lance)]))
+})
+
+# sum of default rate
+to_tal <- c(sum(default_ed[stu_dent]), sum(default_ed[!stu_dent]))
+
+# scale and transpose
+default_s <- t(default_s / to_tal)
+
+# set plot panels
+par(mfrow=c(1,2))
+
+# make ordered balance
+or_der <- order(balance)
+
+# plot cumulative defaults
+plot(x=balance[or_der], y=default_s[or_der, 1],
+     col="red", t="l", lwd=2,
+     main="Cumulative defaults of\n students and non-students",
+     xlab="credit balance", ylab="")
+     
+# draw line
+lines(x=balance[or_der], y=default_s[or_der, 2],
+col="blue", lwd=2)
+
+# make legend
+legend(x="topleft", bty="n",
+ legend=c("students", "non-students"),
+ col=c("red", "blue"), text.col=c("red", "blue"),
+ lwd=c(3, 3))
+
+# balance boxplot for student factor
+boxplot(formula=balance ~ student,
+  col="lightgrey",
+  main="balance", xlab="student")
+```
+
+*** =sct
+```{r}
+success_msg("Multicollinearity is a headache for many regression.")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:e9ca3eeb99
+## Forecasting of Credit Defaults using Logistic Regression
+
+The function `predict()` is a generic function for forecasting based on a given model.
+
+Logistic regression calculates the probability of categorical variables, based on continuous explanatory variables.
+
+A type I error is the incorrect rejection of a TRUE case (i.e. a ”false positive”), That is, a type I error is when there is no default, but it’s classiﬁed as a default, A type II error is the incorrect acceptance of a FALSE case (i.e. a ”false negative”), That is, a type II error is when there is a default, but it’s classiﬁed as no default.
+
+A confusion matrix is a table that summarizes the performance of a classiﬁcation model on a set of test data for which the true values are known.
+
+
+*** =instructions
+- Get prediction from models you trained.
+
+*** =hint
+Follow the instruction and introductions. 
+
+*** =pre_exercise_code
+```{r}
+# no
+```
+
+*** =sample_code
+```{r}
+# fit full logistic regression model
+
+
+# run logistic model
+
+        
+# make prediction using existing model and explanatory variable
+
+
+# get length
+
+
+# look at first ten elements
+
+
+# probability threshold
+
+
+# calculate confusion matrix
+
+
+# sum up
+
+
+# random select data
+
+
+# make training dataset
+
+
+# fit logistic regression over training data
+
+
+# make training dataset
+
+
+# forecast over test data
+
+
+# calculate confusion matrix
+
+```
+
+*** =solution
+```{r}
+# fit full logistic regression model
+for_mula <- as.formula(paste(col_names[1],
+  paste(col_names[-1], collapse="+"), sep=" ~ "))
+
+# run logistic model
+log_it <- glm(for_mula, data=Default,
+        family=binomial(logit))
+        
+# make prediction using existing model and explanatory variable
+fore_casts <- predict(log_it, type="response")
+
+# get length
+length(fore_casts)
+
+# look at first ten elements
+fore_casts[1:10]
+
+# probability threshold
+thresh_old <- 0.5
+
+# calculate confusion matrix
+table((fore_casts>thresh_old), default_ed)
+
+# sum up
+sum(default_ed)
+
+# random select data
+sam_ple <- sample(x=1:NROW(Default), size=NROW(Default)/2)
+
+# make training dataset
+train_data <- Default[sam_ple, ]
+
+# fit logistic regression over training data
+log_it <- glm(for_mula, data=train_data,
+        family=binomial(link="logit"))
+
+# make training dataset
+test_data <- Default[-sam_ple, ]
+
+# forecast over test data
+fore_casts <- predict(log_it, newdata=test_data, type="response")
+
+# calculate confusion matrix
+table((fore_casts>thresh_old), test_data$default=="Yes")
+```
+
+*** =sct
+```{r}
+success_msg("Congrats on finishing your first machine learning tiny project!")
+```
+
