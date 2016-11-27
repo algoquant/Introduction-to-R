@@ -1,243 +1,29 @@
 --- 
 title_meta  : Chapter 2
-title       : R Operations
-description : In this chapter more details about R manipulation will be executed.
-attachments : 
-  slides_link: 
-  
-
---- type:NormalExercise lang:r xp:100 skills:1 key:2d1cb04427
-## Logical Operators
-
-R has the following logical operators: 
-`<` less than, 
-`<=` less than or equal to, 
-`>` greater than, 
-`>=` greater than or equal to, 
-`==` exactly equal to, 
-`!=` not equal to, 
-`!x` Not x, 
-`x & y` x AND y, 
-`x | y` x OR y, 
-
-These operators are applied to vectors element-wise.
+title       : R Objects
+description : In this chapter details about R objects will be covered.
 
 
-*** =instructions 
-Use logical operators to create, combine or negate logical vectors. 
+--- type:NormalExercise lang:r xp:100 skills:1 key:b1b1305012
+## Basic R Objects
 
-*** =hint 
-Type code as instructed in the comment.
+The quotation marks "" (or ’’) around a character string tell R that it’s a string, not a variable name.
 
-*** =pre_exercise_code
-```{r}
-# no pec
+Vectors are the basic building blocks of R objects, There are no scalars in R, and single values are stored as vectors of length "1".
 
-```
+A character string is also a vector with a single element, with the ﬁrst element of the vector containing the string of text.
 
-*** =sample_code
-```{r}
-# test the '|' operator
-TRUE | FALSE
-TRUE | NA
-
-# test the comparison operator
-vec_tor1 <- c(2, 4, 6)
-vec_tor1 < 5
-
-# combine two comparison with '&'
-(vec_tor1 < 5) & (vec_tor1 > 3)
-vec_tor1[(vec_tor1 < 5) & (vec_tor1 > 3)]
-
-# compare two vectors
-vec_tor2 <- c(-10, 0, 10)
-vec_tor1 < vec_tor2
-
-# use '&' for two different boolean vector
-c(FALSE, TRUE, FALSE) & c(TRUE, TRUE, FALSE)
-
-# now use '|' for the same two boolean vector
-
-```
-
-*** =solution
-```{r}
-# test the '|' operator
-TRUE | FALSE
-TRUE | NA
-
-# test the comparison operator
-vec_tor1 <- c(2, 4, 6)
-vec_tor1 < 5
-
-# combine two comparison with '&'
-(vec_tor1 < 5) & (vec_tor1 > 3)
-vec_tor1[(vec_tor1 < 5) & (vec_tor1 > 3)]
-
-# compare two vectors
-vec_tor2 <- c(-10, 0, 10)
-vec_tor1 < vec_tor2
-
-# use '&' for two different boolean vector
-c(FALSE, TRUE, FALSE) & c(TRUE, TRUE, FALSE)
-
-# now use '|' for the same two boolean vector
-c(FALSE, TRUE, FALSE) | c(TRUE, TRUE, FALSE)
-```
-
-*** =sct
-```{r}
-msg <- "Do not change how `vec_tor1` and `vec_tor2` are created!"
-lapply(c("vec_tor1", "vec_tor2"), test_object, undefined_msg = msg, incorrect_msg = msg)
-success_msg("Perfect! Let's explore logical operators further.")
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:c6e056b9c3
-## Long Form Logical Operators
-
-R also has two long form logical operators: 
-`x && y` x AND y, 
-`x || y` x OR y
-
-These operators diﬀer from the short form operators in two ways: 
-They only evaluate the ﬁrst elements of their vector arguments, 
-They short-circuit (stop evaluation as soon as the expression is determined).
-
-Rule of Thumb
-Use `&&` and `||` in if-clauses
-
-*** =instructions
-Use '&&' and '||' in if-clause valuation.
-
-*** =hint
-Use '&&' and '||' in if-clause valuation for two or more long objects.
-
-
-*** =pre_exercise_code
-```{r}
-```
-
-*** =sample_code
-```{r}
-# test with boolean vectors
-c(FALSE, TRUE, FALSE) && c(TRUE, TRUE, FALSE)
-c(FALSE, TRUE, FALSE) || c(TRUE, TRUE, FALSE)
-
-# test long logical operators with functions
-echo_true <- function() {cat("echo_true\t"); TRUE}
-echo_false <- function() {cat("echo_false\t"); FALSE}
-echo_true() | echo_false()
-echo_true() || echo_false()
-
-# define a new vector
-vec_tor <- c(2, 4, 6)
-
-# change the code to make sure evaluations in if-clause works with no flaw
-if (is.matrix(vec_tor) & (vec_tor[2, 3] > 0)) {
-  vec_tor[2, 3] <- 1
-}
-```
-
-*** =solution
-
-```{r}
-# test with boolean vectors
-c(FALSE, TRUE, FALSE) && c(TRUE, TRUE, FALSE)
-c(FALSE, TRUE, FALSE) || c(TRUE, TRUE, FALSE)
-
-# test long logical operators with functions
-echo_true <- function() {cat("echo_true\t"); TRUE}
-echo_false <- function() {cat("echo_false\t"); FALSE}
-echo_true() | echo_false()
-echo_true() || echo_false()
-
-# define a new vector
-vec_tor <- c(2, 4, 6)
-
-# change the code to make sure evaluations in if-clause works with no flaw
-if (is.matrix(vec_tor) && (vec_tor[2, 3] > 0)) {
-  vec_tor[2, 3] <- 1
-}
-```
-
-*** =sct
-```{r}
-test_object("vec_tor", 
-            incorrect_msg = "Don't change how `vec_tor` is defined.")
-success_msg("Very good! Now you see the long and short logical operators is quite different!")
-```
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:ebb5aae2ff
-## Arithmetic Operators
-
-Arithmetic operators perform arithmetic operations on numeric or complex vectors:
-`+` performs addition, 
-`-` performs subtraction, 
-`*` performs multiplication, 
-`/` performs division, 
-`^` and `**` perform exponentiation,
+The colon binary operator ’:’ produces a vector.
+The function c() combines objects into a vector.
+The "[1]" symbol means the return value is a vector.
+The function is.vector() returns TRUE if its argument is a vector, and returns FALSE otherwise.
 
 
 *** =instructions
-Utilize arithmetic operators to do everyday calculation.
+Try to explore different kinds of vector and make use of vector's basic operations.
 
 *** =hint
-Remember '**' and '^' are interchangeable
-
-*** =pre_exercise_code
-```{r}
-```
-
-*** =sample_code
-```{r}
-# multiplication
-4.7 * 0.5
-
-# division
-4.7 / 0.5
-
-# exponentiation
-2**3
-
-# replicate the former example using another way of exponentiation
-
-```
-
-*** =solution
-```{r}
-# multiplication
-4.7 * 0.5
-
-# division
-4.7 / 0.5
-
-# exponentiation
-2**3
-
-# replicate the former example using another way of exponentiation
-2^3
-```
-
-*** =sct
-```{r}
-success_msg("Well done!")
-```
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:5c026ed9fb
-## Comparing Objects With identical()
-
-The function identical() tests if two objects are exactly the same, and always returns a single logical TRUE or FALSE (never NA or logical vectors).
-For atomic arguments identical() often gives the same result as the "==" operator, but it’s not synonymous with it in general.
-The "==" operator applies the recycling rule to vector arguments and returns logical vectors, but identical() doesn’t and returns a single logical value.
-
-
-*** =instructions
-Compare the return value of `==` and `identical()`
-
-*** =hint
-Use `==` instead of `identical`
+Check if object names and function names are correctly typed.
 
 *** =pre_exercise_code
 ```{r}
@@ -246,588 +32,1337 @@ Use `==` instead of `identical`
 
 *** =sample_code
 ```{r}
-# compare with atomic object
-num_var <- 2
-num_var==2
-identical(num_var, 2)
+# create a character vector
+vec_char <- "some string"
 
-# compare with null
-identical(num_var, NULL)
-num_var==NULL
+# check if the single character is a vector
 
-# compare with different vector
-var_num <- 1:5
-var_char <- letters[1:5]
-identical(var_num, var_char)
 
-# use '==' and see results
+# subset to get the first and second element of the vector
+
+
+# create a numeric vector
+vec_num <- 1:10
+
+# check if the vec_num is a vector
+
+
+# subset to get the second and third element of vec_num
+
+
+# now use c() to combine vec_char and vec_num and create vec_c
+vec_c <- c(vec_char, vec_num)
+
+# check if vec_c is a vector
+
+
+# print the second element of vec_c
 
 ```
 
 *** =solution
 ```{r}
-# compare with atomic object
-num_var <- 2
-num_var==2
-identical(num_var, 2)
+# create a character vector
+vec_char <- "some string"
 
-# compare with null
-identical(num_var, NULL)
-num_var==NULL
+# check if the single character is a vector
+is.vector(vec_char)
 
-# compare with different vector
-var_num <- 1:5
-var_char <- letters[1:5]
-identical(var_num, var_char)
+# subset to get the first and second element of the vector
+vec_char[1]
+vec_char[2]
 
-# use '==' and see results
-var_num == var_char
+# create a numeric vector
+vec_num <- 1:10
+
+# check if the vec_num is a vector
+is.vector(vec_num)
+
+# subset to get the second and third element of vec_num
+vec_num[2]
+vec_num[3]
+
+# now use c() to combine vec_char and vec_num and create vec_c
+vec_c <- c(vec_char, vec_num)
+
+# check if vec_c is a vector
+is.vector(vec_c)
+
+# print the second element of vec_c
+vec_c[2]
 ```
+
 
 *** =sct
 ```{r}
-msg <- "Do not change the values of defined vector; they were already coded for you."
-test_object("num_var", incorrect_msg = sprintf(msg, "num_var"))
-test_object("var_num", incorrect_msg = sprintf(msg, "var_num"))
-test_object("var_char", incorrect_msg = sprintf(msg, "var_char"))
-success_msg("Nice one! Now you see how to compare in various ways.")
+test_error()
+msg <- "Do not remove or change the definition of the variable `vec_num`."
+test_object("vec_num", undefined_msg = msg, incorrect_msg = msg)
+success_msg("Great!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:05697caf6a
+## Character Strings
+
+Character strings are sequences of characters (and vectors of length one), The function nchar() returns the length of a string.
+
+Special characters in strings: 
+"\t" for TAB, "\n" for new-line, 
+”\\” for a (single) backslash character
+
+The function cat() concatenates strings and echos them to console, without returning any values
+The function cat() is useful in user-deﬁned functions.
+
+
+*** =instructions
+Explore characters and strings with functions and basic features. Learn to use `length()` and `nchar()`
+
+*** =hint
+Check if object names and function names are correctly typed. Don't miss any variables or functions!
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# create a character string
+str_var <- "Some string"
+
+# print the entire vector and its second element
+
+
+# get the length of vector and string
+
+
+# concatenate and echo to console
+cat("Hello", "World!")
+
+# use \n to start a new line when concatenating
+
+```
+
+*** =solution
+```{r}
+# create a character string
+str_var <- "Some string"
+
+# print the entire vector and its second element
+str_var
+str_var[1]
+
+# get the length of vector and string
+length(str_var)
+nchar(str_var)
+
+# concatenate and echo to console
+cat("Hello", "World!")
+
+# use \n to start a new line when concatenating
+cat("Enter\nnewline")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:6b17fc50b9
-## Lookup and Matching
+*** =sct
+```{r}
+test_error()
+msg <- "Do not remove or change the definition of the variable `str_var`."
+test_object("str_var", undefined_msg = msg, incorrect_msg = msg)
+success_msg("Excellent!")
+```
 
+--- type:NormalExercise lang:r xp:100 skills:1 key:b99299073f
+## Manipulating Strings
+
+The function paste() concatenates its arguments into a string, coerces them to characters if needed, and returns the string.
+If a vector or list is passed to paste(), together with a collapse string, then paste() concatenates the elements into a string, separated by the collapse string.
+The function strsplit() splits the elements of a character vector.
+Splitting on the "." character requires surrounding it with brackets: "[.]", or using argument fixed=TRUE.
+The function substring() extracts or replaces substrings in a character string, The recycling rule extends the length to match the longest object.
+
+*** =instructions
+Use functions to manipulate strings. Learn to use `paste()`, `strsplit()`, `substring()`
+
+*** =hint
+Check if object names and function names are correctly typed. Don't miss the square bracket!
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# create two character string
+str_var1 <- "Hello"
+str_var2 <- "World!"
+
+# concatenate the two strings and return value
+
+
+# create a character string and a numeric vector
+str_var3 <- "a"
+num_var <- 1:4
+
+# convert, recycle and concatenate
+
+
+# create a new string
+hello <- "Hello.World"
+
+# split string on "[.]"
+
+
+# extract characters from 3 to 6
+
+```
+
+*** =solution
+```{r}
+# create two character string
+str_var1 <- "Hello"
+str_var2 <- "World!"
+
+# concatenate the two strings and return value
+paste(str_var1, str_var2, sep=' ')
+
+# create a character string and a numeric vector
+str_var3 <- "a"
+num_var <- 1:4
+
+# convert, recycle and concatenate
+paste(str_var3, num_var, sep = ",")
+
+# create a new string
+hello <- "Hello.World"
+
+# split string on "[.]"
+strsplit(hello, split = "[.]")
+
+# extract characters from 3 to 6
+substring(hello, 3, 6)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Excellent!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:ab03e239aa
+## Regular Expressions in R
+
+R has Regex functions for pattern matching and replacement.
+
+The function gsub() replaces all matches of a pattern in a string.
+The function grep() searches for matches of a pattern in a string.
+The function glob2rx() converts globbing wildcard patterns into regular expressions.
+
+*** =instructions
+Use functions to manipulate strings.
+
+*** =hint
+Check if object names and function names are correctly typed. Don't forget to use "i+" instead of "i"
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+my_string <- c("is", "XX", "is this gratis?")
+# replace "is" with "XX"
+
+
+# get indexes of elements in a vector that contains certain string
+grep("b+", c("abc", "xyz", "cba d", "bbb"))
+
+# change from the code above to return elements instead of index number
+
+
+# convert globs into regex (regular expression)
+glob2rx("abc.*")
+
+# get the index of elements that contain character "i+" in my_string
+
+
+# convert my_string to regex
+
+```
+
+*** =solution
+```{r}
+my_string <- c("is", "XX", "is this gratis?")
+# replace "is" with "XX"
+gsub("is", "XX", my_string)
+
+# get indexes of elements in a vector that contains certain string
+grep("b+", c("abc", "xyz", "cba d", "bbb"))
+
+# change from the code above to return elements instead of index number
+grep("b+", c("abc", "xyz", "cba d", "bbb"), value=TRUE)
+
+# convert globs into regex (regular expression)
+glob2rx("abc.*")
+
+# get the index of elements that contain character "i+" in my_string
+grep("i+", my_string)
+
+# convert my_string to regex
+glob2rx(my_string)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Remember to look at what's popped up in the console")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:540b8c57a5
+## Vectors
+
+Vectors are the basic building blocks of R objects.
+
+For a brief review, we already know that:
+There are no scalars in R, and single values are stored as vectors of length "1"
+The function c() combines values into a vector
+The function is.vector() returns TRUE if its argument is a vector, and returns FALSE otherwise
+
+Beside, we need to knwo that the object letters is a constant and a vector.
+
+To create a vector, R provides several way to do it:
+1) The colon operator (":") provides a simple way of creating a numeric vector
+2) The function vector() returns a vector of the speciﬁed mode
+3) The functions seq(), seq_len(), and seq_along() return a sequence (vector) of numbers
+4) The function rep() replicates an object multiple times
+5) The functions numeric() and character() return empty (zero length) vectors of the speciﬁed type (not to be confused with a NULL object)
+6) Zero length vectors are not NULL objects,
+
+
+*** =instructions
+Use mentioned functions to create vector.
+
+*** =hint
+Check if object names and function names are correctly typed. Use "by=" instead of "len=".
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# create vectors from 1 to 10 using ":"
+1:10
+
+# create numeric vector of length 10 using `vector()`
+vector(mode = "numeric", length = 10)
+
+# create a vector containing five number `10`
+rep(10, times = 5)
+
+# create a vector of sequence from 1 to 10
+seq(10)
+
+# create a vector of sequence along -5:5
+seq(along=(-5:5))
+
+# create a vector of sequence along c("a", "b", "c")
+seq_along(c("a", "b", "c"))
+
+# create a vector of decimals from 0 to 1 containing 11 elements
+seq(from=0, to=1, len=11)
+
+# create empty character vector of length 5
+character(5)
+
+# create empty vector of numerics of length 0
+numeric(0)
+```
+
+*** =solution
+```{r}
+# create vectors from 1 to 10 using ":"
+1:10
+
+# create numeric vector of length 10 using `vector()`
+vector(mode = "numeric", length = 10)
+
+# create a vector containing five number `10`
+rep(10, times = 5)
+
+# create a vector of sequence from 1 to 10
+seq(10)
+
+# create a vector of sequence along -5:5
+seq(along=(-5:5))
+
+# create a vector of sequence along c("a", "b", "c")
+seq_along(c("a", "b", "c"))
+
+# create a vector of decimals from 0 to 1 containing 11 elements
+seq(from=0, to=1, len=11)
+
+# create empty character vector of length 5
+character(5)
+
+# create empty vector of numerics of length 0
+numeric(0)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("See? Empty vector with zero length is not equal to NULL!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:5a2dc65a8a
+## Arithmetic and Logical Operations on Vectors
+
+Vectors can be multiplied and squared element by element, as if they were single elements.
+
+When vectors are manipulated as if they were single elements, then R automatically performs a loop over the vector elements, and applies the operation element-wise. This is a very powerful feature of R called vectorized arithmetic. Vectorized arithmetic avoids writing loops and simpliﬁes notation.
+
+Vectors can be combined together and appended.
+
+*** =instructions
+Use mentioned functions to conduct vector arithmetic and logical operation.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# multiply the vector 4:8 by 2 without bracket
+
+
+# multiply the vector 4:8 by 2 with bracket
+
+
+# divide the vector 4:8 by 2
+
+
+# create vector
+vec_tor <- c(8, 6, 5, 7)
+
+# boolean vector TRUE if element is equal to second one
+
+
+# boolean vector TRUE for elements greater than six
+
+
+# append number 2.0 to vector
+
+```
+
+*** =solution
+```{r}
+# multiply the vector 4:8 by 2 without bracket
+2*4:8
+
+# multiply the vector 4:8 by 2 with bracket
+2*(4:8)
+
+# divide the vector 4:8 by 2
+4:8/2
+
+# create vector
+vec_tor <- c(8, 6, 5, 7)
+
+# boolean vector TRUE if element is equal to second one
+vec_tor == vec_tor[2]
+
+# boolean vector TRUE for elements greater than six
+vec_tor > 6
+
+# append number 2.0 to vector
+c(vec_tor, 2.0)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Beautiful! Appreciate results in the console!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:2635635720
+## Naming and Manipulating Vectors
+
+Vector elements can be assigned names using a list of symbol-value pairs.
+The function names() returns the names attribute of an object.
+The names attribute of a vector can be modiﬁed by assigning to the names() function (”names() <-” assignment).
+The function unname() removes the names attribute.
+The function structure() adds attributes (speciﬁed as symbol=value pairs) to an object, and returns it,
+
+*** =instructions
+Use names() to get names and assign names. Also learn to use structure() to assign names to a vector.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# create named vector
+vec_tor <- c(pi_const=pi, euler=exp(1), gamma=-digamma(1))
+
+# get names of elements
+
+
+# remove names attribute
+
+
+# combine two vectors of letters
+
+
+# create named vector using structure, names are recycled from 'el1' to 'el5'
+structure(sample(1:5), names=paste0("el", 1:5))
+
+# now try to assign 1:3 to names of vec_tor
+
+
+# print out vec_tor
+
+```
+
+*** =solution
+```{r}
+# create named vector
+vec_tor <- c(pi_const=pi, euler=exp(1), gamma=-digamma(1))
+
+# get names of elements
+names(vec_tor)
+
+# remove names attribute
+unname(vec_tor)
+
+# combine two vectors of letters
+c('a', letters[5:10])
+
+# create named vector using structure
+structure(sample(1:5), names=paste0("el", 1:5))
+
+# now try to assign 1:3 to names of vec_tor
+names(vec_tor) <- 1:3
+
+# print out vec_tor
+vec_tor
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Now you can name a vector with names() and structure() methods!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:e2b1d979f4
+## Subsetting Vectors
+
+Vector elements can be subset (indexed, dereferenced) using the "[]" operator.
+
+Vectors can be subset using vectors of:
+positive integers, 
+negative integers, 
+characters (names),
+boolean vectors. 
+
+Negative integers remove the vector elements.
+Subsetting with zero returns a zero-length vector.
+A named vector can be subset using element names.
+
+*** =instructions
+Vec_tor has been recreated in this exercise. 
+Use "[]" combined with integers, characters and boolean vectors to subset a vector.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+vec_tor <- c(pi_const=pi, euler=exp(1), gamma=-digamma(1))
+```
+
+*** =sample_code
+```{r}
+# extract second element
+
+
+# extract all elements, except the second element
+
+
+# extract zero elements - returns zero-length vector
+
+
+# extract second and third elements by boolean vector
+
+
+# extract a element using its name "eulery"
+
+
+# extract multiple elements using a vector of their names
+
+
+# now create a boolean vector comparing vec_tor to 2, name it as "bool"
+bool <- vec_tor > 2
+
+# subset vec_tor with bool to see which element is bigger than 2
+
+```
+
+*** =solution
+```{r}
+# extract second element
+vec_tor[2]
+
+# extract all elements, except the second element
+vec_tor[-2]
+
+# extract zero elements - returns zero-length vector
+vec_tor[0]
+
+# extract second and third elements by boolean vector
+vec_tor[c(FALSE, TRUE, TRUE)]
+
+# extract a element using its name "eulery"
+vec_tor["eulery"]
+
+# extract multiple elements using a vector of their names
+vec_tor[c("pie", "gammy")]
+
+# now create a boolean vector comparing vec_tor to 2, name it as "bool"
+bool <- vec_tor > 2
+
+# subset vec_tor with bool to see which element is bigger than 2
+vec_tor[bool]
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("The subsetting provides support for filtering")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:47e9ca9b81
+## Filtering Vectors
+
+Filtering means extracting elements from a vector that satisfy a logical condition.
+When logical comparison operators are applied to vectors, they produce boolean vectors.
+Boolean vectors can then be applied to subset the original vectors, to extract their elements.
 The function which() returns the indices of the TRUE elements of a boolean vector or array.
-If the argument is an array and arr.ind=TRUE, then which() returns a matrix with rows containing the indices of the TRUE elements.
-The functions which.max() and which.min() return the index of the minimum or maximum of a numeric or boolean vector.
 
 
 *** =instructions
-- Use which.max() to search for the maximum value
+Vec_tor has been recreated in this exercise. 
+Use "[]"  or "which()" to filter vector elements.
 
 *** =hint
-Similar to the previous codes, use which.max() on desired object, like the latter example.
+Check if object names and function names are correctly typed.
 
 *** =pre_exercise_code
 ```{r}
-# no pec
+vec_tor <- runif(5)
 ```
 
 *** =sample_code
 ```{r}
-# create a vector and a matrix
-vec_tor <- sample(1:9)
-mat_rix <- matrix(vec_tor, ncol=3)
+# first, print the vec_tor
+
+
+# compare vec_tor to 0.5
+
+
+# boolean vector of elements equal to the second one
+
+
+# extract all elements equal to the second one
+
+
+# extract all elements greater than 0.5
+
+
+# get index of elements > 0.5
+
+
+# combine which() and "[]" to extract elements greater than 0.5
+
+```
+
+*** =solution
+```{r}
+# first, print the vec_tor
 vec_tor
 
-# search the vector for particular value
-which(vec_tor == 5)
+# compare vec_tor to 0.5
+vec_tor > 0.5
 
-# equivalent but less efficient than above
-(1:length(vec_tor))[vec_tor == 5]
+# boolean vector of elements equal to the second one
+vec_tor == vec_tor[2]
 
-# find indices of TRUE elements of boolean matrix
-which((mat_rix == 5)|(mat_rix == 6), arr.ind=TRUE)
+# extract all elements equal to the second one
+vec_tor[vec_tor == vec_tor[2]]
 
-# equivalent but less efficient than above
-arrayInd(which((mat_rix == 5)|(mat_rix == 6)),
- dim(mat_rix), dimnames(mat_rix))
+# extract all elements greater than 0.5
+vec_tor[vec_tor > 0.5]
 
-# find the maximum of a vector
+# get index of elements > 0.5
+which(vec_tor > 0.5)
 
-
-# equivalent but less efficient than above
-which(vec_tor == max(vec_tor))
+# combine which() and "[]" to extract elements greater than 0.5
+vec_tor[which(vec_tor > 0.5)]
 ```
 
-*** =solution
-```{r}
-# create a vector and a matrix
-vec_tor <- sample(1:9)
-mat_rix <- matrix(vec_tor, ncol=3)
-vec_tor
-
-# search the vector for particular value
-which(vec_tor == 5)
-
-# equivalent but less efficient than above
-(1:length(vec_tor))[vec_tor == 5]
-
-# find indices of TRUE elements of boolean matrix
-which((mat_rix == 5)|(mat_rix == 6), arr.ind=TRUE)
-
-# equivalent but less efficient than above
-arrayInd(which((mat_rix == 5)|(mat_rix == 6)), dim(mat_rix), dimnames(mat_rix))
-
-# find the maximum of a vector
-which.max(vec_tor)
-
-# equivalent but less efficient than above
-which(vec_tor == max(vec_tor))
-```
 
 *** =sct
 ```{r}
-msg = "Do not change anything about the definition and naming of `vec_tor` and `mat_rix`."
-test_object("vec_tor", undefined_msg = msg, incorrect_msg = msg)
-test_object("mat_rix", undefined_msg = msg, incorrect_msg = msg)
-success_msg("Great! Continue to the next exercise.")
+test_error()
+success_msg("Now you can filter a vector with '[]' and which()!")
 ```
 
+--- type:NormalExercise lang:r xp:100 skills:1 key:ab3a8365ff
+## Factors
 
---- type:NormalExercise lang:r xp:100 skills:1 key:a9a1a50a31
-## Lookup and Matching (cont.)
+Factors are similar to vectors, but their elements can only take values from a set of levels.
+Factors are designed for categorical data which can only take certain values.
 
-match() returns the index of the ﬁrst element of its second argument, that matches its ﬁrst argument.
-
-The binary operator %in% returns a boolean vector with TRUE values corresponding to elements that have matches, %in% is a wrapper for match() deﬁned as follows:
-"%in%" <- function(x, table) match(x, table, nomatch=0) > 0, %in% never returns NA, so it’s preferred in if () statements, any() returns TRUE if at least one element of a boolean vector is TRUE, and FALSE otherwise.
-
-Given a single argument, any() is equivalent to %in%, but is much faster because it’s a compiled function.
-
+The function factor() converts a vector into a factor, Factors have two attributes: class (equal to "factor") and levels (the allowed values).
+Although factors aren’t vectors, the data underlying a factor is an integer vector, called an encoding vector.
+The function as.numeric() extracts the encoding vector (indices) of a factor.
+The function as.vector() coerces a factor to a character vector.
 
 *** =instructions
-- Learn to use `match()` on objects
-- Learn to use `%in%` on objects
+Create factors with factor(). 
+See attributes of factor using attributes() and levels().
+Coerce factor using as.numeric() and as.vector().
 
 *** =hint
-For comparing two values to one vector, you can group values into one vector, and use 'match' or '%in%' to the vector you want to check.
+Check if object names and function names are correctly typed.
 
 *** =pre_exercise_code
 ```{r}
-vec_tor <- sample(1:9)
+fac_tor <- factor(c('b', 'c', 'd', 'a', 'c', 'b'))
 ```
 
 *** =sample_code
 ```{r}
-# search in a different way with match()
-match(-5, vec_tor)
+# print the factor vector 'fac_tor'
+fac_tor
 
-# use '%in%' operator to see if some value is in the vector
-5 %in% vec_tor
-
-# equivalent to above
-match(5, vec_tor, nomatch=0) > 0
-
-# search for a value not in the vector
--5 %in% vec_tor
-
-# now try to see -5 and 5 are in the vec_tor
+# subset fac_tor for the third element
 
 
-# equivalent to the previous
-any(vec_tor == 5)
+# get factor attributes
 
-# change the content in the if-clause to see if any negative value in vec_tor
-if (any(vec_tor)) cat("vector contains negative values\n")
+
+# get factor levels
+
+
+# get encoding vector
+
+
+# coerce factor to character vector
+
 ```
 
 *** =solution
 ```{r}
-# search in a different way with match()
-match(-5, vec_tor)
+# print the factor vector 'fac_tor'
+fac_tor
 
-# use '%in%' operator to see if some value is in the vector
-5 %in% vec_tor
+# subset fac_tor for the third element
+fac_tor[3]
 
-# equivalent to above
-match(5, vec_tor, nomatch=0) > 0
+# get factor attributes
+attributes(fac_tor)
 
-# search for a value not in the vector
--5 %in% vec_tor
+# get factor levels
+levels(fac_tor)
 
-# now try to see -5 and 5 are in the vec_tor
-c(5, -5) %in% vec_tor
+# get encoding vector
+as.numeric(fac_tor)
 
-# equivalent to the previous
-any(vec_tor == 5)
-
-# change the content in the if-clause to see if any negative value in vec_tor
-if (any(vec_tor < 0)) cat("vector contains negative values\n")
+# coerce factor to character vector
+as.vector(factor(1:5))
 ```
+
 
 *** =sct
 ```{r}
-msg <- "Do not change anything about the definition and naming of `vec_tor`."
-test_object("vec_tor", undefined_msg = msg, incorrect_msg = msg)
-success_msg("Oops, it seems like you are losing money. Time to rethink and adapt your strategy! This will require some deeper analysis...")
+test_error()
+success_msg("See! The numeric vector turned to be a character vector!")
 ```
 
 
---- type:VideoExercise lang:r xp:50 skills:1 key:513029f4ac
-## Vector Subsetting
+--- type:NormalExercise lang:r xp:100 skills:1 key:771f2e9f50
+## Tables of Categorical Data
 
-*** =video_link
-//player.vimeo.com/video/138173916
+The function table() calculates the frequency distribution of categorical data.
+A contingency table is a matrix that contains the frequency distribution of variables (factors) contained in a set of data, sapply() applies a function to a vector or a list of objects and returns a vector or a list,
 
-*** =video_hls
-//videos.datacamp.com/transcoded/732_intro_to_r/v1/hls-ch2_3.master.m3u8
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:6112e74425
-## Selection by index (1)
-
-After you figured that roulette is not your forte, you decide to compare your performance at the beginning of the week to your performance at the end of the week. You did have a couple of Margarita cocktails at the end of the week...
-
-To answer that question, you only want to focus on a selection of the `total_vector`. In other words, our goal is to select specific elements of the vector.
 
 *** =instructions
-- Assign the poker results of Wednesday to the variable `poker_wednesday`.
-- Assign the roulette results of Friday to the variable `roulette_friday`.
+Use functions and variables as insturcted in the comment.
 
 *** =hint
-Wednesday is the third element of `poker_vector`, and can thus be selected with `poker_vector[3]`.
+Check if object names and function names are correctly typed.
 
 *** =pre_exercise_code
 ```{r}
-# no pec
+fac_tor <- factor(c('b', 'c', 'd', 'a', 'c', 'b'))
 ```
 
 *** =sample_code
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# have a look at the factor vector
+fac_tor
 
-# Poker results of Wednesday: poker_wednesday
+# get encoding vector
 
 
-# Roulette results of Friday: roulette_friday
-
-```
-
-*** =solution
-```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
-
-# Poker results of Wednesday: poker_wednesday
-poker_wednesday <- poker_vector[3]
-
-# Roulette results of Friday: roulette_friday
-roulette_friday <- roulette_vector[5]
-```
-
-*** =sct
-```{r}
-
-msg = "Do not change anything about the definition and naming of `poker_vector` and `roulette_vector`."
-test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("poker_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("roulette_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("poker_wednesday",
-            incorrect_msg = "It looks like `poker_wednesday` does not contain the correct value of `poker_vector`.")
-test_object("roulette_friday",
-            incorrect_msg = "It looks like `roulette_friday` does not contain the correct value of `roulette_vector`.")
-success_msg("Great! R also makes it possible to select multiple elements from a vector at once, remember? Put the theory to practice in the next exercise!")
-```
+# get unique values
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:ae2832fbd1
-## Selection by index (2) 
+# change the code below to get contingency table
+sapply(fac_tor, 
+ function(le_vel) {
+   sum(fac_tor=le_vel)
+ })
 
-How about analyzing your midweek results? 
-
-Instead of using a single number to select a single element, you can also select multiple elements by passing a vector inside the square brackets. For example,
-
-```
-poker_vector[c(1,5)]
-```
-
-selects the first and the fifth element of `poker_vector`.
-
-
-*** =instructions
-- Assign the poker results of Tuesday, Wednesday and Thursday to the variable `poker_midweek`.
-- Assign the roulette results of Thursday and Friday to the variable `roulette_endweek`.
-
-*** =hint
-Use the vector `c(2,3,4)` between square brackets to select the correct elements of `poker_vector`.
-
-*** =pre_exercise_code
-```{r}
-# no pec
-``` 
-
-*** =sample_code
-```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
-
-# Mid-week poker results: poker_midweek
-
-
-# End-of-week roulette results: roulette_endweek
-
+# get contingency (frequency) table
 
 ```
 
 *** =solution
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# have a look at the factor vector
+fac_tor
 
-# Mid-week poker results: poker_midweek
-poker_midweek <- poker_vector[c(2, 3, 4)]
+# get encoding vector
+as.numeric(fac_tor)
 
-# End-of-week roulette results: roulette_endweek
-roulette_endweek <- roulette_vector[c(4,5)]
+# get unique values
+unique(fac_tor)
+
+# change the code below to get contingency table using sapply 
+sapply(levels(fac_tor), 
+ function(le_vel) {
+   sum(fac_tor==le_vel)
+ })
+
+# get contingency (frequency) table
+table(fac_tor)
 ```
+
 
 *** =sct
 ```{r}
-msg <- "Do not change anything about the definition and naming of `poker_vector` and `roulette_vector`."
-test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("poker_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("roulette_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-
-msg <- "It looks like `%s` does not contain the correct elements from `%s`."
-test_object("poker_midweek", 
-            incorrect_msg = sprintf(msg, "poker_midweek", "poker_vector"))
-test_object("roulette_endweek",
-            incorrect_msg = sprintf(msg, "roulette_endweek", "roulette_vector"))
-
-success_msg("Well done! Another way to find the mid-week results is `poker_vector[2:4]`. Continue to the next exercise to specialize in vector selection some more!");
+test_error()
+success_msg("Compared the results you get with sapply() and table()")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:5919f3fc05
-## Selection by name
+--- type:NormalExercise lang:r xp:100 skills:1 key:748763cc09
+## Classifying Continuous Numeric Data Into Categories
 
-Another way to tackle the previous exercise is by using the names of the vector elements (Monday, Tuesday, ...) instead of their numeric positions. For example, 
+Numeric data that represents a magnitude, intensity, or score can be classiﬁed into categorical data, given a vector of breakpoints.
 
-```
-poker_vector["Monday"]
-```
+The breakpoints create intervals that correspond to diﬀerent categories.
 
-will select the first element of `poker_vector` since `"Monday"` is the name of that first element.
+The categories combine elements that have a similar numeric magnitude, findInterval() returns the indices of the intervals speciﬁed by "vec" that contain the elements of "x".
+If there’s an exact match, then findInterval() returns the same index as function match().
+If there’s no exact match, then findInterval() ﬁnds the element of "vec" that is closest to, but not greater than, the element of "x".
+If all the elements of "vec" are greater than the element of "x", then findInterval() returns zero,
+
 
 *** =instructions
-- Select the fourth element, corresponding to Thursday, from `roulette_vector`. Name it `roulette_thursday`.
-- Select Tuesday's poker gains using subsetting by name. Assign the result to `poker_tuesday`.
+Use functions and variables as insturcted in the comment.
 
 *** =hint
-You can use `mean(my_vector)` to get the mean of the vector `my_vector`.
+Check if object names and function names are correctly typed.
 
 *** =pre_exercise_code
 ```{r}
-# no pec
+# none
 ```
 
 *** =sample_code
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# see how we can tweak the outcome findInterval() function with five parameters
+str(findInterval)
 
-# Select Thursday's roulette gains: roulette_thursday
+# get index of the element of "vec" c(3,5,7) that matches 5
 
 
-# Select Tuesday's poker gains: poker_tuesday
+# use match()
+
+
+# no exact match
+
+
+# use match()
+
+
+# indices of "vec" that match elements of "x"
+
+
+# return only indices of inside intervals
+
+
+# make rightmost interval inclusive
 
 ```
 
 *** =solution
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# see how we can tweak the outcome findInterval() function with five parameters
+str(findInterval)
 
-# Select Thursday's roulette gains: roulette_thursday
-roulette_thursday <- roulette_vector["Thursday"]
+# get index of the element of "vec" c(3,5,7) that matches 5
+findInterval(x=5, vec=c(3, 5, 7))
 
-# Select Tuesday's poker gains: poker_tuesday
-poker_tuesday <- poker_vector["Tuesday"]
+# use match()
+match(5, c(3, 5, 7))
+
+# no exact match
+findInterval(x=6, vec=c(3, 5, 7))
+
+# use match()
+match(6, c(3, 5, 7))
+
+# indices of "vec" that match elements of "x"
+findInterval(x=1:8, vec=c(3, 5, 7))
+
+# return only indices of inside intervals
+findInterval(x=1:8, vec=c(3, 5, 7), all.inside=TRUE)
+
+# make rightmost interval inclusive
+findInterval(x=1:8, vec=c(3, 5, 7), rightmost.closed=TRUE)
 ```
+
 
 *** =sct
 ```{r}
-msg <- "Do not change anything about the definition and naming of `poker_vector` and `roulette_vector`."
-test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("poker_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("roulette_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-
-test_object("roulette_thursday")
-test_object("poker_tuesday")
-success_msg("Good job! Head over to the next exercise.");
+test_error()
+success_msg("Congrats! This is the very first step in dividing continuous values")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1 key:22121c6c46
-## Selection by logicals (1)
+--- type:NormalExercise lang:r xp:100 skills:1 key:91aa35a650
+## Classifying Continuous Numeric Data Into Categories, Continued
 
-There are basically three ways to subset vectors: by using the indices, by using the names (if the vectors are named) and by using logical vectors. Filip already told you about the internals in the instructional video. As a refresher, have a look at the following statements to select elements from `poker_vector`, which are all equivalent:
+Temperature can be categorized into ”cold”, ”warm”, ”hot”, etc. 
+A named numeric vector of breakpoints can be used to convert a temperature into one of the categories.
+Breakpoints correspond to categories of the data.
+The ﬁrst breakpoint should correspond to the lowest category, and should have a value less than any of the data.
 
-```
-# selection by index
-poker_vector[c(1,3)]
-
-# selection by name
-poker_vector[c("Monday", "Wednesday")]
-
-# selection by logicals
-poker_vector[c(TRUE, FALSE, TRUE, FALSE, FALSE)]
-```
 
 *** =instructions
-- Assign the roulette results from the first, third and fifth day to `roulette_subset`.
-- Select the first three days from `poker_vector` using a vector of logicals. Assign the result to `poker_start`.
+Use functions and variables as insturcted in the comment.
 
 *** =hint
-The logical vector to use inside square brackets for the first instruction is `c(TRUE, FALSE, TRUE, FALSE, TRUE)`.
+Check if object names and function names are correctly typed.
 
 *** =pre_exercise_code
 ```{r}
-# no pec
+# none
 ```
 
 *** =sample_code
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# creat named numeric vector of breakpoints
+brea_ks <- c("freezing"=0, "very_cold"=30,
+       "cold"=50, "pleasant"=60,
+       "warm"=80, "hot"=90)
 
-# Roulette results for day 1, 3 and 5: roulette_subset
+# print out the breakpoints vector
+brea_ks
 
-  
-# Poker results for first three days: poker_start
+# create a vector of temperatures
+tempe_ratures <- runif(10, min=10, max=100)
+
+# change the code to name values according to breakpoints
+feels_like <- names(
+  brea_ks,findInterval(x=tempe_ratures,
+                 vec=brea_ks))
+
+names(tempe_ratures) <- feels_like
+
+# print the categorized vector
+
 ```
 
 *** =solution
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# creat named numeric vector of breakpoints
+brea_ks <- c("freezing"=0, "very_cold"=30,
+       "cold"=50, "pleasant"=60,
+       "warm"=80, "hot"=90)
 
-# Roulette relsults for day 1, 3 and 5: roulette_subset
-roulette_subset <- roulette_vector[c(TRUE, FALSE, TRUE, FALSE, TRUE)]
-  
-# Poker results for first three days: poker_start
-poker_start <- poker_vector[c(TRUE, TRUE, TRUE, FALSE, FALSE)]
+# print out the breakpoints vector
+brea_ks
+
+# create a vector of temperatures
+tempe_ratures <- runif(10, min=10, max=100)
+
+# change the code to name values according to breakpoints
+feels_like <- names(
+  brea_ks[findInterval(x=tempe_ratures,
+                 vec=brea_ks)])
+
+names(tempe_ratures) <- feels_like
+
+# print the categorized vector
+tempe_ratures
 ```
+
 
 *** =sct
 ```{r}
-msg = "Do not change anything about the definition and naming of `poker_vector` and `roulette_vector`."
-test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("poker_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("roulette_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("roulette_subset")
-test_object("poker_start")
-success_msg("Nice one! Using logical vectors to perform subsetting might seem somewhat tedious, but its true power will become clear in the next exercise!")
+test_error()
+success_msg("Congrats! This is the your first value categorization results!")
 ```
 
 
---- type:NormalExercise lang:r xp:100 skills:1 key:aa2e5f6e97
-## Selection by logicals (2)
+--- type:NormalExercise lang:r xp:100 skills:1 key:ca09ff3670
+## Converting Numeric Data Into Factors Using cut()
 
-By making use of a combination of comparison operators and subsetting using logicals, you can investigate your casino performance in a more pro-active way.
+The function cut() converts a numeric vector into a vector of factors, representing the intervals to which the numeric values belong, cut() divides the range of values into intervals, based on a vector of breaks, cut() then assigns factors to the numeric values, representing the intervals to which the numeric values belong. 
+The argument "breaks" is a numeric vector of break points that divide the range of values into intervals.
+The argument "labels" is a vector of labels for the intervals.
+The argument "right" is a boolean indicating if the intervals should be closed on the right (and open on the left), or vice versa, cut() can produce the same classiﬁcation as findInterval(), but findInterval() is faster than cut(), because it’s a compiled function,
 
-The (logical) comparison operators known to R are:
-- `<` for less than
-- `>` for greater than
-- `<=` for less than or equal to
-- `>=` for greater than or equal to
-- `==` for equal to each other
-- `!=` not equal to each other
-
-Experiment with these operators in the console:
-
-```
-lost_roulette_days <- roulette_vector < 0
-lost_roulette_days
-```
-
-The result will be a logical vector, which you can use to perform subsetting, like this example:
-
-```
-roulette_vector[lost_roulette_days]
-```
-
-The result is a subset of `roulette_vector` that contains only your losses in roulette.
+The library microbenchmark is already loaded to the environment
 
 *** =instructions
-- Check if your poker winnings are positive on the different days of the week (i.e. > 0), and assign this to `selection_vector`.
-- Assign the amounts that you won on the profitable days to the variable `poker_profits` by using `selection_vector`.
+Use functions and variables as insturcted in the comment.
 
 *** =hint
-- In order to check for which days your poker gains are positive, R should check for each element of `poker_vector` whether it is larger than zero. `some_vector > 0` is the way to tell R what you are after.
-- After creating `selection_vector`, you can use it to subset `poker_vector` like this: `poker_vector[selection_vector]`.
+Check if object names and function names are correctly typed.
 
 *** =pre_exercise_code
 ```{r}
-# no pec
+library(microbenchmark)
 ```
 
 *** =sample_code
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# create a vector of random value
+foo <- sample(0:6) + 0.1
 
-# Create logical vector corresponding to profitable poker days: selection_vector
+# print the vector foo
 
 
-# Select amounts for profitable poker days: poker_profits
- 
+# use cut to vector
+cut(x=foo, breaks=c(2, 4, 6, 8))
+
+# bind the cutted vector with rbind()
+rbind(foo, cut(x=foo, breaks=c(2, 4, 6, 8)))
+
+# cut the vector with findInterval()
+findInterval(x=1:8, vec=c(2, 4, 6, 8))
+
+# findInterval() is a compiled function, so it is faster than cut()
+# change the code to compare their speed
+vec_tor <- rnorm(1000)
+summary(microbenchmark(
+  find_interval=
+    findInterval(vec=c(3, 5, 7)),
+  cuut=
+    cut(breaks=c(3, 5, 7)),
+  times=10))[, c(1, 4, 5)]
 ```
 
 *** =solution
 ```{r}
-# Casino winnings from Monday to Friday
-poker_vector <- c(140, -50, 20, -120, 240)
-roulette_vector <- c(-24, -50, 100, -350, 10)
-days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(poker_vector) <- days_vector
-names(roulette_vector) <- days_vector
+# create a vector of random value
+foo <- sample(0:6) + 0.1
 
-# Create logical vector corresponding to profitable poker days: selection_vector
-selection_vector <- poker_vector > 0
+# print the vector foo
+foo
 
-# Select amounts for profitable poker days: poker_profits
-poker_profits <- poker_vector[selection_vector]
+# use cut to vector
+cut(x=foo, breaks=c(2, 4, 6, 8))
+
+# bind the cutted vector with rbind()
+rbind(foo, cut(x=foo, breaks=c(2, 4, 6, 8)))
+
+# cut the vector with findInterval()
+findInterval(x=1:8, vec=c(2, 4, 6, 8))
+
+# findInterval() is a compiled function, so it is faster than cut()
+# change the code to compare their speed
+vec_tor <- rnorm(1000)
+summary(microbenchmark(
+  find_interval=
+    findInterval(x=vec_tor, vec=c(3, 5, 7)),
+  cuut=
+    cut(x=vec_tor, breaks=c(3, 5, 7)),
+  times=10))[, c(1, 4, 5)]
 ```
+
 
 *** =sct
 ```{r}
-msg = "Do not change anything about the definition and naming of `poker_vector` and `roulette_vector`."
-test_object("days_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("poker_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("roulette_vector", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("selection_vector", 
-            undefined_msg = "Please make sure to define a variable `selection_vector`.",
-            incorrect_msg = "It looks like `selection_vector` does not contain the correct result. Remember that R uses element wise operations for vectors.")
-test_object("poker_profits",
-            undefined_msg =  "Please make sure to define a variable `poker_profits`.",
-            incorrect_msg =  "It looks like `poker_profits` does not contain the correct result. Remember that R uses element wise operations for vectors.")
-success_msg("Great! Move on to the Matrices chapter!")
+test_error()
+success_msg("Althogh slower and a little bit different, cut() has similar functionality as findInternval()")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:cd32ce976a
+## Matrices
+
+The function matrix() creates a matrix from a vector, and the matrix dimensions.
+By default matrix() creates matrices column-wise, unless the argument byrow=TRUE is used.
+The elements of matrices can be subset (dereferenced) using the "[]" operator.
+The functions nrow() and ncol() return the number of rows and columns of a matrix.
+The functions NROW() and NCOL() also return the number of rows or columns of a matrix, but they can also be applied to vectors, and treat vectors as single column matrices.
+
+*** =instructions
+Use matrix() to construct matrices, and nrow(), ncol() and NROW(), NCOL().
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+vec_tor <- runif(5)
+```
+
+*** =sample_code
+```{r}
+# create a matrix
+mat_rix <- matrix(5:10, nrow=2, ncol=3)
+
+# by default matrices are constructed column-wise
+mat_rix
+
+# create a matrix row-wise
+matrix(5:10, nrow=2, byrow=TRUE)
+
+# extract third element from second row
+
+
+# extract second row
+
+
+# now try to extract third column
+
+
+# extract first and third column
+
+
+# remove second column
+
+
+# get the number of rows or columns
+nrow(mat_rix); ncol(mat_rix)
+NROW(mat_rix); NCOL(mat_rix)
+
+# apply nrow() and NROW() on vec_tor
+
+```
+
+*** =solution
+```{r}
+# create a matrix
+mat_rix <- matrix(5:10, nrow=2, ncol=3)
+
+# by default matrices are constructed column-wise
+mat_rix
+
+# create a matrix row-wise
+matrix(5:10, nrow=2, byrow=TRUE)
+
+# extract third element from second row
+mat_rix[2, 3]
+
+# extract second row
+mat_rix[2, ]
+
+# now try to extract third column
+mat_rix[, 3]
+
+# extract first and third column
+mat_rix[, c(1,3)]
+
+# remove second column
+mat_rix[, -2]
+
+# get the number of rows or columns
+nrow(mat_rix); ncol(mat_rix)
+NROW(mat_rix); NCOL(mat_rix)
+
+# apply nrow() and NROW() on vec_tor
+nrow(vec_tor)
+NROW(vec_tor)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("So the capitalized functions can be applied to vectors and matrixes")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:9cb7dccabe
+## Matrix attributes
+
+Arrays are vectors with a dimension attribute.
+Matrices are two-dimensional arrays.
+The dimension attribute of a matrix is an integer vector of length 2 (nrow, ncol).
+The dimnames attribute is a list, with vector elements containing row and column names.
+A named matrix can be subset using row and column names.
+
+
+*** =instructions
+Use attributes(), dim(), rownames(), colnames() and rownames() as instructed.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+mat_rix <- matrix(5:10, nrow=2, ncol=3)
+```
+
+*** =sample_code
+```{r}
+# get matrix attributes
+
+
+# get dimension attribute
+
+
+# get class attribute
+
+
+# change the code to assign rownames and colnames attribute
+c("row1", "row2")
+c("col1", "col2", "col3")
+
+# use dimnames() to see row and column names
+
+
+# get the name attributes of mat_rix
+
+```
+
+*** =solution
+```{r}
+# get matrix attributes
+attributes(mat_rix)
+
+# get dimension attribute
+dim(mat_rix)
+
+# get class attribute
+class(mat_rix)
+
+# rownames and colnames attribute
+rownames(mat_rix) <- c("row1", "row2")
+colnames(mat_rix) <- c("col1", "col2", "col3")
+
+# use dimnames() to see row and column names
+dimnames(mat_rix)
+
+# get the name attributes of mat_rix
+names(mat_rix)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("dimname and name is different!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:cb0ddb5306
+## Matrix Subsetting
+
+Matrices can be subset in a similar way as Vectors, either by indices (integers), by characters (names), or boolean vectors.
+Subsetting a matrix to a single row or column produces a vector, unless the parameter "drop=FALSE" is used.
+Subsetting with the parameter "drop=FALSE" prevents the implicit coercion and preserves the matrix class.
+This is an example of implicit coercion in R, which can cause diﬃcult to trace bugs.
+
+
+*** =instructions
+Use "[]" for matrix subsetting, beware of the parameter "drop=FALSE"
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+mat_rix <- matrix(5:10, nrow=2, ncol=3)
+rownames(mat_rix) <- c("row1", "row2")
+colnames(mat_rix) <- c("col1", "col2", "col3")
+```
+
+*** =sample_code
+```{r}
+# subset column1 by name 
+mat_rix[, "col1"]
+
+# subset columns 1,3 by boolean vector
+mat_rix[, c(TRUE, FALSE, TRUE)]
+
+# get subset of row 1 by index
+mat_rix[1, ]
+
+# drop=FALSE preserves matrix
+mat_rix[1, , drop=FALSE]
+
+# revise the code to create two subsets with and without drop = FALSE argument
+mat_1 <- mat_rix[1, ]
+mat_2 <- mat_rix[1, ]
+
+# check if the two subsets are matrix using is.matrix()
+
+```
+
+*** =solution
+```{r}
+# subset column1 by name 
+mat_rix[, "col1"]
+
+# subset columns 1,3 by boolean vector
+mat_rix[, c(TRUE, FALSE, TRUE)]
+
+# get subset of row 1 by index
+mat_rix[1, ]
+
+# drop=FALSE preserves matrix
+mat_rix[1, , drop=FALSE]
+
+# revise the code to create two subsets with and without drop = FALSE argument
+mat_1 <- mat_rix[1, ]
+mat_2 <- mat_rix[1, , drop=FALSE]
+
+# check if the two subsets are matrix using is.matrix()
+is.matrix(mat_1)
+is.matrix(mat_2)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Add or drop the 'drop = FALSE' argument does make differences!")
 ```
 

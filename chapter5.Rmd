@@ -1,34 +1,18 @@
 --- 
 title_meta  : Chapter 5
-title       : Lists
-description : Lists, as opposed to vectors, can hold components of different types, just like your to-do list at home or at work. This chapter will teach you how to create, name and subset these lists!
-attachments : 
-  slides_link: https://s3.amazonaws.com/assets.datacamp.com/course/introduction_to_r/slides/ch5_slides.pdf
-
---- type:VideoExercise lang:r xp:50 skills:1 key:d4fe5a84ef
-## Create and Name Lists
-
-*** =video_link
-//player.vimeo.com/video/138173972
-
-*** =video_hls
-//videos.datacamp.com/transcoded/732_intro_to_r/v1/hls-ch5_1.master.m3u8
-
+title       : More on matrix
+description : Matrix, and matrix-like structures are essential to R data manipulation and operation.
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:b14f9472dd
-## Create a list
+## Logical Operators Applied to Vectors and Matrices
 
-Just a quick refresher: A list in R allows you to gather a variety of objects in an ordered way. These objects can be matrices, vectors, factors, data frames, even other lists, etc. It is not even required that these objects are related to each other. You can construct a list with the [`list()`](http://www.rdocumentation.org/packages/base/functions/list) function:
-
-```
-my_list <- list(comp1, comp2 ...)
-```
+When logical operators are applied to vectors and matrices, they are applied element-wise, producing boolean vectors and matrices.
 
 *** =instructions
-Construct a list, named `my_list`, that contains the variables `my_vector`, `my_matrix` and `my_factor` as list components.
+- Apply logical operators to matrix and vectors.
 
 *** =hint
-Use the [`list()`](http://www.rdocumentation.org/packages/base/functions/list) function with `my_vector`, `my_matrix` and `my_factor` as arguments separated by a comma.
+Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
@@ -37,57 +21,76 @@ Use the [`list()`](http://www.rdocumentation.org/packages/base/functions/list) f
 
 *** =sample_code
 ```{r}
-# Numeric vector: 1 up to 10
-my_vector <- 1:10 
+# create a vector
+vec_tor <- sample(1:9)
 
-# Numeric matrix: 1 up to 9
-my_matrix <- matrix(1:9, ncol = 3)
+# print the vector
 
-# Factor of sizes
-my_factor <- factor(c("M","S","L","L","M"), ordered = TRUE, levels = c("S","M","L"))
 
-# Construct my_list with these different elements
+# element-wise comparison if it's more than 5
+
+
+# element-wise comparison if it's equal to 5
+
+
+# create a matrix
+mat_rix <- matrix(vec_tor, ncol=3)
+
+# print the matrix
+
+
+# element-wise comparison if it's less than 5
+
+
+# element-wise comparison if it's equal to 5
 
 ```
 
 *** =solution
 ```{r}
-# Numeric vector: 1 up to 10
-my_vector <- 1:10 
+# create a vector
+vec_tor <- sample(1:9)
 
-# Numeric matrix: 1 up to 9
-my_matrix <- matrix(1:9, ncol = 3)
+# print the vector
+vec_tor
 
-# Factor of sizes
-my_factor <- factor(c("M","S","L","L","M"), ordered = TRUE, levels = c("S","M","L"))
+# element-wise comparison if it's more than 5
+vec_tor < 5
 
-# Construct my_list with these different elements
-my_list <- list(my_vector, my_matrix, my_factor)
+# element-wise comparison if it's equal to 5
+vec_tor == 5
+
+# create a matrix
+mat_rix <- matrix(vec_tor, ncol=3)
+
+# print the matrix
+mat_rix
+
+# element-wise comparison if it's less than 5
+mat_rix < 5
+
+# element-wise comparison if it's equal to 5
+mat_rix == 5
 ```
 
 *** =sct
 ```{r}
 test_error()
-msg = "Do not remove or change the definition of the variables `my_vector`, `my_matrix` or `my_factor`!"
-test_object("my_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("my_matrix", undefined_msg = msg, incorrect_msg = msg)
-test_object("my_factor", undefined_msg = msg, incorrect_msg = msg)
-test_object("my_list", incorrect_msg = "It looks like `my_list` does not contain the correct elements. Have another look.")
 success_msg("Wonderful! Your skillset is growing at a staggering pace! Head over to the next exercise.")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:849f04f218
-## Listception: lists in lists
+## Coercing Vectors Into Matrices
 
-As mentioned before, lists can also contain other lists. This works just the same as storing other types of R objects in a list. Next to the variables `my_vector`, `my_matrix` and `my_factor` from the previous exercise, now also `my_list` is predefined. Up to you to merge them in a new list; a super list!
+Vectors can be coerced into matrices by adding a dimension attribute, The dimnames attribute can be assigned a named list to convert it into a named matrix, The function structure() adds attributes (speciﬁed as symbol=value pairs) to an object, and returns it.
+
 
 *** =instructions
-- Construct a list, named `my_super_list`, that now contains the four predefined variables listed in the sample code (in the same order).
-- Print the structure of `my_super_list` with the [`str()`](http://www.rdocumentation.org/packages/utils/functions/str) function. Be sure to enter the variables in the following order: `my_ vector`, `my_ matrix`, `my_ factor`, `my_ list`
+- Learn to coerce vectors and create matrix.
 
 *** =hint
-Just as in the previous exercise, use the [`list()`](http://www.rdocumentation.org/packages/base/functions/list) function. This time you have to add four components.
+Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
@@ -96,88 +99,83 @@ Just as in the previous exercise, use the [`list()`](http://www.rdocumentation.o
 
 *** =sample_code
 ```{r}
-# Numeric vector: 1 up to 10
-my_vector <- 1:10 
+# create a vector
+mat_rix <- 1:6
 
-# Numeric matrix: 1 up to 9
-my_matrix <- matrix(1:9, ncol = 3)
-
-# Factor of sizes
-my_factor <- factor(c("M","S","L","L","M"), ordered = TRUE, levels = c("S","M","L"))
-
-# List containing vector, matrix and factor
-my_list <- list(my_vector, my_matrix, my_factor)
-
-# Construct my_super_list with the four data structures above
+# get its class
 
 
-# Display structure of my_super_list
+# is it vector or matrix?
+
+
+# matrix object
+
+
+# adding dimension attribute coerces into matrix
+
+
+# get its class
+
+
+# is it vector or matrix?
+
+
+# assign dimnames attribute
+
+                  
+# print the matrix
 
 ```
 
 *** =solution
 ```{r}
-# Numeric vector: 1 up to 10
-my_vector <- 1:10 
+# create a vector
+mat_rix <- 1:6
 
-# Numeric matrix: 1 up to 9
-my_matrix <- matrix(1:9, ncol = 3)
+# get its class
+class(mat_rix)
 
-# Factor of sizes
-my_factor <- factor(c("M","S","L","L","M"), ordered = TRUE, levels = c("S","M","L"))
+# is it vector or matrix?
+c(is.vector(mat_rix), is.matrix(mat_rix))
 
-# List containing vector, matrix and factor
-my_list <- list(my_vector, my_matrix, my_factor)
+# matrix object
+structure(mat_rix, dim=c(2, 3))
 
-# Construct my_super_list with the four data structures above
-my_super_list <- list(my_vector, my_matrix, my_factor, my_list)
+# adding dimension attribute coerces into matrix
+dim(mat_rix) <- c(2, 3)
 
-# Display structure of my_super_list
-str(my_super_list)
+# get its class
+class(mat_rix)
+
+# is it vector or matrix?
+c(is.vector(mat_rix), is.matrix(mat_rix))
+
+# assign dimnames attribute
+dimnames(mat_rix) <- list(rows=c("row1", "row2"),
+                  columns=c("col1", "col2", "col3"))
+                  
+# print the matrix
+mat_rix
 ```
 
 *** =sct
 ```{r}
 test_error()
-msg = "Do not remove or change the definition of the variables `my_vector`, `my_matrix`, `my_factor` or `my_list`!"
-test_object("my_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("my_matrix", undefined_msg = msg, incorrect_msg = msg)
-test_object("my_factor", undefined_msg = msg, incorrect_msg = msg)
-test_object("my_list", undefined_msg = msg, incorrect_msg = msg)
-test_object("my_super_list",
-            incorrect_msg = "It looks like `my_super_list` does not contain the correct elements. It's also possible that the order is not correct. Have another look.")
-test_output_contains("str(my_super_list)", incorrect_msg = "Don't forget to display the structure of `my_super_list` using the [`str()`](http://www.rdocumentation.org/packages/utils/functions/str) function.")
-success_msg("Nice one! Can you see from the displayed structure how the vector, matrix and ordered factor appear twice: once in the top-level list and once in the embedded list. Next!")
+success_msg("Nice one! Can you see from the displayed structure of matrix. Next!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:f37117a766
-## Create a named list (1)
+## Coercing Matrices Into Other Types
 
-Well done! Let us keep this train going! To make the elements of your list clearer, you'll often want to name them: 
+Matrices can be explicitly coerced using the `as.*` coercion functions, But coercion functions strip the attributes from an object.
 
-```
-my_list <- list(name1 = your_comp1, 
-                name2 = your_comp2)
-``` 
-
-If you want to name your lists after you've created them, you can use the [`names()`](http://www.rdocumentation.org/packages/base/functions/names) function as you did with vectors. The following commands are fully equivalent to the assignment above:
-
-```
-my_list <- list(your_comp1, your_comp2)
-names(my_list) <- c("name1", "name2")
-```
 
 *** =instructions
-- Change the code that build `my_list` by adding names to the components. Use for `my_matrix` the name `mat`, for `my_vector` the name `vec` and for `my_factor` the name `fac`.
-- Print the list to the console and inspect the output.
+- Use `as.numeric`, `as.character` and other similar functions to coerce matrix to other types.
 
 *** =hint
-The first method of assigning names to your list components is the easiest. It starts like this: 
-```
-my_list <- list(vec = my_vector)
-```
-Add the other two components in a similar fashion.
+Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
@@ -186,73 +184,68 @@ Add the other two components in a similar fashion.
 
 *** =sample_code
 ```{r}
-# Numeric vector: 1 up to 10
-my_vector <- 1:10 
+# create matrix
 
-# Numeric matrix: 1 up to 9
-my_matrix <- matrix(1:9, ncol = 3)
 
-# Factor of sizes
-my_factor <- factor(c("M","S","L","L","M"), ordered = TRUE, levels = c("S","M","L"))
+# print the matrix
 
-# Adapt code to add names to elements in my_list
-my_list <- list(my_vector, my_matrix, my_factor)
 
-# Print my_list to the console
+# as.numeric strips dim attribute from matrix
+
+
+# explicitly coerce to "character"
+
+
+# check the type, mode and class of new variable
+
+
+# coercion converted matrix to vector
 
 ```
 
 *** =solution
 ```{r}
-# Numeric vector: 1 up to 10
-my_vector <- 1:10 
+# create matrix
+mat_rix <- matrix(1:10, 2, 5)
 
-# Numeric matrix: 1 up to 9
-my_matrix <- matrix(1:9, ncol = 3)
+# print the matrix
+mat_rix
 
-# Factor of sizes
-my_factor <- factor(c("M","S","L","L","M"), ordered = TRUE, levels = c("S","M","L"))
+# as.numeric strips dim attribute from matrix
+as.numeric(mat_rix)
 
-# Adapt code to add names to elements in my_list
-my_list <- list(vec = my_vector, mat = my_matrix, fac = my_factor)
+# explicitly coerce to "character"
+mat_rix <- as.character(mat_rix)
 
-# Print my_list to the console
-my_list
+# check the type, mode and class of new variable
+c(typeof(mat_rix), mode(mat_rix), class(mat_rix))
+
+# coercion converted matrix to vector
+c(is.matrix(mat_rix), is.vector(mat_rix))
 ```
 
 *** =sct
 ```{r}
 test_error()
-msg = "Do not remove or change the definition of the variables `my_vector`, `my_matrix` or `my_factor`!"
-test_object("my_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("my_matrix", undefined_msg = msg, incorrect_msg = msg)
-test_object("my_factor", undefined_msg = msg, incorrect_msg = msg)
-test_object("my_list",
-            incorrect_msg = "It looks like `my_list` does not contain the correct elements.")
-test_object("my_list", eq_condition = "equal",
-            incorrect_msg = "It looks like `my_list` does not contain the correct naming for the components.");
-test_output_contains("my_list", 
-                     incorrect_msg = "Don't forget to print `my_list` to the console! Simply add `my_list` on a new line in the script.")
-success_msg("Great! Not only do you know how to construct lists now, you can also name them; a skill that will prove most useful in practice. Continue to the next exercise.")
+success_msg("Great!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:dc5f4f6f30
-## Create a named list (2)
+## Binding Vectors and Matrices Together
 
-Being a huge movie fan, you decide to start storing information on good movies with the help of lists. 
+Vectors can be bound into matrices using the functions cbind() and rbind(), The recycling rule allows operations on vectors of diﬀerent lengths:
 
-Start by creating a list for the movie "The Shining". The variables `actors` and `reviews` that you'll need have already been coded in the sample code.
+1 Vectors are scanned from left to right, 
+
+2 Shorter vectors are extended in length by recycling their values until they match the length of longer vectors.
+
 
 *** =instructions
-Create the variable `shining_list`. The list contains the movie title first as "title", then the actor names as "actors", and finally the review scores factor as "reviews". Make sure to adopt the same order, and pay attention to the correct naming!
+- Create matrices by binding vectors, even for different lengths!
 
 *** =hint
-Let's get you started with a chunk of code:
-
-        shining_list <- list(title = "The Shining")
-        
-Can you complete the rest? You still have to add `actors_vector` and `reviews_factor` with the appropriate names.
+Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
@@ -261,249 +254,574 @@ Can you complete the rest? You still have to add `actors_vector` and `reviews_fa
 
 *** =sample_code
 ```{r}
-# Create actors and reviews
-actors_vector <- c("Jack Nicholson","Shelley Duvall","Danny Lloyd","Scatman Crothers","Barry Nelson")
-reviews_factor <- factor(c("Good", "OK", "Good", "Perfect", "Bad", "Perfect", "Good"), 
-                  ordered = TRUE, levels = c("Bad", "OK", "Good", "Perfect"))
+# define vector
+vec_tor1 <- 1:3
 
-# Create shining_list
+# define vector
+vec_tor2 <- 6:4
+
+# bind into columns
+
+
+# bind into rows
+
+
+# extend to four elements
+
+
+# recycling rule applied
+
+
+# another example of recycling rule
 
 ```
 
 *** =solution
 ```{r}
-# Create actors and reviews
-actors_vector <- c("Jack Nicholson","Shelley Duvall","Danny Lloyd","Scatman Crothers","Barry Nelson")
-reviews_factor <- factor(c("Good", "OK", "Good", "Perfect", "Bad", "Perfect", "Good"), 
-                  ordered = TRUE, levels = c("Bad", "OK", "Good", "Perfect"))
+# define vector
+vec_tor1 <- 1:3
 
-# Create the list 'shining_list'
-shining_list <- list(title = "The Shining", actors = actors_vector, reviews = reviews_factor)
+# define vector
+vec_tor2 <- 6:4
+
+# bind into columns
+cbind(vec_tor1, vec_tor2)
+
+# bind into rows
+rbind(vec_tor1, vec_tor2)
+
+# extend to four elements
+vec_tor2 <- c(vec_tor2, 7)
+
+# recycling rule applied
+cbind(vec_tor1, vec_tor2)
+
+# another example of recycling rule
+1:6 + c(10, 20)
 ```
 
 *** =sct
 ```{r}
 test_error()
-msg = "Do not remove or change the definition of the pre-set variables!"
-test_object("actors_vector", undefined_msg = msg, incorrect_msg = msg)
-test_object("reviews_factor", undefined_msg = msg, incorrect_msg = msg)
-test_object("shining_list",
-            incorrect_msg = "It looks like `shining_list` does not contain the correct elements.")
-test_object("shining_list", eq_condition = "equal",
-            incorrect_msg = "It looks like `shining_list` does not contain the correct naming for the components.")
 success_msg("Perfect!")
 ```
 
-
---- type:VideoExercise lang:r xp:50 skills:1 key:a5e5ff2680
-## Subset and Extend Lists
-
-*** =video_link
-//player.vimeo.com/video/138173990
-
-*** =video_hls
-//videos.datacamp.com/transcoded/732_intro_to_r/v1/hls-ch5_2.master.m3u8
-
-
 --- type:NormalExercise lang:r xp:100 skills:1 key:1e3b5f4b0a
-## Selecting elements from a list
+## Replicating Objects Using rep()
 
-Your list will often be built out of numerous elements and components. Therefore, getting a single element, multiple elements, or a component out of it is not always straightforward.
+The function rep() replicates vectors and lists a given number of times, rep() accepts a vector or list "x", and an integer specifying the type and number of replications.
 
-To select a single element from a list, for example the first element from `shining_list`, you can any one of the following commands:
+Argument "times" replicates the whole vector a given number of times.
 
-```
-shining_list[[1]]
-shining_list[["title"]]
-shining_list$title
-```
+Argument "each" replicates each vector element a given number of times.
 
-If you perform selection with single square brackets, you'll end up with another list that contains the specified elements:
+Argument "length.out" replicates the whole vector a certain number of times, so that the output vector length is equal to "length.out".
 
-```
-shining_list[c(2,3)]
-shining_list[c(F,T,T)]
-```
 
 *** =instructions
-- Select the actors from `shining_list` and assign the result to `act`.
-- Create a new list containing only the title and the reviews of `shining_list`; save the new list in `sublist`.
-- Display the structure of `sublist`.
+- Change the arguments in the introduction to manipulate output of `rep()`
 
 *** =hint
-For the first instruction you need double brackets (or the `$`), for the second one the single brackets will do.
+Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/course/introduction_to_r/chapter5.RData"))
 ```
 
 *** =sample_code
 ```{r}
-# shining_list is already defined in the workspace
-
-# Actors from shining_list: act
+# replicate a single element
 
 
-# List containing title and reviews from shining_list: sublist
+# replicate the whole vector several times
 
 
-# Display structure of sublist
+# explicitly set the times
+
+
+# replicate the first element, then the second, etc.
+
+
+# replicate to specified length
 
 ```
 
 *** =solution
 ```{r}
-# shining_list is already defined in the workspace
+# replicate a single element
+rep("a", 5)
 
-# Actors from shining_list: act
-act <- shining_list[["actors"]]
+# replicate the whole vector several times
+rep(c("a", "b"), 5)
 
-# List containing title and reviews from shining_list: sublist
-sublist <- shining_list[c("title", "reviews")]
+# explicitly set the times
+rep(c("a", "b"), times=5)
 
-# Display structure of sublist
-str(sublist)
+# replicate the first element, then the second, etc.
+rep(c("a", "b"), each=5)
+
+# replicate to specified length
+rep(c("a", "b"), length.out=5)
 ```
 
 *** =sct
 ```{r}
 test_error()
-msg = "Do not remove or override `shining_list`."
-test_object("shining_list", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-
-test_object("act", incorrect_msg = "Have you correctly selected the actors from `shining_list`?")
-test_object("sublist", incorrect_msg = "Have you correctly selected the title and reviews from `shining_list`? Use single brackets in combination with a vector to select multiple elements.")
-test_output_contains("str(sublist)", incorrect_msg = "Don't forget to display the structure of `sublist`!")
-
-success_msg("Nice! That was still pretty easy, right? Always be aware of this difference between `[` and `[[`!")
+success_msg("Nice! That was still pretty easy, right?")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:cbda2853c3
-## Chaining your selections
+## Multiplying Vectors and Matrices
 
-Besides selecting entire list elements, it's also possible that you have to access specific parts of these components themselves. It's perfectly possible to _chain your subsetting operations_ in R.
+The multiplication `*` operator performs element-wise (element-by-element) multiplication of vectors and matrices.
 
-For example, with 
+By default the matrix elements are multiplied column-wise by the vector elements: the ﬁrst matrix element in the ﬁrst column is multiplied by the ﬁrst vector element, then the second matrix column is multiplied by the remaining vector elements, etc. 
 
-```
-shining_list[[2]][1]
-```
+The recycling rule is applied to the vector elements as needed, The transpose function `t()` can be applied if we want to perform row-wise multiplication.
 
-you select from the second component, actors (`shining_list[[2]]`), the first element (`[1]`). When you type this in the console, you will see the answer is Jack Nicholson.
 
 *** =instructions
-- Select from the `shining_list` the last actor and assign the result to `last_actor`.
-- Select from the `shining_list` the second review score (which is a factor). Store the result in `second_review`.
+- Use `*` for element-wise multiplication.
 
 *** =hint
-- If you want to do things nicely: `length(shining_list$actors)` gives you the number of actors, and thus the element to select.
-- You can select the information of the second review with `shining_list$reviews[2, ]`.
+Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/course/introduction_to_r/chapter5.RData"))
 ```
 
 *** =sample_code
 ```{r}
-# shining_list is already defined in the workspace
+# define a vector
+vec_tor1 <- c(2, 4, 3)
 
-# Select the last actor: last_actor
+# define a matrix
+mat_rix <- matrix(sample(1:12), ncol=3)
+
+# multiply matrix by vector column-wise
 
 
-# Select the second review: second_review
+# multiply matrix by vector row-wise
 
 ```
 
 *** =solution
 ```{r}
-# shining_list is already defined in the workspace
+# define a vector
+vec_tor1 <- c(2, 4, 3)
 
-# Select the last actor: last_actor
-last_actor <- shining_list$actors[length(shining_list$actors)]
+# define a matrix
+mat_rix <- matrix(sample(1:12), ncol=3)
 
-# Select the second review: second_review
-second_review <- shining_list$reviews[2]
+# multiply matrix by vector column-wise
+vec_tor1 * mat_rix
+
+# multiply matrix by vector row-wise
+t(vec_tor1 * t(mat_rix))
 ```
 
 *** =sct
 ```{r}
 test_error()
-msg = "Do not remove or override `shining_list`."
-test_object("shining_list", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-
-test_object("last_actor", 
-            incorrect_msg = "Looks like `last_actor` does not equal the last actor.")
-test_object("second_review",
-            incorrect_msg = "It looks like `second_review` does not contain the factor that corresponds to the second review.")
-success_msg("Great! Selecting elements from lists is rather easy isn't it? Continue to the next exercise.")
+success_msg("Great! Multiply by elements is rather easy isn't it? Continue to the next exercise.")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:35ba0d6f0d
-## Extending a list
+## Matrix Inner Multiplication
 
-You already know that the `$` as well as `[[` can be used to select elements from lists. They can also be used to extend lists. To extend `shining_list` with some personal opinion, you could do one of the following things:
+The `%*%` operator performs inner (scalar) multiplication of vectors and matrices, Inner multiplication consists of multiplying the rows of one matrix with the columns of another matrix, so that each pair produces a single number.
 
-```
-shining_list$my_opinion <- "Love it!"
-shining_list[["my_opinion"]] <- "Love it!"
-```
-
-Being proud of your first list, you shared it with the members of your movie hobby club. However, one of the senior members, a guy named M. McDowell, noted that you forgot to add the release year (1980). Given your ambitions to become next year's president of the club, you decide to add this information to the list. To fully make up for your mistake, you also decide to add the name of the director (Stanley Kubrick). 
+Inner multiplication produces a vector or matrix with a reduced dimension, Inner multiplication requires the dimensions of the matrices to be conformable (number of columns in the ﬁrst matrix must be equal to the number of rows in the second), otherwise an error is produced, The function `drop()` removes any dimensions of length one.
 
 *** =instructions
-- Add the release year as a numeric to `shining_list` under the name `year`.
-- Add the director to the list, `"Stanley Kubrick"`, with the name `director`.
-- Finally, inspect the structure of `shining_list`.
+- Use `%*%` for mathematical matrix multiplication.
 
 *** =hint
-Let the examples in the assignment guide you to list extension mastery! Remember that R is case sensitive!
+Follow the instruction and introduction. Distinguish between `*` and `%*%``
 
 *** =pre_exercise_code
 ```{r}
-load(url("http://s3.amazonaws.com/assets.datacamp.com/course/introduction_to_r/chapter5.RData"))
 ```
 
 *** =sample_code
 
 ```{r}
-# shining_list is already defined in the workspace
+# create matrix
+mat_rix <- matrix(1:6, ncol=3)
 
-# Add the release year to shining_list
+# define the vector 1
+vec_tor1 <- c(2, 4, 3)
+
+# define vector
+vec_tor2 <- 6:4
+
+# multiply two vectors element-by-element
 
 
-# Add the director to shining_list
+# calculate inner product
 
 
-# Inspect the structure of shining_list
+# calculate inner product and drop dimensions
 
 ```
 
 *** =solution
 ```{r}
-# shining_list is already defined in the workspace
+# create matrix
+mat_rix <- matrix(1:6, ncol=3)
 
-# Add the release year to shining_list
-shining_list$year <- 1980
+# define the vector 1
+vec_tor1 <- c(2, 4, 3)
 
-# Add the director to shining_list
-shining_list$director <- "Stanley Kubrick"
+# define vector
+vec_tor2 <- 6:4
 
-# Inspect the structure of shining_list
-str(shining_list)
+# multiply two vectors element-by-element
+vec_tor1 * vec_tor2
+
+# calculate inner product
+vec_tor1 %*% vec_tor2
+
+# calculate inner product and drop dimensions
+drop(vec_tor1 %*% vec_tor2)
 ```
 
 *** =sct
 ```{r}
 test_error()
-test_object("shining_list", 
-            incorrect_msg = paste("Have you correctly added both the year and the director to `shining_list`?",
-                                  "Make sure to use the correct names (\"year\" and \"director\"). Remember that R is case sensitive!"))
+success_msg("Congrats!")
+```
 
-test_output_contains("str(shining_list)", 
-                     incorrect_msg = "Do not forget to inspect the structure of `shining_list` using the [`str()`](http://www.rdocumentation.org/packages/utils/functions/str) function.")
 
-success_msg("Congratulations on finishing up on this chapter!")
+--- type:NormalExercise lang:r xp:100 skills:1 key:bf49ce3efc
+## Matrix Transpose
+
+The function t() returns the transpose of a matrix, The function crossprod() also performs inner (scalar) multiplication, exactly the same as the %*% operator, but is slightly faster.
+
+*** =instructions
+- Use `t()` to transpose matrices.
+
+*** =hint
+Follow the instruction and introduction. 
+
+*** =pre_exercise_code
+```{r}
+library(microbenchmark)
+# create matrix
+mat_rix <- matrix(1:6, ncol=3)
+
+# define the vector 1
+vec_tor1 <- c(2, 4, 3)
+
+vec_tor2 <- 6:4
+```
+
+*** =sample_code
+
+```{r}
+# works after transpose
+
+
+# calculate inner product
+
+
+# create matrix and vector
+mat_rix <- matrix(1:3000, ncol=3)
+
+# transpose matrix
+
+
+# create new vector
+vec_tor <- 1:3
+
+# change the code to see crossprod is slightly faster than "%*%" operator
+summary(microbenchmark(
+  cross_prod=prod(tmat_rix, vec_tor),
+  inner_prod=mat_rix * vec_tor,
+  times=10))[, c(1, 4, 5)]
+```
+
+*** =solution
+```{r}
+# works after transpose
+drop(vec_tor1 %*% t(mat_rix))
+
+# calculate inner product
+crossprod(vec_tor1, vec_tor2)
+
+# create matrix and vector
+mat_rix <- matrix(1:3000, ncol=3)
+
+# transpose matrix
+tmat_rix <- t(mat_rix)
+
+# create new vector
+vec_tor <- 1:3
+
+# change the code to see crossprod is slightly faster than "%*%" operator
+summary(microbenchmark(
+  cross_prod=crossprod(tmat_rix, vec_tor),
+  inner_prod=mat_rix %*% vec_tor,
+  times=10))[, c(1, 4, 5)]
+```
+
+*** =sct
+```{r}
+test_error()
+success_msg("Takes a bit time, but learn from the result may save you a lot more time!")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:b0b3b7fe27
+## Matrix Outer Multiplication
+
+An outer product consists of all possible products of pairs of elements of two objects: 
+````
+Ci,j = Ai ·Bj
+````
+
+An outer product of a function consists of applying it to all possible pairs of elements of two objects:
+````
+Ci,j = f (Ai,Bj)
+````
+Outer multiplication produces an object with dimension equal to the sum of the factors’ dimensions, and with the number of elements equal to the product of the factors’ elements, The function outer() calculates the outer product of two matrices, and by default multiplies the elements of its arguments, outer() can also calculate the values of a vectorized function of two variables passed to the "FUN" 
+
+*** =instructions
+- Use outer multiplicaiton to preserve and  extend dimension.
+
+*** =hint
+Follow the instruction and introduction. 
+
+*** =pre_exercise_code
+```{r}
+```
+
+*** =sample_code
+
+```{r}
+# define named vectors
+vec_tor1 <- sample(1:4)
+
+# assign names for rows
+
+
+# print the vector
+
+
+# create new vector
+vec_tor2 <- sample(1:3)
+
+# assign names for columns
+
+
+# print the vector
+
+
+# assign outer product of two vectors to mat_rix
+
+
+# print the matrix
+
+# change the code, calculate vectorized function spanned over two vectors
+mat_rix <- outer(vec_tor1, vec_tor2,
+           FUN=function() x2:sin(x1))
+
+# print the matrix
+
+```
+
+*** =solution
+```{r}
+# define named vectors
+vec_tor1 <- sample(1:4)
+
+# assign names for rows
+names(vec_tor1) <- paste0("row", 1:4, "=", vec_tor1)
+
+# print the vector
+vec_tor1
+
+# create new vector
+vec_tor2 <- sample(1:3)
+
+# assign names for columns
+names(vec_tor2) <- paste0("col", 1:3, "=", vec_tor2)
+
+# print the vector
+vec_tor2
+
+# assign outer product of two vectors to mat_rix
+mat_rix <- outer(vec_tor1, vec_tor2)
+
+# print the matrix
+mat_rix
+
+# change the code, calculate vectorized function spanned over two vectors
+mat_rix <- outer(vec_tor1, vec_tor2,
+           FUN=function(x1, x2) x2*sin(x1))
+
+# print the matrix
+mat_rix
+```
+
+*** =sct
+```{r}
+test_error()
+success_msg("That's potentially a new way to create matrix out of vectors")
+```
+
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:eb77d79f8a
+## Flattening a List of Vectors to a Matrix Using do.call()
+
+A list of vectors can be ﬂattened into a matrix using the functions `do.call()` and either `rbind()` or `cbind()`, If the list contains vectors of diﬀerent lengths, then R applies the recycling rule, If the list contains a NULL element, that element is skipped,
+
+
+*** =instructions
+- Flatten list of vectors to more structured matrix.
+
+*** =hint
+Follow the instruction and introduction. 
+
+*** =pre_exercise_code
+```{r}
+```
+
+*** =sample_code
+
+```{r}
+# create list of vectors
+
+
+# bind list elements into matrix - doesn't work
+
+
+# bind list elements into matrix - tedious
+
+
+# bind list elements into matrix - works!
+
+
+# create numeric list
+li_st <- list(1, 2, 3, 4)
+
+# returns single column matrix
+
+
+# returns single row matrix
+
+```
+
+*** =solution
+```{r}
+# create list of vectors
+li_st <- lapply(1:3, function(x) sample(6))
+
+# bind list elements into matrix - doesn't work
+rbind(li_st)
+
+# bind list elements into matrix - tedious
+rbind(li_st[[1]], li_st[[2]], li_st[[3]])
+
+# bind list elements into matrix - works!
+do.call(rbind, li_st)
+
+# create numeric list
+li_st <- list(1, 2, 3, 4)
+
+# returns single column matrix
+do.call(rbind, li_st)
+
+# returns single row matrix
+do.call(cbind, li_st)
+```
+
+*** =sct
+```{r}
+test_error()
+success_msg("Cool! Don't forget the do.call()!`")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:04f0d28b95
+## Eﬃcient Binding of Lists Into Matrices
+
+A list of vectors can be ﬂattened into a matrix using the functions `do.call()` and either `rbind()` or `cbind()`, If the list contains vectors of diﬀerent lengths, then R applies the recycling rule, If the list contains a NULL element, that element is skipped,
+
+
+*** =instructions
+- Use `cbind()`, `rbind()` in loops!
+
+*** =hint
+Follow the instruction and introduction. 
+
+*** =pre_exercise_code
+```{r}
+```
+
+*** =sample_code
+
+```{r}
+# create list of vectors
+list_vectors <- lapply(1:5, rnorm, n=10)
+
+# create matrix out of list
+
+
+# see the dimension of matrix
+
+
+# change the code to create function
+do_call_rbind <- function(li_st) {
+  while (length(li_st)) {
+    odd_index <- seq(from=1, to=length(li_st), by=2)
+    li_st <- lapply(odd_index, function(in_dex) {
+      if (in_dex==length(li_st)) {
+return(li_st[[in_dex]])
+      }
+      return(rbind(li_st[[in_dex]],
+           li_st[[in_dex]]))
+    })
+  }
+  li_st
+}
+
+# check if results are identical
+identical(mat_rix, do_call_rbind(list_vectors))
+```
+
+*** =solution
+```{r}
+# create list of vectors
+list_vectors <- lapply(1:5, rnorm, n=10)
+
+# create matrix out of list
+mat_rix <- do.call(rbind, list_vectors)
+
+# see the dimension of matrix
+dim(mat_rix)
+
+# change the code to create function
+do_call_rbind <- function(li_st) {
+  while (length(li_st) > 1) {
+    odd_index <- seq(from=1, to=length(li_st), by=2)
+    li_st <- lapply(odd_index, function(in_dex) {
+      if (in_dex==length(li_st)) {
+return(li_st[[in_dex]])
+      }
+      return(rbind(li_st[[in_dex]],
+           li_st[[in_dex+1]]))
+    })
+  }
+  li_st[[1]]
+}
+
+# check if results are identical
+identical(mat_rix, do_call_rbind(list_vectors))
+```
+
+*** =sct
+```{r}
+test_error()
+success_msg("Yes! Now you know how to deal with a function!")
 ```

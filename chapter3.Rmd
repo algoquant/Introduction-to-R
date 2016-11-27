@@ -1,42 +1,779 @@
 --- 
 title_meta  : Chapter 3
-title       : Matrices
-description : In this chapter you will learn how to work with matrices in R. By the end of the chapter, you will be able to create matrices and to understand how you can do basic computations with them. You will analyze the box office numbers of Star Wars to illustrate the use of matrices in R. May the force be with you!
-attachments : 
-  slides_link: https://s3.amazonaws.com/assets.datacamp.com/course/introduction_to_r/slides/ch3_slides.pdf
+title       : R Data Operations
+description : In this chapter you will learn to use the functional operations which is essential for more powerful operations. May the force be with you!
   
---- type:VideoExercise lang:r xp:50 skills:1 key:82d8734b17
-## Create and Name Matrices
 
-*** =video_link
-//player.vimeo.com/video/138173926
+--- type:NormalExercise lang:r xp:100 skills:1 key:5db23f19b0
+## Generating Pseudo-Random Numbers
 
-*** =video_hls
-//videos.datacamp.com/transcoded/732_intro_to_r/v1/hls-ch3_1.master.m3u8
+Random number generators produce the same deterministic sequence of numbers after their seed value is reset.
 
+The function set.seed() initializes the random number generator by specifying the seed value.
+The function runif() produces random numbers from the uniform distribution.
+The function rnorm() produces random numbers from the normal distribution.
+The function pnorm() calculates the cumulative normal distribution.
+The function qnorm() calculates the inverse cumulative normal distribution.
 
---- type:NormalExercise lang:r xp:100 skills:1 key:834a0e546c
-## Analyzing matrices, you shall (1)
-
-It is now time to get your hands dirty. In the following exercises you will analyze the box office numbers of the Star Wars franchise. May the force be with you!
-
-As a reminder, look at this line of code that constructs a matrix with numbers 1 through 9, filled row by row:
-
-```
-matrix(1:9, byrow = TRUE, nrow = 3)
-```
-
-In the script, a vector `box` is defined that represents the box office numbers from the first three Star Wars movies. The first, third and fifth element correspond to the US box office revenue for the movies, the second, fourth and sixth element represent the non-US box office revenue.
 
 *** =instructions
-Construct a matrix `star_wars_matrix`:
-
-- Each row represents a movie.
-- The first column is for the US box office revenue, and the second column for the non-US box office revenue. 
-- Use the function `matrix()` with `box` as the first input, and the additional arguments `nrow` and `byrow`.
+- Learn to use set.seed() initializers, as well as runif(), rnorm(), pnorm() and qnorm()
 
 *** =hint
-Set `nrow` to `3` and `byrow` to `TRUE` inside `matrix()`.
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# reset random number generator 1121
+set.seed(1121)
+
+# three random numbers from the uniform distribution
+
+
+# produce another three numbers
+
+
+# reset random number generator 1121
+set.seed(1121)
+
+# produce another three numbers
+
+
+# produce five random numbers from standard normal distribution
+
+
+# produce five random numbers from the normal distribution
+
+
+# calculate cumulative standard normal distribution within 2 sigma from mean
+
+
+# calculate inverse cumulative standard normal distribution within 0.75 to 0.25
+
+```
+
+*** =solution
+```{r}
+# reset random number generator
+set.seed(1121)
+
+# three random numbers from the uniform distribution
+runif(3)
+
+# produce another three numbers
+runif(3)
+
+# reset random number generator
+set.seed(1121)
+
+# produce another three numbers
+runif(3)
+
+# produce five random numbers from standard normal distribution using rnorm()
+rnorm(5)
+
+# produce five random numbers from the normal distribution
+rnorm(n=5, mean=1, sd=2)
+
+# calculate cumulative standard normal distribution within 2 sigma from mean
+c(pnorm(-2), pnorm(2))
+
+# calculate inverse cumulative standard normal distribution within 0.75 to 0.25
+c(qnorm(0.75), qnorm(0.25))
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Don't forget to compare output of those runif()")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:7f3b5009e9
+## Generating Binomial Random Numbers
+
+A binomial trial is a coin ﬂip, that results in either a success or failure.
+The binomial distribution speciﬁes the probability of obtaining a certain number of successes in a sequence of independent binomial trials.
+Let p be the probability of obtaining a success in a binomial trial, and let (1−p) be the probability of failure, p = 0.5 corresponds to ﬂipping an unbiased coin.
+
+The function rbinom() produces random numbers from the binomial distribution.
+
+*** =instructions
+Learn to use rnorm() and sample() to generate binomial random numbers.
+
+*** =hint
+- Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# reset random number generator
+set.seed(1121)
+
+# flip unbiased coin once, 20 times
+
+
+# number of heads after flipping twice, 20 times
+
+
+# flip unbiased coin once, 20 times with faster and slower ways
+
+```
+
+*** =solution
+```{r}
+# reset random number generator
+set.seed(1121)
+
+# flip unbiased coin once, 20 times
+rbinom(n=20, size=1, 0.5)
+
+# number of heads after flipping twice, 20 times
+rbinom(n=20, size=2, 0.5)
+
+# flip unbiased coin once, 20 times with faster and slower ways
+sample(x=0:1, size=20, replace=TRUE)
+as.numeric(runif(20) < 0.5)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Same results, varied speeds!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:dcee782458
+## Generating Random Samples and Permutations
+
+A sample is a subset of elements taken from a set of data elements.
+The function sample() produces a random sample form a vector of data elements, By default the size of the sample (the size argument) is equal to the number of elements in the data vector.
+So the call sample(data) produces a random permutation of all the elements of data.
+If replace=TRUE, then sample() produces samples with replacement.
+
+*** =instructions
+Learn to use sample() to generate permutations with or without replacement.
+
+*** =hint
+- Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# permutation of five numbers
+
+
+# change codes to permutate of four strings
+c("apple", "grape", "orange", "peach")
+
+# sample of size three
+
+
+# change the code and sample with replacement with 'replace = TRUE'
+sample(x=5)
+
+# sample of strings, change the size to 6
+sample(x=c("apple", "grape", "orange", "peach"), size=12, replace=TRUE)
+```
+
+*** =solution
+```{r}
+# permutation of five numbers
+sample(x=5)
+
+# change codes to permutate of four strings
+sample(x=c("apple", "grape", "orange", "peach"))
+
+# sample of size three
+sample(x=5, size=3)
+
+# change the code and sample with replacement with 'replace = TRUE'
+sample(x=5, replace=TRUE)
+
+# sample of strings,change the size to 6
+sample(x=c("apple", "grape", "orange", "peach"), size=6, replace=TRUE)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Change the 'size' argument to get permutation of differing length")
+```
+
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:d5766325a6
+## Statistical Estimators
+
+A data sample is a set of observations of a random variable.
+Let {x1,...,xn} be a data sample of a random variable x.
+Let x follow a probability distribution with population mean equal to µ and population standard deviation equal to σ.
+A statistic is a function of a data sample: f (x1,...,xn).
+A statistic is itself a random variable.
+A statistical estimator is a statistic that provides an estimate of a distribution parameter.
+
+R has the build-in function to calculate mean `mean()` and standard deviation `sd()`. To calculate the skewness and kurtosis you need to type your own formula.
+
+*** =instructions
+Learn to use mean(), sd() to calculate statistical estimators.
+
+*** =hint
+- Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# reset random number generator
+set.seed(1121)
+
+# sample from Standard Normal Distribution
+sam_ple <- rnorm(1000)
+
+# sample mean
+
+
+# sample median
+
+
+# sample standard deviation
+
+
+# try to complete the code, save length, mean and sd for higher moments calculation
+len <- length()
+me_an <- mean()
+s_d <- sd()
+
+# calculate the skewness
+
+
+# calculate the kurtosis
+
+```
+
+*** =solution
+```{r}
+# reset random number generator
+set.seed(1121)
+
+# sample from Standard Normal Distribution
+sam_ple <- rnorm(1000)
+
+# sample mean
+mean(sam_ple)
+
+# sample median
+median(sam_ple)
+
+# sample standard deviation
+sd(sam_ple)
+
+# try to complete the code, save length, mean and sd for higher moments calculation
+len <- length(sam_ple)
+me_an <- mean(sam_ple)
+s_d <- sd(sam_ple)
+
+# calculate the skewness
+len / (len - 1) * (len - 2) * sum(((sam_ple - me_an) / s_d) ^ 3)
+
+# calculate the kurtosis
+len * (len + 1) / ((len - 1) ^ 3) * sum(((sam_ple - me_an) / s_d) ^ 4)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Change the 'size' argument to get permutation of differing length")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:0b1fc2e81d
+## Functions in R
+
+R functions have three components: a list of formal arguments, a body containing R code, an environment.
+An R function plus its environment is referred to as a function closures, The function body should be enclosed in curly braces {}, unless it contains a single command, then it doesn’t have to enclosed.
+The function body doesn’t require a return statement, since by default R functions return the last statement evaluated in the body, args() displays the formal arguments of a function.
+
+*** =instructions
+- Learn to define your own function in R.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# define a function with two arguments
+test_func <- function(first_arg, second_arg) {
+  first_arg + second_arg  # returns last evaluated statement
+}
+
+# apply the function
+test_func(1, 2)
+
+# display argument
+
+
+# define function that uses variable from enclosure environment
+test_func <- function(first_arg, second_arg) {
+  first_arg + second_arg + glob_var
+}
+
+# create glob_var of 10
+
+
+# type 3 and 2 as the first, second input of test_func
+
+```
+
+*** =solution
+```{r}
+# define a function with two arguments
+test_func <- function(first_arg, second_arg) {
+  first_arg + second_arg  # returns last evaluated statement
+}
+
+# apply the function
+test_func(1, 2)
+
+# display argument
+args(test_func)
+
+# define function that uses variable from enclosure environment
+test_func <- function(first_arg, second_arg) {
+  first_arg + second_arg + glob_var
+}
+
+# create glob_var of 10
+glob_var <- 10
+
+# type 3 and 2 as the first, second input of test_func
+test_func(3, 2)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Great! Now what if you redefine test_func() and forget to create glob_var? An error!")
+```
+
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:8d1dbe414e
+## Binding Arguments and Default Argument
+
+The formal arguments of a function are deﬁned in its argument list.
+When a function is called, it’s passed a list of actual function arguments, Formal arguments can be bound to actual arguments either by name or by position: 
+by name: formal arguments are bound to actual arguments with the same name;
+by position: the ﬁrst formal argument is bound to the ﬁrst actual argument, etc. 
+
+Binding by name takes precedence over binding by position: ﬁrst all the named arguments are bound, then the remaining arguments are bound by position.
+Partial argument names are bound to full names.
+
+Formal arguments may be assigned default values, so that when the actual arguments are missing then their default values are used instead.
+Default values are often assigned to function parameters, that determine the function’s behavior.
+Default values can be speciﬁed as a vector of strings, representing the possible values of a function’s parameter.
+The function match.arg() matches a string to one of the possible values, and returns the matched value, or produces an error if it can’t match it.
+The function str() displays the structure of an R object, for example a function name and its formal arguments,
+
+
+*** =instructions
+- Learn to bind function arguments, and set default values.
+
+*** =hint
+Check if object names and function names are correctly typed.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# define a function, with one default value
+test_func <- function(first_arg, second_arg, third_arg = 10) {
+# last statement of function is return value
+  first_arg + 2*second_arg + third_arg
+}  # end test_func
+
+# bind by name with first argument to 3, second argument to 2, without defining third argument
+
+
+# partial name binding with first argument to 3, second argument to 2, without defining third argument 
+
+
+# partial name binding, override default value with 12
+
+
+# bind by position with first argument to 3, second argument to 2, without defining third argument
+
+
+# mixed binding with first argument to 3 at the last, second argument to 2 at the first and third argument to 6 at the middle
+
+```
+
+*** =solution
+```{r}
+# define a function, with one default value
+test_func <- function(first_arg, second_arg, third_arg = 10) {
+# last statement of function is return value
+  first_arg + 2*second_arg + third_arg
+}  # end test_func
+
+# bind by name with first argument to 3, second argument to 2, without defining third argument
+test_func(first_arg=3, second_arg=2)
+
+# partial name binding with first argument to 3, second argument to 2, without defining third argument 
+test_func(first=3, second=2)
+
+# partial name binding, override default value with 12
+test_func(first=3, second=2, third=12)
+
+# bind by position with first argument to 3, second argument to 2, without defining third argument
+test_func(3, 2)
+
+# mixed binding with first argument to 3 at the last, second argument to 2 at the first and third argument to 6 at the middle
+test_func(second_arg=2, third_arg=6, 3)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Enjoy playing the function arguments!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:1c856dfc6f
+## Return Values and Invisible Return
+
+The function body doesn’t require a return statement, since by default R functions return the last statement evaluated in the body, return() statements are inserted in logical branches to terminate function execution and return its intended value,
+
+If a return value is wrapped in the function invisible() then the return value isn’t printed.
+But if the function is assigned to a variable, then its return value is assigned to that variable, invisible() allows creating functions whose return values can be assigned, but which do not print when they’re not assigned.
+
+
+*** =instructions
+- Use return() and invisible() to return value from within a function.
+
+*** =hint
+Remember to change the code for the 'return_invisible()' function.
+
+*** =pre_exercise_code
+```{r}
+# none
+```
+
+*** =sample_code
+```{r}
+# define function that returns NULL for non-numeric argument
+test_func <- function(in_put) {
+  if (!is.numeric(in_put)) {
+    warning(paste("argument", in_put, "isn't numeric"))
+    return(NULL)
+  }
+  2*in_put
+}
+
+# test function output with numeric and character input
+test_func(2)
+test_func("hello")
+
+# change the code to 'invisible()' and define a function that returns invisibly
+return_invisible <- function(in_put) {
+  return(in_put)
+}
+
+# call function with input 2
+return_invisible(2)
+```
+
+*** =solution
+```{r}
+# define function that returns NULL for non-numeric argument
+test_func <- function(in_put) {
+  if (!is.numeric(in_put)) {
+    warning(paste("argument", in_put, "isn't numeric"))
+    return(NULL)
+  }
+  2*in_put
+}
+
+# test function output with numeric and character input
+test_func(2)
+test_func("hello")
+
+# change the code to 'invisible()' and define a function that returns invisibly
+return_invisible <- function(in_put) {
+  invisible(in_put)
+}
+
+# call function with input 2
+return_invisible(2)
+```
+
+
+*** =sct
+```{r}
+test_error()
+success_msg("Enjoy playing the function arguments!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:2d1cb04427
+## Logical Operators
+
+R has the following logical operators: 
+`<` less than, 
+`<=` less than or equal to, 
+`>` greater than, 
+`>=` greater than or equal to, 
+`==` exactly equal to, 
+`!=` not equal to, 
+`!x` Not x, 
+`x & y` x AND y, 
+`x | y` x OR y, 
+
+These operators are applied to vectors element-wise.
+
+
+*** =instructions 
+Use logical operators to create, combine or negate logical vectors. 
+
+*** =hint 
+- Type code as instructed in the comment.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+
+```
+
+*** =sample_code
+```{r}
+# test the '|' operator
+TRUE | FALSE
+TRUE | NA
+
+vec_tor1 <- c(2, 4, 6)
+# element-wise comparison
+vec_tor1 < 5
+
+# combine two comparison with '&'
+(vec_tor1 < 5) & (vec_tor1 > 3)
+
+# compare two vectors
+vec_tor2 <- c(-10, 0, 10)
+vec_tor1 < vec_tor2
+
+# use '&' for two different boolean vector
+c(FALSE, TRUE, FALSE);c(TRUE, TRUE, FALSE)
+
+# use '|' for the same two boolean vector
+c(FALSE, TRUE, FALSE);c(TRUE, TRUE, FALSE)
+```
+
+*** =solution
+```{r}
+# test the '|' operator
+TRUE | FALSE
+TRUE | NA
+
+vec_tor1 <- c(2, 4, 6)
+# element-wise comparison
+vec_tor1 < 5
+
+# combine two comparison with '&'
+(vec_tor1 < 5) & (vec_tor1 > 3)
+
+# compare two vectors
+vec_tor2 <- c(-10, 0, 10)
+vec_tor1 < vec_tor2
+
+# use '&' for two different boolean vector
+c(FALSE, TRUE, FALSE) & c(TRUE, TRUE, FALSE)
+
+# use '|' for the same two boolean vector
+c(FALSE, TRUE, FALSE) | c(TRUE, TRUE, FALSE)
+```
+
+*** =sct
+```{r}
+msg <- "Do not change how `vec_tor1` and `vec_tor2` are created!"
+lapply(c("vec_tor1", "vec_tor2"), test_object, undefined_msg = msg, incorrect_msg = msg)
+success_msg("Perfect! Let's explore logical operators further.")
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:c6e056b9c3
+## Long Form Logical Operators
+
+R also has two long form logical operators: 
+`x && y` x AND y, 
+`x || y` x OR y
+
+These operators diﬀer from the short form operators in two ways: 
+They only evaluate the ﬁrst elements of their vector arguments, 
+They short-circuit (stop evaluation as soon as the expression is determined).
+
+Rule of Thumb
+Use `&&` and `||` in if-clauses
+
+*** =instructions
+- Use '&&' and '||' in if-clause valuation.
+
+*** =hint
+Use '&&' and '||' in if-clause valuation for two or more long objects.
+
+
+*** =pre_exercise_code
+```{r}
+```
+
+*** =sample_code
+```{r}
+# test long logical operators with boolean vectors
+c(FALSE, TRUE, FALSE);c(TRUE, TRUE, FALSE)
+c(FALSE, TRUE, FALSE);c(TRUE, TRUE, FALSE)
+
+# test long logical operators with functions
+echo_true <- function() {cat("echo_true\t"); TRUE}
+echo_false <- function() {cat("echo_false\t"); FALSE}
+echo_true();echo_false()
+echo_true();echo_false()
+
+# define a new vector
+vec_tor <- c(2, 4, 6)
+
+# change the code to make sure evaluations in if-clause works with no flaw
+if (is.matrix(vec_tor) & (vec_tor[2, 3] > 0)) {
+  vec_tor[2, 3] <- 1
+}
+```
+
+*** =solution
+
+```{r}
+# test long logical operators with boolean vectors
+c(FALSE, TRUE, FALSE) && c(TRUE, TRUE, FALSE)
+c(FALSE, TRUE, FALSE) || c(TRUE, TRUE, FALSE)
+
+# test long logical operators with functions
+echo_true <- function() {cat("echo_true\t"); TRUE}
+echo_false <- function() {cat("echo_false\t"); FALSE}
+echo_true() | echo_false()
+echo_true() || echo_false()
+
+# define a new vector
+vec_tor <- c(2, 4, 6)
+
+# change the code to make sure evaluations in if-clause works with no flaw
+if (is.matrix(vec_tor) && (vec_tor[2, 3] > 0)) {
+  vec_tor[2, 3] <- 1
+}
+```
+
+*** =sct
+```{r}
+test_object("vec_tor", 
+            incorrect_msg = "Don't change how `vec_tor` is defined.")
+success_msg("Very good! Now you see the long and short logical operators is quite different!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:ebb5aae2ff
+## Arithmetic Operators
+
+Arithmetic operators perform arithmetic operations on numeric or complex vectors:
+`+` performs addition, 
+`-` performs subtraction, 
+`*` performs multiplication, 
+`/` performs division, 
+`^` and `**` perform exponentiation,
+
+
+*** =instructions
+- Utilize arithmetic operators to do everyday calculation.
+
+*** =hint
+Remember '**' and '^' are interchangeable
+
+*** =pre_exercise_code
+```{r}
+```
+
+*** =sample_code
+```{r}
+# multiplication
+4.7 * 0.5
+
+# division
+4.7 / 0.5
+
+# exponentiation, 2 to the power 3
+2**3
+
+# replicate the former example using another way of exponentiation
+
+```
+
+*** =solution
+```{r}
+# multiplication
+4.7 * 0.5
+
+# division
+4.7 / 0.5
+
+# exponentiation, 2 to the power 3
+2**3
+
+# replicate the former example using another way of exponentiation
+2^3
+```
+
+*** =sct
+```{r}
+success_msg("Well done!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:5c026ed9fb
+## Comparing Objects With identical()
+
+The function identical() tests if two objects are exactly the same, and always returns a single logical TRUE or FALSE (never NA or logical vectors).
+For atomic arguments identical() often gives the same result as the "==" operator, but it’s not synonymous with it in general.
+The "==" operator applies the recycling rule to vector arguments and returns logical vectors, but identical() doesn’t and returns a single logical value.
+
+
+*** =instructions
+- Compare the return value using `==` and `identical()`
+
+*** =hint
+Use `==` instead of `identical`
 
 *** =pre_exercise_code
 ```{r}
@@ -45,148 +782,783 @@ Set `nrow` to `3` and `byrow` to `TRUE` inside `matrix()`.
 
 *** =sample_code
 ```{r}
-# Star Wars box office in millions (!)
-box <- c(460.998, 314.4, 290.475, 247.900, 309.306, 165.8)
+# compare with atomic object
+num_var <- 2
+num_var==2
+identical(num_var, 2)
 
-# Create star_wars_matrix
+# compare with null using both methods in the instruction
+
+
+# compare with different vector
+var_num <- 1:5
+var_char <- letters[1:5]
+
+# compare using both methods in the instruction
 
 ```
 
 *** =solution
 ```{r}
-# Star Wars box office in millions (!)
-box <- c(460.998, 314.4, 290.475, 247.900, 309.306, 165.8)
+# compare with atomic object
+num_var <- 2
+num_var==2
+identical(num_var, 2)
 
-# Create star_wars_matrix
-star_wars_matrix <- matrix(box, nrow = 3, byrow = TRUE) 
+# compare with null using both methods in the instruction
+identical(num_var, NULL)
+num_var == NULL
+
+# compare with different vector
+var_num <- 1:5
+var_char <- letters[1:5]
+
+# compare using both methods in the instruction
+identical(var_num, var_char)
+var_num == var_char
 ```
 
 *** =sct
 ```{r}
-test_error()
-msg <- "Do not change or remove the definition of `box`!"
-test_object("box", undefined_msg = msg, incorrect_msg = msg)
+msg <- "Do not change the values of defined vector; they were already coded for you."
+test_object("num_var", incorrect_msg = sprintf(msg, "num_var"))
+test_object("var_num", incorrect_msg = sprintf(msg, "var_num"))
+test_object("var_char", incorrect_msg = sprintf(msg, "var_char"))
+success_msg("Nice one! Now you see how to compare in various ways.")
+```
 
-# TODO: Fix in testwhat
-test_object("star_wars_matrix", eval = FALSE)
-test_what(
-  expect_equal(
-    dim(get("star_wars_matrix", get_solution_env())), 
-    dim(get("star_wars_matrix", .GlobalEnv))),
-  feedback = 
-    paste("Be sure to use the `byrow` and `nrow` arguments of the function `matrix()`",
-          "to form a matrix of the correct dimensions: 3 rows and 2 columns."))
 
-test_correct({
-  test_object("star_wars_matrix",
-              undefined_msg = "Please make sure to define a variable `star_wars_matrix`.",
-              incorrect_msg = "Did you assign the correct matrix containing the vector that holds all three movies to `star_wars_matrix`?")
-}, {
-  test_function("matrix", "data")
-  test_function("matrix", "nrow")
-  test_function("matrix", "byrow")
-})
+--- type:NormalExercise lang:r xp:100 skills:1 key:6b17fc50b9
+## Lookup and Matching
+
+The function which() returns the indices of the TRUE elements of a boolean vector or array.
+If the argument is an array and arr.ind=TRUE, then which() returns a matrix with rows containing the indices of the TRUE elements.
+The functions which.max() and which.min() return the index of the minimum or maximum of a numeric or boolean vector.
+
+
+*** =instructions
+- Use which.max() to search for the maximum value
+
+*** =hint
+Similar to the previous codes, use which.max() on desired object, like the latter example.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# create a vector and a matrix
+vec_tor <- sample(1:9)
+mat_rix <- matrix(vec_tor, ncol=3)
+vec_tor
+
+# search the vector for those equal to 5
+
+
+# equivalent but less efficient than the above code
+
+
+# find indices of TRUE elements of boolean matrix
+
+
+# equivalent but less efficient than above
+
+
+# find the maximum of a vector
+
+
+# equivalent but less efficient than above
+
+```
+
+*** =solution
+```{r}
+# create a vector and a matrix
+vec_tor <- sample(1:9)
+mat_rix <- matrix(vec_tor, ncol=3)
+vec_tor
+
+# search the vector for particular value
+which(vec_tor == 5)
+
+# equivalent but less efficient than above
+(1:length(vec_tor))[vec_tor == 5]
+
+# find indices of TRUE elements of boolean matrix
+which((mat_rix == 5)|(mat_rix == 6), arr.ind=TRUE)
+
+# equivalent but less efficient than above
+arrayInd(which((mat_rix == 5)|(mat_rix == 6)), dim(mat_rix), dimnames(mat_rix))
+
+# find the maximum of a vector
+which.max(vec_tor)
+
+# equivalent but less efficient than above
+which(vec_tor == max(vec_tor))
+```
+
+*** =sct
+```{r}
+msg = "Do not change anything about the definition and naming of `vec_tor` and `mat_rix`."
+test_object("vec_tor", undefined_msg = msg, incorrect_msg = msg)
+test_object("mat_rix", undefined_msg = msg, incorrect_msg = msg)
+success_msg("Great! Continue to the next exercise.")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:a9a1a50a31
+## Lookup and Matching (cont.)
+
+match() returns the index of the ﬁrst element of its second argument, that matches its ﬁrst argument.
+
+The binary operator %in% returns a boolean vector with TRUE values corresponding to elements that have matches, %in% is a wrapper for match() deﬁned as follows:
+"%in%" <- function(x, table) match(x, table, nomatch=0) > 0, %in% never returns NA, so it’s preferred in if () statements, any() returns TRUE if at least one element of a boolean vector is TRUE, and FALSE otherwise.
+
+Given a single argument, any() is equivalent to %in%, but is much faster because it’s a compiled function.
+
+
+*** =instructions
+- Learn to use `match()` on objects
+- Learn to use `%in%` on objects
+
+*** =hint
+For comparing two values to one vector, you can group values into one vector, and use 'match' or '%in%' to the vector you want to check.
+
+*** =pre_exercise_code
+```{r}
+vec_tor <- sample(1:9)
+```
+
+*** =sample_code
+```{r}
+# search in a different way with match()
+match(-5, vec_tor)
+
+# use '%in%' operator to see if 5 is in the vector
+
+
+# equivalent to above
+
+
+# search for -5 which not in the vector using '%in%'
+
+
+# now try to see -5 and 5 are in the vec_tor using '%in%'
+
+
+# equivalent to the previous
+
+
+# change the content in the if-clause to see if any negative value in vec_tor
+if (any(vec_tor)) cat("vector contains negative values\n")
+```
+
+*** =solution
+```{r}
+# search in a different way with match()
+match(-5, vec_tor)
+
+# use '%in%' operator to see if 5 is in the vector
+5 %in% vec_tor
+
+# equivalent to above
+match(5, vec_tor, nomatch=0) > 0
+
+# search for -5 which not in the vector using '%in%'
+-5 %in% vec_tor
+
+# now try to see -5 and 5 are in the vec_tor using '%in%'
+c(5, -5) %in% vec_tor
+
+# equivalent to the previous
+any(vec_tor == 5)
+
+# change the content in the if-clause to see if any negative value in vec_tor
+if (any(vec_tor < 0)) cat("vector contains negative values\n")
+```
+
+*** =sct
+```{r}
+msg <- "Do not change anything about the definition and naming of `vec_tor`."
+test_object("vec_tor", undefined_msg = msg, incorrect_msg = msg)
+success_msg("Oops, it seems like you are losing money. Time to rethink and adapt your strategy! This will require some deeper analysis...")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:6112e74425
+## Assignment Operators
+
+The standard assignment operator in R is `<-`. Both `<-` and `=` are valid assignment operators in R.
+
+The `<-` operator may cause an error if R confuses it with the `<` logical operator. But they diﬀer in scope and precedence (`<-` has higher precedence than `=`). The `=` operator is used for named arguments in function calls, When variables are assigned within an argument list using the `=` operator, their scope is limited to the function.
+
+Rule of Thumb: Use `<-` in R scripts and inside functions, Use `=` only in function calls.
+
+*** =instructions
+- Distinguish `<-` assignment and `<`.
+- Compare the usage and `<-` and `=`.
+
+*** =hint
+Follow the instruction and introduction. 
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# "<-" and "=" are valid assignment operators
+num_var1 <- 3
+
+# print the variable
+
+
+# use "=" to the variable
+
+
+# add space or brackets to avoid confusion
+
+
+# "<-" assignment within argument list
+
+
+# x exists outside the function
+
+```
+
+*** =solution
+```{r}
+# "<-" and "=" are valid assignment operators
+num_var1 <- 3
+
+# print the variable
+num_var1
+
+# use "=" to the variable
+num_var1 = 3
+
+# add space or brackets to avoid confusion
+2 < -3
+
+# "<-" assignment within argument list
+median(x <- 1:10)
+
+# x exists outside the function
+x
+```
+
+*** =sct
+```{r}
+success_msg("Great! Assignment operator `<-` is unique in R languages, remember to practice in the future!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:ae2832fbd1
+## The "if () else" Control Statement
+
+R has the familiar "if () {...} else {...}" statement to control execution ﬂow depending on logical conditions.
+
+The logical conditions must be either a logical or numeric type, otherwise an error is produced.
+
+The "else" statement can also be omitted, "if" statements can be nested using multiple "else if" statements,
+
+
+*** =instructions
+- Learn to use the `if () else` structure.
+
+*** =hint
+Follow the instructions and introductions.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+num_var1 <- 1
+``` 
+
+*** =sample_code
+```{r}
+# numeric zero is FALSE, all other numbers are TRUE
+if (num_var1) {
+  num_var2 <- 4
+
+# change the code for 'else if' together on same line
+} else (num_var1 == 0) {
+  num_var2 <- 0
+  
+# 'else' together with curly braces
+} else {
+  num_var2 <- -4
+
+# end if
+
+
+# print the "num_var" to see the result
+
+```
+
+*** =solution
+```{r}
+# numeric zero is FALSE, all other numbers are TRUE
+if (num_var1) {
+  num_var2 <- 4
+
+# change the code for 'else if' together on same line
+} else if (num_var1 == 0) {
+  num_var2 <- 0
+  
+# 'else' together with curly braces
+} else {
+  num_var2 <- -4
+
+# end if
+}
+
+# print the "num_var" to see the result
+num_var2
+```
+
+*** =sct
+```{r}
+msg <- "Do not change anything about the definition and naming of `num_var1`."
+test_object("num_var1", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
+success_msg("Well done!!");
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:5919f3fc05
+## The switch() Control Statement
+
+The function `switch()` evaluates its ﬁrst argument `EXPR`, and depending on its value, chooses one of the named arguments passed to the dots `...` argument
+
+The dots `...` argument accepts a named list (symbol-value pairs), If `EXPR` is a character string, then the element with that name is returned by switch(). If switch() can’t match the string to any name, then it returns NULL, If `EXPR` is an integer, then switch() returns the element from that position. Using switch() is a convenient alternative to a cascade of "if () else" statements. 
+
+The function match.arg() matches a string to one of the possible values, and returns the matched value, or produces an error if it can’t match it,
+
+*** =instructions
+- Use `swithc()` to produce similar results to if-else.
+
+*** =hint
+Follow the instructions and introductions.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# change the code and switch to the first argument by name
+switch(0, a="aaahh", b="bee", c="see", d=2, "else this")
+
+# change the code and switch to the third argument by name
+switch(0, a="aaahh", b="bee", c="see", d=2, "else this")
+
+# change the code and switch to the third argument by number
+switch(0, a="aaahh", b="bee", c="see", d=2, "else this")
+
+# type a random name and see where the result is switched
+switch(0, a="aaahh", b="bee", c="see", d=2, "else this")
+
+# measure of central tendency
+centra_lity <- function(in_put,
+    meth_od=c("mean", "mean_narm", "median")) {
+    
+# change the code and validate "meth_od" argument
+  meth_od <- meth_od
+  switch(meth_od,
+ mean=mean(in_put),
+ mean_narm=mean(in_put, na.rm=TRUE),
+ median=median(in_put))
+}
+
+# create 100 random normal number, mean is 2
+
+
+# apply centra_lity to the variable for mean
+
+
+# apply centra_lity to the variable for mean with NA removed
+
+
+# apply centra_lity to the variable for median
+
+```
+
+*** =solution
+```{r}
+# change the code and switch to the first argument by name
+switch("a", a="aaahh", b="bee", c="see", d=2, "else this")
+
+# change the code and switch to the third argument by name
+switch("c", a="aaahh", b="bee", c="see", d=2, "else this")
+
+# change the code and switch to the third argument by number
+switch(3, a="aaahh", b="bee", c="see", d=2, "else this")
+
+# type a random name and see where the result is switched
+switch("cc", a="aaahh", b="bee", c="see", d=2, "else this")
+
+# measure of central tendency
+centra_lity <- function(in_put,
+    meth_od=c("mean", "mean_narm", "median")) {
+    
+# change the code and validate "meth_od" argument
+  meth_od <- match.arg(meth_od)
+  switch(meth_od,
+ mean=mean(in_put),
+ mean_narm=mean(in_put, na.rm=TRUE),
+ median=median(in_put))
+}
+
+# create 100 random normal number, mean is 2
+my_var <- rnorm(100, mean=2)
+
+# apply centra_lity to the variable for mean
+centra_lity(my_var, "mean")
+
+# apply centra_lity to the variable for mean with NA removed
+centra_lity(my_var, "mean_narm")
+
+# apply centra_lity to the variable for median
+centra_lity(my_var, "median")
+```
+
+*** =sct
+```{r}
+success_msg("Good job! Head over to the next exercise.");
+```
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:22121c6c46
+## Iteration Using for() and while() Loops
+
+The "for() {...}" statement iterates a bound variable over elements of a vector or list. The for() loop creates the bound variable, which then iterates over the elements of the vector, and upon loop exit the bound variable is left equal to the last element of the vector, R also has a "while() {...}" loop, while() loops start by testing their logical condition, and they repeat executing the loop body until that condition is FALSE, But while() loops risk producing inﬁnite loops if not written properly, so Use Them With Care!
+
+
+*** =instructions
+- Create loop with `for()`.
+- Create loop with `while()`.
+
+*** =hint
+Follow the indstruction and introduction.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# create a list
+color_list <- list("red", "white", "blue")
+
+# change the code to start loop over list
+for (some_color in color_list) {
+  print(some)
+}
+
+# change the code to correct loop over vector
+for (in_dex in 3:6) {
+  print(color_list[[in_dex]])
+}
+
+# while loops need initialization
+in_dex
+
+# change the code to start while loop
+while (in_ < 4) {
+  print(color_list[[in_dex]])
+  in_dex <- in_dex + 1
+}
+```
+
+*** =solution
+```{r}
+# create a list
+color_list <- list("red", "white", "blue")
+
+# change the code to start loop over list
+for (some_color in color_list) {
+  print(some_color)
+}
+
+# change the code to correct loop over vector
+for (in_dex in 1:3) {
+  print(color_list[[in_dex]])
+}
+
+# while loops need initialization
+in_dex <- 1
+
+# change the code to start while loop
+while (in_dex < 4) {
+  print(color_list[[in_dex]])
+  in_dex <- in_dex + 1
+}
+```
+
+*** =sct
+```{r}
+success_msg("Nice one! Using loops help automate the processing for repetitive operations!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:aa2e5f6e97
+## Fibonacci Sequence Using for() Loop
+
+The Fibonacci sequence was invented by Indian mathematicians, and later described by Fibonacci in his famous treatise Liber Abaci, Very often variables are initialized to NULL before the start of iteration, A more eﬃcicent way to perform iteration is by pre-allocating the vector.
+
+The function numeric(k) returns a numeric vector of zeros of length k, The function numeric(0) returns an empty (zero length) numeric vector (not to be confused with a NULL object).
+
+*** =instructions
+- Use for() loop to extract and store data in a vector.
+
+*** =hint
+- Follow the instruction and introduction. The Fibonacci sequence of integers is deﬁned by the recurrence relation: Fn = Fn−1 + Fn−2, F1 = 0,F2 = 1, Fn = 0,1,1,2,3,5,8,13,... 
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# pre-allocate vector instead of "growing" it
+fib_seq <- numeric(10)
+
+# initialize the first element
+fib_seq[1]
+
+# initialize the second element
+fib_seq[2]
+
+# change the code and perform recurrence loop
+for (i in 3:10) {
+  fib_seq[i-1] + fib_seq[i-2]
+}
+
+# print the result
+fib_seq
+```
+
+*** =solution
+```{r}
+# pre-allocate vector instead of "growing" it
+fib_seq <- numeric(10)
+
+# initialize the first element
+fib_seq[1] <- 0
+
+# initialize the second element
+fib_seq[2] <- 1
+
+# change the code and perform recurrence loop
+for (i in 3:10) {
+  fib_seq[i] <- fib_seq[i-1] + fib_seq[i-2]
+}
+
+# print the result
+fib_seq
+```
+
+*** =sct
+```{r}
+success_msg("Great! Move on to the next exercise!")
+```
+--- type:NormalExercise lang:r xp:100 skills:1 key:834a0e546c
+## List
+
+Lists are a type of vector that contain elements of diﬀerent types, Lists are recursive object types, meaning each list element can contain other vectors or lists.
+
+The function list() creates a list from a list of vectors, list() creates a named list from a list of symbol-value pairs, The function is.list() returns TRUE if its argument is a list, and FALSE otherwise, The function unlist() ﬂattens a list into a vector that contains the atomic elements of the list (which typically causes coercion).
+
+*** =instructions
+- Explore the attributes of list.
+
+*** =hint
+Follow the instruction and introduction.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+```
+
+*** =sample_code
+```{r}
+# create a list with two elements
+list_var <- list(c('a', 'b'), 1:4)
+
+# print the list
+
+
+# see the type, mode and class of the list
+
+
+# lists are also vectors
+
+
+# get the length of the list
+
+
+# create named list
+list_var <- list(first=c('a', 'b'), second=1:4)
+
+# print the list
+
+
+# get the name of the list
+
+
+# flatten the list
+
+```
+
+*** =solution
+```{r}
+# create a list with two elements
+list_var <- list(c('a', 'b'), 1:4)
+
+# print the list
+list_var
+
+# see the type, mode and class of the list
+c(typeof(list_var), mode(list_var), class(list_var))
+
+# lists are also vectors
+c(is.vector(list_var), is.list(list_var))
+
+# get the length of the list
+length(list_var)
+
+# create named list
+list_var <- list(first=c('a', 'b'), second=1:4)
+
+# print the list
+list_var
+
+# get the name of the list
+names(list_var)
+
+# flatten the list
+unlist(list_var)
+```
+
+*** =sct
+```{r}
 success_msg("Great job!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:0dfb4c5e70
-## Analyzing matrices, you shall (2)
+## Subsetting Lists
 
-Instead of as a single vector, the box office numbers for the three Star Wars movies are represented as three vectors. Remember the [`rbind()`](http://www.rdocumentation.org/packages/base/functions/cbind) function to paste together different vectors as if they were rows of a matrix? Take this example, that pastes together 2 vectors as if they were rows of a matrix:
+Lists can be subset (indexed) using: 
 
 ```
-a <- c(1, 2, 3)
-b <- c(4, 5, 6)
-rbind(a, b)
-```
+the "[" operator (returns sublist);
+the "[[" operator (returns an element);
+the "$" operator (for named lists only),
 
-Try a similar thing on the astronomical Star Wars numbers!
+```
+Partial name matching allows subsetting with partial name, as long as it can be resolved,
 
 *** =instructions
-Again, construct the matrix `star_wars_matrix` with one row for each movie.
+Experiment list subsetting with `[]` and `[[]]`.
 
 *** =hint
-Simply pass the three vectors to the [`rbind()`](http://www.rdocumentation.org/packages/base/functions/cbind) function.
+Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
 # no pec
+list_var <- list(first=c('a', 'b'), second=1:4)
 ```
 
 *** =sample_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
+# extract second element as sublist
 
-# Create star_wars_matrix
+
+# extract second element
+
+
+# extract third element of second element
+
+
+# third element of second element
+
+
+# extract second element
+
+
+# extract second element - partial name matching
+
+
+# third element of second element
+
+
+# empty list
+list_var <- list()
+
+# element assignment
+list_var$a <- 1
+list_var[2] <- 2
+
+# print the list
 
 ```
 
 *** =solution
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
+# extract second element as sublist
+list_var[2]
 
-# Create star_wars_matrix
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
+# extract second element
+list_var[[2]]
+
+# extract third element of second element
+list_var[[2]][3]
+
+# third element of second element
+list_var[[c(2, 3)]]
+
+# extract second element
+list_var$second
+
+# extract second element - partial name matching
+list_var$s
+
+# third element of second element
+list_var$second[3]
+
+# empty list
+list_var <- list()
+
+# element assignment
+list_var$a <- 1
+list_var[2] <- 2
+
+# print the list
+list_var
 ```
 
 *** =sct
 ```{r}
-test_error()
-msg = "Do not change anything about the box office variables `new_hope`, `empire_strikes` and `return_jedi`!"
-test_object("new_hope", undefined_msg = msg, incorrect_msg = msg)
-test_object("empire_strikes", undefined_msg = msg, incorrect_msg = msg)
-test_object("return_jedi", undefined_msg = msg, incorrect_msg = msg)
-
-# Fix untill testwhat gets updated again
-# TODO: Fix in testwhat
-test_object("star_wars_matrix", eval = FALSE)
-test_what(
-  expect_equal(
-    dim(get("star_wars_matrix", get_solution_env())), 
-    dim(get("star_wars_matrix", .GlobalEnv))),
-  feedback = 
-    paste("Be sure to use the the function `rbind()` with 3 arguments: `new_hope`,",
-          "`empire_strikes` and `return_jedi`. You should end up with a matrix",
-          "of the correct dimensions: 3 rows and 2 columns."))
-
-
-
-test_correct({
-  test_object("star_wars_matrix",
-            incorrect_msg = "Did you assign the correct matrix containing the vector that holds all three movies to `star_wars_matrix`?")
-}, {
-  test_function("rbind", not_called_msg = "You should use the [`rbind()`](http://www.rdocumentation.org/packages/base/functions/cbind) function to create the matrix.")
-})
 success_msg("The force is actually with you! Continue to the next exercise.")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:ca3dbb8a9f
-## Naming a matrix
+## Coercing Vectors Into Lists Using as.list()
 
-To help you remember what is stored in `star_wars_matrix`, you would like to add the names of the movies for the rows. Not only does this help you to read the data, but it is also useful to select certain elements from the matrix later. 
-
-Similar to vectors, you can add names for the rows and the columns of a matrix
-
-```
-rownames(my_matrix) <- row_names_vector
-colnames(my_matrix) <- col_names_vector
-```
+The function as.list() coerces vectors and other objects into lists, as.list() returns a list with the same elements as the vector, list() called on a vector returns a single element equal to the vector.
 
 *** =instructions
-- Two vectors containing the row names and column names have been created for you: `movie_names` and `col_titles`.
-- Name the rows of `star_wars_matrix` with `movie_names`.
-- Name the columns of `star_wars_matrix` with the pre-defined `col_titles`.
+- Use `as.list()` and `list()` for list coercion.
 
 *** =hint
-To name the rows, start with `rownames(star_wars_matrix) <-`; can you finish the command?
+Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
@@ -195,76 +1567,43 @@ To name the rows, start with `rownames(star_wars_matrix) <-`; can you finish the
 
 *** =sample_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-
-# Build col_names_vector and row_names_vector
-movie_names <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-col_titles <- c("US", "non-US")
-
-# Add row names to star_wars_matrix
+# coerce c(1,2,3) into list
 
 
-# Add column names to star_wars_matrix
+# coerce c(1,2,3) into list in another way
 
 ```
 
 *** =solution
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
+# coerce c(1,2,3) into list
+as.list(c(1,2,3))
 
-# Build col_names_vector and row_names_vector
-movie_names <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-col_titles <- c("US", "non-US")
-
-# Add row names to star_wars_matrix
-rownames(star_wars_matrix) <- movie_names
-
-# Add column names to star_wars_matrix
-colnames(star_wars_matrix) <- col_titles
+# coerce c(1,2,3) into list in another way
+list(c(1,2,3))
 ```
 
 *** =sct
 ```{r}
-msg = "Do not change anything about the box office variables `new_hope`, `empire_strikes` and `return_jedi`!"
-lapply(c("new_hope", "empire_strikes", "return_jedi"), test_object, undefined_msg = msg, incorrect_msg = msg)
-msg <- "Do not change anything about the creation of `star_wars_matrix`."
-test_object("star_wars_matrix", undefined_msg = msg, incorrect_msg = msg)
-msg <- paste("Do not change or remove the vectors `col_names_vector` and `row_names_vector`;",
-             "you can use them to name the columns and rows of `star_wars_matrix`.")
-lapply(c("movie_names", "col_titles"), test_object, undefined_msg = msg, incorrect_msg = msg)
-test_object("star_wars_matrix", eq_condition = "equal",
-            incorrect_msg = paste("Did you set the row and column names of `star_wars_matrix` correctly?",
-                                  "Have another look at your code."))
 success_msg("Great! You're on your way of becoming an R jedi!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:3b60b1a49a
-## Calculating the worldwide box office 
+## Data Frames
 
-The single most important thing for a movie in order to become an instant legend in Tinseltown is its worldwide box office figures. 
+Data frames are 2-D objects (like matrices), but their columns can be of diﬀerent types.
 
-To calculate the total box office revenue for the three Star Wars movies, you have to take the sum of the US revenue column and the non-US revenue column.
+Data frames can be thought of as lists of vectors of the same length.
 
-In R, the function [`rowSums()`](http://www.rdocumentation.org/packages/base/functions/colSums) conveniently calculates the totals for each row of a matrix. This function creates a new vector:
+The function data.frame() creates a data frame from vectors assigned to column names.
 
-```
-sum_of_rows_vector <- rowSums(my_matrix)
-```
 
 *** =instructions
-Calculate the worldwide box office figures for the three movies and put these in the vector named `worldwide_vector`.
+- Learn the baiscs of dataframe.
 
 *** =hint
-The ['rowSums'](http://www.rdocumentation.org/packages/base/functions/colSums) function will calculate the total box office for each row of the `star_wars_matrix`, if you supply `star_wars_matrix` as an argument to that function by putting it between the parentheses.
+Follow the instruction and intorduction.
 
 *** =pre_exercise_code
 ```{r}
@@ -273,475 +1612,564 @@ The ['rowSums'](http://www.rdocumentation.org/packages/base/functions/colSums) f
 
 *** =sample_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
+# create a data frame
+data_frame <- data.frame(
+                type=c('rose', 'daisy', 'tulip'),
+                color=c('red', 'white', 'yellow'),
+                price=c(1.5, 0.5, 1.0)
+              )
 
-# Calculate the worldwide box office: worldwide_vector
+# print the data frame
+
+
+# get dimension attribute
+
+
+# get the colnames attribute
+
+
+# get the rownames attribute
+
+
+# get object class
+
+
+# check if data frames are lists
+
+
+# check if the data frame is a dataframe
 
 ```
 
 *** =solution
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
+# create a data frame
+data_frame <- data.frame(
+                type=c('rose', 'daisy', 'tulip'),
+                color=c('red', 'white', 'yellow'),
+                price=c(1.5, 0.5, 1.0)
+              )
 
-# Calculate the worldwide box office: worldwide_vector
-worldwide_vector <- rowSums(star_wars_matrix)
+# print the data frame
+data_frame
+
+# get dimension attribute
+dim(data_frame)
+
+# get the colnames attribute
+colnames(data_frame)
+
+# get the rownames attribute
+rownames(data_frame)
+
+# get object class
+class(data_frame)
+
+# check if data frames are lists
+typeof(data_frame)
+
+# check if the data frame is a dataframe
+is.data.frame(data_frame)
 ```
 
 *** =sct
 ```{r}
-msg = "Do not change anything about the construction and naming of `star_wars_matrix`!"
-test_object("star_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-
-test_function("rowSums", "x", 
-              not_called_msg = "Have you used the function `rowSums()</code?",
-              incorrect_msg = "Did you use the [`rowSums()`](http://www.rdocumentation.org/packages/base/functions/colSums) function on the correct vector?")
-
-test_object("worldwide_vector",
-            incorrect_msg = "Have you specified `worldwide_vector` correctly?")
 success_msg("Well done! Continue to the next exercise.")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:4e0c938d72
-## Adding a row
+## Subsetting Data Frames
 
-Your R workspace contains two matrices: 
-- `star_wars_matrix`: the matrix that you just created for the first trilogy.
-- `star_wars_matrix2`: similar information for the second trilogy. 
-Type the names of the matrices in the console and press enter if you want to have a closer look.
+Data frames can be subset in a similar way to lists and matrices.
+Depending on how a data frame is subset, the result can be either a data frame or a vector. Extracting a single column from a data frame produces a vector.
+
+The data frame class attribute can be preserved by using the parameter "drop=FALSE", Extracting a single row from a data frame produces a data frame, The function unlist() applied to a single row extracted from a data frame coerces it to a vector,
+
 
 *** =instructions
-Use [`rbind()`](http://www.rdocumentation.org/packages/base/functions/cbind) to create `all_wars_matrix`, a new matrix with `star_wars_matrix` in the first three rows and `star_wars_matrix2` in the next three rows.
+- Expriment with different data frame subsetting methodology.
 
 *** =hint
-You can check out the contents of the workspace by executing [`ls()`](http://www.rdocumentation.org/packages/base/functions/ls) in the console.
-
-Bind the two matrices together in the following way: 
-```
-rbind(matrix1, matrix2)
-```
-Assign the result to `all_wars_matrix`.
+Use methods and functions mentioned in vector and list chapters. Potential candidates are `[]`, `[[]]`, `$`.
 
 
 *** =pre_exercise_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
-
-# Construct matrix2
-box_office_all2 <- c(474.5, 552.5, 310.7, 338.7, 380.3, 468.5)
-movie_names2 <- c("The Phantom Menace", "Attack of the Clones", "Revenge of the Sith")
-star_wars_matrix2 <- matrix(box_office_all2, nrow = 3, byrow = TRUE)
-rownames(star_wars_matrix2) <- c("The Phantom Menace", "Attack of the Clones", "Revenge of the Sith")
-colnames(star_wars_matrix2) <- c("US", "non-US")
+data_frame <- data.frame(  # create a data frame
+                type=c('rose', 'daisy', 'tulip'),
+                color=c('red', 'white', 'yellow'),
+                price=c(1.5, 0.5, 1.0)
+              )
 ```
 
 *** =sample_code
 ```{r}
-# Matrix that contains the first trilogy box office
-star_wars_matrix  
+# extract third column as vector
+data_frame[, 3]
 
-# Matrix that contains the second trilogy box office
-star_wars_matrix2 
+# extract third column as vector
+data_frame[[3]]
 
-# Combine both Star Wars trilogies in one matrix: all_wars_matrix
+# extract third column as data frame
+data_frame[3]
 
+# extract third column as data frame
+data_frame[, 3, drop=FALSE]
+
+# second element from third column
+data_frame[[3]][2]
+
+# second element from 'price' column
+data_frame$price[2]
+
+# check if the third column is a dataframe and if it is a vector
+is.data.frame(data_frame[[3]]); is.vector(data_frame[[3]])
+
+# extract second row
+data_frame[2, ]
+
+# third element from second column
+data_frame[2, ][3]
+
+# third element from second column
+data_frame[2, 3]
+
+# coerce to vector
+unlist(data_frame[2, ])
+
+# check if the second row is a vector or a dataframe
+is.data.frame(data_frame[2, ]); is.vector(data_frame[2, ])
 ```
 
 *** =solution
 ```{r}
-# Matrix that contains the first trilogy box office
-star_wars_matrix  
+# extract third column as vector
+data_frame[, 3]
 
-# Matrix that contains the second trilogy box office
-star_wars_matrix2 
+# extract third column as vector
+data_frame[[3]]
 
-# Combine both Star Wars trilogies in one matrix: all_wars_matrix
-all_wars_matrix <- rbind(star_wars_matrix, star_wars_matrix2)
-```
+# extract third column as data frame
+data_frame[3]
 
-*** =sct
-```{r}
-msg <- "Do not override the variables that have been defined for you in the workspace (`star_wars_matrix` and `star_wars_matrix2`)."
-test_object("star_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("star_wars_matrix2", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("all_wars_matrix",
-            incorrect_msg = "Did you use the [`rbind()`](http://www.rdocumentation.org/packages/base/functions/cbind) function with the correct arguments to build `all_wars_matrix`?")
-success_msg("Wonderful! Continue with the next exercise and see how you can combine the results of the [`rbind()`](http://www.rdocumentation.org/packages/base/functions/cbind) function with the [`colSums()`](http://www.rdocumentation.org/packages/base/functions/colSums) function!")
-```
+# extract third column as data frame
+data_frame[, 3, drop=FALSE]
 
+# second element from third column
+data_frame[[3]][2]
 
---- type:NormalExercise lang:r xp:100 skills:1 key:30a0c39c10
-## The total box office revenue for the entire saga
+# second element from 'price' column
+data_frame$price[2]
 
-Just like every [`cbind()`](http://www.rdocumentation.org/packages/base/functions/cbind) has a [`rbind()`](http://www.rdocumentation.org/packages/base/functions/cbind), every [`colSums()`](http://www.rdocumentation.org/packages/base/functions/colSums) has a [`rowSums()`](http://www.rdocumentation.org/packages/base/functions/colSums). 
+# check if the third column is a dataframe and if it is a vector
+is.data.frame(data_frame[[3]]); is.vector(data_frame[[3]])
 
-Your R workspace already contains the `all_wars_matrix` that you constructed in the previous exercise. Let us now calculate the total box office revenue for the entire saga.
+# extract second row
+data_frame[2, ]
 
-*** =instructions
-- Create a vector of length two with the total revenue for the US and the non-US region. Name this vector `total_revenue_vector`.
-- Print `total_revenue_vector`.
+# third element from second column
+data_frame[2, ][3]
 
-*** =hint
-You should use the [`colSums()`](http://www.rdocumentation.org/packages/base/functions/colSums) function with `star_wars_matrix` as the argument to find the total box office per region.
+# third element from second column
+data_frame[2, 3]
 
-*** =pre_exercise_code
-```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
+# coerce to vector
+unlist(data_frame[2, ])
 
-# Construct matrix2
-box_office_all2 <- c(474.5, 552.5, 310.7, 338.7, 380.3, 468.5)
-movie_names2 <- c("The Phantom Menace", "Attack of the Clones", "Revenge of the Sith")
-star_wars_matrix2 <- matrix(box_office_all2, nrow = 3, byrow = TRUE)
-colnames(star_wars_matrix2) <- c("US", "non-US")
-rownames(star_wars_matrix2) <- c("The Phantom Menace", "Attack of the Clones", "Revenge of the Sith")
-
-# Combine both Star Wars trilogies in one matrix
-all_wars_matrix <- rbind(star_wars_matrix, star_wars_matrix2)
-rm(star_wars_matrix, star_wars_matrix2)
-```
-
-*** =sample_code
-```{r}
-# Print box office Star Wars
-all_wars_matrix
-
-# Total revenue for US and non-US: total_revenue_vector
-
-
-# Print total_revenue_vector
-```
-
-*** =solution
-```{r}
-# Print box office Star Wars
-all_wars_matrix
-
-# Total revenue for US and non-US: total_revenue_vector
-total_revenue_vector <- colSums(all_wars_matrix)
-
-# Print total_revenue_vector
-total_revenue_vector
+# check if the second row is a vector or a dataframe
+is.data.frame(data_frame[2, ]); is.vector(data_frame[2, ])
 ```
 
 *** =sct
 ```{r}
 msg <- "Do not override the variables that have been defined for you in the workspace."
-test_object("all_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_function("colSums", "x", incorrect_msg = "Did you use the [`colSums()`](http://www.rdocumentation.org/packages/base/functions/colSums) function on `all_wars_matrix`?")
-test_object("total_revenue_vector",
-            undefined_msg = "Please make sure to define a variable `total_revenue_vector`.",
-            incorrect_msg = "Have you correctly assigned the result of [`colSums()`](http://www.rdocumentation.org/packages/base/functions/colSums) to `total_revenue_vector?`")
-test_output_contains("total_revenue_vector", incorrect_msg = "Don't forget to print out `total_revenue_vector`.")
+test_object("data_frame", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
+success_msg("Wonderful! Continue with the next exercise!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:30a0c39c10
+## Data Frames and Factors
+
+By default data.frame() coerces character vectors to factors, unless the stringsAsFactors=FALSE option is passed into data.frame(), The function options() sets global options, that determine how R computes and displays its results, If the global option stringsAsFactors=FALSE is set, then character vectors will not be coerced to factors in all subsequent data frame operations.
+
+
+*** =instructions
+- Specify the strings and factor in data frame.
+
+*** =hint
+Follow the instruction in introduction.
+
+*** =pre_exercise_code
+```{r}
+# no spec
+```
+
+*** =sample_code
+```{r}
+# create a data frame
+data_frame <- data.frame(
+                type=c('rose', 'daisy', 'tulip'),
+                color=c('red', 'white', 'yellow'),
+                price=c(1.5, 0.5, 1.0),
+                row.names=c('flower1', 'flower2', 'flower3'),
+                stringsAsFactors=FALSE
+              )
+              
+# print the data frame
+
+
+# get column class of type
+
+
+# get column class of price
+
+
+# set option to not coerce character vectors to factors
+
+
+# check if the option setting is successful
+
+
+# check if the default setting is successful
+
+```
+
+*** =solution
+```{r}
+# create a data frame
+data_frame <- data.frame(
+                type=c('rose', 'daisy', 'tulip'),
+                color=c('red', 'white', 'yellow'),
+                price=c(1.5, 0.5, 1.0),
+                row.names=c('flower1', 'flower2', 'flower3'),
+                stringsAsFactors=FALSE
+              )
+              
+# print the data frame
+data_frame
+
+# get column class
+class(data_frame$type)
+
+# get column class
+class(data_frame$price)
+
+# set option to not coerce character vectors to factors
+options(stringsAsFactors=FALSE)
+
+# check if the option setting is successful
+options("stringsAsFactors")
+
+# check if the default setting is successful
+default.stringsAsFactors()
+```
+
+*** =sct
+```{r}
 success_msg("Wonderful!")
 ```
 
-
---- type:VideoExercise lang:r xp:50 skills:1 key:7ab632b301
-## Subsetting Matrices
-
-*** =video_link
-//player.vimeo.com/video/138173935
-
-*** =video_hls
-//videos.datacamp.com/transcoded/732_intro_to_r/v1/hls-ch3_2.master.m3u8
-
-
 --- type:NormalExercise lang:r xp:100 skills:1 key:b4007d31b3
-## Select elements
+## Exploring Data Frames
 
-In the previous video, Filip explained how subsetting, using square brackets, extended from vectors to matrices. In general, the following line selects an element that's on row `i` and column `j` from a matrix `m`:
+The function str() displays the structure of an R object.
 
-```
-m[i,j]
-```
+The functions head() and tail() display the ﬁrst and last rows of an R object,
 
-Let's go intergalactic on subsetting now! You'll continue working on `star_wars_matrix`, which is still a matrix containing both US and non-US box office figures for the first three movies.
 
 *** =instructions
-- Select the US box office figure for "The Empire Strikes Back".
-- Select the non-US box office number for "A New Hope"
-No need to assign these elements to new variables; simply print them.
+- Explore parts of the data with `str()`, `head()` and `tail()`.
 
 *** =hint
 To select the element on row 3 and column 2, you can use `star_wars_matrix[3, 2]`.
 
 *** =pre_exercise_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-colnames(star_wars_matrix) <- c("US", "non-US")
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
+# no
+data_frame <- data.frame(
+                type=c('rose', 'daisy', 'tulip'),
+                color=c('red', 'white', 'yellow'),
+                price=c(1.5, 0.5, 1.0),
+                row.names=c('flower1', 'flower2', 'flower3'),
+                stringsAsFactors=FALSE
+              )
 ```
 
 *** =sample_code
 ```{r}
-# star_wars_matrix is already defined in your workspace
-
-# US box office revenue for "The Empire Strikes Back"
+# display the data_frame structure
 
 
-# non-US box office revenue for "A New Hope"
+# the cars data frame has 50 rows
 
+
+# get first five rows
+
+
+# get last five rows
 
 ```
 
 *** =solution
 ```{r}
-# star_wars_matrix is already defined in your workspace
+# display the object structure
+str(data_frame)
 
-# US box office revenue for "The Empire Strikes Back"
-star_wars_matrix[2,1]
+# the cars data frame has 50 rows
+dim(cars)
 
-# non-US box office revenue for "A New Hope"
-star_wars_matrix[1,2]
+# get first five rows
+head(cars, n=5)
+
+# get last five rows
+tail(cars, n=5)
 ```
 
 *** =sct
 ```{r}
 
-msg <- "Do not remove or override `star_wars_matrix`, it has already been defined for you!"
-test_object("star_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-msg <- "Have another look at the %s instruction. Are you sure you selected the correct element(s)?"
-test_output_contains("star_wars_matrix[2,1]", incorrect_msg = sprintf(msg, "first"))
-test_output_contains("star_wars_matrix[1,2]", incorrect_msg = sprintf(msg, "second"))
+msg <- "Do not remove or override `data_frame`, it has already been defined for you!"
+test_object("data_frame", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
 success_msg("Great! That wasn't too hard was it? Head over to the next exercise.")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:3b3ab3e40a
-## Select rows and columns
+## Coercing Data Frames Into Matrices Using as.matrix()
 
-In the previous exercise, you covered the selection of a single element from a matrix. The result was a vector of length 1. However, as the matrix is two-dimensional, you can also extract one-dimensional parts from it. More specifically, to select all elements on row `i` of a matrix `m`, you use:
-
-```
-m[i,]
-```
-
-Likewise, to select all elements on column `j`, 
-
-```
-m[,j]
-```
-
-will help you out. Notice that the result of these subsetting operators are also vectors, but they're typically contain more than 1 element.
+The function as.matrix() coerces vectors and data frames into matrices, Coercing a data frame into a matrix causes coercion of numeric values into character, as.matrix() coerces vectors into single column matrices, as opposed to matrix(), which produces a matrix.
 
 *** =instructions
-- Select all US box office revenue from `star_wars_matrix`, so the entire first column.
-- Extract all the revenue information for "A New Hope", so the entire first row.
+- Use `as.matrix()` to coerce object to matrix, compare it with `matrix()`.
 
 *** =hint
-- To select the first row from `star_wars_matrix`, you can use `star_wars_matrix[1,]`.
+- Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
+data_frame <- data.frame(
+                type=c('rose', 'daisy', 'tulip'),
+                color=c('red', 'white', 'yellow'),
+                price=c(1.5, 0.5, 1.0),
+                row.names=c('flower1', 'flower2', 'flower3'),
+                stringsAsFactors=FALSE
+              )
 ```
 
 *** =sample_code
 ```{r}
-# star_wars_matrix is already defined in your workspace
-
-# Select all US box office revenue
+# coerce data_frame to matrix
 
 
-# Select revenue for "A New Hope"
+# create a randomly-sampled vec_tor of length 9
 
+
+# coerce into a matrix of 3 columns using matrix()
+
+
+# coerce into a matrix of 3 columns using as.matrix()
 
 ```
 
 *** =solution
 ```{r}
-# star_wars_matrix is already defined in your workspace
+# coerce data_frame to matrix
+as.matrix(data_frame)
 
-# Select all US box office revenue
-star_wars_matrix[,1]
+# create a random vec_tor of length 9
+vec_tor <- sample(9)
 
-# Select revenue for "A New Hope"
-star_wars_matrix[1,]
+# coerce into a matrix of 3 columns using matrix()
+matrix(vec_tor, ncol = 3)
+
+# coerce into a matrix of 3 columns using as.matrix()
+as.matrix(vec_tor, ncol = 3)
 ```
 
 *** =sct
 ```{r}
 
-msg <- "Do not remove or override `star_wars_matrix`, it has already been defined for you!"
-test_object("star_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-msg <- "Have another look at the %s instruction. Are you sure you selected the correct element(s)?"
-test_output_contains("star_wars_matrix[,1]", incorrect_msg = sprintf(msg, "first"))
-test_output_contains("star_wars_matrix[1,]", incorrect_msg = sprintf(msg, "second"))
+msg <- "Do not remove or override `data_frame`, it has already been defined for you!"
+test_object("data_frame", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
 success_msg("Great! Continue to the next exercise.")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:32d3cedaba
-## Create submatrices
+## Coercing Matrices Into Data Frames and Lists
 
-Last but not least, you can create submatrices from larger matrices. If a vector is not sufficient to store the information you want to select, you need to create a new matrix. If you want to create a submatrix that comprises rows 1 and 4 and columns 2 and 3 of a matrix `m`, to following call will help you out:
+The generic function as.data.frame() coerces matrices and other objects into data frames.
 
-```
-m[c(1,4), c(2,3)]
-```
+The method as.data.frame.matrix() coerces only matrices into data frames.
+
+`as.data.frame.matrix()` is about 50% faster than as.data.frame(), because it skips extra R code in as.data.frame() needed for argument validation, error checking, and method dispatch.
+
+As a general rule, calling generic functions is slower than directly calling individual methods, because generic functions must execute extra R code for method dispatch.
+
+The function data.frame() can also be used to coerce matrices into data frames, but is much slower than even as.data.frame().
+
+`as.data.frame()` is about three times faster than data.frame(), because it doesn’t require extra R code in data.frame() needed for handling diﬀerent types of vectors, and for method dispatch.
+
+Matrices can be coerced into lists in at least two diﬀerent ways, Matrices can be ﬁrst coerced into a data frame, and then into a list using function as.list().
+
+Matrices can be directly coerced into a list using function lapply(), Using lapply() is the faster of the two methods, because lapply() is a compiled function.
+
 
 *** =instructions
-Select all revenue figures for "A New Hope" and "Return of the Jedi" from `star_wars_matrix`.
+- Use function method instead of callling generic functions.
 
 *** =hint
-No hint on this one, you're on your own here!
+Follow the instructions and introductions.
 
 *** =pre_exercise_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
+library(microbenchmark)
+mat_rix <- matrix(5:10, nrow=2, ncol=3)  # create a matrix
+rownames(mat_rix) <- c("row1", "row2")  # rownames attribute
+colnames(mat_rix) <- c("col1", "col2", "col3")  # colnames attribute
 ```
 
 *** =sample_code
 ```{r}
-# star_wars_matrix is already defined in your workspace
+# call method instead of generic function
+as.data.frame.matrix(mat_rix)
 
-# All figures for "A New Hope" and "Return of the Jedi"
+# a few methods for generic function as.data.frame()
 
+
+# change the code to see that function method is faster than generic function
+summary(microbenchmark(
+  as_data_frame_matrix=
+    as.data.frame(mat_rix),
+  as_data_frame=as.data.frame(mat_rix),
+  data_frame=mat_rix, 
+  times=10))[c(1, 4, 5), ]
+
+# change the code to see that lapply is faster than coercion function
+summary(microbenchmark(
+  as_list=
+    as.list(as.data.frame.matrix(mat_rix)),
+  l_apply=
+    apply(seq_along(mat_rix[1, ]),
+     function(in_dex) mat_rix[, in_dex]),
+  times=10))[c(1, 4, 5), ]
 ```
 
 *** =solution
 ```{r}
-# star_wars_matrix is already defined in your workspace
+# call method instead of generic function
+as.data.frame.matrix(mat_rix)
 
-# All figures for "A New Hope" and "Return of the Jedi"
-star_wars_matrix[c(1,3), c(1,2)]   # option 1
-star_wars_matrix[c(1,3), ]         # option 2
+# a few methods for generic function as.data.frame()
+sample(methods(as.data.frame), size=4)
+
+# change the code to see that function method is faster than generic function
+summary(microbenchmark(
+  as_data_frame_matrix=
+    as.data.frame.matrix(mat_rix),
+  as_data_frame=as.data.frame(mat_rix),
+  data_frame=data.frame(mat_rix), 
+  times=10))[, c(1, 4, 5)]
+
+# change the code to see that lapply is faster than coercion function
+summary(microbenchmark(
+  as_list=
+    as.list(as.data.frame.matrix(mat_rix)),
+  l_apply=
+    lapply(seq_along(mat_rix[1, ]),
+     function(in_dex) mat_rix[, in_dex]),
+  times=10))[, c(1, 4, 5)]
 ```
 
 *** =sct
 ```{r}
-
-msg <- "Do not remove or override `star_wars_matrix`, it has already been defined for you!"
-test_object("star_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_output_contains("star_wars_matrix[c(1,3), c(1,2)]", 
-                     incorrect_msg = "Hmm, that's not totally correct. Make sure you end up with another matrix, containing 4 elements in total.")
-success_msg("Nice one! You could have used both `star_wars_matrix[c(1,3), c(1,2)]` and `star_wars_matrix[c(1,3), ]` to solve this exercise. Not defining any index for a dimension, is actually keeping all the indices for that dimension.")
+success_msg("Nice one! Even small, these coding tricks will save a lot of time when handling big data sets")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:a6e32664a3
-## Alternative ways of subsetting
+## The iris Data Frame
 
-Just as with vectors, you can also subset matrices using names and logical vectors. Of course, you can only subset by name if the matrix you're working with actually has names associated with it. Logical vectors on the other hand, can always be used to select the element(s) of interest.
+The iris data frame is included in the datasets base package, iris contains sepal and petal dimensions of 50 ﬂowers from 3 species of iris.
+
+The function unique() extracts unique elements of an object, sapply() applies a function to a list or a vector of objects and returns a vector, sapply() performs a loop over the list of objects, and can replace "for" loops in R.
 
 *** =instructions
-- Select the US revenues for "A New Hope" and "The Empire Strikes Back".
-- Select the last two rows and both columns from `star_wars_matrix`.
+- Apply unique() and sapply() on a classical dataset.
 
 *** =hint
-To select the US revenue for "Return of The Jedi", you can use the following command:
-```
-star_wars_matrix["Return of the Jedi", "US"]
-```
+Sapply should be used with dataset in the first argument and function name in the second argument.
 
 *** =pre_exercise_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
+#
+data(iris)
 ```
 
 *** =sample_code
 ```{r}
-# star_wars_matrix is already defined in your workspace
-
-# Select the US revenues for "A New Hope" and "The Empire Strikes Back"
+# get dimension information on iris
 
 
-# Select the last two rows and both columns
+# get the first few rows of iris
 
+
+# get column names of iris
+
+
+# list of unique elements of iris
+
+
+# get the class of the unique value of Species column
+
+
+# find which columns of iris are numeric
+
+
+# calculate means of iris columns
 
 ```
 
 *** =solution
 ```{r}
-# star_wars_matrix is already defined in your workspace
+# get dimension information on iris
+dim(iris)
 
-# Select the US revenues for "A New Hope" and "The Empire Strikes Back"
-star_wars_matrix[c("A New Hope", "The Empire Strikes Back"), "US"]
+# get the first few rows of iris
+head(iris, 2)
 
-# Select the last two rows and both columns
-star_wars_matrix[c(FALSE, TRUE, TRUE), c(TRUE, TRUE)]
+# get column names of iris
+colnames(iris)
+
+# list of unique elements of iris
+unique(iris$Species)
+
+# get the class of the unique value of Species column
+class(unique(iris$Species))
+
+# find which columns of iris are numeric
+sapply(iris, is.numeric)
+
+# calculate means of iris columns
+sapply(iris, mean)
 ```
 
 *** =sct
 ```{r}
-msg <- "Do not remove or override `star_wars_matrix`, it has already been defined for you!"
-test_object("star_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-msg <- "Have another look at the %s instruction. Are you sure you selected the correct element(s) using the correct methods?"
-test_output_contains("star_wars_matrix[c(\"A New Hope\", \"The Empire Strikes Back\"), \"US\"]", incorrect_msg = sprintf(msg, "first"))
-test_output_contains("star_wars_matrix[c(FALSE, TRUE, TRUE), c(TRUE, TRUE)]", incorrect_msg = sprintf(msg, "second"))
-success_msg("Awesome! Remember that you can combine subsetting by indices, by names and using logical vectors: you can for example select the rows using indices, but the columns using a vector of `TRUE`s and `FALSE`s. You name it, R can handle it!")
+success_msg("Awesome!")
 ```
 
-
---- type:VideoExercise lang:r xp:50 skills:1 key:f49d1498f5
-## Matrix Arithmetic
-
-*** =video_link
-//player.vimeo.com/video/141163423
-
-*** =video_hls
-//videos.datacamp.com/transcoded/732_intro_to_r/v1/hls-ch3_3.master.m3u8
-
 --- type:NormalExercise lang:r xp:100 skills:1 key:c099d6de31
-## Arithmetic with matrices (1)
+## 'mtcars' data
 
-Similar to what you have learned with vectors, the standard operators like `+`, `-`, `/`, `*`, etc. work in an element-wise way on matrices in R. 
-
-As a newly-hired data analyst for StarWarsStudios, it is your job is to find out how many visitors went to each movie for each geographical area. 
-
-You already have the total revenue figures in `star_wars_matrix`. Assume that the price of a ticket was 5 dollars. Box office numbers divided by the ticket price gives you the number of visitors.
+The mtcars data frame is included in the datasets base package, and contains design and performance data for 32 automobiles,
 
 *** =instructions
-- Assign the matrix with the estimated number of Non-US and US visitors (in millions) for the three movies to `visitors`.
-- Print the resulting variable to the console.
+- Apply similar functions to the `mtcars` dataset
 
 *** =hint
-The number of visitors is the revenue (which is stored in `star_wars_matrix`) divided by the price of ticket (assumed to be $5).
+You can press `Ctrl` + `j` to go back to the previous exercise for reference!
 
 *** =pre_exercise_code
 ```{r}
@@ -750,115 +2178,413 @@ The number of visitors is the revenue (which is stored in `star_wars_matrix`) di
 
 *** =sample_code
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
+# get dimension information on mtcars
 
-# Estimation of visitors
 
-  
-# Print the estimate to the console
+# get the first few rows of mtcars
+
+
+# get column names of mtcars
+
+
+# list of unique elements of cylinders
+
+
+# get the class of the unique value of cylinder column
+
+
+# find which columns of mtcars are numeric
+
+
+# calculate means of mtcars columns
 
 ```
 
 *** =solution
 ```{r}
-# Star Wars box office in millions (!)
-new_hope <- c(460.998, 314.4)
-empire_strikes <- c(290.475, 247.900)
-return_jedi <- c(309.306, 165.8)
-star_wars_matrix <- rbind(new_hope, empire_strikes, return_jedi)
-rownames(star_wars_matrix) <- c("A New Hope", "The Empire Strikes Back", "Return of the Jedi")
-colnames(star_wars_matrix) <- c("US", "non-US")
+# get dimension information on mtcars
+dim(mtcars)
 
-# Estimation of visitors
-visitors <- star_wars_matrix / 5
+# get the first few rows of mtcars
+head(mtcars, 2)
 
-# Print the estimate to the console
-visitors
+# get column names of mtcars
+colnames(mtcars)
+
+# list of unique elements of cylinders
+unique(mtcars$cyl)
+
+# get the class of the unique value of cylinder column
+class(unique(mtcars$cyl))
+
+# find which columns of mtcars are numeric
+sapply(mtcars, is.numeric)
+
+# calculate means of mtcars columns
+sapply(mtcars, mean)
 ```
 
 *** =sct
 ```{r}
-msg <- "Do not remove or override `star_wars_matrix`, it has already been defined for you!"
-test_object("star_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("visitors",
-            incorrect_msg = "It looks like `visitors` does not contain the correct value. Remember that operations on matrices are element-wise.")
-test_output_contains("visitors", 
-                     incorrect_msg = "Don't forget to also print the variable `visitors` to the console.")
-success_msg("Great! What do these results tell you? A staggering 92 million people went to see A New Hope in theaters! Continue to the next exercise.");
+success_msg("Great!");
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:57d4c926e3
-## Arithmetic with matrices (2)
+## The Cars93 Data Frame
 
-Just like `2 * my_matrix` multiplies every element of `my_matrix` by 2, `my_matrix1 * my_matrix2` creates a matrix where each element is the product of the corresponding elements in `my_matrix1` and `my_matrix2`. 
+The Cars93 data frame is included in the MASS package, and contains design and performance data for 93 automobiles, The function hist() calculates and plots a histogram, The parameter breaks is the number of cells of the histogram, "FD" stands for the Freedman-Diaconis rule for calculating histogram breaks.
 
-After looking at the result of the previous exercise, the boss of StarWarsStudios points out that the ticket prices went up over time with one dollar per movie. He asks to redo the analysis based on the prices you can find in `ticket_prices_matrix` (source: imagination).
-
-_Those who are familiar with linear algebra: this is not the standard matrix multiplication for which you should use `%*%` in R._
+MASS library is already loaded for you.
 
 *** =instructions
-- Assign to `visitors` the matrix with your estimated number of Non-US and US visitors (in millions) for the three movies. Use ticket_prices_matrix` this time to take into account the movie-specific ticket prices.
-- Subset `visitors` so that you keep only the US visitors, and calculate the average number of this column. You have to use [`mean()`](http://www.rdocumentation.org/packages/base/functions/mean) here; this R function gives you the average of a numerical vector. Store the result in a variable `average_us_visitors`.
+- Use similar methods to explore the dataset.
 
 *** =hint
-- You can use the function [`mean()`](http://www.rdocumentation.org/packages/base/functions/mean) to calculate the average of the inputs to the function.
-- To get the number of visitors in the US, select the first column from `visitors` using `visitors[ ,1]`.
+You can press `Ctrl` + `j` to go back to the previous exercise for reference!
 
 *** =pre_exercise_code
 ```{r}
 # no pec
+library(MASS)
 ```
 
 *** =sample_code
 ```{r}
-# Star Wars box office in millions (!)
-box_office_all <- c(461, 314.4, 290.5, 247.9, 309.3, 165.8)
-movie_names <- c("A New Hope","The Empire Strikes Back","Return of the Jedi")
-col_titles <- c("US","non-US")
-star_wars_matrix <- matrix(box_office_all, nrow = 3, byrow = TRUE, dimnames = list(movie_names, col_titles))
-
-# Definition of ticket_prices_matrix
-ticket_prices_matrix <- matrix(c(5, 5, 6, 6, 7, 7), nrow = 3, byrow = TRUE, dimnames = list(movie_names, col_titles)) 
-
-# Estimated number of visitors
+# get the dimension of Cars93
 
 
-# Average number of US visitors
+# get the first few element of Cars93's column name
 
+
+# get the first two rows of Cars93
+
+
+# extract list of car types
+
+
+# calculate means of Cars93 columns
+
+
+# change the code to plot histogram of Highway MPG using the Freedman-Diaconis rule
+hist(Cars93$MPG.highway)
+```
+
+*** =solution
+```{r}
+# get the dimension of Cars93
+dim(Cars93)
+
+# get the first few element of Cars93's column name
+head(colnames(Cars93))
+
+# get the first two rows of Cars93
+head(Cars93, 2)
+
+# extract list of car types
+unique(Cars93$Type)
+
+# calculate means of Cars93 columns
+sapply(Cars93, mean)
+
+# change the code to plot histogram of Highway MPG using the Freedman-Diaconis rule
+hist(Cars93$MPG.highway, col="lightblue1", 
+     main="Distance per Gallon 1993", xlab="Highway MPG", breaks="FD")
+```
+
+*** =sct
+```{r}
+success_msg("Rock with these data!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:c990b311e0
+## Types of Bad Data
+
+Possible sources of bad data are: imported data, class coercion, numeric overﬂow.
+
+Types of bad data: NA means Not Available (missing) data, NaN means Not a Number data, Inf means numeric overﬂow divide by zero.
+
+When a function produces NA or NaN values, then it also produces a warning condition, but not an error, NA or NaN values are not errors, The functions is.na() and is.nan() test for NA and NaN values, Many functions have a na.rm parameter to remove NAs from input data.
+
+*** =instructions
+- Distinguish different types of bad data.
+
+*** =hint
+Follow the instruction and introduction.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+library(MASS)
+```
+
+*** =sample_code
+```{r}
+# NA from coercion
+
+
+# NaN from ambiguous math
+0/0
+
+# Inf from divide by zero
+
+
+# test for NA
+is.na(c(NA, NaN, 0/0, 1/0))
+
+# test for NaN
+
+
+# create vector of Nas
+
+
+# create vector with some NA values
+da_ta <- c(1, 2, NA, 4, NA, 5)
+
+# print to see the result
+
+
+# mean returns NA, when NAs are input
+
+
+# remove NAs from input data
+
+
+# delete the NA values
+
+
+# count non-NA values
 
 ```
 
 *** =solution
 ```{r}
-# Star Wars box office in millions (!) 
-# Construct matrix 
-box_office_all <- c(461, 314.4, 290.5, 247.9, 309.3, 165.8)
-movie_names <- c("A New Hope","The Empire Strikes Back","Return of the Jedi")
-col_titles <- c("US","non-US")
-star_wars_matrix <- matrix(box_office_all, nrow = 3, byrow = TRUE, dimnames = list(movie_names, col_titles))
-ticket_prices_matrix <- matrix(c(5, 5, 6, 6, 7, 7), nrow = 3, byrow = TRUE, dimnames = list(movie_names,col_titles))
+# NA from coercion
+as.numeric(c(1:3, "a"))
 
-# Estimated number of visitors
-visitors <- star_wars_matrix / ticket_prices_matrix
+# NaN from ambiguous math
+0/0
 
-# Average number of US visitors
-average_us_visitors <- mean(visitors[ ,1])
+# Inf from divide by zero
+1/0
+
+# test for NA
+is.na(c(NA, NaN, 0/0, 1/0))
+
+# test for NaN
+is.nan(c(NA, NaN, 0/0, 1/0))
+
+# create vector of Nas
+NA*1:4
+
+# create vector with some NA values
+da_ta <- c(1, 2, NA, 4, NA, 5)
+
+# print to see the result
+da_ta
+
+# returns NA, when NAs are input
+mean(da_ta)
+
+# remove NAs from input data
+mean(da_ta, na.rm=TRUE)
+
+# delete the NA values
+da_ta[!is.na(da_ta)]
+
+# count non-NA values
+sum(!is.na(da_ta))
 ```
 
 *** =sct
 ```{r}
-msg <- "Do not change anything about the preset variables!"
-test_object("star_wars_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("ticket_prices_matrix", eq_condition = "equal", undefined_msg = msg, incorrect_msg = msg)
-test_object("visitors", incorrect_msg = "It looks like `visitors` does not contain the correct value. Remember that you can divide two matrices.")
-test_object("average_us_visitors", incorrect_msg = "It looks like `average_us_visitors` does not contain the average of the US visitors. Use [`mean()`](http://www.rdocumentation.org/packages/base/functions/mean) in combination with a subset of `visitors`.")
-success_msg("It's a fact: the R force is with you! You are now ready for the final exercise on matrices!")
+success_msg("Bad data are everywhere!")
 ```
 
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:8b792b993e
+## Scrubbing Bad Data
+
+Rows containing bad data may be either removed or replaced with an estimated value.
+
+The function `complete.cases()` returns TRUE if a row has no NA values.
+
+The function `na.locf()` from package zoo replaces NAs with most recent non-NA prior to it.
+
+*** =instructions
+- Use `complete.cases()` and `na.locf()` to filter out NA values.
+
+*** =hint
+Follow the instruction and introduction.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+library(MASS)
+```
+
+*** =sample_code
+```{r}
+# airquality data has some NAs
+
+
+# look at the dimension of airquality
+
+
+# get the number of NAs
+
+
+# display rows containing NAs
+
+
+# remove rows containing NAs
+
+
+# look at the dimension of new dataframe
+
+
+# look at the first few rows to see that NAs are removed
+
+
+# load package zoo
+
+
+# replace NAs with another method, also name resulting object as good_air
+
+
+# look at the dimension of new 
+
+
+# look at the first few rows to see that NAs are removed
+
+```
+
+*** =solution
+```{r}
+# airquality data has some NAs
+head(airquality)
+
+# look at the dimension of airquality
+dim(airquality)
+
+# get the number of NAs
+sum(!complete.cases(airquality))
+
+# display rows containing NAs
+head(airquality[!complete.cases(airquality), ])
+
+# remove rows containing NAs
+good_air <- airquality[complete.cases(airquality), ]
+
+# look at the dimension of new dataframe
+dim(good_air)
+
+# look at the first few rows to see that NAs are removed
+head(good_air)
+
+# load package zoo
+library(zoo)
+
+# replace NAs with another method, also name resulting object as good_air
+good_air <- na.locf(airquality)
+
+# look at the dimension of new 
+dim(good_air)
+
+# look at the first few rows to see that NAs are removed
+head(good_air)
+```
+
+*** =sct
+```{r}
+success_msg("We can cure some of these bad data now.")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:5dc2a83c44
+## NULL Values
+
+NULL is a reserved word that represents a value that doesn’t exist.
+
+NULL is a legitimate value, not bad data, The function is.null() tests for NULL values, NULL is often returned by functions whose value is undeﬁned.
+
+Very often variables are initialized to NULL before the start of iteration, A more eﬃcicent way to perform iteration is by pre-allocating the vector.
+
+
+*** =instructions
+- Use `complete.cases()` and `na.locf()` to filter out NA values.
+
+*** =hint
+Follow the instruction and introduction.
+
+*** =pre_exercise_code
+```{r}
+# no pec
+
+```
+
+*** =sample_code
+```{r}
+# NULL values have no mode or type
+
+
+# see the difference in type between NULL and NA
+
+
+# NULL and NA also differs in length
+
+
+# check for NULL values
+
+
+# NULL values are ignored when combined into a vector
+
+
+# change the code to see that vectors can be initialized to NULL in a loop
+da_ta <- NULL
+for (in_dex in 1:5)
+  da_ta <- da_ta
+da_ta
+
+# change the code to see that NA value isn't ignored in a loop
+da_ta <- NA
+for (in_dex in 1:5)
+  da_ta <- da_ta
+da_ta
+```
+
+*** =solution
+```{r}
+# NULL values have no mode or type
+c(mode(NULL), mode(NA))
+
+# see the difference in type between NULL and NA
+c(typeof(NULL), typeof(NA))
+
+# NULL and NA also differs in length
+c(length(NULL), length(NA))
+
+# check for NULL values
+is.null(NULL)
+
+# NULL values are ignored when combined into a vector
+c(1, 2, NULL, 4, 5)
+
+# change the code to see that vectors can be initialized to NULL in a loop
+da_ta <- NULL
+for (in_dex in 1:5)
+  da_ta <- c(da_ta, in_dex)
+da_ta
+
+# change the code to see that NA value isn't ignored in a loop
+da_ta <- NA
+for (in_dex in 1:5)
+  da_ta <- c(da_ta, in_dex)
+da_ta
+```
+
+*** =sct
+```{r}
+success_msg("Be alert to this new type of bad data!")
+```
