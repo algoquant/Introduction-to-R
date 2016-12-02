@@ -353,9 +353,6 @@ write_clip <- function(data, row.names=FALSE,
 
 # run the function
 
-
-# launch spreadsheet-style data editor
-
 ```
 
 *** =solution
@@ -386,9 +383,6 @@ write_clip <- function(data, row.names=FALSE,
 
 # run the function
 write_clip(data=data_frame)
-
-# launch spreadsheet-style data editor
-data_frame <- edit(data_frame)
 ```
 
 *** =sct
