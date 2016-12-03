@@ -113,6 +113,7 @@ Follow the instruction and introductions
 *** =pre_exercise_code
 ```{r}
 # no pec
+library(xts)
 ```
 
 *** =sample_code
@@ -303,6 +304,7 @@ Follow the instruction and introductions.
 ```{r}
 # no pec
 load("etf_data.Rdata")
+library(ggplot2)
 load("etf_data_new.Rdata")
 ```
 
@@ -372,6 +374,7 @@ In order to plot various time series at once, you need to combine time serieses 
 # no pec
 load("etf_data.Rdata")
 load("etf_data_new.Rdata")
+library(xts)
 ```
 
 *** =sample_code
@@ -524,6 +527,7 @@ Follow the instruction and introduction.
 # no pec
 load("etf_data.Rdata")
 load("etf_data_new.Rdata")
+library(xts)
 ```
 
 *** =sample_code
@@ -536,8 +540,8 @@ load("etf_data_new.Rdata")
 
 # plotly syntax using pipes
 data_frame %>%
-  plot_ly(x=dates, y=VTI, fill=?, name=?)
-  add_trace(x=dates, y=IEF, fill=, name=?)
+  plot_ly(x=~dates, y=~VTI, fill=?, name=?)
+  add_trace(x=~dates, y=~IEF, fill=, name=?)
   layout(title="VTI and IEF prices",
    xaxis=list(title="Time"),
    yaxis=list(title="Stock Prices"),
@@ -555,10 +559,10 @@ data_frame <-
   data.frame(dates=index(env_etf$price_s),
     coredata(env_etf$price_s[, c("VTI", "IEF")]))
 
-# plotly syntax using pipes
+# change code to make plot
 data_frame %>%
-  plot_ly(x=dates, y=VTI, fill="tozeroy", name="VTI") %>%
-  add_trace(x=dates, y=IEF, fill="tonexty", name="IEF") %>%
+  plot_ly(x=~dates, y=~VTI, type = "scatter",fill="tozeroy", name="VTI") %>%
+  add_trace(x=~dates, y=~IEF, type= "scatter",fill="tonexty", name="IEF") %>%
   layout(title="VTI and IEF prices",
    xaxis=list(title="Time"),
    yaxis=list(title="Stock Prices"),
