@@ -577,486 +577,485 @@ success_msg("This is very modern chart!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:e2b1d979f4
-## Subsetting Vectors
+## Subsetting xts Time Series
 
-Vector elements can be subset (indexed, dereferenced) using the "[]" operator.
+xts time series can be subset in similar ways to zoo.
 
-Vectors can be subset using vectors of:
-positive integers, 
-negative integers, 
-characters (names),
-boolean vectors. 
+In addition, xts time series can be subset using date strings, or date range strings, for example: ["2014-10-15/2015-01-10"], xts time series can be subset by year, week, days, or even seconds.
 
-Negative integers remove the vector elements.
-Subsetting with zero returns a zero-length vector.
-A named vector can be subset using element names.
+If only the date is subset, then a comma "," after the date range isn’t necessary, The function `.subset xts()` allows fast subsetting of xts time series, which is at least three times faster than the bracket "[]" notation
 
 *** =instructions
-Vec_tor has been recreated in this exercise. 
-Use "[]" combined with integers, characters and boolean vectors to subset a vector.
+- Subset time series objects according to time span
 
 *** =hint
-Check if object names and function names are correctly typed.
+Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
-vec_tor <- c(pi_const=pi, euler=exp(1), gamma=-digamma(1))
+load(zoo_data.Rdata)
+library(xts)
+st_ox <- as.xts(zoo_stx_adj)
 ```
 
 *** =sample_code
 ```{r}
-# extract second element
+# subset xts using a date range string
 
 
-# extract all elements, except the second element
+# get the first element
 
 
-# extract zero elements - returns zero-length vector
+# get the last element
 
 
-# extract second and third elements by boolean vector
+# subset Nov 2014 using a date string
 
 
-# extract a element using its name "eulery"
+# get the first element
 
 
-# extract multiple elements using a vector of their names
+# get the last element
 
 
-# now create a boolean vector comparing vec_tor to 2, name it as "bool"
-bool <- vec_tor > 2
+# subset all data after Nov 2014
 
-# subset vec_tor with bool to see which element is bigger than 2
+
+# get the first element
+
+
+# get the last element
+
+
+# comma after date range not necessary
+
+
+# load microbenchmark
+
+
+# benchmark the speed of subsetting
 
 ```
 
 *** =solution
 ```{r}
-# extract second element
-vec_tor[2]
+# subset xts using a date range string
+stox_sub <- st_ox["2014-10-15/2015-01-10", 1:4]
 
-# extract all elements, except the second element
-vec_tor[-2]
+# get the first element
+first(stox_sub)
 
-# extract zero elements - returns zero-length vector
-vec_tor[0]
+# get the last element
+last(stox_sub)
 
-# extract second and third elements by boolean vector
-vec_tor[c(FALSE, TRUE, TRUE)]
+# subset Nov 2014 using a date string
+stox_sub <- st_ox["2014-11", 1:4]
 
-# extract a element using its name "eulery"
-vec_tor["eulery"]
+# get the first element
+first(stox_sub)
 
-# extract multiple elements using a vector of their names
-vec_tor[c("pie", "gammy")]
+# get the last element
+last(stox_sub)
 
-# now create a boolean vector comparing vec_tor to 2, name it as "bool"
-bool <- vec_tor > 2
+# subset all data after Nov 2014
+stox_sub <- st_ox["2014-11/", 1:4]
 
-# subset vec_tor with bool to see which element is bigger than 2
-vec_tor[bool]
+# get the first element
+first(stox_sub)
+
+# get the last element
+last(stox_sub)
+
+# comma after date range not necessary
+identical(st_ox["2014-11", ], st_ox["2014-11"])
+
+# load microbenchmark
+library(microbenchmark)
+
+# benchmark the speed of subsetting
+summary(microbenchmark(
+  bracket=sapply(10*(10:1000),
+  function(in_dex)
+    max(SPY[in_dex:(in_dex+10), ])),
+  subset=sapply(10*(10:1000),
+  function(in_dex)
+    max(.subset_xts(SPY, in_dex:(in_dex+10)))),
+  times=10))[, c(1, 4, 5)]
 ```
 
 
 *** =sct
 ```{r}
 test_error()
-success_msg("The subsetting provides support for filtering")
+success_msg("Carefully use this convenient but slow tool!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:47e9ca9b81
-## Filtering Vectors
+## Subsetting Recurring xts Time Intervals
 
-Filtering means extracting elements from a vector that satisfy a logical condition.
-When logical comparison operators are applied to vectors, they produce boolean vectors.
-Boolean vectors can then be applied to subset the original vectors, to extract their elements.
-The function which() returns the indices of the TRUE elements of a boolean vector or array.
+A recurring time interval is the same time interval every day, xts can be subset on recurring time intervals using the "T" notation。
+
+For example, to subset the time interval from 9:30AM to 4:00PM every day: `["T09:30:00/T16:00:00"]` Warning messages that ”timezone of object is diﬀerent than current timezone” can be suppressed by calling the function `options()` with argument "xts check tz=FALSE"
 
 
 *** =instructions
-Vec_tor has been recreated in this exercise. 
-Use "[]"  or "which()" to filter vector elements.
+- Subset with recurring time span.
 
 *** =hint
-Check if object names and function names are correctly typed.
+Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
-vec_tor <- runif(5)
+library(xts)
 ```
 
 *** =sample_code
 ```{r}
-# first, print the vec_tor
+# vector of 1-minute times (ticks)
 
 
-# compare vec_tor to 0.5
+# xts of 1-minute times (ticks) of random returns
 
 
-# boolean vector of elements equal to the second one
+# subset recurring time interval using "T notation",
 
 
-# extract all elements equal to the second one
+# first element of day
 
 
-# extract all elements greater than 0.5
+# last element of day
 
 
-# get index of elements > 0.5
-
-
-# combine which() and "[]" to extract elements greater than 0.5
+# suppress timezone warning messages
 
 ```
 
 *** =solution
 ```{r}
-# first, print the vec_tor
-vec_tor
+# vector of 1-minute times (ticks)
+min_ticks <- seq.POSIXt(
+  from=as.POSIXct("2015-04-14", tz="America/New_York"),
+  to=as.POSIXct("2015-04-16"),
+  by="min")
 
-# compare vec_tor to 0.5
-vec_tor > 0.5
+# xts of 1-minute times (ticks) of random returns
+x_ts <- xts(rnorm(length(min_ticks)),
+               order.by=min_ticks)
 
-# boolean vector of elements equal to the second one
-vec_tor == vec_tor[2]
+# subset recurring time interval using "T notation",
+x_ts <- x_ts["T09:30:00/T16:00:00"]
 
-# extract all elements equal to the second one
-vec_tor[vec_tor == vec_tor[2]]
+# first element of day
+first(x_ts["2015-04-15"])
 
-# extract all elements greater than 0.5
-vec_tor[vec_tor > 0.5]
+# last element of day
+last(x_ts["2015-04-15"])
 
-# get index of elements > 0.5
-which(vec_tor > 0.5)
-
-# combine which() and "[]" to extract elements greater than 0.5
-vec_tor[which(vec_tor > 0.5)]
+# suppress timezone warning messages
+options(xts_check_tz=FALSE)
 ```
 
 
 *** =sct
 ```{r}
 test_error()
-success_msg("Now you can filter a vector with '[]' and which()!")
+success_msg("Subset for regular daily periods made easy!")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:ab3a8365ff
-## Factors
+## Properties of xts Time Series
 
-Factors are similar to vectors, but their elements can only take values from a set of levels.
-Factors are designed for categorical data which can only take certain values.
+xts series always have a dim attribute, unlike zoo, zoo series with multiple columns have a dim attribute, and are therefore matrices.
 
-The function factor() converts a vector into a factor, Factors have two attributes: class (equal to "factor") and levels (the allowed values).
-Although factors aren’t vectors, the data underlying a factor is an integer vector, called an encoding vector.
-The function as.numeric() extracts the encoding vector (indices) of a factor.
-The function as.vector() coerces a factor to a character vector.
+But zoo with a single column don’t, and are therefore vectors not matrices, When a zoo is subset to a single column, the dim attribute is dropped, which can create errors.
+
 
 *** =instructions
-Create factors with factor(). 
-See attributes of factor using attributes() and levels().
-Coerce factor using as.numeric() and as.vector().
+- Explore properties of xts object
 
 *** =hint
-Check if object names and function names are correctly typed.
+Follow the instruction and introductions.
 
 *** =pre_exercise_code
 ```{r}
-fac_tor <- factor(c('b', 'c', 'd', 'a', 'c', 'b'))
+load(zoo_data.Rdata)
+library(xts)
+st_ox <- as.xts(zoo_stx_adj)
 ```
 
 *** =sample_code
 ```{r}
-# print the factor vector 'fac_tor'
-fac_tor
-
-# subset fac_tor for the third element
+# display structure of xts
 
 
-# get factor attributes
+# subsetting zoo
 
 
-# get factor levels
+# subsetting zoo to single column drops dim attribute
 
 
-# get encoding vector
+# zoo with single column are vectors not matrices
 
 
-# coerce factor to character vector
+# xts always have a dim attribute
+
+
+# check if it a matrix
 
 ```
 
 *** =solution
 ```{r}
-# print the factor vector 'fac_tor'
-fac_tor
+# display structure of xts
+str(st_ox)
 
-# subset fac_tor for the third element
-fac_tor[3]
+# subsetting zoo
+dim(zoo_stx_adj)
 
-# get factor attributes
-attributes(fac_tor)
+# subsetting zoo to single column drops dim attribute
+dim(zoo_stx_adj[, 1])
 
-# get factor levels
-levels(fac_tor)
+# zoo with single column are vectors not matrices
+c(is.matrix(zoo_stx_adj), is.matrix(zoo_stx_adj[, 1]))
 
-# get encoding vector
-as.numeric(fac_tor)
+# xts always have a dim attribute
+rbind(base=dim(st_ox), subs=dim(st_ox[, 1]))
 
-# coerce factor to character vector
-as.vector(factor(1:5))
+# check if it a matrix
+c(is.matrix(st_ox), is.matrix(st_ox[, 1]))
 ```
 
 
 *** =sct
 ```{r}
 test_error()
-success_msg("See! The numeric vector turned to be a character vector!")
+success_msg("xts is actually a matrix with time index")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:771f2e9f50
-## Tables of Categorical Data
+## lag() and diff() Operations on xts Time Series
 
-The function table() calculates the frequency distribution of categorical data.
-A contingency table is a matrix that contains the frequency distribution of variables (factors) contained in a set of data, sapply() applies a function to a vector or a list of objects and returns a vector or a list,
+`lag()` and `diff()` operations on xts series diﬀer from those on zoo, `lag()` and `diff()` operations on zoo series shorten the series by one row, By default, the `lag()` operation on xts replaces the present value with values from the past (negative lags replace with values from the future).
+
+By default, the `lag()` and `diff()` operations on xts retain the same number of rows, but substitute NAs for missing data.
 
 
 *** =instructions
-Use functions and variables as insturcted in the comment.
+- Use functions to get lag terms in time series.
 
 *** =hint
-Check if object names and function names are correctly typed.
+Follow the instruction and introductions.
 
 *** =pre_exercise_code
 ```{r}
-fac_tor <- factor(c('b', 'c', 'd', 'a', 'c', 'b'))
+load(zoo_data.Rdata)
+library(xts)
+st_ox <- as.xts(zoo_stx_adj)
 ```
 
 *** =sample_code
 ```{r}
-# have a look at the factor vector
-fac_tor
-
-# get encoding vector
+# lag of zoo shortens it by one row
 
 
-# get unique values
+# lag of xts doesn't shorten it
 
 
-# change the code below to get contingency table
-sapply(fac_tor, 
- function(le_vel) {
-   sum(fac_tor=le_vel)
- })
+# lag of zoo is in opposite direction from xts
 
-# get contingency (frequency) table
+
+# print the first 4 rows
 
 ```
 
 *** =solution
 ```{r}
-# have a look at the factor vector
-fac_tor
+# lag of zoo shortens it by one row
+rbind(base=dim(zoo_stx_adj), lag=dim(lag(zoo_stx_adj)))
 
-# get encoding vector
-as.numeric(fac_tor)
+# lag of xts doesn't shorten it
+rbind(base=dim(st_ox), lag=dim(lag(st_ox)))
 
-# get unique values
-unique(fac_tor)
+# lag of zoo is in opposite direction from xts
+head(lag(zoo_stx_adj), 4)
 
-# change the code below to get contingency table using sapply 
-sapply(levels(fac_tor), 
- function(le_vel) {
-   sum(fac_tor==le_vel)
- })
-
-# get contingency (frequency) table
-table(fac_tor)
+# print the first 4 rows
+head(lag(st_ox), 4)
 ```
 
 
 *** =sct
 ```{r}
 test_error()
-success_msg("Compared the results you get with sapply() and table()")
+success_msg("Lag terms are useful for time series analysis. Just be careful to the NA items generated.")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:748763cc09
-## Classifying Continuous Numeric Data Into Categories
+## Converting xts to Lower Periodicity
 
-Numeric data that represents a magnitude, intensity, or score can be classiﬁed into categorical data, given a vector of breakpoints.
-
-The breakpoints create intervals that correspond to diﬀerent categories.
-
-The categories combine elements that have a similar numeric magnitude, findInterval() returns the indices of the intervals speciﬁed by "vec" that contain the elements of "x".
-If there’s an exact match, then findInterval() returns the same index as function match().
-If there’s no exact match, then findInterval() ﬁnds the element of "vec" that is closest to, but not greater than, the element of "x".
-If all the elements of "vec" are greater than the element of "x", then findInterval() returns zero,
+The function `to.period()` converts a time series to a lower periodicity (for example from hourly to daily periodicity), `to.period()` returns a time series of open, high, low, and close values (OHLC) for the lower period, `to.period()` converts both univariate and OHLC time series to a lower periodicity
 
 
 *** =instructions
-Use functions and variables as insturcted in the comment.
+- Use `to.period()` families to adapt time series frequency.
 
 *** =hint
-Check if object names and function names are correctly typed.
+Follow the instruction and introductions.
 
 *** =pre_exercise_code
 ```{r}
 # none
+load(zoo_data.Rdata)
+library(xts)
+st_ox <- as.xts(zoo_stx_adj)
 ```
 
 *** =sample_code
 ```{r}
-# see how we can tweak the outcome findInterval() function with five parameters
-str(findInterval)
-
-# get index of the element of "vec" c(3,5,7) that matches 5
+# lower the periodicity to months
 
 
-# use match()
+# get monthly column names
 
 
-# no exact match
+# change the code to convert colnames to standard OHLC format 
+colnames(xts_monthly) <- sapply(
+  colnames(xts_monthly),
+  function(na_me) na_me[-1]
+  )
+
+# print the first 3 rows
 
 
-# use match()
+# lower the periodicity to years
 
 
-# indices of "vec" that match elements of "x"
+# change the code to modify column names
+colnames(xts_yearly) <- sapply(
+  colnames(xts_yearly),
+  function(na_me) na_me[-1]
+  )
 
-
-# return only indices of inside intervals
-
-
-# make rightmost interval inclusive
+# get head
 
 ```
 
 *** =solution
 ```{r}
-# see how we can tweak the outcome findInterval() function with five parameters
-str(findInterval)
+# lower the periodicity to months
+xts_monthly <- to.period(x=st_ox,
+             period="months", name="MSFT")
 
-# get index of the element of "vec" c(3,5,7) that matches 5
-findInterval(x=5, vec=c(3, 5, 7))
+# get monthly column names
+colnames(xts_monthly)
 
-# use match()
-match(5, c(3, 5, 7))
+# change the code to convert colnames to standard OHLC format 
+colnames(xts_monthly) <- sapply(
+  strsplit(colnames(xts_monthly), split=".", fixed=TRUE),
+  function(na_me) na_me[-1]
+  )
 
-# no exact match
-findInterval(x=6, vec=c(3, 5, 7))
+# print the first 3 rows
+head(xts_monthly, 3)
 
-# use match()
-match(6, c(3, 5, 7))
+# lower the periodicity to years
+xts_yearly <- to.period(x=xts_monthly,
+             period="years", name="MSFT")
 
-# indices of "vec" that match elements of "x"
-findInterval(x=1:8, vec=c(3, 5, 7))
+# change the code to modify column names
+colnames(xts_yearly) <- sapply(
+  strsplit(colnames(xts_yearly), split=".", fixed=TRUE),
+  function(na_me) na_me[-1]
+  )
 
-# return only indices of inside intervals
-findInterval(x=1:8, vec=c(3, 5, 7), all.inside=TRUE)
-
-# make rightmost interval inclusive
-findInterval(x=1:8, vec=c(3, 5, 7), rightmost.closed=TRUE)
+# get head
+head(xts_yearly)
 ```
 
 
 *** =sct
 ```{r}
 test_error()
-success_msg("Congrats! This is the very first step in dividing continuous values")
+success_msg("You can use daily data to generate OHLC data of lower frequency now")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:91aa35a650
-## Classifying Continuous Numeric Data Into Categories, Continued
+## Plotting OHLC Time Series Using xts
 
-Temperature can be categorized into ”cold”, ”warm”, ”hot”, etc. 
-A named numeric vector of breakpoints can be used to convert a temperature into one of the categories.
-Breakpoints correspond to categories of the data.
-The ﬁrst breakpoint should correspond to the lowest category, and should have a value less than any of the data.
+The method (function) plot.xts() can plot OHLC time series of class xts.
 
 
 *** =instructions
-Use functions and variables as insturcted in the comment.
+- Plot OHLC data.
 
 *** =hint
-Check if object names and function names are correctly typed.
+Follow the instruction and introduction
 
 *** =pre_exercise_code
 ```{r}
 # none
+load(zoo_data.Rdata)
+library(xts)
+st_ox <- as.xts(zoo_stx_adj)
 ```
 
 *** =sample_code
 ```{r}
-# creat named numeric vector of breakpoints
-brea_ks <- c("freezing"=0, "very_cold"=30,
-       "cold"=50, "pleasant"=60,
-       "warm"=80, "hot"=90)
+# as.xts() creates xts from zoo
 
-# print out the breakpoints vector
-brea_ks
 
-# create a vector of temperatures
-tempe_ratures <- runif(10, min=10, max=100)
+# subset xts using a date
 
-# change the code to name values according to breakpoints
-feels_like <- names(
-  brea_ks,findInterval(x=tempe_ratures,
-                 vec=brea_ks))
 
-names(tempe_ratures) <- feels_like
+# plot OHLC using plot.xts method
 
-# print the categorized vector
+
+# add title
 
 ```
 
 *** =solution
 ```{r}
-# creat named numeric vector of breakpoints
-brea_ks <- c("freezing"=0, "very_cold"=30,
-       "cold"=50, "pleasant"=60,
-       "warm"=80, "hot"=90)
+# as.xts() creates xts from zoo
+st_ox <- as.xts(zoo_stx_adj)
 
-# print out the breakpoints vector
-brea_ks
+# subset xts using a date
+stox_sub <- st_ox["2014-11", 1:4]
 
-# create a vector of temperatures
-tempe_ratures <- runif(10, min=10, max=100)
+# plot OHLC using plot.xts method
+plot(stox_sub, type="candles", main="")
 
-# change the code to name values according to breakpoints
-feels_like <- names(
-  brea_ks[findInterval(x=tempe_ratures,
-                 vec=brea_ks)])
-
-names(tempe_ratures) <- feels_like
-
-# print the categorized vector
-tempe_ratures
+# add title
+title(main="MSFT Prices")
 ```
 
 
 *** =sct
 ```{r}
 test_error()
-success_msg("Congrats! This is the your first value categorization results!")
+success_msg("OHLC helps generating candle charts!")
 ```
 
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:ca09ff3670
-## Converting Numeric Data Into Factors Using cut()
+## Time Series Classes in R
 
-The function cut() converts a numeric vector into a vector of factors, representing the intervals to which the numeric values belong, cut() divides the range of values into intervals, based on a vector of breaks, cut() then assigns factors to the numeric values, representing the intervals to which the numeric values belong. 
-The argument "breaks" is a numeric vector of break points that divide the range of values into intervals.
-The argument "labels" is a vector of labels for the intervals.
-The argument "right" is a boolean indicating if the intervals should be closed on the right (and open on the left), or vice versa, cut() can produce the same classiﬁcation as findInterval(), but findInterval() is faster than cut(), because it’s a compiled function,
+R and other packages contain a number of diﬀerent time series classes: 
 
-The library microbenchmark is already loaded to the environment
+Class "ts" from base package stats: native time series class in R, but allows only regular (equally spaced) date-time index, not suitable for sophisticated ﬁnancial applications, 
+
+Class "zoo": allows irregular date-time index, the zoo index can be from any date-time class, 
+
+Class "xts" extension of zoo class: most widely accepted time series class, designed for high-frequency and OHLC data, contains convenient functions for plotting, calculating rolling max, min, etc. 
+
+Class "timeSeries" from the Rmetrics suite
 
 *** =instructions
-Use functions and variables as insturcted in the comment.
+- Use and compare different time series format.
 
 *** =hint
-Check if object names and function names are correctly typed.
+Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
@@ -1065,308 +1064,55 @@ library(microbenchmark)
 
 *** =sample_code
 ```{r}
-# create a vector of random value
-foo <- sample(0:6) + 0.1
-
-# print the vector foo
+# make ts object
 
 
-# use cut to vector
-cut(x=foo, breaks=c(2, 4, 6, 8))
+# get its class
 
-# bind the cutted vector with rbind()
-rbind(foo, cut(x=foo, breaks=c(2, 4, 6, 8)))
 
-# cut the vector with findInterval()
-findInterval(x=1:8, vec=c(2, 4, 6, 8))
+# see the last few data
 
-# findInterval() is a compiled function, so it is faster than cut()
-# change the code to compare their speed
-vec_tor <- rnorm(1000)
-summary(microbenchmark(
-  find_interval=
-    findInterval(vec=c(3, 5, 7)),
-  cuut=
-    cut(breaks=c(3, 5, 7)),
-  times=10))[, c(1, 4, 5)]
+
+# load the xts package
+
+
+# make xts object
+
+
+# get its class
+
+
+# get the last few rows
+
 ```
 
 *** =solution
 ```{r}
-# create a vector of random value
-foo <- sample(0:6) + 0.1
+# make ts object
+ts_stx <- as.ts(zoo_stx)
 
-# print the vector foo
-foo
+# get its class
+class(ts_stx)
 
-# use cut to vector
-cut(x=foo, breaks=c(2, 4, 6, 8))
+# see the last few data
+tail(ts_stx[, 1:4])
 
-# bind the cutted vector with rbind()
-rbind(foo, cut(x=foo, breaks=c(2, 4, 6, 8)))
+# load the xts package
+library(xts)
 
-# cut the vector with findInterval()
-findInterval(x=1:8, vec=c(2, 4, 6, 8))
+# make xts object
+st_ox <- as.xts(zoo_stx)
 
-# findInterval() is a compiled function, so it is faster than cut()
-# change the code to compare their speed
-vec_tor <- rnorm(1000)
-summary(microbenchmark(
-  find_interval=
-    findInterval(x=vec_tor, vec=c(3, 5, 7)),
-  cuut=
-    cut(x=vec_tor, breaks=c(3, 5, 7)),
-  times=10))[, c(1, 4, 5)]
+# get its class
+class(st_ox)
+
+# get the last few rows
+tail(st_ox[, 1:4])
 ```
 
 
 *** =sct
 ```{r}
 test_error()
-success_msg("Althogh slower and a little bit different, cut() has similar functionality as findInternval()")
+success_msg("All formats are fine, but you see there're reason we prefer xts")
 ```
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:cd32ce976a
-## Matrices
-
-The function matrix() creates a matrix from a vector, and the matrix dimensions.
-By default matrix() creates matrices column-wise, unless the argument byrow=TRUE is used.
-The elements of matrices can be subset (dereferenced) using the "[]" operator.
-The functions nrow() and ncol() return the number of rows and columns of a matrix.
-The functions NROW() and NCOL() also return the number of rows or columns of a matrix, but they can also be applied to vectors, and treat vectors as single column matrices.
-
-*** =instructions
-Use matrix() to construct matrices, and nrow(), ncol() and NROW(), NCOL().
-
-*** =hint
-Check if object names and function names are correctly typed.
-
-*** =pre_exercise_code
-```{r}
-vec_tor <- runif(5)
-```
-
-*** =sample_code
-```{r}
-# create a matrix
-mat_rix <- matrix(5:10, nrow=2, ncol=3)
-
-# by default matrices are constructed column-wise
-mat_rix
-
-# create a matrix row-wise
-matrix(5:10, nrow=2, byrow=TRUE)
-
-# extract third element from second row
-
-
-# extract second row
-
-
-# now try to extract third column
-
-
-# extract first and third column
-
-
-# remove second column
-
-
-# get the number of rows or columns
-nrow(mat_rix); ncol(mat_rix)
-NROW(mat_rix); NCOL(mat_rix)
-
-# apply nrow() and NROW() on vec_tor
-
-```
-
-*** =solution
-```{r}
-# create a matrix
-mat_rix <- matrix(5:10, nrow=2, ncol=3)
-
-# by default matrices are constructed column-wise
-mat_rix
-
-# create a matrix row-wise
-matrix(5:10, nrow=2, byrow=TRUE)
-
-# extract third element from second row
-mat_rix[2, 3]
-
-# extract second row
-mat_rix[2, ]
-
-# now try to extract third column
-mat_rix[, 3]
-
-# extract first and third column
-mat_rix[, c(1,3)]
-
-# remove second column
-mat_rix[, -2]
-
-# get the number of rows or columns
-nrow(mat_rix); ncol(mat_rix)
-NROW(mat_rix); NCOL(mat_rix)
-
-# apply nrow() and NROW() on vec_tor
-nrow(vec_tor)
-NROW(vec_tor)
-```
-
-
-*** =sct
-```{r}
-test_error()
-success_msg("So the capitalized functions can be applied to vectors and matrixes")
-```
-
-
---- type:NormalExercise lang:r xp:100 skills:1 key:9cb7dccabe
-## Matrix attributes
-
-Arrays are vectors with a dimension attribute.
-Matrices are two-dimensional arrays.
-The dimension attribute of a matrix is an integer vector of length 2 (nrow, ncol).
-The dimnames attribute is a list, with vector elements containing row and column names.
-A named matrix can be subset using row and column names.
-
-
-*** =instructions
-Use attributes(), dim(), rownames(), colnames() and rownames() as instructed.
-
-*** =hint
-Check if object names and function names are correctly typed.
-
-*** =pre_exercise_code
-```{r}
-mat_rix <- matrix(5:10, nrow=2, ncol=3)
-```
-
-*** =sample_code
-```{r}
-# get matrix attributes
-
-
-# get dimension attribute
-
-
-# get class attribute
-
-
-# change the code to assign rownames and colnames attribute
-c("row1", "row2")
-c("col1", "col2", "col3")
-
-# use dimnames() to see row and column names
-
-
-# get the name attributes of mat_rix
-
-```
-
-*** =solution
-```{r}
-# get matrix attributes
-attributes(mat_rix)
-
-# get dimension attribute
-dim(mat_rix)
-
-# get class attribute
-class(mat_rix)
-
-# rownames and colnames attribute
-rownames(mat_rix) <- c("row1", "row2")
-colnames(mat_rix) <- c("col1", "col2", "col3")
-
-# use dimnames() to see row and column names
-dimnames(mat_rix)
-
-# get the name attributes of mat_rix
-names(mat_rix)
-```
-
-
-*** =sct
-```{r}
-test_error()
-success_msg("dimname and name is different!")
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:cb0ddb5306
-## Matrix Subsetting
-
-Matrices can be subset in a similar way as Vectors, either by indices (integers), by characters (names), or boolean vectors.
-Subsetting a matrix to a single row or column produces a vector, unless the parameter "drop=FALSE" is used.
-Subsetting with the parameter "drop=FALSE" prevents the implicit coercion and preserves the matrix class.
-This is an example of implicit coercion in R, which can cause diﬃcult to trace bugs.
-
-
-*** =instructions
-Use "[]" for matrix subsetting, beware of the parameter "drop=FALSE"
-
-*** =hint
-Check if object names and function names are correctly typed.
-
-*** =pre_exercise_code
-```{r}
-mat_rix <- matrix(5:10, nrow=2, ncol=3)
-rownames(mat_rix) <- c("row1", "row2")
-colnames(mat_rix) <- c("col1", "col2", "col3")
-```
-
-*** =sample_code
-```{r}
-# subset column1 by name 
-mat_rix[, "col1"]
-
-# subset columns 1,3 by boolean vector
-mat_rix[, c(TRUE, FALSE, TRUE)]
-
-# get subset of row 1 by index
-mat_rix[1, ]
-
-# drop=FALSE preserves matrix
-mat_rix[1, , drop=FALSE]
-
-# revise the code to create two subsets with and without drop = FALSE argument
-mat_1 <- mat_rix[1, ]
-mat_2 <- mat_rix[1, ]
-
-# check if the two subsets are matrix using is.matrix()
-
-```
-
-*** =solution
-```{r}
-# subset column1 by name 
-mat_rix[, "col1"]
-
-# subset columns 1,3 by boolean vector
-mat_rix[, c(TRUE, FALSE, TRUE)]
-
-# get subset of row 1 by index
-mat_rix[1, ]
-
-# drop=FALSE preserves matrix
-mat_rix[1, , drop=FALSE]
-
-# revise the code to create two subsets with and without drop = FALSE argument
-mat_1 <- mat_rix[1, ]
-mat_2 <- mat_rix[1, , drop=FALSE]
-
-# check if the two subsets are matrix using is.matrix()
-is.matrix(mat_1)
-is.matrix(mat_2)
-```
-
-
-*** =sct
-```{r}
-test_error()
-success_msg("Add or drop the 'drop = FALSE' argument does make differences!")
-```
-
