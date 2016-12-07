@@ -612,11 +612,11 @@ Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
+# no pec
 library(zoo)
 library(xts)
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
-st_ox <- as.xts(zoo_stx_adj)
 ```
 
 *** =sample_code
