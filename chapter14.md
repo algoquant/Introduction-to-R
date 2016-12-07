@@ -22,6 +22,10 @@ Follow instruction and introductions.
 *** =pre_exercise_code
 ```{r}
 # no pec
+library(zoo)
+library(xts)
+load("etf_data.Rdata")
+load("zoo_data.Rdata")
 ```
 
 *** =sample_code
@@ -113,7 +117,9 @@ Follow the instruction and introductions
 *** =pre_exercise_code
 ```{r}
 # no pec
+library(zoo)
 library(xts)
+load("etf_data.Rdata")
 load("zoo_data.Rdata")
 ```
 
@@ -180,7 +186,10 @@ Follow the instruction and introduction.
 *** =pre_exercise_code
 ```{r}
 # no pec
+library(zoo)
+library(xts)
 load("etf_data.Rdata")
+load("zoo_data.Rdata")
 ```
 
 *** =sample_code
@@ -305,9 +314,10 @@ Follow the instruction and introductions.
 *** =pre_exercise_code
 ```{r}
 # no pec
-library(ggplot2)
+library(zoo)
+library(xts)
 load("etf_data.Rdata")
-load("etf_data_new.Rdata")
+load("zoo_data.Rdata")
 ```
 
 *** =sample_code
@@ -374,9 +384,10 @@ In order to plot various time series at once, you need to combine time serieses 
 *** =pre_exercise_code
 ```{r}
 # no pec
-load("etf_data.Rdata")
-load("etf_data_new.Rdata")
+library(zoo)
 library(xts)
+load("etf_data.Rdata")
+load("zoo_data.Rdata")
 ```
 
 *** =sample_code
@@ -463,8 +474,10 @@ Follow the instructions and introductions.
 *** =pre_exercise_code
 ```{r}
 # no pec
+library(zoo)
+library(xts)
 load("etf_data.Rdata")
-load("etf_data_new.Rdata")
+load("zoo_data.Rdata")
 ```
 
 *** =sample_code
@@ -527,9 +540,10 @@ Follow the instruction and introduction.
 *** =pre_exercise_code
 ```{r}
 # no pec
-load("etf_data.Rdata")
-load("etf_data_new.Rdata")
+library(zoo)
 library(xts)
+load("etf_data.Rdata")
+load("zoo_data.Rdata")
 ```
 
 *** =sample_code
@@ -595,8 +609,10 @@ Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
-load(zoo_data.Rdata)
+library(zoo)
 library(xts)
+load("etf_data.Rdata")
+load("zoo_data.Rdata")
 st_ox <- as.xts(zoo_stx_adj)
 ```
 
@@ -708,7 +724,10 @@ Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
+library(zoo)
 library(xts)
+load("etf_data.Rdata")
+load("zoo_data.Rdata")
 ```
 
 *** =sample_code
@@ -780,8 +799,10 @@ Follow the instruction and introductions.
 
 *** =pre_exercise_code
 ```{r}
-load(zoo_data.Rdata)
+library(zoo)
 library(xts)
+load("etf_data.Rdata")
+load("zoo_data.Rdata")
 st_ox <- as.xts(zoo_stx_adj)
 ```
 
@@ -851,8 +872,10 @@ Follow the instruction and introductions.
 
 *** =pre_exercise_code
 ```{r}
-load(zoo_data.Rdata)
+library(zoo)
 library(xts)
+load("etf_data.Rdata")
+load("zoo_data.Rdata")
 st_ox <- as.xts(zoo_stx_adj)
 ```
 
@@ -908,8 +931,10 @@ Follow the instruction and introductions.
 *** =pre_exercise_code
 ```{r}
 # none
-load(zoo_data.Rdata)
+library(zoo)
 library(xts)
+load("etf_data.Rdata")
+load("zoo_data.Rdata")
 st_ox <- as.xts(zoo_stx_adj)
 ```
 
@@ -997,8 +1022,10 @@ Follow the instruction and introduction
 *** =pre_exercise_code
 ```{r}
 # none
-load(zoo_data.Rdata)
+library(zoo)
 library(xts)
+load("etf_data.Rdata")
+load("zoo_data.Rdata")
 st_ox <- as.xts(zoo_stx_adj)
 ```
 
@@ -1062,6 +1089,10 @@ Follow the instruction and introduction.
 *** =pre_exercise_code
 ```{r}
 library(microbenchmark)
+library(zoo)
+library(xts)
+load("etf_data.Rdata")
+load("zoo_data.Rdata")
 ```
 
 *** =sample_code
