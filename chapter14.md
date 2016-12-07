@@ -24,8 +24,8 @@ Follow instruction and introductions.
 # no pec
 library(zoo)
 library(xts)
-load("etf_data.Rdata")
-load("zoo_data.Rdata")
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
 ```
 
 *** =sample_code
@@ -119,8 +119,8 @@ Follow the instruction and introductions
 # no pec
 library(zoo)
 library(xts)
-load("etf_data.Rdata")
-load("zoo_data.Rdata")
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
 ```
 
 *** =sample_code
@@ -188,8 +188,8 @@ Follow the instruction and introduction.
 # no pec
 library(zoo)
 library(xts)
-load("etf_data.Rdata")
-load("zoo_data.Rdata")
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
 ```
 
 *** =sample_code
@@ -316,8 +316,11 @@ Follow the instruction and introductions.
 # no pec
 library(zoo)
 library(xts)
-load("etf_data.Rdata")
-load("zoo_data.Rdata")
+library(ggplot2)
+library(zoo)
+library(xts)
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
 ```
 
 *** =sample_code
@@ -386,8 +389,8 @@ In order to plot various time series at once, you need to combine time serieses 
 # no pec
 library(zoo)
 library(xts)
-load("etf_data.Rdata")
-load("zoo_data.Rdata")
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
 ```
 
 *** =sample_code
@@ -476,8 +479,8 @@ Follow the instructions and introductions.
 # no pec
 library(zoo)
 library(xts)
-load("etf_data.Rdata")
-load("zoo_data.Rdata")
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
 ```
 
 *** =sample_code
@@ -542,8 +545,8 @@ Follow the instruction and introduction.
 # no pec
 library(zoo)
 library(xts)
-load("etf_data.Rdata")
-load("zoo_data.Rdata")
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
 ```
 
 *** =sample_code
@@ -611,8 +614,8 @@ Follow the instruction and introduction.
 ```{r}
 library(zoo)
 library(xts)
-load("etf_data.Rdata")
-load("zoo_data.Rdata")
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
 st_ox <- as.xts(zoo_stx_adj)
 ```
 
@@ -726,8 +729,8 @@ Follow the instruction and introduction.
 ```{r}
 library(zoo)
 library(xts)
-load("etf_data.Rdata")
-load("zoo_data.Rdata")
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
 ```
 
 *** =sample_code
@@ -801,8 +804,8 @@ Follow the instruction and introductions.
 ```{r}
 library(zoo)
 library(xts)
-load("etf_data.Rdata")
-load("zoo_data.Rdata")
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
 st_ox <- as.xts(zoo_stx_adj)
 ```
 
@@ -874,8 +877,8 @@ Follow the instruction and introductions.
 ```{r}
 library(zoo)
 library(xts)
-load("etf_data.Rdata")
-load("zoo_data.Rdata")
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
 st_ox <- as.xts(zoo_stx_adj)
 ```
 
@@ -933,8 +936,8 @@ Follow the instruction and introductions.
 # none
 library(zoo)
 library(xts)
-load("etf_data.Rdata")
-load("zoo_data.Rdata")
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
 st_ox <- as.xts(zoo_stx_adj)
 ```
 
@@ -1024,8 +1027,8 @@ Follow the instruction and introduction
 # none
 library(zoo)
 library(xts)
-load("etf_data.Rdata")
-load("zoo_data.Rdata")
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
 st_ox <- as.xts(zoo_stx_adj)
 ```
 
@@ -1091,8 +1094,8 @@ Follow the instruction and introduction.
 library(microbenchmark)
 library(zoo)
 library(xts)
-load("etf_data.Rdata")
-load("zoo_data.Rdata")
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
 ```
 
 *** =sample_code
