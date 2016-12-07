@@ -114,6 +114,7 @@ Follow the instruction and introductions
 ```{r}
 # no pec
 library(xts)
+load("zoo_data.Rdata")
 ```
 
 *** =sample_code
@@ -179,6 +180,7 @@ Follow the instruction and introduction.
 *** =pre_exercise_code
 ```{r}
 # no pec
+load("etf_data.Rdata")
 ```
 
 *** =sample_code
