@@ -616,12 +616,13 @@ library(zoo)
 library(xts)
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
-
-st_ox <- as.xts(zoo_stx_adj)
 ```
 
 *** =sample_code
 ```{r}
+# construct time series
+
+
 # subset xts using a date range string
 
 
@@ -661,6 +662,9 @@ st_ox <- as.xts(zoo_stx_adj)
 
 *** =solution
 ```{r}
+# construct time series
+st_ox <- as.xts(zoo_stx_adj)
+
 # subset xts using a date range string
 stox_sub <- st_ox["2014-10-15/2015-01-10", 1:4]
 
