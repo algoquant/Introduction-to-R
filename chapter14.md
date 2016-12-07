@@ -303,8 +303,8 @@ Follow the instruction and introductions.
 *** =pre_exercise_code
 ```{r}
 # no pec
-load("etf_data.Rdata")
 library(ggplot2)
+load("etf_data.Rdata")
 load("etf_data_new.Rdata")
 ```
 
