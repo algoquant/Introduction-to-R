@@ -581,12 +581,12 @@ data_frame <-
 
 # change code to make plot
 data_frame %>%
-  plot_ly(x=~dates, y=~VTI, type = "scatter",fill="tozeroy", name="VTI") %>%
-  add_trace(x=~dates, y=~IEF, type= "scatter",fill="tonexty", name="IEF") %>%
-  layout(title="VTI and IEF prices",
-   xaxis=list(title="Time"),
-   yaxis=list(title="Stock Prices"),
-   legend=list(x=0.1, y=0.9))
+    plot_ly(x=~dates, y=~VTI, type="scatter", mode="lines+markers", fill="tozeroy", name="VTI") %>%
+    add_trace(x=~dates, y=~IEF, type="scatter", mode="lines+markers", fill="tonexty", name="IEF") %>%
+    layout(title="VTI and IEF prices",
+         xaxis=list(title="Time"),
+         yaxis=list(title="Stock Prices"),
+         legend=list(x=0.1, y=0.9))
 ```
 
 
