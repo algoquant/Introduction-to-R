@@ -24,8 +24,8 @@ Follow instruction and introductions.
 # no pec
 library(zoo)
 library(xts)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.Rdata"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.Rdata"))
 ```
 
 *** =sample_code
@@ -119,8 +119,8 @@ Follow the instruction and introductions
 # no pec
 library(zoo)
 library(xts)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.Rdata"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.Rdata"))
 ```
 
 *** =sample_code
@@ -188,8 +188,8 @@ Follow the instruction and introduction.
 # no pec
 library(zoo)
 library(xts)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.Rdata"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.Rdata"))
 ```
 
 *** =sample_code
@@ -319,8 +319,8 @@ library(xts)
 library(ggplot2)
 library(zoo)
 library(xts)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.Rdata"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.Rdata"))
 ```
 
 *** =sample_code
@@ -389,8 +389,8 @@ In order to plot various time series at once, you need to combine time serieses 
 # no pec
 library(zoo)
 library(xts)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.Rdata"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.Rdata"))
 ```
 
 *** =sample_code
@@ -457,6 +457,7 @@ test_error()
 success_msg("Beautiful Charts! Tune the parameters to make your own style!")
 ```
 
+
 --- type:NormalExercise lang:r xp:100 skills:1 key:5a2dc65a8a
 ## Interactive Time Series Plots Using Package dygraphs
 
@@ -479,8 +480,8 @@ Follow the instructions and introductions.
 # no pec
 library(zoo)
 library(xts)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.Rdata"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.Rdata"))
 ```
 
 *** =sample_code
@@ -545,8 +546,8 @@ Follow the instruction and introduction.
 # no pec
 library(zoo)
 library(xts)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.Rdata"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.Rdata"))
 ```
 
 *** =sample_code
@@ -605,18 +606,18 @@ In addition, xts time series can be subset using date strings, or date range str
 If only the date is subset, then a comma "," after the date range isn’t necessary, The function `.subset xts()` allows fast subsetting of xts time series, which is at least three times faster than the bracket "[]" notation
 
 *** =instructions
-- Subset time series objects according to time span
+- Subset time series objects according to time span.
 
 *** =hint
 Follow the instruction and introduction.
 
 *** =pre_exercise_code
 ```{r}
-# no pec
+# pre
 library(zoo)
 library(xts)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.Rdata"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.Rdata"))
 ```
 
 *** =sample_code
@@ -735,8 +736,8 @@ Follow the instruction and introduction.
 ```{r}
 library(zoo)
 library(xts)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.Rdata"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.Rdata"))
 ```
 
 *** =sample_code
@@ -810,8 +811,8 @@ Follow the instruction and introductions.
 ```{r}
 library(zoo)
 library(xts)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.Rdata"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.Rdata"))
 st_ox <- as.xts(zoo_stx_adj)
 ```
 
@@ -883,8 +884,8 @@ Follow the instruction and introductions.
 ```{r}
 library(zoo)
 library(xts)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.Rdata"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.Rdata"))
 st_ox <- as.xts(zoo_stx_adj)
 ```
 
@@ -942,8 +943,8 @@ Follow the instruction and introductions.
 # none
 library(zoo)
 library(xts)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.Rdata"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.Rdata"))
 st_ox <- as.xts(zoo_stx_adj)
 ```
 
@@ -1033,8 +1034,8 @@ Follow the instruction and introduction
 # none
 library(zoo)
 library(xts)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.Rdata"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.Rdata"))
 st_ox <- as.xts(zoo_stx_adj)
 ```
 
@@ -1100,8 +1101,8 @@ Follow the instruction and introduction.
 library(microbenchmark)
 library(zoo)
 library(xts)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.RData"))
-load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/zoo_data.Rdata"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1871/datasets/etf_data.Rdata"))
 ```
 
 *** =sample_code
