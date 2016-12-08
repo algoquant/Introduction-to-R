@@ -702,13 +702,10 @@ library(microbenchmark)
 
 # benchmark the speed of subsetting
 summary(microbenchmark(
-  bracket=sapply(10*(10:1000),
-  function(in_dex)
-    max(SPY[in_dex:(in_dex+10), ])),
-  subset=sapply(10*(10:1000),
-  function(in_dex)
-    max(.subset_xts(SPY, in_dex:(in_dex+10)))),
-  times=10))[, c(1, 4, 5)]
+  bracket = sapply(1:100, function(in_dex){max(st_ox[in_dex:(in_dex),])}),
+  subset = sapply(1:100, function(in_dex){max(.subset_xts(st_ox, in_dex:(in_dex+10)))}),
+  times = 10
+))
 ```
 
 
